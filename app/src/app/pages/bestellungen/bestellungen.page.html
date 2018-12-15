@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bestellungen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    
+    <ion-list-header color="primary">Filter</ion-list-header>
+    <ion-item>
+      <ion-label>Aufnehmer</ion-label>
+      <ion-select [(ngModel)]="filter.aufnehmer_id" (ngModelChange)="onFilterChange()">
+        <ion-select-option value="all">Alle</ion-select-option>
+        <ion-select-option *ngFor="let a of daten?.daten?.aufnehmer" [value]="a.id">{{ a.vorname }} {{ a.nachname }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tischreihe</ion-label>
+      <ion-select [(ngModel)]="filter.tischkategorien_id" (ngModelChange)="onFilterChange()">
+        <ion-select-option value="all">Alle</ion-select-option>
+        <ion-select-option *ngFor="let tk of daten?.daten?.tischkategorien" [value]="tk.id">{{ tk.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Tisch</ion-label>
+      <ion-select [(ngModel)]="filter.tische_id" (ngModelChange)="onFilterChange()">
+        <ion-select-option value="all">Alle</ion-select-option>
+        <ion-select-option *ngFor="let t of filtredTische" [value]="t.id">{{ t.reihe }} {{ t.nummer }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Datum</ion-label>
+      <ion-select [(ngModel)]="filter.tag" (ngModelChange)="onFilterChange()">
+        <ion-select-option value="all">Alle</ion-select-option>
+        <ion-select-option *ngFor="let tag of filtredTage" [value]="datum">{{ tag | date: 'EEEE, dd.MM.yyyy' }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-list-header color="primary">Bestellungen</ion-list-header>
+    <ion-item *ngFor="let bestellung of filtredBestellungen" href="/bestellungen/{{bestellung.id}}">
+      <!--<ion-icon [name]="item.icon" slot="start"></ion-icon>-->
+      <ion-label>
+        <h2>{{ bestellung?.tisch.reihe }} {{ bestellung?.tisch.nummer }}</h2>
+        <p>{{ bestellung?.timestamp_beendet | date: 'dd.MM.yyyy HH:mm:ss' }} | {{ bestellung?.bestellung_summe | euroPreis }}</p>
+      </ion-label>
+      <div class="item-note" slot="end">{{ bestellung?.aufnehmer.vorname }} {{ bestellung?.aufnehmer.nachname }}</div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+  

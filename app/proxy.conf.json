@@ -1,0 +1,12 @@
+{
+    "/api": {
+       "target": "http://ffgk.local/v1",
+       "changeOrigin": true,
+       "secure": false,
+       "pathRewrite": {
+         "^/api": ""
+       },
+       "logLevel": "debug"
+     }
+   }
+   

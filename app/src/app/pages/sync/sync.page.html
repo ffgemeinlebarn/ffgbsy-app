@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Synchronisierung</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div class="content-container content-container--center-vertical content-container--center-horizontal">
+    <div class="content-container__inner">
+        <ion-spinner [hidden]="sync_beendet" name="lines"></ion-spinner>
+        <ion-button [hidden]="!sync_beendet" href="/select-aufnehmer" routerDirection="forward">Weiter</ion-button>
+    </div>
+  </div>
+</ion-content>

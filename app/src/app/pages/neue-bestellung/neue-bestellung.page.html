@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Neue Bestellung</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancelBestellung()">
+        <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+  
+<ion-content  *ngIf="!setup_start" padding>
+  <div class="content-container content-container--center-vertical content-container--center-horizontal">
+    <div class="content-container__inner">
+        <ion-button size="large" (click)="starteTischChooser()">Neue Bestellung starten</ion-button>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content *ngIf="setup_start && !setup_tische">
+    <div class="kachelwand">
+      <div *ngFor="let tisch of this.current_tisch_kat_tische" [ngClass]="{'kachel': true, 'tisch-kachel': true, 'tisch-kachel--big-1': (tisch.reihe.length > 10), 'tisch-kachel--big-2': (tisch.reihe.length > 15)}">
+        <div class="kachel__inner">
+            <ion-button text-wrap text-normal expand="full" (click)="createBestellung(tisch)">
+              <span class="button-inner">{{tisch.reihe}} {{tisch.nummer}}</span>
+            </ion-button>
+        </div>
+      </div>
+    </div>
+</ion-content>
+<ion-footer *ngIf="setup_start && !setup_tische">
+  <div class="kachelwand">
+    <div class="kachel tischkategorie-kachel" *ngFor="let tischkategorie of daten.daten.tischkategorien">
+      <div class="kachel__inner">
+        <ion-button text-wrap text-normal expand="full" (click)="changeTischKategorie(tischkategorie.id)">
+          <span class="button-inner">{{tischkategorie.name}}</span>
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-footer>
+
+<ion-content *ngIf="setup_start && setup_tische"><!-- scroll-x="false" scroll-y="false" -->
+  <ion-grid class="content">
+      <ion-row>
+        <ion-col size="5" class="content-left">
+          <ion-row class="tisch">
+            <h1>{{bestellung?.tisch?.reihe}} {{bestellung?.tisch?.nummer}}</h1>
+          </ion-row>
+          <ion-row class="bestellpositionen">
+            <ion-list>
+              <ion-item button *ngFor="let bp of bestellung.bestellpositionen.slice().reverse()" (click)="editBestellungsposition(bp)">
+                <ion-label text-wrap>
+                  <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
+                  <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
+                  <p *ngIf="bp.display.eigenschaften.mit.length" ><strong>MIT:</strong> {{ bp.display.eigenschaften.mit.join(", ") }}</p>
+                  <p *ngIf="bp.display.eigenschaften.ohne.length"><strong>OHNE:</strong> {{ bp.display.eigenschaften.ohne.join(", ") }}</p>
+                  <p *ngIf="bp.notiz"><strong>Notiz:</strong> {{ bp.notiz }}</p>
+                </ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-row>
+        </ion-col>
+        <ion-col size="7" class="content-right">
+          <ion-list>
+            <ion-item button *ngFor="let produkt of current_kat_produkte" (click)="addProdukt(produkt, 'standard', $event)">
+              <ion-label text-wrap>
+                <h2>{{produkt?.name}}</h2>
+                <p>{{produkt?.preis | euroPreis }}</p>
+              </ion-label>
+              <ion-button item-end icon-only size="small" (click)="addProdukt(produkt, 'new_line', $event)">
+                <ion-icon name="undo"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer *ngIf="setup_start && setup_tische">
+  <ion-row>
+      <ion-col size="5" class="footer-left">
+        <div class="summe">
+          <span class="summe__euro">€</span>
+          <span class="summe__betrag">{{ bestellung.calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
+        </div>
+        <div class="submit">
+          <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" [disabled]="bestellung.bestellpositionen.length == 0">
+            <ion-icon slot="icon-only" name="logo-euro"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-col>
+      <ion-col size="7" class="footer-right">
+        <div class="kachelwand">
+          <div class="kachel produktkategorie-kachel" *ngFor="let produktkategorie of daten.daten.produktkategorien">
+            <div class="kachel__inner">
+              <ion-button text-wrap text-normal expand="full" (click)="changeKategorie(produktkategorie.id)">
+                <span class="button-inner">{{produktkategorie.name}}</span>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+</ion-footer>

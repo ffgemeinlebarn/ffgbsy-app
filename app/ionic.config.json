@@ -1,0 +1,11 @@
+{
+  "name": "Bestellsystem",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "proxies": [{
+      "path": "/api",
+      "proxyUrl": "http://ffgk.local"
+  }]
+}

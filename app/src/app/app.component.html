@@ -1,0 +1,34 @@
+<ion-app>
+    <ion-split-pane>
+        <ion-menu swipeGesture="false">
+            <ion-header class="menu-header">
+              <div class="menu-header__image"></div>
+              <h3>{{global.loggedIn.aufnehmer.vorname}} {{global.loggedIn.aufnehmer.nachname}}</h3>
+              <ion-button *ngIf="global.loggedIn.status" size="small" color="light" (click)="logout()">Logout</ion-button>
+            </ion-header>
+            <ion-content>
+              <ion-menu-toggle>
+                <ion-list>
+                  <ion-item color="primary" href="/neue-bestellung" routerDirection="root">
+                    Neue Bestellung
+                  </ion-item>
+                  <ion-item href="/bestellungen" routerDirection="root">
+                    Bestellungen
+                  </ion-item>
+                  <ion-item href="/systemstatus" routerDirection="root">
+                    Systemstatus
+                  </ion-item>
+                  <ion-item href="/einstellungen" routerDirection="root">
+                    Einstellungen
+                  </ion-item>
+                  <ion-item href="/impressum" routerDirection="root">
+                    Impressum
+                  </ion-item>
+                </ion-list>
+              </ion-menu-toggle>
+            </ion-content>
+          </ion-menu>
+      <ion-router-outlet main></ion-router-outlet>
+    </ion-split-pane>
+  </ion-app>
+  

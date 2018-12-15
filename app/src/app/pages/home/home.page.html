@@ -1,0 +1,50 @@
+<ion-content padding>
+
+    <ion-card>
+        <ion-card-header color="tertiary">
+            <ion-card-subtitle>System Check #1</ion-card-subtitle>
+            <ion-card-title>Gerät</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+            <p>WLAN Aktiv: {{global.system.connectivity.wlan_aktiv | status}}</p>
+            <p>Android-App Version: {{global.system.app.version}}</p>
+            <p>Akkustand: 89%</p>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header color="tertiary">
+            <ion-card-subtitle>System Check #2</ion-card-subtitle>
+            <ion-card-title>Daten</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+            <p>Lokale Daten Version: {{daten?.daten?.version}}</p>
+            <p>Online Daten Version: {{online?.data_version}}</p>
+            <p>Daten Update Erforderlich: {{ data_update | status }}</p>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header color="tertiary">
+            <ion-card-subtitle>System Check #3</ion-card-subtitle>
+            <ion-card-title>Lokales Netzwerk</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+            <p>Lokales Netzwerk erreichbar: {{global.system.connectivity.lan_erreichbar | status}}</p>
+            <p><strong>Drucker</strong></p>
+            <p *ngFor="let d of online?.drucker">{{ d.name }} ({{ d.ip }}): {{ d.ping.erreichbar | status }} <span [hidden]="!d.ping.erreichbar">({{ d.ping.leverage }}ms)</span></p>
+        </ion-card-content>
+    </ion-card>
+
+
+    <div class="content-container content-container--center-horizontal">
+        <div class="content-container__inner">
+            <ion-button [hidden]="!data_update" href="/sync" routerDirection="forward">Weiter</ion-button>
+            <ion-button [hidden]="data_update" href="/select-aufnehmer" routerDirection="root">Weiter</ion-button>
+        </div>
+    </div>
+
+</ion-content>
