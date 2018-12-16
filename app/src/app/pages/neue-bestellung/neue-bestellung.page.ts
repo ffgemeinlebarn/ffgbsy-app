@@ -108,13 +108,6 @@ export class NeueBestellungPage implements OnInit {
     }
   }
 
-  addProduktModifikation(produkt: Produkt, notiz?:string, params?:any){
-
-    if (notiz){
-      this.bestellung.bestellpositionen.push(new Bestellposition(produkt));
-    }
-  }
-
   // Tisch-Kategorie wechselen
 
   changeTischKategorie(id: number){
@@ -157,12 +150,12 @@ export class NeueBestellungPage implements OnInit {
     modal.onDidDismiss()
       .then((data) => {
 
-        bestellposition = data.data;
+        //bestellposition = data.data;
 
         bestellposition.display.eigenschaften.mit = [];
         bestellposition.display.eigenschaften.ohne = [];
 
-        for (let e of data.data.produkt.eigenschaften){
+        for (let e of data.data.eigenschaften){
           if (e.in_produkt_enthalten == 0 && e.aktiv == 1){
             if (parseFloat(e.preis) != 0){
               bestellposition.display.eigenschaften.mit.push(e.name + " (€ " + e.preis + ")");

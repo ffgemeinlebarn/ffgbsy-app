@@ -1,4 +1,5 @@
 import { Produkt } from "./produkt.class";
+import { Eigenschaft } from "./eigenschaft.class";
 
 export class Bestellposition {
     id: number = null;
@@ -11,11 +12,31 @@ export class Bestellposition {
             ohne: []
         }
     };
+    eigenschaften: Array<any>;
 
     constructor(produkt: Produkt) {
-        this.id = 1;
-        this.produkt = produkt;
+        this.produkt = produkt; //new Produkt(produkt.id, produkt.name, produkt.einzahl, produkt.einheit, produkt.preis, produkt.produktkategorien_id, produkt.drucker_id_level_2, produkt.sortierindex, produkt.eigenschaften);
         this.anzahl = 1;
         this.notiz = "";
+        this.display = {
+            eigenschaften:{
+                mit: [],
+                ohne: []
+            }
+        };
+
+        this.eigenschaften = [];
+        for (let e of this.produkt.eigenschaften){
+            let bool = !!+e.aktiv;
+            let new_e = {
+                name: e.name, 
+                aktiv: bool, 
+                in_produkt_enthalten: 
+                e.in_produkt_enthalten, 
+                preis: e.preis, 
+                eigenschaften_id: e.eigenschaften_id
+            };
+            this.eigenschaften.push(new_e);
+        }
     }
 }

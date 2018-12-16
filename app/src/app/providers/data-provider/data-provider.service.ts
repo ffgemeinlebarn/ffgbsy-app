@@ -63,7 +63,7 @@ export class DataProviderService {
         anzahl: bp.anzahl,
         produkte_id: bp.produkt.id,
         notiz: bp.notiz,
-        eigenschaften: bp.produkt.eigenschaften
+        eigenschaften: bp.eigenschaften
       });
     }
     form_data.append("positionen", JSON.stringify(positionen));

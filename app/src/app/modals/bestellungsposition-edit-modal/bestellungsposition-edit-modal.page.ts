@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
+import { Bestellposition } from '../../classes/bestellposition.class';
 
 @Component({
   selector: 'app-bestellungsposition-edit-modal',
@@ -8,20 +9,20 @@ import { ModalController, NavParams } from '@ionic/angular';
 })
 export class BestellungspositionEditModalPage implements OnInit {
 
-  bestellposition: any;
+  bestellpositionModal: Bestellposition;
 
   constructor(private modalCtrl: ModalController, public navParams: NavParams) {
-    this.bestellposition = this.navParams.get('bestellposition');
+    this.bestellpositionModal = this.navParams.get('bestellposition');
   }
 
   ngOnInit() {
   }
 
   closeModal(){
-    this.modalCtrl.dismiss(this.bestellposition);
+    this.modalCtrl.dismiss(this.bestellpositionModal);
   }
 
   changeAnzahl(change: number){
-    this.bestellposition.anzahl += change;
+    this.bestellpositionModal.anzahl += change;
   }
 }
