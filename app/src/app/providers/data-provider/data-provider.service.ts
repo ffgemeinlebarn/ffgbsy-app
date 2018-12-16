@@ -10,9 +10,10 @@ import { Storage } from '@ionic/storage';;
   providedIn: 'root'
 })
 export class DataProviderService {
-  daten: any = null;
+  daten: any;
 
   constructor(public global:GlobalProviderService, private storage: Storage, public http: HttpClient) {
+    this.daten = {version: 0};
     this.feedFromLocalData();
   }
 
