@@ -35,7 +35,8 @@ export class GlobalProviderService {
     this.api = {
       //baseUrl: '/api',
       //baseUrl: 'http://ffgk.local/v1',
-      baseUrl: 'http://ffgk.local.192.168.100.4.xip.io/v1'
+      //baseUrl: 'http://ffgk.local.192.168.100.4.xip.io/v1'
+      baseUrl: 'http://ffgk.local.10.0.0.7.xip.io/v1'
     };
 
     this.loggedIn = {

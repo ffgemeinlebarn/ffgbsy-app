@@ -15,7 +15,9 @@ export class Bestellung {
     bestellpositionen: Array<Bestellposition> = Array();
 
     constructor (tisch: Tisch, aufnehmer: Aufnehmer, geraet?: Geraet){
-        this.timestamp_begonnen = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        let now = new Date();
+        now.setTime(now.getTime() - now.getTimezoneOffset()*60*1000);
+        this.timestamp_begonnen = now.toISOString().slice(0, 19).replace('T', ' ');
         this.tisch = tisch;
         this.aufnehmer = aufnehmer;
         this.geraet = geraet;
