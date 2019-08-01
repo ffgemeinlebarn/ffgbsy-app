@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
   templateUrl: './neue-bestellung.page.html',
   styleUrls: ['./neue-bestellung.page.scss'],
 })
-export class NeueBestellungPage implements OnInit {
+export class NeueBestellungPage {
 
   tisch: Tisch;
   setup_start: boolean = false;
@@ -33,12 +33,8 @@ export class NeueBestellungPage implements OnInit {
   bestellung: Bestellung;
 
   constructor(public modalController: ModalController, public global: GlobalProviderService, public daten: DataProviderService, public http: HttpClient, public router: Router, public alertController: AlertController) {
-
-    if (this.global.loggedIn.status == false) this.router.navigateByUrl('/home');
-  
-  }
-
-  ngOnInit() {
+    //if (this.global.loggedIn.status == false) this.router.navigateByUrl('/home');
+    this.daten.resolve();
   }
 
   starteTischChooser(){

@@ -21,8 +21,8 @@ export class BestellungenPage implements OnInit {
 
   constructor(public http: HttpClient, public global: GlobalProviderService, public daten: DataProviderService, private route: ActivatedRoute) {
 
-    this.daten.feedFromLocalData();
-    this.filtredTische = 
+    this.daten.resolve();
+    this.filtredTische = [];
     this.filtredTage = [];
 
     this.filter = {

@@ -12,6 +12,7 @@ import { System } from '../../interfaces/system';
 import { StatusPipe } from '../../pipes/status/status.pipe';
 import { DataProviderService } from '../../providers/data-provider/data-provider.service';
 import { Drucker } from '../../classes/drucker.class';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -23,11 +24,7 @@ export class HomePage {
   online: System;
   data_update: boolean;
   
-  constructor(private http: HttpClient, private global: GlobalProviderService, public daten: DataProviderService) {
-
-  }
-  
-  ngOnInit() {
+  constructor(private http: HttpClient, private global: GlobalProviderService, public daten: DataProviderService, private navCtrl: NavController) {
 
     this.global.system.connectivity.wlan_aktiv = true;
     this.global.system.connectivity.lan_erreichbar = true;
@@ -36,8 +33,6 @@ export class HomePage {
     this.http.get<System>(this.global.api.baseUrl + '/status').subscribe(data => {
       this.online = data;
       this.data_update = this.online.data_version > this.daten.daten.version;
-
-
 
       for(let i=0;i<this.online.drucker.length;i++){
         this.checkDrucker(this.online.drucker[i]);

@@ -8,16 +8,22 @@ import { DataProviderService } from '../../providers/data-provider/data-provider
   selector: 'app-select-aufnehmer',
   templateUrl: './select-aufnehmer.page.html',
   styleUrls: ['./select-aufnehmer.page.scss'],
+  providers: [
+    GlobalProviderService,
+    DataProviderService
+  ]
 })
-export class SelectAufnehmerPage implements OnInit {
+export class SelectAufnehmerPage {
 
   aufnehmer: Array<Aufnehmer>;
   selectedAufnehmerId: number;
 
   constructor(public global: GlobalProviderService, public daten: DataProviderService){
-    this.aufnehmer = daten.daten.aufnehmer;
-    this.selectedAufnehmerId = this.aufnehmer[0].id;
-    this.aufnehmerChange(this.aufnehmer[0]);
+    this.daten.resolve().then(_ => {
+      this.aufnehmer = this.daten.daten.aufnehmer;
+      this.selectedAufnehmerId = this.aufnehmer[0].id;
+      this.aufnehmerChange(this.aufnehmer[0]);
+    })
   }
 
   aufnehmerChange(aufnehmer: Aufnehmer){
@@ -26,9 +32,6 @@ export class SelectAufnehmerPage implements OnInit {
       status: true,
       aufnehmer: aufnehmer
     };
-  }
-
-  ngOnInit() {
   }
 
 }

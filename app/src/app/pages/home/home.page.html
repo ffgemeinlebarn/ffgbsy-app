@@ -41,10 +41,9 @@
 
 
     <div class="content-container content-container--center-horizontal">
-        <div class="content-container__inner">
-            <ion-button [hidden]="!data_update" href="/sync" routerDirection="forward">Weiter</ion-button>
-            <ion-button [hidden]="data_update" href="/select-aufnehmer" routerDirection="root">Weiter</ion-button>
+        <div class="content-container__inner"> 
+            <ion-button [hidden]="!data_update" [routerLink]="['/sync']">Weiter</ion-button>
+            <ion-button [hidden]="data_update" [routerLink]="['/select-aufnehmer']">Weiter</ion-button>
         </div>
     </div>
-
 </ion-content>

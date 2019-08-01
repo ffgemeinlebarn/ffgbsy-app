@@ -4,29 +4,33 @@ import { GlobalProviderService } from '../global-provider/global-provider.servic
 import { Daten } from '../../interfaces/daten'
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
-import { Storage } from '@ionic/storage';;
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
+import { resolve } from 'path';
+import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class DataProviderService {
+export class DataProviderService implements Resolve<any> {
   daten: any;
 
-  constructor(public global:GlobalProviderService, private storage: Storage, public http: HttpClient) {
+  constructor(public global: GlobalProviderService, private storage: NativeStorage, public http: HttpClient) {
     this.daten = {version: 0};
-    this.feedFromLocalData();
+    //this.feedFromLocalData();
   }
 
   storeOnlineData(data: Daten){
-    return this.storage.set(this.global.storage.keys.daten, JSON.stringify(data))
+    return this.storage.setItem(this.global.storage.keys.daten, JSON.stringify(data))
   }
 
-  feedFromLocalData(){
-    this.storage.get(this.global.storage.keys.daten).then((data) => {
+  resolve() {
+    return this.storage.getItem(this.global.storage.keys.daten).then((data) => {
       this.daten = JSON.parse(data);
+      console.log(new Date(), "resolve");
     });
   }
-
 
   // Produkte
 
@@ -49,12 +53,14 @@ export class DataProviderService {
 
   postBestellung(bestellung){
 
+    console.log("bestellung", bestellung);
+
     let positionen = [];
     let form_data = new FormData();
 
     form_data.append("tische_id", bestellung.tisch.id);
     form_data.append("timestamp_begonnen", bestellung.timestamp_begonnen);
-    form_data.append("aufnehmer_id", this.global.loggedIn.aufnehmer.id); //bestellung.aufnehmer.id);
+    form_data.append("aufnehmer_id", "1");//this.global.loggedIn.aufnehmer.id); //bestellung.aufnehmer.id);
     form_data.append("geraete_id", "1");
     
     for (let bp of bestellung.bestellpositionen){
