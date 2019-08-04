@@ -4,3 +4,76 @@
 // styles are for the entire app and not just one component. Additionally, this 
 // file can hold Sass mixins, functions, and placeholder classes to be imported 
 // and used throughout the application.
+
+// Ion-Card Layout
+
+.ion-card-side-image-layout{
+    display: flex;
+    flex-direction: row;
+
+    &__content{
+        width: 100%;
+    }
+
+    &__image{
+        width: 130px;
+        background-color: #dddddd;
+        background-size: cover;
+        background-position: center center;
+    }
+}
+
+
+// Sidemenu
+
+.sidemenu-padding{
+    padding: 10px;
+}
+
+.sidemenu-main-menu{
+    padding-top: 0px;
+
+    ion-item{
+        border-bottom: 1px solid #ddd;
+
+        ion-label{
+            line-height: 60px;
+        }
+    }
+}
+
+.sidemenu-headline{
+    @extend .sidemenu-padding;
+    padding-bottom: 5px;
+}
+
+
+// Alert & Modal Styles
+
+:host ::ng-deep {
+
+    .classic-modal{
+        // padding: 30px;
+    }
+
+    ion-alert {
+        --max-width: 350px;
+    }
+}
+
+// Content - Center All
+
+:host ::ng-deep {
+    
+    ion-content.center{
+
+        >ion-grid.center{
+            height: 100%;
+
+            >ion-row.center{
+                height: 100%;
+                flex-direction: column;
+            }
+        }
+    }
+}

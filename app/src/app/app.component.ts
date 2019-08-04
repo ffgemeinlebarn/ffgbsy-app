@@ -1,8 +1,15 @@
+// Angular
 import { Component } from '@angular/core';
 
+// Ionic
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+
+// Meine Services
+import { SessionService } from './services/session/session.service';
+import { SettingsService } from './services/settings/settings.service';
+import { BestellungenHandlerService } from './services/bestellungen/bestellungen-handler.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +20,10 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private session: SessionService,
+    private settings: SettingsService,
+    private bestellungen: BestellungenHandlerService
   ) {
     this.initializeApp();
   }

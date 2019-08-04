@@ -1,0 +1,28 @@
+ion-modal{
+    padding: 30px;
+}
+
+ion-footer{
+    background-color: #ffffff;
+    padding: 0px;
+    flex-direction: row;
+    display: flex;
+    height: 80px;
+
+    ion-button{
+        --border-radius: 0px;
+        --box-shadow: 0px;
+        margin: 0px;
+        height: 100%;
+        font-size: 1em;
+        font-weight: bold;
+
+        &.button-bestellung-nochmal-bearbeiten{
+            width: 35%;
+        }
+
+        &.button-bestellung-senden{
+            width: 65%;
+        }
+    }
+}

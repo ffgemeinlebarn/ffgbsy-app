@@ -1,0 +1,166 @@
+// Tische
+
+.kachelwand{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.kachel{
+    box-sizing: border-box;
+    padding: 1px;
+
+    &__inner{
+        background-color: #cccccc;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+
+        font-weight: bold;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        ion-button{
+            width: 100%;
+            height: 100%;
+            margin: 0px;
+            --box-shadow: 0px;
+
+            .button-inner{
+                text-transform: none;
+                font-weight: bold;
+                line-height: 1.3;
+            }
+        }
+    }
+}
+
+.tischkategorie-kachel{
+    width: 25vw;
+    min-height: 60px;
+}
+
+.tisch-kachel{
+    width: 20vw;
+    height: 20vw;
+
+    &--big-1{ width: 40vw; }
+    &--big-2{ width: 60vw; }
+    &--big-3{ width: 80vw; }
+    &--big-4{ width: 100vw; }
+}
+
+.status-current-bestellpositionen{
+
+    .content{
+        display: flex;
+        flex-direction: row;
+        padding: 0px;
+        min-height: 100%;
+        height: 100%;
+    
+        >ion-row{
+            min-height: 100%;
+            height: 100%;
+        }
+    
+        .content-left{
+            width: 44%;
+            padding: 0px;
+            min-height: 100%;
+            height: 100%;
+            background-color: #f4f4f4;
+            overflow: auto;
+    
+            ion-row, 
+            ion-col{
+                padding: 0px;
+            }
+    
+            .tisch{
+                h1{
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+    
+            .bestellpositionen{
+                ion-list{
+                    width: 100%;
+                    --ion-background-color: transparent;
+                }
+            }
+        }
+    
+        .content-right{
+            width: 56%;
+            padding: 0px;
+            min-height: 100%;
+            overflow: auto;
+        }
+    
+        ion-item{
+            --padding-start: 0px;
+            --ion-safe-area-left: 0px;
+            --inner-padding-start: 16px;
+            --ion-safe-area-right: 0px;
+        }
+    }
+    
+    .footer-left{
+        display: flex;
+        flex-direction: column;
+        padding: 0px;
+    
+        .summe{
+            width: 100%;
+            padding: 30px 20px;
+            font-size: 1.7em;
+            font-weight: bold;
+            text-align: center;
+    
+            &__euro{
+                font-size: 0.7em;
+    margin-right: 6px;
+    color: #777;
+            }
+        }
+    
+        .submit{
+            width: 100%;
+            height: 100%;
+            padding: 0px;// 20px 20px 20px;
+            flex-basis: 0;
+            flex-grow: 1;
+            overflow: auto;
+    
+            ion-button{
+                width: 100%;
+                height: 100%;
+                margin: 0px;
+                padding: 0px;
+                --border-radius: 0px;
+
+                ion-icon{
+                    width: 1.25em;
+                    height: 1.25em;
+                }
+            }
+        }
+    }
+    
+    .footer-right{
+        padding: 0px;
+    }
+
+    .produktkategorie-kachel{
+        width: 33.3333%;
+        font-size: 0.9em;
+        min-height: 80px;
+    
+        .kachel__inner{
+            text-align: center;
+        }
+    }
+}

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Tisch: {{bestellung?.tisch?.reihe}} {{bestellung?.tisch?.nummer}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item button *ngFor="let bp of bestellung.bestellpositionen.slice().reverse()" (click)="editBestellungsposition(bp)">
+      <ion-label text-wrap>
+        <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
+        <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
+        <p *ngIf="bp.display.eigenschaften.mit.length" ><strong>MIT:</strong> {{ bp.display.eigenschaften.mit.join(", ") }}</p>
+        <p *ngIf="bp.display.eigenschaften.ohne.length"><strong>OHNE:</strong> {{ bp.display.eigenschaften.ohne.join(", ") }}</p>
+        <p *ngIf="bp.notiz"><strong>Notiz:</strong> {{ bp.notiz }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+    <ion-button class="button-bestellung-nochmal-bearbeiten" color="danger" expand="block" (click)="closeModal()">
+      <ion-icon name="undo" slot="start"></ion-icon>
+      <ion-label>zurück</ion-label>
+    </ion-button>
+    <ion-button class="button-bestellung-senden" color="success" expand="block" (click)="sendBestellung()">
+      <ion-icon name="send" slot="start"></ion-icon>
+      <ion-label>Absenden</ion-label>
+    </ion-button>
+</ion-footer>

@@ -1,0 +1,56 @@
+.classic-modal{
+    padding: 30px;
+}
+
+h1{
+    text-align: center;
+    padding: 30px 0px;
+}
+
+.anzahl{
+    background-color: #f4f4f4;
+    padding: 30px 0px;
+
+    ion-col{
+        text-align: center;
+    }
+
+    h2{
+        margin: 0px;
+        font-weight: bold;
+        font-size: 1.6em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+}
+
+ion-list{
+    padding: 0px;
+}
+
+ion-footer{
+    background-color: #ffffff;
+    padding: 0px;
+    flex-direction: row;
+    display: flex;
+    height: 80px;
+
+    ion-button{
+        --border-radius: 0px;
+        --box-shadow: 0px;
+        margin: 0px;
+        height: 100%;
+        font-size: 1em;
+        font-weight: bold;
+
+        &.button-bestellposition-entfernen{
+            width: 30%;
+        }
+
+        &.button-bestellposition-speichern{
+            width: 70%;
+        }
+    }
+}

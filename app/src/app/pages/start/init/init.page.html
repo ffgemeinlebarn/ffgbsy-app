@@ -1,0 +1,14 @@
+<ion-content class="center" padding="true">
+  <ion-grid class="center">
+    <ion-row class="center" justify-content-center align-items-center>
+      <h2 class="headline">Synchronisierung der FFGBSY-App mit dem Server</h2>
+      <ion-spinner [hidden]="!datenSynchronisierungLaeuft" name="lines-small"></ion-spinner>
+      <p class="message">{{ messageLineOne }}<br />{{ messageLineTwo }}</p>
+      <ion-button [hidden]="datenSynchronisiert" (click)="datenSynchronisierungStarten()">Synchronisierung starten</ion-button>
+      <ion-button [hidden]="!datenSynchronisiert" [routerLink]="['/select-aufnehmer']">
+        <ion-label>Aufnehmer auswählen</ion-label>
+        <ion-icon name="arrow-forward" slot="end"></ion-icon>
+      </ion-button>
+    </ion-row>
+  </ion-grid>
+</ion-content>

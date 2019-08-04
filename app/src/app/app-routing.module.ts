@@ -2,8 +2,15 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
+  { path: '', redirectTo: 'init', pathMatch: 'full' },
+  { path: 'init', loadChildren: './pages/start/init/init.module#InitPageModule' },
+  { path: 'select-aufnehmer', loadChildren: './pages/start/select-aufnehmer/select-aufnehmer.module#SelectAufnehmerPageModule' },
+  { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
+  { path: 'neue-bestellung', loadChildren: './pages/bestellungen/neue-bestellung/neue-bestellung.module#NeueBestellungPageModule' },
+  { path: 'bestellungen', loadChildren: './pages/bestellungen/bestellungen/bestellungen.module#BestellungenPageModule' },
+  { path: 'systemstatus', loadChildren: './pages/systemstatus/systemstatus.module#SystemstatusPageModule' },
+  { path: 'imprint', loadChildren: './pages/imprint/imprint.module#ImprintPageModule' },
+
 ];
 
 @NgModule({
