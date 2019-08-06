@@ -20,6 +20,7 @@ import { BestellungenHandlerService } from './services/bestellungen/bestellungen
 
 // Pipes
 import { PipesModule } from './pipes/pipes.module';
+import { FrontendService } from './services/frontend/frontend.service';
 
 // Modals
 import { BestellungKontrollePageModule } from './modals/bestellung-kontrolle/bestellung-kontrolle.module';
@@ -45,7 +46,8 @@ import { BestellungspositionEditModalPageModule } from './modals/bestellungsposi
     DataService,
     SessionService,
     SettingsService,
-    BestellungenHandlerService
+    BestellungenHandlerService,
+    FrontendService
   ],
   bootstrap: [AppComponent]
 })

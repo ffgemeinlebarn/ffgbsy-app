@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SessionService } from './services/session/session.service';
 import { SettingsService } from './services/settings/settings.service';
 import { BestellungenHandlerService } from './services/bestellungen/bestellungen-handler.service';
+import { FrontendService } from './services/frontend/frontend.service';
 
 @Component({
   selector: 'app-root',
@@ -23,7 +24,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private session: SessionService,
     private settings: SettingsService,
-    private bestellungen: BestellungenHandlerService
+    private bestellungen: BestellungenHandlerService,
+    private frontend: FrontendService
   ) {
     this.initializeApp();
   }
