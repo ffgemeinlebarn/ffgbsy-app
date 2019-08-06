@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from '@ionic/angular';
 import { MenuController } from '@ionic/angular';
 
 // Classen
@@ -7,6 +6,7 @@ import { Aufnehmer } from '../../classes/aufnehmer.class';
 import { Geraet } from '../../classes/geraet.class';
 import { Router } from '@angular/router';
 import { BestellungenHandlerService } from '../bestellungen/bestellungen-handler.service';
+import { FrontendService } from '../frontend/frontend.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class SessionService {
   public timeStart: Date;
 
   constructor(
-    public alertController: AlertController, 
+    private frontend: FrontendService, 
     private router: Router, 
     private menu: MenuController,
     private bestellungsHandler: BestellungenHandlerService
@@ -74,39 +74,23 @@ export class SessionService {
 
     if (this.bestellungsHandler.current !== null) {
 
-      const alert = await this.alertController.create({
-        header: 'Fehler',
-        message: 'Es existiert noch eine offene Bestellung. Diese muss vor dem beenden der Session beendet werden!',
-        buttons: ['OK']
+      this.frontend.showOkAlert(
+        'Fehler',
+        'Es existiert noch eine offene Bestellung. Diese muss vor dem beenden der Session beendet werden!'
+      ).then(ok =>{
+        this.menu.close();
       });
-  
-      await alert.present();
 
     }else{
 
-      const alert = await this.alertController.create({
-        header: 'Session beenden',
-        message: 'Willst du die Session wirklich beenden?',
-        buttons: [
-          {
-            text: 'Nein',
-            role: 'Nein',
-            cssClass: 'secondary',
-            handler: (blah) => {
-              
-            }
-          }, {
-            text: 'Ja, ausloggen',
-            handler: () => {
-              this.end();
-              this.router.navigateByUrl('/init');
-              this.menu.close();
-            }
-          }
-        ]
-      });
-  
-      await alert.present();
+      this.frontend.showJaNeinAlert(
+        'Session beenden',
+        'Willst du die Session wirklich beenden und dich ausloggen?'
+      ).then(yes => {
+        this.end();
+        this.router.navigateByUrl('/init');
+        this.menu.close();
+      }, no => {});
 
     }
   }

@@ -14,7 +14,7 @@ export class SettingsService {
 
   public api: APISettings = {
     protocol: 'http://',
-    host: '192.168.0.120',
+    host: '192.168.0.121',
     path: '/v1',
     url: null
   }

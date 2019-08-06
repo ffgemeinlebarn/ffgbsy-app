@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { DataService } from 'src/app/services/data/data.service';
-import { AlertController, ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { BestellungspositionEditModalPage } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.page';
 import { BestellungKontrollePage } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle.page';
+import { FrontendService } from 'src/app/services/frontend/frontend.service';
 
 @Component({
   selector: 'app-neue-bestellung',
@@ -24,8 +25,8 @@ export class NeueBestellungPage implements OnInit {
     private data: DataService, 
     private bestellungsHandler: BestellungenHandlerService, 
     private session: SessionService, 
-    private alertController: AlertController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private frontend: FrontendService
   ) {
     this.filterTischkategorieId = this.data.tischkategorien[0].id;
     this.filterProduktkategorie = this.data.produktkategorien[0];
@@ -87,12 +88,15 @@ export class NeueBestellungPage implements OnInit {
       }
   }
 
-  async editBestellungsposition(bestellposition: Bestellposition){
+  async editBestellungsposition(bestellposition: Bestellposition, nonReverseIndex: number){
+
+    let reverseIndex = this.bestellungsHandler.current.bestellpositionen.length - 1 - nonReverseIndex;
 
     const modal = await this.modalController.create({
       component: BestellungspositionEditModalPage,
       componentProps: {
-        bestellposition: bestellposition
+        bestellposition: bestellposition,
+        index: reverseIndex
       },
       cssClass: 'classic-modal',
       showBackdrop: true,
@@ -159,28 +163,13 @@ export class NeueBestellungPage implements OnInit {
 
   async askForCancelCurrentBestellung(){
 
-    const alert = await this.alertController.create({
-      header: 'Abbruch der Bestellung',
-      message: 'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.',
-      buttons: [
-        {
-          text: 'Nein',
-          role: 'Nein',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            
-          }
-        }, {
-          text: 'Ja',
-          cssClass: 'primary',
-          handler: () => {
-            this.bestellungsHandler.clearCurrent();
-          }
-        }
-      ]
-    });
+    await this.frontend.showJaNeinAlert(
+      'Abbruch der Bestellung',
+      'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.'
+    ).then(yes => {
+      this.bestellungsHandler.clearCurrent();
+    }, no => {});
 
-    await alert.present();
   }
 
 }

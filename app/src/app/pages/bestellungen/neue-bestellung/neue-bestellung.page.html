@@ -53,7 +53,7 @@
       </div>
       <div class="bestellpositionen">
         <ion-list>
-          <ion-item button *ngFor="let bp of bestellungsHandler.current?.bestellpositionen.slice().reverse()" (click)="editBestellungsposition(bp)">
+          <ion-item button *ngFor="let bp of bestellungsHandler.current?.bestellpositionen.slice().reverse(); index as nonReverseIndex" (click)="editBestellungsposition(bp, nonReverseIndex)">
             <ion-label text-wrap>
               <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
               <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
@@ -98,7 +98,7 @@
       <ion-col size="7" class="footer-right">
         <div class="kachelwand">
           <div class="kachel produktkategorie-kachel" *ngFor="let produktkategorie of data.produktkategorien">
-            <div class="kachel__inner">
+            <div class="kachel__inner" [ngStyle]="{'background-color': produktkategorie.color}">
               <ion-button text-wrap text-normal expand="full" (click)="changeFilterProduktkategorie(produktkategorie)">
                 <span class="button-inner">{{produktkategorie.name}}</span>
               </ion-button>

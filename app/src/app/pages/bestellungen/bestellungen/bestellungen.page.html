@@ -1,10 +1,31 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-menu-button slot="start"></ion-menu-button>
-      <ion-title>Bestellungen</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-menu-button slot="start"></ion-menu-button>
+    <ion-title>Bestellungen</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="filterSelectAufnehmer()">
+        <ion-icon name="people" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-
+    <ion-select [(ngModel)]="filter.aufnehmerId" style="display: none;">
+      <ion-select-option [value]="null">Alle</ion-select-option>
+      <ion-select-option *ngFor="let aufnehmer of data.aufnehmer" [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
+    </ion-select>
+  <ion-list>
+    <ion-item 
+      *ngFor="let bestellung of bestellungen"
+      [hidden]="(filter.aufnehmerId != null && filter.aufnehmerId != bestellung.aufnehmer.id)"
+      >
+        <ion-label>
+          <h2>{{ bestellung?.tisch.reihe }} {{ bestellung?.tisch.nummer }}</h2>
+          <p>Datum: <strong>{{ bestellung?.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bestellung?.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</strong></p>
+          <p>Summe: <strong>{{ bestellung?.bestellung_summe | euroPreis }}</strong></p>
+        </ion-label>
+        <ion-note slot="end">{{ bestellung?.aufnehmer.vorname }} {{ bestellung?.aufnehmer.nachname }}</ion-note>
+    </ion-item>
+  </ion-list>
 </ion-content>

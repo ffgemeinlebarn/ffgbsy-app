@@ -6,6 +6,7 @@ import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { Geraet } from 'src/app/classes/geraet.class';
 import { SettingsService } from '../settings/settings.service';
+import { FrontendService } from '../frontend/frontend.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class BestellungenHandlerService {
   public current: Bestellung = null;
   public status: string = null;
 
-  constructor(private http: HttpClient, private settings: SettingsService) { }
+  constructor(private http: HttpClient, private settings: SettingsService, private frontend: FrontendService) { }
 
   public newCurrent(){
     if (this.current === null){
@@ -65,12 +66,14 @@ export class BestellungenHandlerService {
     }
     form_data.append("positionen", JSON.stringify(positionen));
 
+    this.frontend.showToast("Bestellung erfolgreich gesendet!", 1000);
+    this.clearCurrent();
+
     this.http.post<any>(this.settings.api.url + '/bestellungen', form_data).subscribe(data => {
       console.log("POST Return", data);
-      this.clearCurrent();
     },
     err => {
       console.log("Error occured: ", err);
-    }); 
+    });
   }
 }

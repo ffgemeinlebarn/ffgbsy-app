@@ -10,7 +10,7 @@
     padding: 1px;
 
     &__inner{
-        background-color: #cccccc;
+        background-color: var(--ion-color-primary);
         width: 100%;
         height: 100%;
         box-sizing: border-box;
@@ -26,6 +26,8 @@
             height: 100%;
             margin: 0px;
             --box-shadow: 0px;
+            --background: transparent;
+            --background-hover: rgba(0,0,0,0.2);
 
             .button-inner{
                 text-transform: none;
