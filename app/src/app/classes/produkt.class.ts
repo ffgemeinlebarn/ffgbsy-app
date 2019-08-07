@@ -3,6 +3,7 @@ import { Eigenschaft } from "./eigenschaft.class";
 export class Produkt {
     id: number;
     name: string;
+    formal_name: string;
     einzahl: any;
     einheit: string;
     preis: any;
@@ -12,9 +13,10 @@ export class Produkt {
     eigenschaften: Array<Eigenschaft>;
     hash: string;
 
-    constructor(id, name, einzahl, einheit, preis, produktkategorien_id, drucker_id_level_2, sortierindex, eigenschaften) {
+    constructor(id, name, formal_name, einzahl, einheit, preis, produktkategorien_id, drucker_id_level_2, sortierindex, eigenschaften) {
         this.id = id;
         this.name = name;
+        this.formal_name = formal_name;
         this.einzahl = einzahl;
         this.einheit = einheit;
         this.preis = preis;

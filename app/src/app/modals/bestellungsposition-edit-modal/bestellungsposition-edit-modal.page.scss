@@ -2,9 +2,18 @@
     padding: 30px;
 }
 
-h1{
+h1.name{
     text-align: center;
-    padding: 30px 0px;
+    padding: 0px;
+    padding-top: 20px;
+    padding-bottom: 0px;
+}
+
+.formal_name{
+    color: #777777;
+    padding: 0px;
+    margin-bottom: 35px;
+    text-align: center;
 }
 
 .anzahl{
