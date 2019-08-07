@@ -58,6 +58,10 @@
 
     ion-alert {
         --max-width: 350px;
+
+        .alert-message{
+            white-space: pre-wrap;
+        }
     }
 }
 
