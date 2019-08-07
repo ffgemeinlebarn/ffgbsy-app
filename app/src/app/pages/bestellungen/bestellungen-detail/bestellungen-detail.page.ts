@@ -43,7 +43,7 @@ export class BestellungenDetailPage implements OnInit {
         this.frontend.hideLoadingSpinner();
         reject(err);
         console.log("Error occured: ", err);
-      }); 
+      });
 
     });
   }
