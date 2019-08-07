@@ -25,6 +25,7 @@ import { FrontendService } from './services/frontend/frontend.service';
 // Modals
 import { BestellungKontrollePageModule } from './modals/bestellung-kontrolle/bestellung-kontrolle.module';
 import { BestellungspositionEditModalPageModule } from './modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.module';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -47,7 +48,8 @@ import { BestellungspositionEditModalPageModule } from './modals/bestellungsposi
     SessionService,
     SettingsService,
     BestellungenHandlerService,
-    FrontendService
+    FrontendService,
+    AppVersion
   ],
   bootstrap: [AppComponent]
 })

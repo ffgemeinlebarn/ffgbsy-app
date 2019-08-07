@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-imprint',
@@ -7,9 +9,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ImprintPage implements OnInit {
 
-  constructor() { }
+  public appName = null;
+  public packageName = null;
+  public versionCode = null;
+  public versionNumber = null;
 
-  ngOnInit() {
+  constructor(private platform: Platform, private appVersion: AppVersion) {
+
+    if (platform.is('android') || platform.is('ios')){
+      platform.ready().then(() => {
+        this.appVersion.getAppName().then(res => this.appName = res );
+        this.appVersion.getPackageName().then(res => this.packageName = res );
+        this.appVersion.getVersionCode().then(res => this.versionCode = res );
+        this.appVersion.getVersionNumber().then(res => this.versionNumber = res );
+      });
+    }
   }
+
+  ngOnInit() { }
 
 }
