@@ -81,16 +81,3 @@
         }
     }
 }
-
-
-// Buttons in ion-item-divider
-
-:host ::ng-deep {
-
-    ion-item-divider{
-        ion-button[slot='end']{
-            margin-right: 5px;
-        }
-    }
-
-}

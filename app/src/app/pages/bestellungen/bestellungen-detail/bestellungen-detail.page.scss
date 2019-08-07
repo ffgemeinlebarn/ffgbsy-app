@@ -1,0 +1,18 @@
+:host ::ng-deep {
+
+    // Buttons in ion-item-divider
+    ion-item-divider{
+        ion-button[slot='end']{
+            margin-right: 5px;
+        }
+    }
+
+    // Icons slot start
+    ion-item{
+        ion-icon[slot="start"] {
+            margin-right: 16px;
+        }
+    }
+    
+
+}
