@@ -38,8 +38,6 @@ export class BestellungenPage implements OnInit {
       
       this.frontend.showLoadingSpinner();
       this.http.get<Bestellung[]>(this.settings.api.url + '/bestellungen').subscribe(bestellungen => {
-
-        console.log(bestellungen);
         this.bestellungen = bestellungen;
         this.frontend.hideLoadingSpinner();
         resolve();

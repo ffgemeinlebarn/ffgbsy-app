@@ -8,8 +8,9 @@ const routes: Routes = [
   { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
   { path: 'neue-bestellung', loadChildren: './pages/bestellungen/neue-bestellung/neue-bestellung.module#NeueBestellungPageModule' },
   { path: 'bestellungen', loadChildren: './pages/bestellungen/bestellungen/bestellungen.module#BestellungenPageModule' },
+  { path: 'bestellungen/:id', loadChildren: './pages/bestellungen/bestellungen-detail/bestellungen-detail.module#BestellungenDetailPageModule' },
   { path: 'systemstatus', loadChildren: './pages/systemstatus/systemstatus.module#SystemstatusPageModule' },
-  { path: 'imprint', loadChildren: './pages/imprint/imprint.module#ImprintPageModule' },  { path: 'bestellungen-detail', loadChildren: './pages/bestellungen/bestellungen-detail/bestellungen-detail.module#BestellungenDetailPageModule' },
+  { path: 'imprint', loadChildren: './pages/imprint/imprint.module#ImprintPageModule' },
 
 
 ];

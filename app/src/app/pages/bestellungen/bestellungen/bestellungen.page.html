@@ -16,9 +16,10 @@
       <ion-select-option *ngFor="let aufnehmer of data.aufnehmer" [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
     </ion-select>
   <ion-list>
-    <ion-item 
+    <ion-item detail
       *ngFor="let bestellung of bestellungen"
       [hidden]="(filter.aufnehmerId != null && filter.aufnehmerId != bestellung.aufnehmer.id)"
+      [routerLink]="['/bestellungen', bestellung.id]"
       >
         <ion-label>
           <h2>{{ bestellung?.tisch.reihe }} {{ bestellung?.tisch.nummer }}</h2>
