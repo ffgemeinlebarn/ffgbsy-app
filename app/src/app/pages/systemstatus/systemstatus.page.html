@@ -6,5 +6,48 @@
   </ion-header>
 
 <ion-content>
-  <ion-button [routerLink]="['/init']">Initialisierung (App Neustart)</ion-button>
+  <ion-list>
+    <ion-item (click)="systemstatusAbrufen()">
+      <ion-label>
+        <h3>Systemstatus abrufen</h3>
+        <p>Drücken, um den aktuellen Systemstatus abzurufen</p>
+      </ion-label>
+      <ion-icon name="refresh" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  <ion-list [hidden]="!systemstatus">
+    <ion-item-divider>
+      <ion-label>Schnittstelle und Server</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-icon [hidden]="systemstatus?.api.connected != null" name="radio-button-off" slot="start" color="light"></ion-icon>
+      <ion-icon [hidden]="systemstatus?.api.connected != true" name="checkmark-circle" slot="start" color="success"></ion-icon>
+      <ion-icon [hidden]="systemstatus?.api.connected != false" name="alert" slot="start" color="danger"></ion-icon>
+      <ion-label>API</ion-label>
+    </ion-item>
+
+    <ion-item-divider>
+      <ion-label>Drucker</ion-label>
+    </ion-item-divider>
+    <ion-item *ngFor="let drucker of systemstatus?.drucker">
+      <ion-icon [hidden]="drucker.connected != null" name="radio-button-off" slot="start" color="light"></ion-icon>
+      <ion-icon [hidden]="drucker.connected != true" name="checkmark-circle" slot="start" color="success"></ion-icon>
+      <ion-icon [hidden]="drucker.connected != false" name="alert" slot="start" color="danger"></ion-icon>
+      <ion-label>{{ drucker.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+  
+  <ion-list>
+    <ion-item-divider>
+      <ion-label>Funktionen</ion-label>
+    </ion-item-divider>
+    <ion-item [routerLink]="['/init']">
+      <ion-label>
+        <h3>App Initialisierung</h3>
+        <p>Möglichkeit zur Synchronisierung der Daten</p>
+      </ion-label>
+      <ion-icon name="arrow-forward" slot="end"></ion-icon>
+    </ion-item>
+  </ion-list>
 </ion-content>
