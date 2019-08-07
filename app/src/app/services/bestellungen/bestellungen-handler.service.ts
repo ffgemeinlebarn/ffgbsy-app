@@ -47,6 +47,8 @@ export class BestellungenHandlerService {
 
   public sendCurrentBestellung(){
 
+    this.frontend.showLoadingSpinner('send');
+
     let positionen = [];
     let form_data = new FormData();
 
@@ -66,13 +68,39 @@ export class BestellungenHandlerService {
     }
     form_data.append("positionen", JSON.stringify(positionen));
 
-    this.frontend.showToast("Bestellung erfolgreich gesendet!", 1000);
-    this.clearCurrent();
-
     this.http.post<any>(this.settings.api.url + '/bestellungen', form_data).subscribe(data => {
-      console.log("POST Return", data);
+
+      // Bestellung erfolgreich angelegt?
+      if (data.success){
+
+        this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
+        this.clearCurrent();
+
+        this.http.post<any>(this.settings.api.url + '/bestellungen/' + data.bestellungen_id + '/druck', {}).subscribe(data => {
+
+          this.frontend.hideLoadingSpinner();
+    
+          if (data.all_success){
+            this.frontend.showToast("Alle Bons wurden erfolgreich gedruckt!", 2000);
+          }else{
+            this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten nicht alle Bons gedruckt werden!\n\nWeitere Details unter dem Menüpunkt "Bestellungen".');
+          }
+    
+        },
+        err => {
+          this.frontend.hideLoadingSpinner();
+          this.frontend.showOkAlert('HTTP Fehler', 'Name: ' + err.name + '\n\nStatus: ' + err.status + '/' + err.statusText + '\n\nNachricht: ' + err.message);
+          console.log("Error occured: ", err);
+        });
+      }else{
+        this.frontend.hideLoadingSpinner();
+        this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', 'Die Bestellung wurde nicht angelegt!\n\n' + data.message);
+      }
+
     },
     err => {
+      this.frontend.hideLoadingSpinner();
+      this.frontend.showOkAlert('HTTP Fehler', 'Name: ' + err.name + '\n\nStatus: ' + err.status + '/' + err.statusText + '\n\nNachricht: ' + err.message);
       console.log("Error occured: ", err);
     });
   }
