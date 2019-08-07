@@ -11,12 +11,12 @@
 </ion-header>
 
 <ion-content>
-    <ion-select [(ngModel)]="filter.aufnehmerId" style="display: none;">
-      <ion-select-option [value]="null">Alle</ion-select-option>
-      <ion-select-option *ngFor="let aufnehmer of data.aufnehmer" [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
-    </ion-select>
+  <ion-select [interfaceOptions]="{header: 'Aufnehmer'}" [(ngModel)]="filter.aufnehmerId" style="display: none;">
+    <ion-select-option [value]="null">Alle</ion-select-option>
+    <ion-select-option *ngFor="let aufnehmer of data.aufnehmer" [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
+  </ion-select>
   <ion-list>
-    <ion-item detail
+    <ion-item
       *ngFor="let bestellung of bestellungen"
       [hidden]="(filter.aufnehmerId != null && filter.aufnehmerId != bestellung.aufnehmer.id)"
       [routerLink]="['/bestellungen', bestellung.id]"
@@ -27,6 +27,7 @@
           <p>Summe: <strong>{{ bestellung?.bestellung_summe | euroPreis }}</strong></p>
         </ion-label>
         <ion-note slot="end">{{ bestellung?.aufnehmer.vorname }} {{ bestellung?.aufnehmer.nachname }}</ion-note>
+        <!--<ion-icon slot="end"name="arrow-forward"></ion-icon>-->
     </ion-item>
   </ion-list>
 </ion-content>

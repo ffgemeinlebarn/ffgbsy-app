@@ -20,7 +20,7 @@
       <ion-item>
         <ion-label>Gerät</ion-label>
         <ion-select [(ngModel)]="settings.locale.diesesGeraetId">
-          <ion-select-option *ngFor="let geraet of data.geraete" [value]="geraet.id">{{ geraet.hersteller }}{{ geraet.type }} ({{ geraet.ip }})</ion-select-option>
+          <ion-select-option *ngFor="let geraet of data.geraete" [value]="geraet.id">{{ geraet.hersteller }} {{ geraet.type }} ({{ geraet.ip }})</ion-select-option>
         </ion-select>
       </ion-item>
   </ion-list>

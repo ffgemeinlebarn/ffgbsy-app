@@ -5,10 +5,23 @@
       <ion-spinner [hidden]="!datenSynchronisierungLaeuft" name="lines-small"></ion-spinner>
       <p class="message">{{ messageLineOne }}<br />{{ messageLineTwo }}</p>
       <ion-button [hidden]="datenSynchronisiert" (click)="datenSynchronisierungStarten()">Synchronisierung starten</ion-button>
-      <ion-button [hidden]="!datenSynchronisiert" [routerLink]="['/select-aufnehmer']">
+      <ion-button [hidden]="!datenSynchronisiert || !lokalesGeraetReady" [routerLink]="['/select-aufnehmer']">
         <ion-label>Aufnehmer auswählen</ion-label>
         <ion-icon name="arrow-forward" slot="end"></ion-icon>
       </ion-button>
+      <ion-button [hidden]="!datenSynchronisiert || lokalesGeraetReady" (click)="openGeraeteSelect()" fill="outline">
+        <ion-label>Lokales Gerät konfigurieren</ion-label>
+        <ion-icon name="settings" slot="end"></ion-icon>
+      </ion-button>
+
+      <p class="geraet-message" [hidden]="!datenSynchronisiert">{{ geraet_message }}</p>
+      <ion-button class="geraet-refresh" [hidden]="!datenSynchronisiert || lokalesGeraetReady" shape="round" fill="outline" color="light" (click)="refrehLocalGeraet()">
+        <ion-icon name="refresh" slot="icon-only"></ion-icon>
+      </ion-button>
     </ion-row>
   </ion-grid>
+
+  <ion-select [interfaceOptions]="{header: 'Geräte'}" [(ngModel)]="settings.locale.diesesGeraetId" style="display: none;" (ionChange)="settings.saveLocal(); refrehLocalGeraet();">
+    <ion-select-option *ngFor="let geraet of data.geraete" [value]="geraet.id">{{ geraet.hersteller }} {{ geraet.type }} ({{ geraet.ip }})</ion-select-option>
+  </ion-select>
 </ion-content>

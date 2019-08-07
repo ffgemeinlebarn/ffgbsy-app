@@ -61,27 +61,24 @@ export class DataService implements Daten{
 
   getGeraetById(id: number){
     for(let g of this.geraete){
-      if (g.id == id){ return g }
-      return null;
+      if (g.id == id){ return g; }
     }
+    return null;
   }
 
   getProduktById(id: number){
     for(let p of this.produkte){
-      if (p.id == id){ return p }
-      return null;
+      if (p.id == id){ return p; }
     }
+    return null;
   }
 
   getProduktByIds(ids: Array<number>){
     let arr: Array<Produkt>;
     for(let p of this.produkte){
       if (ids.indexOf(p.id)){ arr.push(p) }
-      return arr;
     }
+    return arr;
   }
-
-    
-
 
 }

@@ -14,7 +14,7 @@
 <ion-content class="center" padding="true" [hidden]="bestellungsHandler.current !== null">
   <ion-grid class="center">
     <ion-row class="center" justify-content-center align-items-center>
-      <ion-button (click)="starteTischAuswahl()">Neue Bestellung starten</ion-button>
+      <ion-button (click)="starteTischAuswahl()" class="neue-bestellung">Neue Bestellung starten</ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>
@@ -82,29 +82,29 @@
 </ion-content>
 
 <ion-footer class="status-current-bestellpositionen" [hidden]="bestellungsHandler.status != 'current-bestellpositionen'">
-  <ion-row>
-      <ion-col size="5" class="footer-left">
-        <div class="summe">
-          <span class="summe__euro">€</span>
-          <span class="summe__betrag">{{ bestellungsHandler.current?.calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
-        </div>
-        <div class="submit">
-          <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" [disabled]="bestellungsHandler.current?.bestellpositionen.length == 0">
-            <ion-label>Abschluss </ion-label>
-            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
-          </ion-button>
-        </div>
-      </ion-col>
-      <ion-col size="7" class="footer-right">
-        <div class="kachelwand">
-          <div class="kachel produktkategorie-kachel" *ngFor="let produktkategorie of data.produktkategorien">
-            <div class="kachel__inner" [ngStyle]="{'background-color': produktkategorie.color}">
-              <ion-button text-wrap text-normal expand="full" (click)="changeFilterProduktkategorie(produktkategorie)">
-                <span class="button-inner">{{produktkategorie.name}}</span>
-              </ion-button>
-            </div>
+  <div class="footer">
+    <div class="footer-left">
+      <div class="summe">
+        <span class="summe__euro">€</span>
+        <span class="summe__betrag">{{ bestellungsHandler.current?.calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
+      </div>
+      <div class="submit">
+        <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" [disabled]="bestellungsHandler.current?.bestellpositionen.length == 0">
+          <ion-label>Abschluss </ion-label>
+          <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="kachelwand">
+        <div class="kachel produktkategorie-kachel" *ngFor="let produktkategorie of data.produktkategorien">
+          <div class="kachel__inner" [ngStyle]="{'background-color': produktkategorie.color}">
+            <ion-button text-wrap text-normal expand="full" (click)="changeFilterProduktkategorie(produktkategorie)">
+              <span class="button-inner">{{produktkategorie.name}}</span>
+            </ion-button>
           </div>
         </div>
-      </ion-col>
-    </ion-row>
+      </div>
+    </div>
+  </div>
 </ion-footer>

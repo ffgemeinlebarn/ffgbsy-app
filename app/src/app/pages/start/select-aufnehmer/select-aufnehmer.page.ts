@@ -22,8 +22,8 @@ export class SelectAufnehmerPage implements OnInit {
 
   constructor(private data: DataService, private session: SessionService, private settings: SettingsService, private router: Router) {
 
-    this.selectedAufnehmer = data.aufnehmer[0];
-    this.geraet = data.getGeraetById(this.settings.locale.diesesGeraetId);
+    this.selectedAufnehmer = this.data.aufnehmer[0];
+    this.geraet = this.data.getGeraetById(this.settings.locale.diesesGeraetId);
   }
 
   readySelectedAufnehmer(){

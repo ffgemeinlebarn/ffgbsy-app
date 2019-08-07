@@ -81,3 +81,12 @@
         }
     }
 }
+
+// Ion-Select Alert
+
+:host ::ng-deep {
+    .single-select-alert{
+        --max-width: 400px;
+        --min-width: 350px;
+    }
+}

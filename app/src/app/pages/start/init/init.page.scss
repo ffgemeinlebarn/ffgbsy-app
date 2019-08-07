@@ -4,8 +4,21 @@
 
 .message{
     margin-top: 20px;
-    margin-bottom: 100px;
+    margin-bottom: 80px;
     color: #777777;
     font-size: 1em;
     text-align: center;
+}
+
+.geraet-refresh{
+    --padding-start: 4px;
+    --padding-end: 4px;
+    margin-bottom: 20px;
+}
+
+.geraet-message{
+    margin-top: 150px;
+    margin-bottom: 20px;
+    font-size: 0.8em;
+    color: #aaaaaa;
 }
