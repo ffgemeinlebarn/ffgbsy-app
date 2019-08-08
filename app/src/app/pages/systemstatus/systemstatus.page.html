@@ -1,12 +1,36 @@
 <ion-header>
     <ion-toolbar>
       <ion-menu-button slot="start"></ion-menu-button>
-      <ion-title>Systemstatus</ion-title>
+      <ion-title>Systemstatus<span [hidden]="!systemstatusDateTime"> von {{ systemstatusDateTime | date: 'dd.MM.yyyy HH:mm:ss' }} Uhr</span></ion-title>
     </ion-toolbar>
   </ion-header>
 
 <ion-content>
+
   <ion-list>
+    <ion-item-divider>
+      <ion-label>Lokale Daten</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <ion-label>
+        <h3 [hidden]="data.version == 0">{{ data.version }} (Stand: {{ data.version*1000 | date: 'dd.MM.yyyy HH:mm:ss' }} Uhr)</h3>
+        <h3 [hidden]="data.version != 0">Noch kein lokaler Datensatz am Gerät</h3>
+        <p>Version</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+  
+  <ion-list>
+    <ion-item-divider>
+      <ion-label>Funktionen</ion-label>
+    </ion-item-divider>
+    <ion-item [routerLink]="['/init']">
+      <ion-label>
+        <h3>App Initialisierung</h3>
+        <p>Möglichkeit zur Synchronisierung der Daten</p>
+      </ion-label>
+      <ion-icon name="arrow-forward" slot="end"></ion-icon>
+    </ion-item>
     <ion-item (click)="systemstatusAbrufen()">
       <ion-label>
         <h3>Systemstatus abrufen</h3>
@@ -36,18 +60,17 @@
       <ion-icon [hidden]="drucker.connected != false" name="alert" slot="start" color="danger"></ion-icon>
       <ion-label>{{ drucker.name }}</ion-label>
     </ion-item>
-  </ion-list>
-  
-  <ion-list>
+
     <ion-item-divider>
-      <ion-label>Funktionen</ion-label>
+      <ion-label>Verfügbarkeit von Grundprodukten</ion-label>
     </ion-item-divider>
-    <ion-item [routerLink]="['/init']">
+    <ion-item *ngFor="let grundprodukt of systemstatus?.grundprodukte">
+      <ion-icon [hidden]="grundprodukt.bestand <= 0 && grundprodukt.bestand != null" name="checkmark-circle" slot="start" color="success"></ion-icon>
+      <ion-icon [hidden]="!(grundprodukt.bestand <= 0 && grundprodukt.bestand != null)" name="alert" slot="start" color="danger"></ion-icon>
       <ion-label>
-        <h3>App Initialisierung</h3>
-        <p>Möglichkeit zur Synchronisierung der Daten</p>
+        <h3>{{ grundprodukt.name }}</h3>
+        <p>{{ grundprodukt.bestand == null ? 'Unlimitiert' : grundprodukt.bestand + ' ' + grundprodukt.einheit }}</p>
       </ion-label>
-      <ion-icon name="arrow-forward" slot="end"></ion-icon>
     </ion-item>
   </ion-list>
 </ion-content>

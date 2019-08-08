@@ -15,19 +15,24 @@ import { HttpClient } from '@angular/common/http';
 export class SystemstatusPage implements OnInit {
 
   public systemstatus: any = null;
+  public systemstatusDateTime: Date = null;
 
   constructor(
     private http: HttpClient,
     private settings: SettingsService, 
-    private frontend: FrontendService) { }
+    private frontend: FrontendService,
+    private data: DataService) { }
 
   ngOnInit() { }
 
   systemstatusAbrufen(){
+
+    let startingDateTime = new Date();
+
     return new Promise((resolve, reject) => {
-      
       this.frontend.showLoadingSpinner();
       this.http.get<any>(this.settings.api.url + '/systemstatus').subscribe(systemstatus => {
+        this.systemstatusDateTime = startingDateTime;
         this.systemstatus = systemstatus;
         this.frontend.hideLoadingSpinner();
         resolve();
