@@ -94,7 +94,7 @@ export class BestellungenHandlerService {
         });
       }else{
         this.frontend.hideLoadingSpinner();
-        this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', 'Die Bestellung wurde nicht angelegt!\n\n' + data.message);
+        this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', data.message);
       }
 
     },
