@@ -66,8 +66,9 @@
       </div>
     </div>
     <div class="content-right">
-      <ion-list>
-        <ion-item button *ngFor="let produkt of filterProduktkategorie.produkte" (click)="addBestellpositionToCurrentBestellung(produkt, 'standard', $event)">
+      <ion-list *ngFor="let produkteinteilung of filterProduktkategorie.produkteinteilungen">
+        <ion-item-divider>{{ produkteinteilung.name }}</ion-item-divider>
+        <ion-item button *ngFor="let produkt of produkteinteilung.produkte" (click)="addBestellpositionToCurrentBestellung(produkt, 'standard', $event)">
           <ion-label text-wrap>
             <h2>{{ produkt?.name }}</h2>
             <p>{{ produkt?.preis | euroPreis }}</p>
