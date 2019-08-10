@@ -22,3 +22,19 @@
     font-size: 0.8em;
     color: #aaaaaa;
 }
+
+.button-systemstatus-abrufen,
+.button-erneute-synchronisation{
+    position: fixed;
+    right: 20px;
+    --ion-color-primary: #ccc;
+    font-size: 0.8em;
+}
+
+    .button-systemstatus-abrufen{
+        bottom: 16px;
+    }
+
+    .button-erneute-synchronisation{
+        bottom: 60px;
+    }

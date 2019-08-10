@@ -90,3 +90,20 @@
         --min-width: 350px;
     }
 }
+
+
+// Systemcheck auf Init Page
+
+:host ::ng-deep {
+    .systemstatus-success{
+        .action-sheet-icon{
+            color: var(--ion-color-success);
+        }
+    }
+
+    .systemstatus-danger{
+        .action-sheet-icon{
+            color: var(--ion-color-danger);
+        }
+    }
+}

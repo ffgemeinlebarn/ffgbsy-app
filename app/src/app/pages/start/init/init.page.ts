@@ -10,7 +10,9 @@ import { Geraet } from 'src/app/classes/geraet.class';
 
 import { Storage } from '@ionic/storage';
 import { SettingsService } from 'src/app/services/settings/settings.service';
-import { IonSelect } from '@ionic/angular';
+import { IonSelect, ActionSheetController } from '@ionic/angular';
+import { FrontendService } from 'src/app/services/frontend/frontend.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-init',
@@ -28,7 +30,9 @@ export class InitPage implements OnInit {
   private geraet: any = null;
   private geraet_message: string = '';
 
-  constructor(private data: DataService, private session: SessionService, private settings: SettingsService) {
+  private systemstatus: any = [];
+
+  constructor(private data: DataService, private session: SessionService, private settings: SettingsService, private frontend: FrontendService, private http: HttpClient,public actionSheetController: ActionSheetController) {
     this.messageLineOne = "Warte auf Synchronisierung der Daten.";
     this.messageLineTwo = "";
   }
@@ -75,6 +79,47 @@ export class InitPage implements OnInit {
       this.geraet_message = 'Dieses lokale Gerät ist noch keinem Gerät im System zugewiesen!';
     }
 
+  }
+
+  systemstatusAbrufen(){
+
+    let startingDateTime = new Date();
+      this.frontend.showLoadingSpinner(null, 'Prüfe Systemstatus');
+      this.http.get<any>(this.settings.api.url + '/systemstatus').subscribe(systemstatus => {
+        this.frontend.hideLoadingSpinner();
+        this.systemstatus = [
+          {
+            text: 'API',
+            icon: systemstatus.api.connected ? 'checkmark-circle' : 'alert',
+            cssClass: systemstatus.api.connected ? 'systemstatus-success' : 'systemstatus-danger',
+            handler: () => { return false; }
+          }
+        ]
+
+        for(let i=0;i<systemstatus.drucker.length;i++){
+
+          this.systemstatus.push({
+            text: 'Drucker ' + systemstatus.drucker[i].name,
+            icon: systemstatus.drucker[i].connected ? 'checkmark-circle' : 'alert',
+            cssClass: systemstatus.drucker[i].connected ? 'systemstatus-success' : 'systemstatus-danger',
+            handler: () => { return false; }
+          });
+        }
+
+        this.showSystemstatus();
+      },
+      err => {
+        this.frontend.hideLoadingSpinner();
+        console.log("Error occured: ", err);
+      });
+  }
+
+  async showSystemstatus() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Systemstatus Kurzbericht',
+      buttons: this.systemstatus
+    });
+    await actionSheet.present();
   }
 
   @ViewChild(IonSelect, {static: false}) select: IonSelect;
