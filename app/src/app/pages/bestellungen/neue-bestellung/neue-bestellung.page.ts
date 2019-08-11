@@ -72,8 +72,15 @@ export class NeueBestellungPage implements OnInit {
       let added: boolean = false;
   
       if (form == 'standard'){
+
+        added = false;
+
         for (let bp of this.bestellungsHandler.neubestellung.bestellung.bestellpositionen){
-          if (bp.produkt.id == produkt.id){
+          if (
+            bp.produkt.id == produkt.id &&
+            bp.display.eigenschaften.mit.length == 0 &&  // <= nur unmodifiziertes Produkt automatisch hochzählen
+            bp.display.eigenschaften.ohne.length == 0
+          ){
             bp.anzahl++;
             added = true;
             break;
