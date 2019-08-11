@@ -10,6 +10,7 @@ import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { BestellungspositionEditModalPage } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.page';
 import { BestellungKontrollePage } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle.page';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
+import { SettingsService } from 'src/app/services/settings/settings.service';
 
 @Component({
   selector: 'app-neue-bestellung',
@@ -18,15 +19,16 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 })
 export class NeueBestellungPage implements OnInit {
 
-  private filterTischkategorieId: number = null;
-  private filterProduktkategorie: Produktkategorie = null;
+  public filterTischkategorieId: number = null;
+  public filterProduktkategorie: Produktkategorie = null;
 
   constructor(
-    private data: DataService, 
-    private bestellungsHandler: BestellungenHandlerService, 
-    private session: SessionService, 
-    private modalController: ModalController,
-    private frontend: FrontendService
+    public bestellungsHandler: BestellungenHandlerService,
+    public data: DataService,
+    public session: SessionService,
+    public settings: SettingsService,
+    public frontend: FrontendService,
+    private modalController: ModalController
   ) {
     this.filterTischkategorieId = this.data.tischkategorien[0].id;
     this.filterProduktkategorie = this.data.produktkategorien[0];

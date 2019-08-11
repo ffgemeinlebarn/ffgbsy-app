@@ -6,6 +6,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { SessionService } from 'src/app/services/session/session.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { ModalController, IonSelect } from '@ionic/angular';
+import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 
 @Component({
   selector: 'app-bestellungen',
@@ -21,11 +22,12 @@ export class BestellungenPage implements OnInit {
   public anyFilterBestellung: boolean = false;
 
   constructor(
+    public bestellungsHandler: BestellungenHandlerService,
+    public data: DataService,
+    public session: SessionService,
+    public settings: SettingsService,
+    public frontend: FrontendService,
     private http: HttpClient, 
-    private session: SessionService, 
-    private data: DataService,
-    private settings: SettingsService, 
-    private frontend: FrontendService,
     private modalController: ModalController
   ) {
     this.filter.aufnehmerId = this.session.aufnehmer.id;

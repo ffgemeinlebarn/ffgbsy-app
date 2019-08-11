@@ -11,6 +11,7 @@ import { SessionService } from './services/session/session.service';
 import { SettingsService } from './services/settings/settings.service';
 import { BestellungenHandlerService } from './services/bestellungen/bestellungen-handler.service';
 import { FrontendService } from './services/frontend/frontend.service';
+import { DataService } from './services/data/data.service';
 
 @Component({
   selector: 'app-root',
@@ -22,10 +23,11 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private session: SessionService,
-    private settings: SettingsService,
-    private bestellungen: BestellungenHandlerService,
-    private frontend: FrontendService
+    public bestellungsHandler: BestellungenHandlerService,
+    public data: DataService,
+    public session: SessionService,
+    public settings: SettingsService,
+    public frontend: FrontendService
   ) {
     this.initializeApp();
   }

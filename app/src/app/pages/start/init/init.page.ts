@@ -13,6 +13,7 @@ import { SettingsService } from 'src/app/services/settings/settings.service';
 import { IonSelect, ActionSheetController } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { HttpClient } from '@angular/common/http';
+import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 
 @Component({
   selector: 'app-init',
@@ -21,18 +22,26 @@ import { HttpClient } from '@angular/common/http';
 })
 export class InitPage implements OnInit {
 
-  private messageLineOne: string = "";
-  private messageLineTwo: string = "";
-  private datenSynchronisiert: boolean = false;
-  private datenSynchronisierungLaeuft: boolean = false;
-  private lokalesGeraetReady: boolean = false;
+  public messageLineOne: string = "";
+  public messageLineTwo: string = "";
+  public datenSynchronisiert: boolean = false;
+  public datenSynchronisierungLaeuft: boolean = false;
+  public lokalesGeraetReady: boolean = false;
 
-  private geraet: any = null;
-  private geraet_message: string = '';
+  public geraet: any = null;
+  public geraet_message: string = '';
 
-  private systemstatus: any = [];
+  public systemstatus: any = [];
 
-  constructor(private data: DataService, private session: SessionService, private settings: SettingsService, private frontend: FrontendService, private http: HttpClient,public actionSheetController: ActionSheetController) {
+  constructor(
+    private http: HttpClient,
+    public actionSheetController: ActionSheetController,
+    public bestellungsHandler: BestellungenHandlerService,
+    public data: DataService,
+    public session: SessionService,
+    public settings: SettingsService,
+    public frontend: FrontendService
+  ) {
     this.messageLineOne = "Warte auf Synchronisierung der Daten.";
     this.messageLineTwo = "";
   }

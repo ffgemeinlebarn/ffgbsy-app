@@ -19,9 +19,9 @@ export class SystemstatusPage implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private settings: SettingsService, 
-    private frontend: FrontendService,
-    private data: DataService) { }
+    public settings: SettingsService, 
+    public frontend: FrontendService,
+    public data: DataService) { }
 
   ngOnInit() { }
 
