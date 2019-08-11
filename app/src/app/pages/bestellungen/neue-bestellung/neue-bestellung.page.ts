@@ -39,15 +39,15 @@ export class NeueBestellungPage implements OnInit {
   *******************************************************************************/
 
   starteTischAuswahl(){
-   this.bestellungsHandler.newCurrent();
-   this.bestellungsHandler.addAufnehmerToCurrent(this.session.aufnehmer);
-   this.bestellungsHandler.addGeraetToCurrent(this.session.geraet);
-   this.bestellungsHandler.status = 'current-tischauswahl';
+   this.bestellungsHandler.newNeubestellung();
+   this.bestellungsHandler.addAufnehmerToNeubestellung(this.session.aufnehmer);
+   this.bestellungsHandler.addGeraetToNeubestellung(this.session.geraet);
+   this.bestellungsHandler.neubestellung.status = 'tischauswahl';
   }
 
   selectTisch(tisch: Tisch){
-    this.bestellungsHandler.addTischToCurrent(tisch); 
-    this.bestellungsHandler.status = 'current-bestellpositionen';
+    this.bestellungsHandler.addTischToNeubestellung(tisch); 
+    this.bestellungsHandler.neubestellung.status = 'bestellpositionen';
   }
 
   changeFilterTischkategorieId(tischkategorie_id: number){
@@ -63,7 +63,7 @@ export class NeueBestellungPage implements OnInit {
     this.filterProduktkategorie = produktkategorie;
   }
 
-  addBestellpositionToCurrentBestellung(produkt: Produkt, form: string, event: any){
+  addBestellposition(produkt: Produkt, form: string, event: any){
 
       // Verhindert dass ein Extra-Einfügen eine doppeltes Clicken des wrapper-Elements darunter verursacht
       event.stopPropagation();
@@ -72,7 +72,7 @@ export class NeueBestellungPage implements OnInit {
       let added: boolean = false;
   
       if (form == 'standard'){
-        for (let bp of this.bestellungsHandler.current.bestellpositionen){
+        for (let bp of this.bestellungsHandler.neubestellung.bestellung.bestellpositionen){
           if (bp.produkt.id == produkt.id){
             bp.anzahl++;
             added = true;
@@ -84,13 +84,13 @@ export class NeueBestellungPage implements OnInit {
       }
   
       if (!added){
-        this.bestellungsHandler.current.addBestellposition(new Bestellposition(produkt));
+        this.bestellungsHandler.neubestellung.bestellung.addBestellposition(new Bestellposition(produkt));
       }
   }
 
   async editBestellungsposition(bestellposition: Bestellposition, nonReverseIndex: number){
 
-    let reverseIndex = this.bestellungsHandler.current.bestellpositionen.length - 1 - nonReverseIndex;
+    let reverseIndex = this.bestellungsHandler.neubestellung.bestellung.bestellpositionen.length - 1 - nonReverseIndex;
 
     const modal = await this.modalController.create({
       component: BestellungspositionEditModalPage,
@@ -134,7 +134,7 @@ export class NeueBestellungPage implements OnInit {
     const modal = await this.modalController.create({
       component: BestellungKontrollePage,
       componentProps: {
-        bestellung: this.bestellungsHandler.current
+        bestellung: this.bestellungsHandler.neubestellung.bestellung
       },
       cssClass: 'classic-modal',
       showBackdrop: true,
@@ -145,7 +145,7 @@ export class NeueBestellungPage implements OnInit {
     modal.onDidDismiss()
       .then((data) => {
         if (data.data) {
-          this.bestellungsHandler.sendCurrentBestellung();
+          this.bestellungsHandler.sendNeubestellungBestellung();
         }
 
     });
@@ -161,13 +161,14 @@ export class NeueBestellungPage implements OnInit {
 
   // Cancel Bestellung
 
-  async askForCancelCurrentBestellung(){
+  async askForCancelBestellung(){
 
     await this.frontend.showJaNeinAlert(
       'Abbruch der Bestellung',
       'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.'
     ).then(yes => {
-      this.bestellungsHandler.clearCurrent();
+      this.bestellungsHandler.neubestellung.bestellung = null;
+      this.bestellungsHandler.neubestellung.status = null;
     }, no => {});
 
   }

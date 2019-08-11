@@ -72,7 +72,7 @@ export class SessionService {
 
   async askForEndSession() {
 
-    if (this.bestellungsHandler.current !== null) {
+    if (this.bestellungsHandler.neubestellung.bestellung !== null) {
 
       this.frontend.showOkAlert(
         'Fehler',

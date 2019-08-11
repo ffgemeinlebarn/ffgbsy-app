@@ -11,13 +11,13 @@
   <ion-list>
     <ion-item>
       <ion-label>
-        <h3>{{ bestellung?.id }}</h3>
+        <h3>{{ bestellungsHandler.ansichtsbestellung.bestellung?.id }}</h3>
         <p>ID</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h3>{{ bestellung?.tisch.reihe }} {{ bestellung?.tisch.nummer }}</h3>
+        <h3>{{ bestellungsHandler.ansichtsbestellung.bestellung?.tisch.reihe }} {{ bestellungsHandler.ansichtsbestellung.bestellung?.tisch.nummer }}</h3>
         <p>Tisch</p>
       </ion-label>
     </ion-item>
@@ -27,13 +27,13 @@
     </ion-item-divider>
     <ion-item>
       <ion-label>
-        <h3>{{ bestellung?.timestamp_begonnen | date: 'dd.MM.yyyy' }} um {{ bestellung?.timestamp_begonnen | date: 'HH:mm:ss' }} Uhr</h3>
+        <h3>{{ bestellungsHandler.ansichtsbestellung.bestellung?.timestamp_begonnen | date: 'dd.MM.yyyy' }} um {{ bestellungsHandler.ansichtsbestellung.bestellung?.timestamp_begonnen | date: 'HH:mm:ss' }} Uhr</h3>
         <p>Timestamp Bestellung begonnen</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h3>{{ bestellung?.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bestellung?.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</h3>
+        <h3>{{ bestellungsHandler.ansichtsbestellung.bestellung?.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bestellungsHandler.ansichtsbestellung.bestellung?.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</h3>
         <p>Timestamp Bestellung gesendet</p>
       </ion-label>
     </ion-item>
@@ -43,21 +43,38 @@
     </ion-item-divider>
     <ion-item>
       <ion-label>
-        <h3>{{ bestellung?.aufnehmer.vorname }} {{ bestellung?.aufnehmer.nachname }}</h3>
+        <h3>{{ bestellungsHandler.ansichtsbestellung.bestellung?.aufnehmer.vorname }} {{ bestellungsHandler.ansichtsbestellung.bestellung?.aufnehmer.nachname }}</h3>
         <p>Aufnehmer</p>
       </ion-label>
     </ion-item>
     <ion-item>
       <ion-label>
-        <h3>{{ bestellung?.geraet.hersteller }} {{ bestellung?.geraet.type }}</h3>
+        <h3>{{ bestellungsHandler.ansichtsbestellung.bestellung?.geraet.hersteller }} {{ bestellungsHandler.ansichtsbestellung.bestellung?.geraet.type }}</h3>
         <p>Gerät</p>
       </ion-label>
-      <ion-note slot="end">{{ bestellung?.geraet.ip }}</ion-note>
+      <ion-note slot="end">{{ bestellungsHandler.ansichtsbestellung.bestellung?.geraet.ip }}</ion-note>
     </ion-item>
 
     <ion-item-divider color="light">
       <ion-label>Bestellpositionen</ion-label>
     </ion-item-divider>
+    <ion-item-sliding *ngFor="let bestellposition of bestellungsHandler.ansichtsbestellung.bestellung?.bestellpositionen; let i = index">
+      <ion-item>
+        <ion-label>
+          <p>#{{ i+1 }}</p>
+          <h3>{{ bestellposition?.anzahl }} {{ bestellposition?.name }}</h3>
+        </ion-label>
+        <ion-badge [hidden]="bestellposition.storno_anzahl <= 0" color="danger">{{ bestellposition?.storno_anzahl }}x storniert!</ion-badge>
+        <ion-note slot="end">{{ bestellposition?.anzahl }}x {{ bestellposition?.preis | euroPreis }} = {{ bestellposition?.position_gesamtsumme | euroPreis }}</ion-note>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="askStornoAnzahl(bestellposition)" color="danger">
+          <ion-label>Stornieren</ion-label>
+          <ion-icon name="remove-circle" slot="end"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+    <!--
     <ion-item *ngFor="let bestellposition of bestellung?.bestellpositionen; let i = index">
       <ion-label>
         <p>#{{ i+1 }}</p>
@@ -65,9 +82,10 @@
       </ion-label>
       <ion-note slot="end">{{ bestellposition?.anzahl }}x {{ bestellposition?.preis | euroPreis }} = {{ bestellposition?.position_gesamtsumme | euroPreis }}</ion-note>
     </ion-item>
+    -->
     <ion-item color="primary">
       <ion-label>
-        <h3>{{ bestellung?.bestellung_summe | euroPreis}}</h3>
+        <h3>{{ bestellungsHandler.ansichtsbestellung.bestellung?.bestellung_summe | euroPreis}}</h3>
         <p>Summe</p>
       </ion-label>
     </ion-item>
@@ -76,10 +94,10 @@
       <ion-label>Bons</ion-label>
     </ion-item-divider>
 
-    <ion-item-group *ngFor="let bon of bestellung?.bons">
+    <ion-item-group *ngFor="let bon of bestellungsHandler.ansichtsbestellung.bestellung?.bons">
       <ion-item-divider>
         <ion-label>{{ bon.drucker_name }}</ion-label>
-        <ion-button slot="end"  size="small" shape="round" fill="outline" (click)="printBon(bestellung.id, bon.drucker_id)">
+        <ion-button slot="end"  size="small" shape="round" fill="outline" (click)="printBon(bon.drucker_id)">
           <ion-icon name="print" slot="icon-only"></ion-icon>
         </ion-button>
       </ion-item-divider>

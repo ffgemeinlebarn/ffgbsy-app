@@ -30,7 +30,7 @@ export class BestellungspositionEditModalPage implements OnInit {
   }
 
   removeBestellposition(){
-    this.bestellungsHandler.current.bestellpositionen.splice(this.index, 1);
+    this.bestellungsHandler.neubestellung.bestellung.bestellpositionen.splice(this.index, 1);
     this.modalCtrl.dismiss(this.bestellposition);
   }
 }

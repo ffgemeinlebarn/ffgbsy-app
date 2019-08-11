@@ -7,57 +7,69 @@ import { Tisch } from 'src/app/classes/tisch.class';
 import { Geraet } from 'src/app/classes/geraet.class';
 import { SettingsService } from '../settings/settings.service';
 import { FrontendService } from '../frontend/frontend.service';
+import { Bestellposition } from 'src/app/classes/bestellposition.class';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BestellungenHandlerService {
 
-  public current: Bestellung = null;
-  public status: string = null;
+  public neubestellung: any = {
+    bestellung: null,
+    status: null
+  };
+
+  public ansichtsbestellung: any = {
+    bestellung: null,
+    status: null
+  };
 
   constructor(private http: HttpClient, private settings: SettingsService, private frontend: FrontendService) { }
 
-  public newCurrent(){
-    if (this.current === null){
-      this.current = new Bestellung();
-      this.status = 'current-begonnen';
+  /*******************************************************************************
+  *** Neubestellung
+  *******************************************************************************/
+
+  public newNeubestellung(){
+    if (this.neubestellung.bestellung === null){
+      this.neubestellung.bestellung = new Bestellung();
+      this.neubestellung.status = 'begonnen';
       return true;
     }
 
     return false;
   }
 
-  public addTischToCurrent(tisch: Tisch){
-    this.current.tisch = tisch;
+  public addTischToNeubestellung(tisch: Tisch){
+    this.neubestellung.bestellung.tisch = tisch;
   }
   
-  public addAufnehmerToCurrent(aufnehmer: Aufnehmer){
-    this.current.aufnehmer = aufnehmer;
+  public addAufnehmerToNeubestellung(aufnehmer: Aufnehmer){
+    this.neubestellung.bestellung.aufnehmer = aufnehmer;
   }
 
-  public addGeraetToCurrent(geraet: Geraet){
-    this.current.geraet = geraet;
+  public addGeraetToNeubestellung(geraet: Geraet){
+    this.neubestellung.bestellung.geraet = geraet;
   }
 
-  public clearCurrent(){
-    this.current = null;
-    this.status = null;
+  public clearNeubestellung(){
+    this.neubestellung.bestellung = null;
+    this.neubestellung.status = null;
   }
 
-  public sendCurrentBestellung(){
+  public sendNeubestellungBestellung(){
 
     this.frontend.showLoadingSpinner('send');
 
     let positionen = [];
     let form_data = new FormData();
 
-    form_data.append("tische_id", this.current.tisch.id.toString());
-    form_data.append("timestamp_begonnen", this.current.timestamp_begonnen);
-    form_data.append("aufnehmer_id", this.current.aufnehmer.id.toString());
-    form_data.append("geraete_id", this.current.geraet.id.toString());
+    form_data.append("tische_id", this.neubestellung.bestellung.tisch.id.toString());
+    form_data.append("timestamp_begonnen", this.neubestellung.bestellung.timestamp_begonnen);
+    form_data.append("aufnehmer_id", this.neubestellung.bestellung.aufnehmer.id.toString());
+    form_data.append("geraete_id", this.neubestellung.bestellung.geraet.id.toString());
     
-    for (let bp of this.current.bestellpositionen){
+    for (let bp of this.neubestellung.bestellung.bestellpositionen){
 
       positionen.push({
         anzahl: bp.anzahl,
@@ -74,7 +86,7 @@ export class BestellungenHandlerService {
       if (data.success){
 
         this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
-        this.clearCurrent();
+        this.clearNeubestellung();
 
         this.http.post<any>(this.settings.api.url + '/bestellungen/' + data.bestellungen_id + '/druck', {}).subscribe(data => {
 
@@ -104,4 +116,64 @@ export class BestellungenHandlerService {
       console.log("Error occured: ", err);
     });
   }
+
+  /*******************************************************************************
+  *** Ansichtsbestellung
+  *******************************************************************************/
+
+  public loadAnsichtsbestellung(id){
+    return new Promise((resolve, reject) => {
+      
+      this.frontend.showLoadingSpinner();
+      this.http.get<Bestellung>(this.settings.api.url + '/bestellungen/' + id).subscribe(bestellung => {
+        this.frontend.hideLoadingSpinner();
+        this.ansichtsbestellung.bestellung = bestellung;
+        resolve(bestellung);
+      },
+      err => {
+        this.frontend.hideLoadingSpinner();
+        this.frontend.showOkAlert('HTTP Fehler', 'Name: ' + err.name + '\n\nStatus: ' + err.status + '/' + err.statusText + '\n\nNachricht: ' + err.message);
+        reject(err);
+      });
+
+    });
+  }
+
+  public clearAnsichtsbestellung(){
+    this.ansichtsbestellung.bestellung = null;
+    this.ansichtsbestellung.status = null;
+  }
+
+  public printAnsichtsbestellungBestellpositionBon(drucker_id){
+    return new Promise((resolve, reject) => {
+
+      this.frontend.showLoadingSpinner('send');
+      this.http.post<any>(this.settings.api.url + '/bestellungen/' + this.ansichtsbestellung.bestellung.id + '/druck/drucker/' + drucker_id, {}).subscribe(data => {
+        this.frontend.hideLoadingSpinner();
+        resolve(data);
+      },
+      err => {
+        this.frontend.hideLoadingSpinner();
+        this.frontend.showOkAlert('HTTP Fehler', 'Name: ' + err.name + '\n\nStatus: ' + err.status + '/' + err.statusText + '\n\nNachricht: ' + err.message);
+        reject(err);
+      });
+    });
+  }
+
+  public stornoAnsichtsbestellungBestellposition(bestellposition: Bestellposition, anzahl: number){
+    return new Promise((resolve, reject) => {
+      
+      this.frontend.showLoadingSpinner('send');
+      this.http.post<any>(this.settings.api.url + '/bestellungen/' + bestellposition.bestellungen_id + '/bestellpositionen/' + bestellposition.id + '/storno', {anzahl: anzahl}).subscribe(data => {
+        this.frontend.hideLoadingSpinner();
+        resolve(data);
+      },
+      err => {
+        this.frontend.hideLoadingSpinner();
+        this.frontend.showOkAlert('HTTP Fehler', 'Name: ' + err.name + '\n\nStatus: ' + err.status + '/' + err.statusText + '\n\nNachricht: ' + err.message);
+        reject(err);
+      });
+    });
+  }
+
 }

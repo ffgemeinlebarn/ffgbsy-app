@@ -3,7 +3,7 @@
     <ion-menu-button slot="start"></ion-menu-button>
     <ion-title>Neue Bestellung</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="askForCancelCurrentBestellung()" [hidden]="bestellungsHandler.current === null">
+      <ion-button (click)="askForCancelBestellung()" [hidden]="bestellungsHandler.neubestellung.bestellung === null">
         <ion-icon name="close-circle" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -11,7 +11,7 @@
 </ion-header>
 
 <!-- Keine aktuelle Bestellung im BestellungenService -->
-<ion-content class="center" padding="true" [hidden]="bestellungsHandler.current !== null">
+<ion-content class="center" padding="true" [hidden]="bestellungsHandler.neubestellung.bestellung !== null">
   <ion-grid class="center">
     <ion-row class="center" justify-content-center align-items-center>
       <ion-button (click)="starteTischAuswahl()" class="neue-bestellung">Neue Bestellung starten</ion-button>
@@ -20,7 +20,7 @@
 </ion-content>
 
 <!-- Tischauswahl -->
-<ion-content [hidden]="bestellungsHandler.status != 'current-tischauswahl'">
+<ion-content [hidden]="bestellungsHandler.neubestellung.status != 'tischauswahl'">
     <div class="kachelwand">
       <div *ngFor="let tisch of data.tische" [hidden]="tisch.tischkategorien_id != filterTischkategorieId" [ngClass]="{'kachel': true, 'tisch-kachel': true, 'tisch-kachel--big-1': (tisch.reihe.length > 10), 'tisch-kachel--big-2': (tisch.reihe.length > 15)}">
         <div class="kachel__inner">
@@ -32,7 +32,7 @@
     </div>
 </ion-content>
 
-<ion-footer [hidden]="bestellungsHandler.status != 'current-tischauswahl'">
+<ion-footer [hidden]="bestellungsHandler.neubestellung.status != 'tischauswahl'">
   <div class="kachelwand">
     <div class="kachel tischkategorie-kachel" *ngFor="let tischkategorie of data.tischkategorien">
       <div class="kachel__inner">
@@ -45,15 +45,15 @@
 </ion-footer>
 
 <!-- Bestellpositionen & Produktauswahl -->
-<ion-content class="status-current-bestellpositionen" [hidden]="bestellungsHandler.status != 'current-bestellpositionen'">
+<ion-content class="status-current-bestellpositionen" [hidden]="bestellungsHandler.neubestellung.status != 'bestellpositionen'">
   <div class="content">
     <div class="content-left">
       <div class="tisch">
-        <h1>{{ bestellungsHandler.current?.tisch?.reihe }} {{ bestellungsHandler.current?.tisch?.nummer }}</h1>
+        <h1>{{ bestellungsHandler.neubestellung.bestellung?.tisch?.reihe }} {{ bestellungsHandler.neubestellung.bestellung?.tisch?.nummer }}</h1>
       </div>
       <div class="bestellpositionen">
         <ion-list>
-          <ion-item button *ngFor="let bp of bestellungsHandler.current?.bestellpositionen.slice().reverse(); index as nonReverseIndex" (click)="editBestellungsposition(bp, nonReverseIndex)">
+          <ion-item button *ngFor="let bp of bestellungsHandler.neubestellung.bestellung?.bestellpositionen.slice().reverse(); index as nonReverseIndex" (click)="editBestellungsposition(bp, nonReverseIndex)">
             <ion-label text-wrap>
               <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
               <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
@@ -68,12 +68,12 @@
     <div class="content-right">
       <ion-list *ngFor="let produkteinteilung of filterProduktkategorie.produkteinteilungen">
         <ion-item-divider>{{ produkteinteilung.name }}</ion-item-divider>
-        <ion-item button *ngFor="let produkt of produkteinteilung.produkte" (click)="addBestellpositionToCurrentBestellung(produkt, 'standard', $event)">
+        <ion-item button *ngFor="let produkt of produkteinteilung.produkte" (click)="addBestellposition(produkt, 'standard', $event)">
           <ion-label text-wrap>
             <h2>{{ produkt?.name }}</h2>
             <p>{{ produkt?.preis | euroPreis }}</p>
           </ion-label>
-          <ion-button item-end icon-only size="small" (click)="addBestellpositionToCurrentBestellung(produkt, 'new_line', $event)">
+          <ion-button item-end icon-only size="small" (click)="addBestellposition(produkt, 'new_line', $event)">
             <ion-icon name="undo"></ion-icon>
           </ion-button>
         </ion-item>
@@ -82,15 +82,15 @@
   </div>
 </ion-content>
 
-<ion-footer class="status-current-bestellpositionen" [hidden]="bestellungsHandler.status != 'current-bestellpositionen'">
+<ion-footer class="status-current-bestellpositionen" [hidden]="bestellungsHandler.neubestellung.status != 'bestellpositionen'">
   <div class="footer">
     <div class="footer-left">
       <div class="summe">
         <span class="summe__euro">€</span>
-        <span class="summe__betrag">{{ bestellungsHandler.current?.calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
+        <span class="summe__betrag">{{ bestellungsHandler.neubestellung.bestellung?.calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
       </div>
       <div class="submit">
-        <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" [disabled]="bestellungsHandler.current?.bestellpositionen.length == 0">
+        <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" [disabled]="bestellungsHandler.neubestellung.bestellung?.bestellpositionen.length == 0">
           <ion-label>Abschluss </ion-label>
           <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
         </ion-button>
