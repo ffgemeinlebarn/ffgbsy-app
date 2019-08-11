@@ -68,7 +68,7 @@
         <ion-note slot="end">{{ bestellposition?.anzahl }}x {{ bestellposition?.preis | euroPreis }} = {{ bestellposition?.position_gesamtsumme | euroPreis }}</ion-note>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option (click)="askStornoAnzahl(bestellposition)" color="danger">
+        <ion-item-option (click)="askStornoAnzahl(bestellposition)" color="danger" [hidden]="(bestellposition.anzahl - bestellposition.storno_anzahl) <= 0">
           <ion-label>Stornieren</ion-label>
           <ion-icon name="remove-circle" slot="end"></ion-icon>
         </ion-item-option>
