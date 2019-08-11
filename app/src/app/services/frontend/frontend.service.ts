@@ -36,7 +36,14 @@ export class FrontendService {
   }
 
   hideLoadingSpinner(){
-    this.loadingSpinner.dismiss();
+    if(this.loadingSpinner){
+      this.loadingSpinner.dismiss();
+    }else{
+      let tmp_this = this;
+      setTimeout(function(){
+        tmp_this.hideLoadingSpinner();
+      }, 300);
+    }
   }
 
   showOkAlert(header, message){
