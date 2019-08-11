@@ -21,11 +21,7 @@ export class BestellungenDetailPage implements OnInit {
   public idParam: number = null;
 
   constructor(
-    private http: HttpClient, 
-    private session: SessionService, 
-    private data: DataService,
     private bestellungsHandler: BestellungenHandlerService,
-    private settings: SettingsService, 
     private frontend: FrontendService,
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController) { }

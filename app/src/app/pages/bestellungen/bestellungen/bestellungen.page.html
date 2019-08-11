@@ -10,8 +10,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-select [interfaceOptions]="{header: 'Aufnehmer'}" [(ngModel)]="filter.aufnehmerId" style="display: none;">
+<ion-content class="center" padding="true" [hidden]="anyFilterBestellung">
+  <ion-grid class="center">
+    <ion-row class="center" justify-content-center align-items-center>
+      <p>Keine Bestellungen</p>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<ion-content [hidden]="!anyFilterBestellung">
+  <ion-select [interfaceOptions]="{header: 'Aufnehmer'}" [(ngModel)]="filter.aufnehmerId" style="display: none;" (ionChange)="checkIfanyFilterBestellung()">
     <ion-select-option [value]="null">Alle</ion-select-option>
     <ion-select-option *ngFor="let aufnehmer of data.aufnehmer" [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
   </ion-select>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { SettingsService } from 'src/app/services/settings/settings.service';
@@ -18,6 +18,7 @@ export class BestellungenPage implements OnInit {
   public filter: any = {
     aufnehmerId: null
   };
+  public anyFilterBestellung: boolean = false;
 
   constructor(
     private http: HttpClient, 
@@ -28,7 +29,7 @@ export class BestellungenPage implements OnInit {
     private modalController: ModalController
   ) {
     this.filter.aufnehmerId = this.session.aufnehmer.id;
-    this.getBestellungen();
+    this.getBestellungen().then(_ => this.checkIfanyFilterBestellung());
   }
 
   ngOnInit() { }
@@ -49,6 +50,20 @@ export class BestellungenPage implements OnInit {
       }); 
 
     });
+  }
+
+  checkIfanyFilterBestellung(){
+    this.anyFilterBestellung = false;
+
+    if(this.filter.aufnehmerId == null){
+      if (this.bestellungen.length > 0) this.anyFilterBestellung = true;
+    }else{
+      this.bestellungen.forEach(item => {
+        if (item.aufnehmer.id == this.filter.aufnehmerId){
+          this.anyFilterBestellung = true;
+        }
+      });
+    }
   }
 
   @ViewChild(IonSelect, {static: false}) select: IonSelect;

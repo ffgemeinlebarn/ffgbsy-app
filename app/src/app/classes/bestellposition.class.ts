@@ -1,5 +1,4 @@
 import { Produkt } from "./produkt.class";
-import { Eigenschaft } from "./eigenschaft.class";
 
 export class Bestellposition {
     id: number = null;
