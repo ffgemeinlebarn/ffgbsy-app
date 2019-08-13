@@ -42,8 +42,10 @@ export class SelectAufnehmerPage implements OnInit {
     this.session.setAufnehmer(this.selectedAufnehmer);
     this.session.setGeraet(this.geraet);
 
-    this.session.start();
-    this.router.navigateByUrl('/neue-bestellung');
+    this.session.start().then(res => {
+      this.router.navigateByUrl('/neue-bestellung');
+    });
+    
   }
 
   ngOnInit() {  }
