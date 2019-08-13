@@ -52,10 +52,6 @@
 
 :host ::ng-deep {
 
-    .classic-modal{
-        // padding: 30px;
-    }
-
     ion-alert {
         --max-width: 350px;
 
@@ -115,10 +111,6 @@
     .zoom-level{
 
         // Std. Ionic Sizes
-        
-        &--1{
-            // Non Change
-        }
 
         &--2{
             $tischkategorie-kachel_font-size: 1.10em;
