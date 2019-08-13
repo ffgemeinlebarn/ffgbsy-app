@@ -132,6 +132,8 @@
             $produktauswahl-produkteinteilung_font-size: 1.00em;
             $produktauswahl-item-h2_font-size: 1.15em;
             $produktauswahl-item-p_font-size: 1.00em;
+
+            $produktauswahl-item-button_width-height: 40px;
             
             // Classen
             .tischkategorie-kachel ion-button { font-size: $tischkategorie-kachel_font-size; }
@@ -145,6 +147,8 @@
             .content-right ion-list ion-item-divider { font-size: $produktauswahl-produkteinteilung_font-size; }
             .content-right ion-list ion-item ion-label h2 { font-size: $produktauswahl-item-h2_font-size; }
             .content-right ion-list ion-item ion-label p { font-size: $produktauswahl-item-p_font-size; } 
+
+            .content-right ion-list ion-item ion-button { width: $produktauswahl-item-button_width-height !important; height: $produktauswahl-item-button_width-height !important; } 
         }
 
         &--3{
@@ -159,6 +163,8 @@
             $produktauswahl-produkteinteilung_font-size: 1.00em;
             $produktauswahl-item-h2_font-size: 1.30em;
             $produktauswahl-item-p_font-size: 1.00em;
+
+            $produktauswahl-item-button_width-height: 46px;
             
             // Classen
             .tischkategorie-kachel ion-button { font-size: $tischkategorie-kachel_font-size; }
@@ -172,6 +178,8 @@
             .content-right ion-list ion-item-divider { font-size: $produktauswahl-produkteinteilung_font-size; }
             .content-right ion-list ion-item ion-label h2 { font-size: $produktauswahl-item-h2_font-size; }
             .content-right ion-list ion-item ion-label p { font-size: $produktauswahl-item-p_font-size; } 
+
+            .content-right ion-list ion-item ion-button { width: $produktauswahl-item-button_width-height !important; height: $produktauswahl-item-button_width-height !important; } 
         }
     }
 }

@@ -182,4 +182,8 @@ export class NeueBestellungPage implements OnInit {
 
   }
 
+  changeTisch(){
+    this.bestellungsHandler.neubestellung.status = 'tischauswahl';
+  }
+
 }

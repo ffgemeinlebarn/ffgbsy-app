@@ -75,29 +75,35 @@
         padding: 0px;
         min-height: 100%;
         height: 100%;
-    
-        >ion-row{
-            min-height: 100%;
-            height: 100%;
-        }
-    
+        
         .content-left{
             width: 44%;
             padding: 0px;
             min-height: 100%;
             height: 100%;
-            background-color: #f4f4f4;
+            background-color: #f8f8f8;
             overflow: auto;
     
-            ion-row, 
-            ion-col{
-                padding: 0px;
-            }
-    
             .tisch{
+                background-color: #dddddd;
+                border-bottom: 1px #cccccc solid;
+                padding: 20px 0px;
+                align-items: center;
+                display: flex;
+                flex-direction: column;
+
                 h1{
+                    margin: 0px;
+                    padding: 0px;
+                    line-height: 1.15;
                     width: 100%;
                     text-align: center;
+                    margin-bottom: 12px;
+                }
+
+                ion-botton{
+                    --border-color: #ffffff;
+                    --color: #ffffff;
                 }
             }
     
@@ -114,6 +120,13 @@
             padding: 0px;
             min-height: 100%;
             overflow: auto;
+
+            ion-item{
+                ion-button{
+                    width: 36px;
+                    height: 36px;
+                }
+            }
         }
     
         ion-item{
