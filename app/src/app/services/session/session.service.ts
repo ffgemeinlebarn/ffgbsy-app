@@ -17,6 +17,7 @@ export class SessionService {
   public geraet: Geraet;
   public running: any;
   public timeStart: Date;
+  public zoomLevel: number = 1;
 
   constructor(
     private frontend: FrontendService, 
@@ -64,6 +65,7 @@ export class SessionService {
 
   setAufnehmer(aufnehmer: Aufnehmer){
     this.aufnehmer = aufnehmer;
+    this.zoomLevel = this.aufnehmer.zoom_level;
   }
 
   setGeraet(geraet: Geraet){
