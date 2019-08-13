@@ -22,7 +22,7 @@
 <!-- Tischauswahl -->
 <ion-content [hidden]="bestellungsHandler.neubestellung.status != 'tischauswahl'">
   <div class="kachelwand">
-    <div *ngFor="let tisch of data.tische" [hidden]="tisch.tischkategorien_id != filterTischkategorieId" [ngClass]="{'kachel': true, 'tisch-kachel': true, 'tisch-kachel--big-1': (tisch.reihe.length > 10), 'tisch-kachel--big-2': (tisch.reihe.length > 15)}">
+    <div *ngFor="let tisch of data.tische" [hidden]="tisch.tischkategorien_id != filterTischkategorieId" [ngClass]="{'kachel': true, 'tisch-kachel': true, 'tisch-kachel--big-1': (tisch.reihe.length > 7), 'tisch-kachel--big-2': (tisch.reihe.length > 14)}">
       <div class="kachel__inner">
           <ion-button text-wrap text-normal expand="full" (click)="selectTisch(tisch)">
             <span class="button-inner">{{tisch.reihe}} {{tisch.nummer}}</span>
