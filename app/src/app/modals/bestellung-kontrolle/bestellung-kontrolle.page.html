@@ -10,8 +10,8 @@
       <ion-label text-wrap>
         <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
         <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
-        <p *ngIf="bp.display.eigenschaften.mit.length" ><strong>MIT:</strong> {{ bp.display.eigenschaften.mit.join(", ") }}</p>
-        <p *ngIf="bp.display.eigenschaften.ohne.length"><strong>OHNE:</strong> {{ bp.display.eigenschaften.ohne.join(", ") }}</p>
+        <p *ngIf="bp.display.eigenschaften.mit.length" ><strong>Mit:</strong> {{ bp.display.eigenschaften.mit.join(", ") }}</p>
+        <p *ngIf="bp.display.eigenschaften.ohne.length"><strong>Ohne:</strong> {{ bp.display.eigenschaften.ohne.join(", ") }}</p>
         <p *ngIf="bp.notiz"><strong>Notiz:</strong> {{ bp.notiz }}</p>
       </ion-label>
     </ion-item>

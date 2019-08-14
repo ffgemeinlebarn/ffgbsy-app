@@ -35,7 +35,7 @@ export class Bestellung {
         let summe = 0.00;
 
         for(let bp of this.bestellpositionen){
-            summe += (bp.anzahl * bp.produkt.preis);
+            summe += (bp.anzahl * bp.produkt.preis) + bp.calc_correction;
         }
 
         return summe;

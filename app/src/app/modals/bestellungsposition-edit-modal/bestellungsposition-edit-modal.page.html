@@ -29,7 +29,7 @@
       <ion-label>Eigenschaften & Extras</ion-label>
     </ion-list-header>
     <ion-item *ngFor="let eigenschaft of bestellposition.eigenschaften">
-        <ion-label>{{ eigenschaft.name }}</ion-label>
+        <ion-label>{{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-label>
         <ion-checkbox [(ngModel)]="eigenschaft.aktiv"></ion-checkbox>
     </ion-item>
     <ion-list-header color="primary">

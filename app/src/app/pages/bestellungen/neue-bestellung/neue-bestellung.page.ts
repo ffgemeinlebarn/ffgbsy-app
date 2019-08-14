@@ -97,6 +97,10 @@ export class NeueBestellungPage implements OnInit {
       }
   }
 
+  displayEuroNumber(value: any) {
+    return  "€ " + String(parseFloat(value).toFixed(2)).replace(".", ",");
+  }
+
   async editBestellungsposition(bestellposition: Bestellposition, nonReverseIndex: number){
 
     let reverseIndex = this.bestellungsHandler.neubestellung.bestellung.bestellpositionen.length - 1 - nonReverseIndex;
@@ -118,19 +122,25 @@ export class NeueBestellungPage implements OnInit {
         bestellposition.display.eigenschaften.mit = [];
         bestellposition.display.eigenschaften.ohne = [];
 
+        bestellposition.calc_correction = 0.00;
+
         for (let e of data.data.eigenschaften){
           if (e.in_produkt_enthalten == 0 && e.aktiv == 1){
             if (parseFloat(e.preis) != 0){
-              bestellposition.display.eigenschaften.mit.push(e.name + " (€ " + e.preis + ")");
+
+              bestellposition.display.eigenschaften.mit.push(e.name + " (" + bestellposition.anzahl + "x = +" + this.displayEuroNumber(bestellposition.anzahl * e.preis) + ")");
             }else{
               bestellposition.display.eigenschaften.mit.push(e.name);
             }
+            bestellposition.calc_correction += (bestellposition.anzahl * parseFloat(e.preis));
+
           } else if (e.in_produkt_enthalten == 1 && e.aktiv == 0){
             if (parseFloat(e.preis) != 0){
-              bestellposition.display.eigenschaften.ohne.push(e.name + " (€ " + e.preis + ")");
+              bestellposition.display.eigenschaften.ohne.push(e.name + " (" + bestellposition.anzahl + "x = -" + this.displayEuroNumber(bestellposition.anzahl * e.preis) + ")");
             }else{
               bestellposition.display.eigenschaften.ohne.push(e.name);
             }
+            bestellposition.calc_correction -= (bestellposition.anzahl * parseFloat(e.preis));
           }
         }
     });

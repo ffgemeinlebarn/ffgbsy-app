@@ -12,6 +12,7 @@ export class Bestellposition {
             ohne: []
         }
     };
+    calc_correction: any = 0.00;
     eigenschaften: Array<any>;
     bestellungen_id: number;
 
