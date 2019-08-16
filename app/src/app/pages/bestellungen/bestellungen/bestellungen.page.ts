@@ -16,10 +16,11 @@ import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestel
 export class BestellungenPage implements OnInit {
 
   public bestellungen: Array<Bestellung>;
+  public filtredBestellungen: Array<Bestellung> = [];
   public filter: any = {
-    aufnehmerId: null
+    aufnehmerId: null,
+    tischeId: null
   };
-  public anyFilterBestellung: boolean = false;
 
   constructor(
     public bestellungsHandler: BestellungenHandlerService,
@@ -31,7 +32,8 @@ export class BestellungenPage implements OnInit {
     private modalController: ModalController
   ) {
     this.filter.aufnehmerId = this.session.aufnehmer.id;
-    this.getBestellungen().then(_ => this.checkIfanyFilterBestellung());
+    this.filter.tischeId = null;
+    this.getBestellungen().then(_ => this.filterBestellungen());
   }
 
   ngOnInit() { }
@@ -54,23 +56,36 @@ export class BestellungenPage implements OnInit {
     });
   }
 
-  checkIfanyFilterBestellung(){
-    this.anyFilterBestellung = false;
+  filterBestellungen(){
 
-    if(this.filter.aufnehmerId == null){
-      if (this.bestellungen.length > 0) this.anyFilterBestellung = true;
-    }else{
-      this.bestellungen.forEach(item => {
-        if (item.aufnehmer.id == this.filter.aufnehmerId){
-          this.anyFilterBestellung = true;
+    console.log("filtredBestellungen", this.filter.tischeId, this.filter.aufnehmerId);
+
+    this.filtredBestellungen = [];
+    
+    for(var i=0;i<this.bestellungen.length;i++){
+      let b = this.bestellungen[i];
+      let push = false;
+
+      if (this.filter.aufnehmerId == b.aufnehmer.id || this.filter.aufnehmerId == null){
+        if (this.filter.tischeId == b.tisch.id || this.filter.tischeId == null){
+          push = true;
         }
-      });
+      }
+
+      if (push) this.filtredBestellungen.push(b);
     }
+    
   }
 
-  @ViewChild(IonSelect, {static: false}) select: IonSelect;
+  @ViewChild('aufnehmerSelect', {static: false}) aufnehmerSelect: IonSelect;
   filterSelectAufnehmer(){
-    this.select.open();
+    this.aufnehmerSelect.open();
+  }
+
+  @ViewChild('tischeSelect', {static: false}) tischeSelect: IonSelect;
+  filterSelectTische(){
+    console.log(this.data.tische);
+    this.tischeSelect.open();
   }
 
 }

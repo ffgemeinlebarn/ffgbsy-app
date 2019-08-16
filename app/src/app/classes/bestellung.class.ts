@@ -18,10 +18,7 @@ export class Bestellung {
 
         this.id = null;
 
-        let now = new Date();
-        now.setTime(now.getTime() - now.getTimezoneOffset()*60*1000);
-
-        this.timestamp_begonnen = now.toISOString().slice(0, 19).replace('T', ' ');
+        this.setTimestampBegonnen();
         if(tisch) this.tisch = tisch;
         if(aufnehmer) this.aufnehmer = aufnehmer;
         if(geraet) this.geraet = geraet;
@@ -29,6 +26,12 @@ export class Bestellung {
 
     addBestellposition(bestellposition: Bestellposition){
         this.bestellpositionen.push(bestellposition);
+    }
+
+    setTimestampBegonnen(){
+        let now = new Date();
+        now.setTime(now.getTime() - now.getTimezoneOffset()*60*1000);
+        this.timestamp_begonnen = now.toISOString().slice(0, 19).replace('T', ' ');
     }
 
     calcSumme(){

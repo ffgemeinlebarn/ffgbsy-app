@@ -42,6 +42,7 @@ export class BestellungenHandlerService {
 
   public addTischToNeubestellung(tisch: Tisch){
     this.neubestellung.bestellung.tisch = tisch;
+    this.neubestellung.bestellung.setTimestampBegonnen();
   }
   
   public addAufnehmerToNeubestellung(aufnehmer: Aufnehmer){
