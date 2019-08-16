@@ -42,7 +42,7 @@ export class BestellungenPage implements OnInit {
     return new Promise((resolve, reject) => {
       
       this.frontend.showLoadingSpinner();
-      this.http.get<Bestellung[]>(this.settings.api.url + '/bestellungen').subscribe(bestellungen => {
+      this.http.get<Bestellung[]>(this.settings.api.url + '/bestellungen', { params: { filter: 'today' } }).subscribe(bestellungen => {
         this.bestellungen = bestellungen;
         this.frontend.hideLoadingSpinner();
         resolve();
@@ -57,8 +57,6 @@ export class BestellungenPage implements OnInit {
   }
 
   filterBestellungen(){
-
-    console.log("filtredBestellungen", this.filter.tischeId, this.filter.aufnehmerId);
 
     this.filtredBestellungen = [];
     
@@ -84,7 +82,6 @@ export class BestellungenPage implements OnInit {
 
   @ViewChild('tischeSelect', {static: false}) tischeSelect: IonSelect;
   filterSelectTische(){
-    console.log(this.data.tische);
     this.tischeSelect.open();
   }
 
