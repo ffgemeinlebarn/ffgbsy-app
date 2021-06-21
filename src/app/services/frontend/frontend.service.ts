@@ -55,7 +55,7 @@ export class FrontendService {
         buttons: [{
           text: 'OK',
           handler: (blah) => {
-            resolve();
+            resolve(true);
           }
         }]
       }).then((alert) => {
@@ -85,7 +85,7 @@ export class FrontendService {
             text: 'Ja',
             cssClass: 'primary',
             handler: () => {
-              resolve();
+              resolve(true);
             }
           }
         ]

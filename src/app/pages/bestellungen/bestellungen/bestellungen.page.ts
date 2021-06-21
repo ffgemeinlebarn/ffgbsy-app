@@ -45,7 +45,7 @@ export class BestellungenPage implements OnInit {
       this.http.get<Bestellung[]>(this.settings.api.url + '/bestellungen', { params: { filter: 'today' } }).subscribe(bestellungen => {
         this.bestellungen = bestellungen;
         this.frontend.hideLoadingSpinner();
-        resolve();
+        resolve(true);
       },
       err => {
         this.frontend.hideLoadingSpinner();

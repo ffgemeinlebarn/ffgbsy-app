@@ -35,7 +35,7 @@ export class SystemstatusPage implements OnInit {
         this.systemstatusDateTime = startingDateTime;
         this.systemstatus = systemstatus;
         this.frontend.hideLoadingSpinner();
-        resolve();
+        resolve(true);
       },
       err => {
         this.frontend.hideLoadingSpinner();

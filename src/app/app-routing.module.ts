@@ -3,16 +3,14 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', redirectTo: 'init', pathMatch: 'full' },
-  { path: 'init', loadChildren: './pages/start/init/init.module#InitPageModule' },
-  { path: 'select-aufnehmer', loadChildren: './pages/start/select-aufnehmer/select-aufnehmer.module#SelectAufnehmerPageModule' },
-  { path: 'settings', loadChildren: './pages/settings/settings.module#SettingsPageModule' },
-  { path: 'neue-bestellung', loadChildren: './pages/bestellungen/neue-bestellung/neue-bestellung.module#NeueBestellungPageModule' },
-  { path: 'bestellungen', loadChildren: './pages/bestellungen/bestellungen/bestellungen.module#BestellungenPageModule' },
-  { path: 'bestellungen/:id', loadChildren: './pages/bestellungen/bestellungen-detail/bestellungen-detail.module#BestellungenDetailPageModule' },
-  { path: 'systemstatus', loadChildren: './pages/systemstatus/systemstatus.module#SystemstatusPageModule' },
-  { path: 'imprint', loadChildren: './pages/imprint/imprint.module#ImprintPageModule' },
-
-
+  { path: 'init', loadChildren: () => import('./pages/start/init/init.module').then(m => m.InitPageModule) },
+  { path: 'select-aufnehmer', loadChildren: () => import('./pages/start/select-aufnehmer/select-aufnehmer.module').then(m => m.SelectAufnehmerPageModule) },
+  { path: 'settings', loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule) },
+  { path: 'neue-bestellung', loadChildren: () => import('./pages/bestellungen/neue-bestellung/neue-bestellung.module').then(m => m.NeueBestellungPageModule) },
+  { path: 'bestellungen', loadChildren: () => import('./pages/bestellungen/bestellungen/bestellungen.module').then(m => m.BestellungenPageModule) },
+  { path: 'bestellungen/:id', loadChildren: () => import('./pages/bestellungen/bestellungen-detail/bestellungen-detail.module').then(m => m.BestellungenDetailPageModule) },
+  { path: 'systemstatus', loadChildren: () => import('./pages/systemstatus/systemstatus.module').then(m => m.SystemstatusPageModule) },
+  { path: 'imprint', loadChildren: () => import('./pages/imprint/imprint.module').then(m => m.ImprintPageModule) }
 ];
 
 @NgModule({
