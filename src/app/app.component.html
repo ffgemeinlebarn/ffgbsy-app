@@ -1,7 +1,7 @@
 <ion-app [ngClass]="'zoom-level--'+session.zoomLevel">
 
   <!-- Sidemenu -->
-  <ion-menu side="start" menuId="sidemenu">
+  <ion-menu side="start" menuId="sidemenu" contentId="main-content">
     <ion-content>
 
       <!-- Menu Links -->
@@ -92,6 +92,6 @@
   </ion-menu>
 
   <!-- Router Outlet -->
-  <ion-router-outlet main></ion-router-outlet>
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 
 </ion-app>
