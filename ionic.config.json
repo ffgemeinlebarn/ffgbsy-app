@@ -1,5 +1,7 @@
 {
-  "name": "ffgbsy-app",
-  "integrations": {},
-  "type": "ionic-angular"
+    "name": "ffgbsy-app",
+    "integrations": {
+        "capacitor": {}
+    },
+    "type": "angular"
 }
