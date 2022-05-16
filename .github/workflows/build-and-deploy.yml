@@ -1,8 +1,6 @@
 name: Build App
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
@@ -43,6 +41,7 @@ jobs:
   deploy:
     name: Deploy
     needs: build
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -52,6 +51,11 @@ jobs:
           name: PWA
           path: dist
 
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: dist
+      - name: Deploy via FTP
+        uses: JakobVesely/ftp-action-delete-and-upload@master
+        with:
+          host: ${{ secrets.FTP_DEPLOY_HOST }}
+          user: ${{ secrets.FTP_DEPLOY_USERNAME }}
+          password: ${{ secrets.FTP_DEPLOY_PASSWORD }}
+          localDir: "dist"
+          remoteDir: "."
