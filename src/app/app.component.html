@@ -1,0 +1,97 @@
+<ion-app [ngClass]="'zoom-level--'+session.zoomLevel">
+
+  <!-- Sidemenu -->
+  <ion-menu side="start" menuId="sidemenu" contentId="main-content">
+    <ion-content>
+
+      <!-- Menu Links -->
+      <ion-list class="sidemenu-main-menu">
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/neue-bestellung']" [disabled]="!session.running.state" lines="none" menuClose>
+            <ion-label>Neue Bestellung</ion-label>
+            <ion-icon slot="end"name="arrow-forward"></ion-icon>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/bestellungen']" [disabled]="!session.running.state" lines="none" menuClose>
+            <ion-label>Bestellungen</ion-label>
+            <ion-icon slot="end"name="arrow-forward"></ion-icon>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/systemstatus']" lines="none" menuClose>
+            <ion-label>Systemstatus</ion-label>
+            <ion-icon slot="end"name="arrow-forward"></ion-icon>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/settings']" lines="none" menuClose>
+            <ion-label>Einstellungen</ion-label>
+            <ion-icon slot="end"name="arrow-forward"></ion-icon>
+          </ion-item>
+        </ion-menu-toggle>
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/imprint']" lines="none" menuClose>
+            <ion-label>Impressum</ion-label>
+            <ion-icon slot="end"name="arrow-forward"></ion-icon>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+
+      <h4 class="sidemenu-headline">Session</h4>
+
+      <!-- Session Info - Session Aktiv/Inaktiv -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ session.running.text }}</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content [hidden]="!session.running.state">
+          <p>Beginn: {{ session.timeStart | date: 'dd.MM.yyyy' }} um {{ session.timeStart | date: 'HH:mm:ss' }} Uhr</p>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Session Info - Aufnehmer -->
+      <ion-card class="ion-card-side-image-layout" [hidden]="!session.running.state">
+        <div class="ion-card-side-image-layout__content">
+          <ion-card-header>
+            <ion-card-subtitle>Aufnehmer</ion-card-subtitle>
+            <ion-card-title>
+              {{ session.aufnehmer?.vorname }}<br />
+              {{ session.aufnehmer?.nachname }}
+            </ion-card-title>
+          </ion-card-header>
+        </div>
+        <div class="ion-card-side-image-layout__image" style="background-image: url(assets/cards/dribbble_aufnehmer.jpg)"></div>
+      </ion-card>
+
+      <!-- Session Info - Gerät -->
+      <ion-card class="ion-card-side-image-layout" [hidden]="!session.running.state">
+        <div class="ion-card-side-image-layout__content">
+            <ion-card-header>
+              <ion-card-subtitle>Gerät</ion-card-subtitle>
+              <ion-card-title>{{ session.geraet?.hersteller }} {{ session.geraet?.type }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <p>IP: {{ session.geraet?.ip }}</p>
+              <p>MAC: {{ session.geraet?.mac }}</p>
+            </ion-card-content>
+        </div>
+        <div class="ion-card-side-image-layout__image" style="background-image: url(assets/cards/dribbble_device.jpg)"></div>
+      </ion-card>
+
+      <!-- Session Info - Session Beenden -->
+      <div class="sidemenu-padding" [hidden]="!session.running.state">
+        <ion-button (click)="session.askForEndSession()">
+          <ion-icon slot="start" name="exit"></ion-icon>
+          Session beenden
+        </ion-button>
+      </div>
+
+    </ion-content>
+  </ion-menu>
+
+  <!-- Router Outlet -->
+  <ion-router-outlet id="main-content"></ion-router-outlet>
+
+</ion-app>
