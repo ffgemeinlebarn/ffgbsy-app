@@ -1,15 +1,16 @@
 {
-    "name": "app",
-    "version": "0.0.1",
-    "author": "Ionic Framework",
-    "homepage": "https://ionicframework.com/",
+    "name": "@ffgemeinlebarn/ffgbsy",
+    "version": "1.0.0",
+    "author": "Jakob Vesely",
+    "homepage": "https://jakob.fyi",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
         "test": "ng test",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "ci:build:production": "ng build --prod"
     },
     "private": true,
     "dependencies": {
