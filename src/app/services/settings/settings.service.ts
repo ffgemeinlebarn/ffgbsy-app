@@ -7,67 +7,67 @@ import { FrontendService } from '../frontend/frontend.service';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class SettingsService {
 
-  public app: AppSettings = {
-    version: '1.0.0'
-  };
+    public app: AppSettings = {
+        version: '1.0.0'
+    };
 
-  public api: APISettings = {
-    protocol: 'http://',
-    host: '192.168.0.121',
-    path: '/api/v1',
-    url: null
-  }
-  
-  public storage: StorageSettings = {
-    prefix: 'ffgbsy_',
-    keys: {
-      daten: 'daten'
+    public api: APISettings = {
+        protocol: 'https://',
+        host: 'ffgbsy.dev',
+        path: '/v1',
+        url: null
     }
-  };
-  
-  public locale: LocaleSettings = {
-    diesesGeraetId: null
-  };
 
-  constructor(
-    public ionicStorage: Storage, 
-    public http: HttpClient,
-    public frontend: FrontendService
-  )  {
-    this.api.url = this.api.protocol + this.api.host + this.api.path;
-    this.loadLocal();
-  }
+    public storage: StorageSettings = {
+        prefix: 'ffgbsy_',
+        keys: {
+            daten: 'daten'
+        }
+    };
 
-  loadLocal(){
-    this.ionicStorage.get(this.storage.prefix + 'locale').then((val) => {
-      if (val !== null){
-        this.locale = <LocaleSettings>JSON.parse(val);
-      }
-    });
-  }
+    public locale: LocaleSettings = {
+        diesesGeraetId: null
+    };
 
-  saveLocal(){
-    this.ionicStorage.set(this.storage.prefix + 'locale', JSON.stringify(this.locale));
-  }
+    constructor(
+        public ionicStorage: Storage,
+        public http: HttpClient,
+        public frontend: FrontendService
+    ) {
+        this.api.url = this.api.protocol + this.api.host + this.api.path;
+        this.loadLocal();
+    }
 
-  saveAufnehmer(aufnehmer: Aufnehmer){
-    return new Promise((resolve, reject) => {
+    loadLocal() {
+        this.ionicStorage.get(this.storage.prefix + 'locale').then((val) => {
+            if (val !== null) {
+                this.locale = <LocaleSettings>JSON.parse(val);
+            }
+        });
+    }
 
-      this.frontend.showLoadingSpinner('send');
-      this.http.put<any>(this.api.url + '/aufnehmer/' + aufnehmer.id, aufnehmer).subscribe(data => {
-        this.frontend.hideLoadingSpinner();
-        resolve(data);
-      },
-      err => {
-        this.frontend.hideLoadingSpinner();
-        this.frontend.showOkAlert('HTTP Fehler', 'Name: ' + err.name + '\n\nStatus: ' + err.status + '/' + err.statusText + '\n\nNachricht: ' + err.message);
-        reject(err);
-      });
-    });
-  }
+    saveLocal() {
+        this.ionicStorage.set(this.storage.prefix + 'locale', JSON.stringify(this.locale));
+    }
+
+    saveAufnehmer(aufnehmer: Aufnehmer) {
+        return new Promise((resolve, reject) => {
+
+            this.frontend.showLoadingSpinner('send');
+            this.http.put<any>(this.api.url + '/aufnehmer/' + aufnehmer.id, aufnehmer).subscribe(data => {
+                this.frontend.hideLoadingSpinner();
+                resolve(data);
+            },
+                err => {
+                    this.frontend.hideLoadingSpinner();
+                    this.frontend.showOkAlert('HTTP Fehler', 'Name: ' + err.name + '\n\nStatus: ' + err.status + '/' + err.statusText + '\n\nNachricht: ' + err.message);
+                    reject(err);
+                });
+        });
+    }
 
 }
