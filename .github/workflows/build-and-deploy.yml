@@ -37,17 +37,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Download PWA Artifact
         uses: actions/download-artifact@v3
         with:
           name: PWA
           path: dist
 
-      - name: Deploy via FTP
-        uses: JakobVesely/ftp-action-delete-and-upload@master
+      - name: 📂 Upload PWA
+        uses: SamKirkland/FTP-Deploy-Action@4.3.0
         with:
-          host: ${{ secrets.FTP_DEPLOY_HOST }}
-          user: ${{ secrets.FTP_DEPLOY_USERNAME }}
+          server: ${{ secrets.FTP_DEPLOY_HOST }}
+          username: ${{ secrets.FTP_DEPLOY_USERNAME }}
           password: ${{ secrets.FTP_DEPLOY_PASSWORD }}
-          localDir: "dist"
-          remoteDir: "."
+          local-dir: ./dist
+          dangerous-clean-slate: true
