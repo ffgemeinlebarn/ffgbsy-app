@@ -16,7 +16,7 @@ export class SettingsService {
     };
 
     public api: APISettings = {
-        protocol: 'http://',
+        protocol: 'https://',
         host: 'pi.ffgbsy.lan',
         path: '/v1',
         url: null
