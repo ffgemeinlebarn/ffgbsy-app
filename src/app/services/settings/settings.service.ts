@@ -17,7 +17,7 @@ export class SettingsService {
 
     public api: APISettings = {
         protocol: 'https://',
-        host: 'pi.ffgbsy.lan',
+        host: 'internal.ffgbsy.ff-gemeinlebarn.at',
         path: '/v1',
         url: null
     }
