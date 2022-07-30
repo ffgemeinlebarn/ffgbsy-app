@@ -14,7 +14,7 @@ export class SettingsService {
     public StoragePrefix = 'ffgbsy_';
 
     public locale: LocaleSettings = {
-        geraet: null,
+        deviceName: '',
         api: ''
     };
 

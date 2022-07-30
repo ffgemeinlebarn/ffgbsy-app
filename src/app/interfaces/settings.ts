@@ -25,11 +25,11 @@ export interface StorageSettings {
 
 // Local
 export class LocaleSettings {
-    geraet: Geraet;
+    deviceName: string;
     api: string;
 
     constructor() {
-        this.geraet = new Geraet();
+        this.deviceName = '';
         this.api = environment.api;
     }
 }

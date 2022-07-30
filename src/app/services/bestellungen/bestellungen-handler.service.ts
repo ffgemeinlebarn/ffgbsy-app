@@ -13,7 +13,6 @@ import { Neubestellung } from 'src/app/classes/neubestellung.class';
 export class BestellungenHandlerService {
 
     public aufnehmer: Aufnehmer | null = null;
-
     public neubestellung: Neubestellung = new Neubestellung();
 
     constructor(private api: ApiService, private settings: SettingsService, private frontend: FrontendService) { }
@@ -26,7 +25,7 @@ export class BestellungenHandlerService {
         if (this.neubestellung.bestellung === null) {
             this.neubestellung.bestellung = new Bestellung();
             this.neubestellung.bestellung.aufnehmer = this.aufnehmer;
-            this.neubestellung.bestellung.device_name = this.settings.locale.geraet.description;
+            this.neubestellung.bestellung.device_name = this.settings.locale.deviceName;
             this.neubestellung.status = 'begonnen';
             return true;
         }

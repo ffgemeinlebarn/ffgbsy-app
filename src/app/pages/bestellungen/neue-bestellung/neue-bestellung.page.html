@@ -124,7 +124,7 @@
     </div>
 </ion-footer>
 
-<ion-modal *ngIf="data.ready" trigger="select-aufnehmer" [isOpen]="false" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="0.5" [canDismiss]="true">
+<ion-modal *ngIf="data.ready" trigger="select-aufnehmer" [isOpen]="false" [breakpoints]="[0.1, 0.75, 1]" [initialBreakpoint]="0.75" [canDismiss]="true">
     <ng-template>
         <ion-content>
             <ion-radio-group [(ngModel)]="bestellungsHandler.aufnehmer" allow-empty-selection="false">
