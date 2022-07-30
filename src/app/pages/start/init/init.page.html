@@ -1,39 +1,38 @@
-<ion-content class="center" padding="true">
-    <ion-grid class="center">
-        <ion-row class="center" justify-content-center align-items-center>
-            <h2 class="headline">Synchronisierung der FFGBSY-App mit dem Server</h2>
-            <ion-spinner [hidden]="!datenSynchronisierungLaeuft" name="lines-small"></ion-spinner>
+<ion-content>
+    <div class="center-wrapper">
+        <div class="centered">
+
+            <h2 class="headline">Initialisierung</h2>
+            <h4 class="tagline">FFGBSY</h4>
+
+            <!-- <ion-spinner [hidden]="!datenSynchronisierungLaeuft" name="lines-small"></ion-spinner> -->
             <p class="message">{{ messageLineOne }}<br />{{ messageLineTwo }}</p>
-            <ion-button [hidden]="datenSynchronisiert" (click)="datenSynchronisierungStarten()">Synchronisierung starten
-            </ion-button>
-            <ion-button [hidden]="!datenSynchronisiert || !lokalesGeraetReady" [routerLink]="['/select-aufnehmer']">
-                <ion-label>Aufnehmer auswählen</ion-label>
-                <ion-icon name="arrow-forward" slot="end"></ion-icon>
-            </ion-button>
-            <ion-button [hidden]="!datenSynchronisiert || lokalesGeraetReady" (click)="openGeraeteSelect()"
-                fill="outline">
-                <ion-label>Lokales Gerät konfigurieren</ion-label>
-                <ion-icon name="settings" slot="end"></ion-icon>
+
+            <!-- Requirements -->
+            <h4>Daten</h4>
+            <p>Version: {{ data.version }}</p>
+            <p>Speicherstand am Gerät: {{ data.saved | date: 'd.M.Y HH:mm:ss' }}</p>
+
+            <h4>Gerät</h4>
+            <p *ngIf="!settings.locale.geraet?.description?.length">Das Gerät muss konfiguriert werden!</p>
+            <p *ngIf="settings.locale.geraet?.description?.length">{{ settings.locale?.geraet?.hersteller }}<span [hidden]="!settings.locale?.geraet?.type">({{ settings.locale?.geraet?.type }})</span></p>
+            <p *ngIf="settings.locale.geraet?.description?.length">Beschreibungstext auf Bon: {{ settings.locale?.geraet?.description }}</p>
+
+            <!-- Actions -->
+            <ion-button *ngIf="settings.locale.geraet?.description?.length && data.version" (click)="initComplete()">
+                Starten
             </ion-button>
 
-            <p class="geraet-message" [hidden]="!datenSynchronisiert">{{ geraet_message }}</p>
-
-            <ion-button class="button-erneute-synchronisation" [hidden]="!datenSynchronisiert"
-                (click)="datenSynchronisierungStarten()" fill="outline" shape="round">
-                <ion-label>Daten erneut synchronisieren</ion-label>
-                <ion-icon name="sync" slot="end"></ion-icon>
+            <ion-button *ngIf="!settings.locale.geraet?.description?.length" routerLink="/settings">
+                Einstellungen
             </ion-button>
-            <ion-button class="button-systemstatus-abrufen" (click)="systemstatusAbrufen()" fill="outline"
-                shape="round">
+
+            <!-- Bottom -->
+            <ion-button class="button-systemstatus-abrufen" (click)="systemstatusAbrufen()" fill="outline" shape="round">
                 <ion-label>Systemstatus prüfen</ion-label>
                 <ion-icon name="cloud-done" slot="end"></ion-icon>
             </ion-button>
-        </ion-row>
-    </ion-grid>
+        </div>
 
-    <ion-select [interfaceOptions]="{header: 'Geräte'}" [(ngModel)]="settings.locale.diesesGeraetId"
-        (ionChange)="settings.saveLocal(); refrehLocalGeraet();">
-        <ion-select-option *ngFor="let geraet of data.geraete" [value]="geraet.id">{{ geraet.hersteller }} {{
-            geraet.type }} ({{ geraet.ip }})</ion-select-option>
-    </ion-select>
+    </div>
 </ion-content>

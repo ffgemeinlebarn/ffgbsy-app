@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 
 // Meine Services
-import { SessionService } from './services/session/session.service';
 import { SettingsService } from './services/settings/settings.service';
 import { BestellungenHandlerService } from './services/bestellungen/bestellungen-handler.service';
 import { FrontendService } from './services/frontend/frontend.service';
@@ -21,7 +20,6 @@ export class AppComponent {
         private platform: Platform,
         public bestellungsHandler: BestellungenHandlerService,
         public data: DataService,
-        public session: SessionService,
         public settings: SettingsService,
         public frontend: FrontendService
     ) { }

@@ -1,3 +1,5 @@
+import { environment } from 'src/environments/environment';
+import { Aufnehmer } from '../classes/aufnehmer.class';
 import { Geraet } from '../classes/geraet.class';
 
 // App
@@ -22,6 +24,17 @@ export interface StorageSettings {
 }
 
 // Local
-export interface LocaleSettings {
-    diesesGeraetId: number
+export class LocaleSettings {
+    geraet: Geraet;
+    api: string;
+
+    constructor() {
+        this.geraet = new Geraet();
+        this.api = environment.api;
+    }
+}
+
+// Local
+export interface SessionSettings {
+    aufnehmer: Aufnehmer
 }

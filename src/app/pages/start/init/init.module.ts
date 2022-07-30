@@ -6,21 +6,24 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { InitPage } from './init.page';
+import { InitRequirementComponent } from 'src/app/components/init-requirement/init-requirement.component';
+import { ComponentsModule } from 'src/app/components/components.module';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: InitPage
-  }
+    {
+        path: '',
+        component: InitPage
+    }
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [InitPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        ComponentsModule
+    ],
+    declarations: [InitPage]
 })
-export class InitPageModule {}
+export class InitPageModule { }

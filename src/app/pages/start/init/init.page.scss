@@ -2,6 +2,14 @@
     text-align: center;
 }
 
+.tagline{
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    color: #777;
+    margin-top: 0px;
+}
+
 .message{
     margin-top: 20px;
     margin-bottom: 80px;
@@ -38,3 +46,7 @@
     .button-erneute-synchronisation{
         bottom: 60px;
     }
+
+ion-spinner{
+    text-align: center;
+}

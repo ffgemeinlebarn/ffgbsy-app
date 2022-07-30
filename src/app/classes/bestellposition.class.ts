@@ -7,7 +7,7 @@ export class Bestellposition {
     produkt: Produkt;
     notiz: string;
     display: any = {
-        eigenschaften:{
+        eigenschaften: {
             mit: [],
             ohne: []
         }
@@ -21,24 +21,12 @@ export class Bestellposition {
         this.anzahl = 1;
         this.notiz = "";
         this.display = {
-            eigenschaften:{
+            eigenschaften: {
                 mit: [],
                 ohne: []
             }
         };
 
-        this.eigenschaften = [];
-        for (let e of this.produkt.eigenschaften){
-            let bool = !!+e.aktiv;
-            let new_e = {
-                name: e.name, 
-                aktiv: bool, 
-                in_produkt_enthalten: 
-                e.in_produkt_enthalten, 
-                preis: e.preis, 
-                eigenschaften_id: e.eigenschaften_id
-            };
-            this.eigenschaften.push(new_e);
-        }
+        this.eigenschaften = JSON.parse(JSON.stringify(this.produkt.eigenschaften));
     }
 }
