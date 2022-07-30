@@ -1,6 +1,5 @@
 import { environment } from 'src/environments/environment';
 import { Aufnehmer } from '../classes/aufnehmer.class';
-import { Geraet } from '../classes/geraet.class';
 
 // App
 export interface AppSettings {

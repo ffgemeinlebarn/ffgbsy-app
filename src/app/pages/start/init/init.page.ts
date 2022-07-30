@@ -1,17 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-
-// Services
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/data/data.service';
-
-// Classes
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
-import { Geraet } from 'src/app/classes/geraet.class';
-
-import { Storage } from '@ionic/storage';
 import { SettingsService } from 'src/app/services/settings/settings.service';
-import { IonSelect, ActionSheetController } from '@ionic/angular';
+import { ActionSheetController } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { HttpClient } from '@angular/common/http';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -26,10 +18,7 @@ export class InitPage implements OnInit {
     public messageLineOne: string = "";
     public messageLineTwo: string = "";
     public datenSynchronisierungLaeuft: boolean = false;
-    // public datenSynchronisiert: boolean = false;
-    // public lokalesGeraetReady: boolean = false;
 
-    public geraet: Geraet | null = null;
     public aufnehmer: Aufnehmer | null = null;
 
     public systemstatus: any = [];
@@ -94,12 +83,11 @@ export class InitPage implements OnInit {
                 }
             ];
 
-            for (let i = 0; i < status.drucker.length; i++) {
-
+            for (const element of status.drucker) {
                 systemstatus.push({
-                    text: 'Drucker ' + status.drucker[i].name,
-                    icon: status.drucker[i].connected ? 'checkmark-circle' : 'alert',
-                    cssClass: status.drucker[i].connected ? 'systemstatus-success' : 'systemstatus-danger',
+                    text: 'Drucker ' + element.name,
+                    icon: element.connected ? 'checkmark-circle' : 'alert',
+                    cssClass: element.connected ? 'systemstatus-success' : 'systemstatus-danger',
                     handler: () => { return false; }
                 });
             }

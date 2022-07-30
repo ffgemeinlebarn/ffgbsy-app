@@ -14,16 +14,15 @@
             <p>Speicherstand am Gerät: {{ data.saved | date: 'd.M.Y HH:mm:ss' }}</p>
 
             <h4>Gerät</h4>
-            <p *ngIf="!settings.locale.geraet?.description?.length">Das Gerät muss konfiguriert werden!</p>
-            <p *ngIf="settings.locale.geraet?.description?.length">{{ settings.locale?.geraet?.hersteller }}<span [hidden]="!settings.locale?.geraet?.type">({{ settings.locale?.geraet?.type }})</span></p>
-            <p *ngIf="settings.locale.geraet?.description?.length">Beschreibungstext auf Bon: {{ settings.locale?.geraet?.description }}</p>
+            <p *ngIf="!settings.locale.deviceName?.length">Das Gerät muss konfiguriert werden!</p>
+            <p *ngIf="settings.locale.deviceName?.length">Gerätename: {{ settings.locale?.deviceName }}</p>
 
             <!-- Actions -->
-            <ion-button *ngIf="settings.locale.geraet?.description?.length && data.version" (click)="initComplete()">
+            <ion-button *ngIf="settings.locale.deviceName?.length && data.version" (click)="initComplete()">
                 Starten
             </ion-button>
 
-            <ion-button *ngIf="!settings.locale.geraet?.description?.length" routerLink="/settings">
+            <ion-button *ngIf="!settings.locale.deviceName?.length" routerLink="/settings">
                 Einstellungen
             </ion-button>
 

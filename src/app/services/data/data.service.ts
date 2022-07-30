@@ -8,7 +8,6 @@ import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { Tisch } from 'src/app/classes/tisch.class';
-import { Geraet } from 'src/app/classes/geraet.class';
 import { ApiService } from '../api/api.service';
 
 @Injectable({
@@ -20,7 +19,6 @@ export class DataService implements Daten {
     private storageKey = 'data';
 
     public aufnehmer: Aufnehmer[] = [];
-    public geraete: Geraet[] = [];
     public produktbereiche: Produktbereich[];
     public produktkategorien: Produktkategorie[];
     public produkte: Produkt[];
@@ -53,7 +51,6 @@ export class DataService implements Daten {
                 }>JSON.parse(jsonObject);
 
                 this.aufnehmer = dataObject.data.aufnehmer;
-                this.geraete = dataObject.data.geraete;
                 this.produktbereiche = dataObject.data.produktbereiche;
                 this.produktkategorien = dataObject.data.produktkategorien;
                 this.produkte = dataObject.data.produkte;
@@ -72,7 +69,7 @@ export class DataService implements Daten {
 
         console.log('[FFGBSY]', 'Data ', 'Start Download');
 
-        await this.api.getDaten().subscribe((data) => {
+        this.api.getDaten().subscribe((data) => {
 
             const saved = new Date();
 
@@ -91,11 +88,11 @@ export class DataService implements Daten {
 
             this.saved = saved;
 
-            this.ready = new Promise((resolve, reject) => resolve(saved));
+            this.ready = Promise.resolve(saved);
 
         }, (err) => {
             alert("Es trat ein Fehler auf!" + "Daten wurden nicht synchronisiert!");
-            this.ready = new Promise((resolve, reject) => reject(undefined));
+            this.ready = Promise.reject(err);
         });
     }
 
