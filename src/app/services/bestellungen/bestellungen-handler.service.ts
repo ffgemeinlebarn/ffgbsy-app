@@ -47,9 +47,7 @@ export class BestellungenHandlerService {
         this.api.createBestellung(this.neubestellung.bestellung).subscribe((bestellung) => {
 
             this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
-
-            this.newNeubestellung();
-            this.neubestellung.status = 'tischauswahl';
+            this.clearNeubestellung();
 
             this.api.druckBestellung(bestellung).subscribe((bons) => {
                 if (bons.filter(b => !b.result).length == 0) {
