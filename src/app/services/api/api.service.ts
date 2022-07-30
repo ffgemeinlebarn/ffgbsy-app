@@ -76,7 +76,7 @@ export class ApiService {
             );
     }
 
-    public druckBestellung(bestellung: Bestellung): Observable<Bestellung> {
+    public druckBestellung(bestellung: Bestellung): Observable<Array<any>> {
         this.frontend.showLoadingSpinner('send');
         return this.http
             .post(`${this.url}/bons/druck/bestellung/${bestellung.id}`, null, { headers: this.headers })

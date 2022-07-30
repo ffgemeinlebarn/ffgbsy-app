@@ -32,7 +32,7 @@ export class NeueBestellungPage implements OnInit {
         this.filterProduktkategorie = this.data.produktkategorien[0];
     }
 
-    ngOnInit() { }
+    ngOnInit(): void { /* Compliant */ }
 
     /*******************************************************************************
     *** Tischauswahl
@@ -71,8 +71,6 @@ export class NeueBestellungPage implements OnInit {
 
         if (form == 'standard') {
 
-            added = false;
-
             for (let bp of this.bestellungsHandler.neubestellung.bestellung.bestellpositionen) {
                 if (
                     bp.produkt.id == produkt.id &&
@@ -84,8 +82,6 @@ export class NeueBestellungPage implements OnInit {
                     break;
                 }
             }
-        } else if (form == 'new_line') {
-            added = false;
         }
 
         if (!added) {
@@ -141,7 +137,7 @@ export class NeueBestellungPage implements OnInit {
                 }
             });
 
-        return await modal.present();
+        return modal.present();
     }
 
     async kontrolliereBestellung() {
@@ -165,7 +161,7 @@ export class NeueBestellungPage implements OnInit {
 
             });
 
-        return await modal.present();
+        return modal.present();
     }
 
 
@@ -177,15 +173,13 @@ export class NeueBestellungPage implements OnInit {
     // Cancel Bestellung
 
     async askForCancelBestellung() {
-
         await this.frontend.showJaNeinAlert(
             'Abbruch der Bestellung',
             'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.'
-        ).then(yes => {
+        ).then(_ => {
             this.bestellungsHandler.neubestellung.bestellung = null;
             this.bestellungsHandler.neubestellung.status = null;
-        }, no => { });
-
+        });
     }
 
     changeTisch() {

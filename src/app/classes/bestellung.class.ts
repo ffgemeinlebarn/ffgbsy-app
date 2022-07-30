@@ -16,7 +16,6 @@ export class Bestellung {
     constructor(tisch?: Tisch, aufnehmer?: Aufnehmer) {
 
         this.id = null;
-        this.device_name = "Testdevice";
 
         this.setTimestampBegonnen();
         if (tisch) this.tisch = tisch;
