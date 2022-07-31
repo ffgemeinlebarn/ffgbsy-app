@@ -57,18 +57,7 @@ export class InitPage implements OnInit {
     ngOnInit() { }
 
     public async downloadData() {
-        this.messageLineOne = "Lade neue Daten vom Server ...";
-        this.messageLineTwo = "";
-
         await this.data.download();
-
-        this.messageLineOne = "Daten wurden aktualisiert!";
-        this.messageLineTwo = "";
-    }
-
-    private setMessage(firstLine: string, secondLine: string): void {
-        this.messageLineOne = firstLine;
-        this.messageLineTwo = secondLine;
     }
 
     public systemstatusAbrufen() {
