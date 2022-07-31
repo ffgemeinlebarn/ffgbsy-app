@@ -3,14 +3,9 @@ export class Drucker {
     name: string;
     ip: string;
     port: any;
-    mac: any;
 
     ping: any = {
         erreichbar: false,
         leverage: null
     };
-
-    constructor(){
-        
-    }
 }

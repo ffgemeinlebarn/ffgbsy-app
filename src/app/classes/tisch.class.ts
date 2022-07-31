@@ -4,8 +4,4 @@ export class Tisch {
     nummer: number;
     tischkategorien_id: number;
     sortierIndex: number;
-
-    constructor(){
-        
-    }
 }
