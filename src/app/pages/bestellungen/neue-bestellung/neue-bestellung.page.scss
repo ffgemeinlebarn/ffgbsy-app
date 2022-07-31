@@ -1,6 +1,4 @@
 // Neue Bestellung Button
-
-
 .neue-bestellung{
     --padding-top: 30px;
     --padding-bottom: 30px;
@@ -20,7 +18,7 @@
     margin-top: 3em;
 }
 
-// Tische
+// Tischauswahl
 
 .kachelwand{
     display: flex;
@@ -61,19 +59,85 @@
 }
 
 .tischkategorie-kachel{
-    width: 25vw;
     min-height: 60px;
+    flex-basis: var(--base-width-kategorien);
 }
 
 .tisch-kachel{
-    width: 20vw;
-    height: 20vw;
+    aspect-ratio: 1;
+    flex-basis: var(--base-width-tische);
 
-    &--big-1{ width: 40vw; }
-    &--big-2{ width: 60vw; }
-    &--big-3{ width: 80vw; }
-    &--big-4{ width: 100vw; }
+    &--big-1{
+        flex-basis: calc(var(--base-width-tische) * 2);
+        aspect-ratio: 2;
+    }
+    &--big-2{
+        flex-basis: calc(var(--base-width-tische) * 3);
+        aspect-ratio: 3;
+    }
+    &--big-3{
+        flex-basis: calc(var(--base-width-tische) * 4);
+        aspect-ratio: 4;
+    }
+    &--big-4{
+        flex-basis: calc(var(--base-width-tische) * 5);
+        aspect-ratio: 5;
+    }
 }
+
+@media screen and (max-width: 300px)
+{
+    :host{
+        --base-width-tische: 50%;
+        --base-width-kategorien: 50%;
+    }
+}
+
+@media screen and (min-width: 301px) and (max-width: 500px)
+{
+    :host{
+        --base-width-tische: 33.33333%;
+        --base-width-kategorien: 50%;
+    }
+}
+
+@media screen and (min-width: 501px) and (max-width: 700px)
+{
+    :host{
+        --base-width-tische: 25%;
+        --base-width-kategorien: 25%;
+    }
+}
+
+@media screen and (min-width: 701px) and (max-width: 1000px)
+{
+    :host{
+        --base-width-tische: 20%;
+        --base-width-kategorien: 25%;
+    }
+}
+
+@media screen and (min-width: 1001px) and (max-width: 1260px)
+{
+    :host{
+        --base-width-tische: 16.6666666%;
+        --base-width-kategorien: 25%;
+    }
+}
+
+@media screen and (min-width: 1261px)
+{
+    :host{
+        --base-width-tische: 12.5%;
+        --base-width-kategorien: 16.6666666%;
+    }
+}
+
+// --ion-grid-width-xs: 100%;
+// --ion-grid-width-sm: 540px;
+// --ion-grid-width-md: 720px;
+// --ion-grid-width-lg: 960px;
+// --ion-grid-width-xl: 1140px;
 
 .status-current-bestellpositionen{
 
