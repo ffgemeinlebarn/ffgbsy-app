@@ -7,6 +7,26 @@
                 <p>Name</p>
             </ion-label>
         </ion-item>
+        <ion-item-divider>Error Payload</ion-item-divider>
+        <ion-item>
+            <ion-label>
+                <h3>{{ error.error.statusCode }}</h3>
+                <p>Status Code</p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <h3>{{ error.error.error.type }}</h3>
+                <p>Type</p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <h3>{{ error.error.error.description }}</h3>
+                <p>Beschreibung</p>
+            </ion-label>
+        </ion-item>
+        <ion-item-divider>Error Object</ion-item-divider>
         <ion-item>
             <ion-label>
                 <h3>{{ error.status }}</h3>
