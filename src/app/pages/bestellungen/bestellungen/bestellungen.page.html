@@ -23,7 +23,7 @@
         <ion-item *ngFor="let bestellung of bestellungen" [routerLink]="['/bestellungen', bestellung.id]">
             <ion-label>
                 <h2>{{ bestellung?.tisch?.reihe }} {{ bestellung?.tisch?.nummer }}</h2>
-                <p>Datum: <strong>{{ bestellung?.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bestellung?.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</strong></p>
+                <p>Datum: <strong>{{ bestellung?.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bestellung?.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</strong></p>
                 <p>Summe: <strong>{{ bestellung?.summe | euroPreis }}</strong></p>
             </ion-label>
             <ion-note slot="end">{{ bestellung?.aufnehmer?.vorname }} {{ bestellung?.aufnehmer?.nachname }}</ion-note>
