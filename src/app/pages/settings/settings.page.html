@@ -1,50 +1,56 @@
 <ion-header>
     <ion-toolbar>
-      <ion-menu-button slot="start"></ion-menu-button>
-      <ion-title>Einstellungen</ion-title>
-      <ion-buttons slot="primary">
-        <ion-button (click)="save()">
-          <ion-icon name="save" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-buttons>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Einstellungen</ion-title>
+        <ion-buttons slot="primary">
+            <ion-button (click)="save()">
+                <ion-icon name="save" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
-  </ion-header>
+</ion-header>
 
 <ion-content>
 
-  <ion-list>
-    <ion-item-divider>
-      <ion-label>Meine Aufnehmer-Einstellungen</ion-label>
-    </ion-item-divider>
-    <ion-item>
-      <ion-label position="stacked">Vorname</ion-label>
-      <ion-input [(ngModel)]="aufnehmer.vorname"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Nachname</ion-label>
-      <ion-input [(ngModel)]="aufnehmer.nachname"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="stacked">Schriftgröße</ion-label>
-      <ion-select [(ngModel)]="aufnehmer.zoom_level">
-        <ion-select-option [value]="1">Level 1</ion-select-option>
-        <ion-select-option [value]="2">Level 2</ion-select-option>
-        <ion-select-option [value]="3">Level 3</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+    <ion-list *ngIf="bestellungsHandler.aufnehmer">
+        <ion-item-divider>
+            <ion-label>Meine Aufnehmer-Einstellungen</ion-label>
+        </ion-item-divider>
+        <ion-item>
+            <ion-label position="stacked">Vorname</ion-label>
+            <ion-input [(ngModel)]="bestellungsHandler.aufnehmer.vorname"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Nachname</ion-label>
+            <ion-input [(ngModel)]="bestellungsHandler.aufnehmer.nachname"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Schriftgröße</ion-label>
+            <ion-select [(ngModel)]="bestellungsHandler.aufnehmer.zoom_level">
+                <ion-select-option [value]="1">Level 1</ion-select-option>
+                <ion-select-option [value]="2">Level 2</ion-select-option>
+                <ion-select-option [value]="3">Level 3</ion-select-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
 
-  <ion-list>
-    <ion-item-divider>
-      <ion-label>Lokale Einstellungen</ion-label>
-    </ion-item-divider>
+    <ion-list>
+        <ion-item-divider>
+            <ion-label>API</ion-label>
+        </ion-item-divider>
 
-    <ion-item>
-      <ion-label position="stacked">Gerät <ion-icon name="alert" color="danger"></ion-icon></ion-label>
-      <ion-select [(ngModel)]="settings.locale.diesesGeraetId">
-        <ion-select-option *ngFor="let geraet of data.geraete" [value]="geraet.id">{{ geraet.hersteller }} {{ geraet.type }} ({{ geraet.ip }})</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+        <ion-item>
+            <ion-label position="stacked">Base URL</ion-label>
+            <ion-input [(ngModel)]="settings.locale.api"></ion-input>
+        </ion-item>
+
+        <ion-item-divider>
+            <ion-label>Gerät</ion-label>
+        </ion-item-divider>
+        <ion-item>
+            <ion-label position="stacked">Gerätename</ion-label>
+            <ion-input [(ngModel)]="settings.locale.deviceName"></ion-input>
+        </ion-item>
+    </ion-list>
 
 </ion-content>

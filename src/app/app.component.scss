@@ -1,50 +1,29 @@
-// App Styles
-// ----------------------------------------------------------------------------
-// Put style rules here that you want to apply to the entire application. These 
-// styles are for the entire app and not just one component. Additionally, this 
-// file can hold Sass mixins, functions, and placeholder classes to be imported 
-// and used throughout the application.
+ion-menu{
+    --side-max-width: 400px;
 
-// Ion-Card Layout
+    .container{
+        display: flex;
+        flex-direction: column;
+        height: 100%;
 
-.ion-card-side-image-layout{
-    display: flex;
-    flex-direction: row;
+        // Items
+        .sidemenu-main-menu{
+            padding-top: 0px;
+            flex: 1;
 
-    &__content{
-        width: 100%;
-    }
+            ion-item{
+                border-bottom: 1px solid #ddd;
 
-    &__image{
-        width: 130px;
-        background-color: #dddddd;
-        background-size: cover;
-        background-position: center center;
-    }
-}
+                ion-label{
+                    line-height: 60px;
+                }
+            }
+        }
 
-
-// Sidemenu
-
-.sidemenu-padding{
-    padding: 10px;
-}
-
-.sidemenu-main-menu{
-    padding-top: 0px;
-
-    ion-item{
-        border-bottom: 1px solid #ddd;
-
-        ion-label{
-            line-height: 60px;
+        .init-button{
+            margin: 1em;
         }
     }
-}
-
-.sidemenu-headline{
-    @extend .sidemenu-padding;
-    padding-bottom: 5px;
 }
 
 
@@ -63,20 +42,21 @@
 
 // Content - Center All
 
-:host ::ng-deep {
-    
-    ion-content.center{
 
-        >ion-grid.center{
-            height: 100%;
+// :host ::ng-deep {
 
-            >ion-row.center{
-                height: 100%;
-                flex-direction: column;
-            }
-        }
-    }
-}
+//     ion-content.center{
+
+//         >ion-grid.center{
+//             height: 100%;
+
+//             >ion-row.center{
+//                 height: 100%;
+//                 flex-direction: column;
+//             }
+//         }
+//     }
+// }
 
 // Ion-Select Alert
 
@@ -126,21 +106,21 @@
             $produktauswahl-item-p_font-size: 1.00em;
 
             $produktauswahl-item-button_width-height: 40px;
-            
+
             // Classen
             .tischkategorie-kachel ion-button { font-size: $tischkategorie-kachel_font-size; }
             .tisch-kachel ion-button { font-size: $tisch-kachel_font-size; }
 
             .produktkategorie-kachel ion-button { font-size: $produktkategorie-kachel_font-size; }
 
-            .content-left ion-list ion-item ion-label h3 { font-size: $bestellposition-h3_font-size; } 
+            .content-left ion-list ion-item ion-label h3 { font-size: $bestellposition-h3_font-size; }
             .content-left ion-list ion-item ion-label p { font-size: $bestellposition-p_font-size; }
-            
+
             .content-right ion-list ion-item-divider { font-size: $produktauswahl-produkteinteilung_font-size; }
             .content-right ion-list ion-item ion-label h2 { font-size: $produktauswahl-item-h2_font-size; }
-            .content-right ion-list ion-item ion-label p { font-size: $produktauswahl-item-p_font-size; } 
+            .content-right ion-list ion-item ion-label p { font-size: $produktauswahl-item-p_font-size; }
 
-            .content-right ion-list ion-item ion-button { width: $produktauswahl-item-button_width-height !important; height: $produktauswahl-item-button_width-height !important; } 
+            .content-right ion-list ion-item ion-button { width: $produktauswahl-item-button_width-height !important; height: $produktauswahl-item-button_width-height !important; }
         }
 
         &--3{
@@ -157,21 +137,21 @@
             $produktauswahl-item-p_font-size: 1.00em;
 
             $produktauswahl-item-button_width-height: 46px;
-            
+
             // Classen
             .tischkategorie-kachel ion-button { font-size: $tischkategorie-kachel_font-size; }
             .tisch-kachel ion-button { font-size: $tisch-kachel_font-size; }
 
             .produktkategorie-kachel ion-button { font-size: $produktkategorie-kachel_font-size; }
 
-            .content-left ion-list ion-item ion-label h3 { font-size: $bestellposition-h3_font-size; } 
+            .content-left ion-list ion-item ion-label h3 { font-size: $bestellposition-h3_font-size; }
             .content-left ion-list ion-item ion-label p { font-size: $bestellposition-p_font-size; }
-            
+
             .content-right ion-list ion-item-divider { font-size: $produktauswahl-produkteinteilung_font-size; }
             .content-right ion-list ion-item ion-label h2 { font-size: $produktauswahl-item-h2_font-size; }
-            .content-right ion-list ion-item ion-label p { font-size: $produktauswahl-item-p_font-size; } 
+            .content-right ion-list ion-item ion-label p { font-size: $produktauswahl-item-p_font-size; }
 
-            .content-right ion-list ion-item ion-button { width: $produktauswahl-item-button_width-height !important; height: $produktauswahl-item-button_width-height !important; } 
+            .content-right ion-list ion-item ion-button { width: $produktauswahl-item-button_width-height !important; height: $produktauswahl-item-button_width-height !important; }
         }
     }
 }

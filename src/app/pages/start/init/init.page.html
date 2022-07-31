@@ -1,39 +1,60 @@
-<ion-content class="center" padding="true">
-    <ion-grid class="center">
-        <ion-row class="center" justify-content-center align-items-center>
-            <h2 class="headline">Synchronisierung der FFGBSY-App mit dem Server</h2>
-            <ion-spinner [hidden]="!datenSynchronisierungLaeuft" name="lines-small"></ion-spinner>
-            <p class="message">{{ messageLineOne }}<br />{{ messageLineTwo }}</p>
-            <ion-button [hidden]="datenSynchronisiert" (click)="datenSynchronisierungStarten()">Synchronisierung starten
-            </ion-button>
-            <ion-button [hidden]="!datenSynchronisiert || !lokalesGeraetReady" [routerLink]="['/select-aufnehmer']">
-                <ion-label>Aufnehmer auswählen</ion-label>
-                <ion-icon name="arrow-forward" slot="end"></ion-icon>
-            </ion-button>
-            <ion-button [hidden]="!datenSynchronisiert || lokalesGeraetReady" (click)="openGeraeteSelect()"
-                fill="outline">
-                <ion-label>Lokales Gerät konfigurieren</ion-label>
-                <ion-icon name="settings" slot="end"></ion-icon>
-            </ion-button>
+<ion-content>
+    <div class="center-wrapper">
+        <div class="centered">
 
-            <p class="geraet-message" [hidden]="!datenSynchronisiert">{{ geraet_message }}</p>
+            <img class="logo" src="assets/logo.svg" alt="Logo">
 
-            <ion-button class="button-erneute-synchronisation" [hidden]="!datenSynchronisiert"
-                (click)="datenSynchronisierungStarten()" fill="outline" shape="round">
-                <ion-label>Daten erneut synchronisieren</ion-label>
-                <ion-icon name="sync" slot="end"></ion-icon>
-            </ion-button>
-            <ion-button class="button-systemstatus-abrufen" (click)="systemstatusAbrufen()" fill="outline"
-                shape="round">
+            <h4 class="tagline">FF Gemeinlebarn Bestellsystem</h4>
+            <h4 class="version">Version {{ version.number }}</h4>
+
+            <ion-grid class="cards">
+                <ion-row>
+                    <ion-col>
+                        <div class="tile ion-activatable ripple-parent" (click)="initComplete()" [ngClass]="{'tile--success': settings.locale.deviceName?.length && data.version}" *ngIf="settings.locale.deviceName?.length && data.version">
+                            <ion-grid>
+                                <ion-row class="ion-align-items-center">
+                                    <ion-col>
+                                        <h4>Initilisierung vollständig</h4>
+                                        <p>Hier drücken, um fortzufahren!</p>
+                                    </ion-col>
+                                    <ion-col size="auto">
+                                        <ion-icon class="start-icon" name="arrow-redo-outline"></ion-icon>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
+
+                            <ion-ripple-effect></ion-ripple-effect>
+                        </div>
+                        <div class="tile" *ngIf="settings.locale.deviceName?.length == 0 || !data.version">
+                            <h4>Initilisierung unvollständig</h4>
+                            <p>Die Probleme können unten behoben werden</p>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <div class="tile" [ngClass]="{'tile--success': data.version}">
+                            <h4>Daten Stand</h4>
+                            <p>{{ data.saved | date: 'dd.MM.YYYY HH:mm:ss' }}</p>
+                        </div>
+                    </ion-col>
+                    <ion-col>
+                        <div class="tile ion-activatable ripple-parent" [ngClass]="{'tile--success': settings.locale?.deviceName?.length}" routerLink="/settings">
+                            <h4>Gerät</h4>
+                            <p *ngIf="!settings.locale.deviceName?.length">Der Gerätename fehlt!</p>
+                            <p *ngIf="settings.locale.deviceName?.length">{{ settings.locale?.deviceName }}</p>
+                            <ion-ripple-effect></ion-ripple-effect>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+            <!-- Bottom -->
+            <ion-button class="button-systemstatus-abrufen" (click)="systemstatusAbrufen()" fill="outline" shape="round">
                 <ion-label>Systemstatus prüfen</ion-label>
                 <ion-icon name="cloud-done" slot="end"></ion-icon>
             </ion-button>
-        </ion-row>
-    </ion-grid>
+        </div>
 
-    <ion-select [interfaceOptions]="{header: 'Geräte'}" [(ngModel)]="settings.locale.diesesGeraetId"
-        (ionChange)="settings.saveLocal(); refrehLocalGeraet();">
-        <ion-select-option *ngFor="let geraet of data.geraete" [value]="geraet.id">{{ geraet.hersteller }} {{
-            geraet.type }} ({{ geraet.ip }})</ion-select-option>
-    </ion-select>
+    </div>
 </ion-content>

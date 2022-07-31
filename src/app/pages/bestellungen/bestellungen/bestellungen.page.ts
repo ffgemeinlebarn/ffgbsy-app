@@ -1,88 +1,57 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Bestellung } from 'src/app/classes/bestellung.class';
-import { SettingsService } from 'src/app/services/settings/settings.service';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { SessionService } from 'src/app/services/session/session.service';
-import { DataService } from 'src/app/services/data/data.service';
-import { ModalController, IonSelect } from '@ionic/angular';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
+import { ApiService } from 'src/app/services/api/api.service';
+import { Router } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { QrScanComponent } from 'src/app/modals/qr-scan/qr-scan.component';
 
 @Component({
-  selector: 'app-bestellungen',
-  templateUrl: './bestellungen.page.html',
-  styleUrls: ['./bestellungen.page.scss'],
+    selector: 'app-bestellungen',
+    templateUrl: './bestellungen.page.html',
+    styleUrls: ['./bestellungen.page.scss'],
 })
 export class BestellungenPage implements OnInit {
 
-  public bestellungen: Array<Bestellung>;
-  public filtredBestellungen: Array<Bestellung> = [];
-  public filter: any = {
-    aufnehmerId: null,
-    tischeId: null
-  };
+    public scannerEnabled: boolean = false;
+    public bestellungen: Array<Bestellung>;
+    public filter: any = {
+        aufnehmerId: null,
+        tischeId: null
+    };
 
-  constructor(
-    public bestellungsHandler: BestellungenHandlerService,
-    public data: DataService,
-    public session: SessionService,
-    public settings: SettingsService,
-    public frontend: FrontendService,
-    private http: HttpClient, 
-    private modalController: ModalController
-  ) {
-    this.filter.aufnehmerId = this.session.aufnehmer.id;
-    this.filter.tischeId = null;
-    this.getBestellungen().then(_ => this.filterBestellungen());
-  }
-
-  ngOnInit() { }
-
-  getBestellungen(){
-    return new Promise((resolve, reject) => {
-      
-      this.frontend.showLoadingSpinner();
-      this.http.get<Bestellung[]>(this.settings.api.url + '/bestellungen', { params: { filter: 'today' } }).subscribe(bestellungen => {
-        this.bestellungen = bestellungen;
-        this.frontend.hideLoadingSpinner();
-        resolve(true);
-      },
-      err => {
-        this.frontend.hideLoadingSpinner();
-        reject(err);
-        console.log("Error occured: ", err);
-      }); 
-
-    });
-  }
-
-  filterBestellungen(){
-
-    this.filtredBestellungen = [];
-    
-    for(var i=0;i<this.bestellungen.length;i++){
-      let b = this.bestellungen[i];
-      let push = false;
-
-      if (this.filter.aufnehmerId == b.aufnehmer.id || this.filter.aufnehmerId == null){
-        if (this.filter.tischeId == b.tisch.id || this.filter.tischeId == null){
-          push = true;
-        }
-      }
-
-      if (push) this.filtredBestellungen.push(b);
+    constructor(
+        private api: ApiService,
+        private bestellungsHandler: BestellungenHandlerService,
+        private router: Router,
+        private modalCtrl: ModalController
+    ) {
+        this.filter.aufnehmerId = this.bestellungsHandler.aufnehmer;
+        this.filter.tischeId = null;
     }
-    
-  }
 
-  @ViewChild('aufnehmerSelect', {static: false}) aufnehmerSelect: IonSelect;
-  filterSelectAufnehmer(){
-    this.aufnehmerSelect.open();
-  }
+    ngOnInit() {
+        this.getBestellungen();
+    }
 
-  @ViewChild('tischeSelect', {static: false}) tischeSelect: IonSelect;
-  filterSelectTische(){
-    this.tischeSelect.open();
-  }
+    getBestellungen() {
+        return this.api.getBestellungen().subscribe(bestellungen => this.bestellungen = bestellungen);
+    }
 
+    async qrScanOpen() {
+        this.scannerEnabled = true;
+
+        const modal = await this.modalCtrl.create({
+            component: QrScanComponent,
+            cssClass: 'qr-modal'
+        });
+
+        modal.present();
+
+        const { data, role } = await modal.onWillDismiss();
+
+        if (role == 'success') {
+            this.router.navigate(['bestellungen', data]);
+        }
+    }
 }

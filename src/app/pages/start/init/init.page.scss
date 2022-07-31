@@ -1,30 +1,30 @@
-.headline{
-    text-align: center;
+.logo{
+    max-width: 100px;
+    width: 100%;
 }
 
-.message{
-    margin-top: 20px;
-    margin-bottom: 80px;
-    color: #777777;
+.tagline{
+    text-align: center;
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #777;
+    margin-top: 2em;
+}
+
+.version{
+    color: #aaa;
     font-size: 1em;
-    text-align: center;
+    margin-top: 0.4em;
+    margin-bottom: 2em;
 }
 
-.geraet-refresh{
-    --padding-start: 4px;
-    --padding-end: 4px;
-    margin-bottom: 20px;
+.cards{
+    margin-top: 2em;
+    width: 100%;
+    max-width: 640px;
 }
 
-.geraet-message{
-    margin-top: 150px;
-    margin-bottom: 20px;
-    font-size: 0.8em;
-    color: #aaaaaa;
-}
-
-.button-systemstatus-abrufen,
-.button-erneute-synchronisation{
+.button-systemstatus-abrufen{
     position: fixed;
     right: 20px;
     --ion-color-primary: #ccc;
@@ -35,6 +35,42 @@
         bottom: 16px;
     }
 
-    .button-erneute-synchronisation{
-        bottom: 60px;
+.centered{
+    width: 100%;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.start-icon{
+    font-size: 2em;
+}
+
+ion-col{
+    --ion-grid-column-padding: 0.65em;
+}
+
+.tile{
+    background-color: #f4f4f4;
+    padding: 2em;
+    border-radius: 0.7em;
+    width: 100%;
+
+    h4{
+        font-weight: bold;
+        font-size: 1.25em;
+        margin: 0px;
+        line-height: 1;
     }
+
+    p{
+        line-height: 1;
+        margin-bottom: 0px;
+    }
+
+    &--success{
+        background-color: rgb(68, 68, 158);
+        color: #fff;
+    }
+}

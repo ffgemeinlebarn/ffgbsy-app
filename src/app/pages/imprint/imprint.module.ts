@@ -8,19 +8,19 @@ import { IonicModule } from '@ionic/angular';
 import { ImprintPage } from './imprint.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: ImprintPage
-  }
+    {
+        path: '',
+        component: ImprintPage
+    }
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [ImprintPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes)
+    ],
+    declarations: [ImprintPage]
 })
-export class ImprintPageModule {}
+export class ImprintPageModule { }
