@@ -7,6 +7,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
+import { version } from 'src/environments/version';
 
 @Component({
     selector: 'app-init',
@@ -15,8 +16,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class InitPage implements OnInit {
 
-    public messageLineOne: string = "";
-    public messageLineTwo: string = "";
+    public version = version;
     public datenSynchronisierungLaeuft: boolean = false;
 
     public aufnehmer: Aufnehmer | null = null;
@@ -32,9 +32,6 @@ export class InitPage implements OnInit {
         public frontend: FrontendService,
         private api: ApiService
     ) {
-        this.messageLineOne = "Warte auf Synchronisierung der Daten.";
-        this.messageLineTwo = "";
-
         this.data.ready.then(() => {
 
             // Check Version
