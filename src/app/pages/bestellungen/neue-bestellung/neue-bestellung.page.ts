@@ -52,6 +52,10 @@ export class NeueBestellungPage implements OnInit {
         this.filterTischkategorieId = tischkategorie_id;
     }
 
+    changeTisch() {
+        this.bestellungsHandler.neubestellung.status = 'tischauswahl';
+    }
+
 
     /*******************************************************************************
     *** Aufnahme der Bestellpositionen
@@ -168,8 +172,6 @@ export class NeueBestellungPage implements OnInit {
     *** Sonstiges
     *******************************************************************************/
 
-    // Cancel Bestellung
-
     async askForCancelBestellung() {
         await this.frontend.showJaNeinAlert(
             'Abbruch der Bestellung',
@@ -178,10 +180,6 @@ export class NeueBestellungPage implements OnInit {
             this.bestellungsHandler.neubestellung.bestellung = null;
             this.bestellungsHandler.neubestellung.status = null;
         });
-    }
-
-    changeTisch() {
-        this.bestellungsHandler.neubestellung.status = 'tischauswahl';
     }
 
 }
