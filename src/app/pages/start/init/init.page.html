@@ -2,29 +2,41 @@
     <div class="center-wrapper">
         <div class="centered">
 
-            <h2 class="headline">Initialisierung</h2>
-            <h4 class="tagline">FFGBSY</h4>
+            <img class="logo" src="assets/logo.svg" alt="Logo">
 
-            <!-- <ion-spinner [hidden]="!datenSynchronisierungLaeuft" name="lines-small"></ion-spinner> -->
-            <p class="message">{{ messageLineOne }}<br />{{ messageLineTwo }}</p>
+            <h4 class="tagline">FF Gemeinlebarn Bestellsystem</h4>
 
-            <!-- Requirements -->
-            <h4>Daten</h4>
-            <p>Version: {{ data.version }}</p>
-            <p>Speicherstand am Gerät: {{ data.saved | date: 'd.M.Y HH:mm:ss' }}</p>
-
-            <h4>Gerät</h4>
-            <p *ngIf="!settings.locale.deviceName?.length">Das Gerät muss konfiguriert werden!</p>
-            <p *ngIf="settings.locale.deviceName?.length">Gerätename: {{ settings.locale?.deviceName }}</p>
-
-            <!-- Actions -->
-            <ion-button *ngIf="settings.locale.deviceName?.length && data.version" (click)="initComplete()">
-                Starten
-            </ion-button>
-
-            <ion-button *ngIf="!settings.locale.deviceName?.length" routerLink="/settings">
-                Einstellungen
-            </ion-button>
+            <ion-grid class="cards">
+                <ion-row>
+                    <ion-col>
+                        <div class="tile ion-activatable ripple-parent" (click)="initComplete()" [ngClass]="{'tile--success': settings.locale.deviceName?.length && data.version}" *ngIf="settings.locale.deviceName?.length && data.version">
+                            <h4>Initilisierung vollständig</h4>
+                            <p>Hier drücken, um fortzufahren!</p>
+                            <ion-ripple-effect></ion-ripple-effect>
+                        </div>
+                        <div class="tile" *ngIf="settings.locale.deviceName?.length == 0 || !data.version">
+                            <h4>Initilisierung unvollständig</h4>
+                            <p>Die Probleme können unten behoben werden</p>
+                        </div>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <div class="tile" [ngClass]="{'tile--success': data.version}">
+                            <h4>Daten Stand</h4>
+                            <p>{{ data.saved | date: 'dd.MM.YYYY HH:mm:ss' }}</p>
+                        </div>
+                    </ion-col>
+                    <ion-col>
+                        <div class="tile ion-activatable ripple-parent" [ngClass]="{'tile--success': settings.locale?.deviceName?.length}" routerLink="/settings">
+                            <h4>Gerät</h4>
+                            <p *ngIf="!settings.locale.deviceName?.length">Der Gerätename fehlt!</p>
+                            <p *ngIf="settings.locale.deviceName?.length">{{ settings.locale?.deviceName }}</p>
+                            <ion-ripple-effect></ion-ripple-effect>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
 
             <!-- Bottom -->
             <ion-button class="button-systemstatus-abrufen" (click)="systemstatusAbrufen()" fill="outline" shape="round">

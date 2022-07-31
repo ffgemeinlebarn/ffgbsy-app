@@ -1,38 +1,21 @@
-.headline{
-    text-align: center;
+.logo{
+    max-width: 100px;
+    width: 100%;
 }
 
 .tagline{
     text-align: center;
-    font-size: 1em;
+    font-size: 1.25em;
     font-weight: bold;
     color: #777;
-    margin-top: 0px;
+    margin: 2em 0em;
 }
 
-.message{
-    margin-top: 20px;
-    margin-bottom: 80px;
-    color: #777777;
-    font-size: 1em;
-    text-align: center;
+.cards{
+    margin-top: 2em;
 }
 
-.geraet-refresh{
-    --padding-start: 4px;
-    --padding-end: 4px;
-    margin-bottom: 20px;
-}
-
-.geraet-message{
-    margin-top: 150px;
-    margin-bottom: 20px;
-    font-size: 0.8em;
-    color: #aaaaaa;
-}
-
-.button-systemstatus-abrufen,
-.button-erneute-synchronisation{
+.button-systemstatus-abrufen{
     position: fixed;
     right: 20px;
     --ion-color-primary: #ccc;
@@ -43,10 +26,38 @@
         bottom: 16px;
     }
 
-    .button-erneute-synchronisation{
-        bottom: 60px;
+.centered{
+    width: 100%;
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ion-col{
+    --ion-grid-column-padding: 0.65em;
+}
+
+.tile{
+    background-color: #f4f4f4;
+    padding: 2em;
+    border-radius: 0.7em;
+    width: 100%;
+
+    h4{
+        font-weight: bold;
+        font-size: 1.25em;
+        margin: 0px;
+        line-height: 1;
     }
 
-ion-spinner{
-    text-align: center;
+    p{
+        line-height: 1;
+        margin-bottom: 0px;
+    }
+
+    &--success{
+        background-color: rgb(144, 144, 255);
+        color: #fff;
+    }
 }

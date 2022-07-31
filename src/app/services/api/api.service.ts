@@ -112,7 +112,7 @@ export class ApiService {
     public getSystemstatus(): Observable<any> {
         this.frontend.showLoadingSpinner(null, 'Prüfe Systemstatus');
         return this.http
-            .get(`${this.url}/systemstatus`, { headers: this.headers })
+            .get(`${this.url}/status/systemstatus`, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),

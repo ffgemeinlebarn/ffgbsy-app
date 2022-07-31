@@ -72,22 +72,22 @@ export class InitPage implements OnInit {
     }
 
     public systemstatusAbrufen() {
-        this.api.getSystemstatus().subscribe((status) => {
+        this.api.getSystemstatus().subscribe((data) => {
 
             const systemstatus = [
                 {
                     text: 'API',
-                    icon: status.api.connected ? 'checkmark-circle' : 'alert',
-                    cssClass: status.api.connected ? 'systemstatus-success' : 'systemstatus-danger',
+                    icon: data.api ? 'checkmark-circle' : 'alert',
+                    cssClass: data.api ? 'systemstatus-success' : 'systemstatus-danger',
                     handler: () => { return false; }
                 }
             ];
 
-            for (const element of status.drucker) {
+            for (const item of data.drucker) {
                 systemstatus.push({
-                    text: 'Drucker ' + element.name,
-                    icon: element.connected ? 'checkmark-circle' : 'alert',
-                    cssClass: element.connected ? 'systemstatus-success' : 'systemstatus-danger',
+                    text: 'Drucker ' + item.drucker.name,
+                    icon: item.result ? 'checkmark-circle' : 'alert',
+                    cssClass: item.result ? 'systemstatus-success' : 'systemstatus-danger',
                     handler: () => { return false; }
                 });
             }
