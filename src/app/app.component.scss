@@ -1,6 +1,6 @@
-
-// Sidemenu
 ion-menu{
+    --side-max-width: 400px;
+
     .container{
         display: flex;
         flex-direction: column;
@@ -26,23 +26,6 @@ ion-menu{
     }
 }
 
-// Ion-Card Layout
-
-.ion-card-side-image-layout{
-    display: flex;
-    flex-direction: row;
-
-    &__content{
-        width: 100%;
-    }
-
-    &__image{
-        width: 130px;
-        background-color: #dddddd;
-        background-size: cover;
-        background-position: center center;
-    }
-}
 
 // Alert & Modal Styles
 
