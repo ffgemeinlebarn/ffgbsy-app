@@ -18,7 +18,12 @@
     </ion-grid>
 </ion-content>
 
-<ion-content [hidden]="bestellungen?.length == 0">
+<ion-content>
+
+    <div class="scanner">
+        <zxing-scanner [enable]="scannerEnabled"></zxing-scanner>
+    </div>
+
     <ion-list>
         <ion-item *ngFor="let bestellung of bestellungen" [routerLink]="['/bestellungen', bestellung.id]">
             <ion-label>

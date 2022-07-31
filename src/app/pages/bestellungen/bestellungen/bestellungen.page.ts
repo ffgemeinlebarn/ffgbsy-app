@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class BestellungenPage implements OnInit {
 
+    public scannerEnabled: boolean = false;
     public bestellungen: Array<Bestellung>;
     public filter: any = {
         aufnehmerId: null,
@@ -33,6 +34,7 @@ export class BestellungenPage implements OnInit {
     }
 
     openQrScanner() {
+        this.scannerEnabled = true;
         // TODO: Implement QR Scanner
     }
 }
