@@ -1,11 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Bestellung } from 'src/app/classes/bestellung.class';
-import { SettingsService } from 'src/app/services/settings/settings.service';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { DataService } from 'src/app/services/data/data.service';
-import { ModalController, IonSelect } from '@ionic/angular';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
     selector: 'app-bestellungen',
@@ -15,72 +11,28 @@ import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestel
 export class BestellungenPage implements OnInit {
 
     public bestellungen: Array<Bestellung>;
-    public filtredBestellungen: Array<Bestellung> = [];
     public filter: any = {
         aufnehmerId: null,
         tischeId: null
     };
 
     constructor(
-        public bestellungsHandler: BestellungenHandlerService,
-        public data: DataService,
-        public settings: SettingsService,
-        public frontend: FrontendService,
-        private http: HttpClient,
-        private modalController: ModalController
+        private api: ApiService,
+        private bestellungsHandler: BestellungenHandlerService
     ) {
         this.filter.aufnehmerId = this.bestellungsHandler.aufnehmer;
         this.filter.tischeId = null;
-        // this.getBestellungen().then(_ => this.filterBestellungen());
     }
 
-    ngOnInit() { }
+    ngOnInit() {
+        this.getBestellungen();
+    }
 
     getBestellungen() {
-        // return new Promise((resolve, reject) => {
-
-        //     this.frontend.showLoadingSpinner();
-        //     this.http.get<Bestellung[]>(this.settings.api.url + '/bestellungen', { params: { filter: 'today' } }).subscribe(bestellungen => {
-        //         this.bestellungen = bestellungen;
-        //         this.frontend.hideLoadingSpinner();
-        //         resolve(true);
-        //     },
-        //         err => {
-        //             this.frontend.hideLoadingSpinner();
-        //             reject(err);
-        //             console.log("Error occured: ", err);
-        //         });
-
-        // });
+        return this.api.getBestellungen().subscribe(bestellungen => this.bestellungen = bestellungen);
     }
 
-    filterBestellungen() {
-
-        this.filtredBestellungen = [];
-
-        for (var i = 0; i < this.bestellungen.length; i++) {
-            let b = this.bestellungen[i];
-            let push = false;
-
-            if (this.filter.aufnehmerId == b.aufnehmer.id || this.filter.aufnehmerId == null) {
-                if (this.filter.tischeId == b.tisch.id || this.filter.tischeId == null) {
-                    push = true;
-                }
-            }
-
-            if (push) this.filtredBestellungen.push(b);
-        }
-
+    openQrScanner() {
+        // TODO: Implement QR Scanner
     }
-
-    @ViewChild('aufnehmerSelect', { static: false }) aufnehmerSelect: IonSelect;
-    filterSelectAufnehmer() {
-        this.aufnehmerSelect.open();
-    }
-
-    @ViewChild('tischeSelect', { static: false }) tischeSelect: IonSelect;
-    filterSelectTische() {
-        this.tischeSelect.open();
-    }
-
 }

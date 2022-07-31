@@ -79,7 +79,29 @@ export class ApiService {
     public druckBestellung(bestellung: Bestellung): Observable<Array<any>> {
         this.frontend.showLoadingSpinner('send');
         return this.http
-            .post(`${this.url}/bons/druck/bestellung/${bestellung.id}`, null, { headers: this.headers })
+            .post(`${this.url}/print/bestellung/${bestellung.id}`, null, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public getBestellungen(): Observable<Array<Bestellung>> {
+        this.frontend.showLoadingSpinner('send');
+        return this.http
+            .get(`${this.url}/bestellungen`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public getBestellung(id: number): Observable<Bestellung> {
+        this.frontend.showLoadingSpinner('send');
+        return this.http
+            .get(`${this.url}/bestellungen/${id}`, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),

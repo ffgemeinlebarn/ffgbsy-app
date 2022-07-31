@@ -3,7 +3,7 @@ import { Produkt } from "./produkt.class";
 export class Bestellposition {
     id: number = null;
     anzahl: number = 0;
-    storno_anzahl: number = 0;
+    anzahl_storno: number = 0;
     produkt: Produkt;
     notiz: string;
     display: any = {

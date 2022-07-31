@@ -1,17 +1,22 @@
 import { Bestellposition } from "./bestellposition.class";
 import { Aufnehmer } from "./aufnehmer.class";
 import { Tisch } from "./tisch.class";
+import { Bon } from "./bon";
 
 export class Bestellung {
     public id: number;
     public tisch: Tisch;
     public aufnehmer: Aufnehmer;
     public device_name: string;
+    public device_ip: string | null = null;
 
     public timestamp_begonnen: any = null;
     public timestamp_beendet: any = null;
-    public timestamp_gedruckt: any = null;
     public bestellpositionen: Array<Bestellposition> = Array();
+    public bons: Array<Bon> = Array();
+
+    public summe: number | null = null;
+    public summe_ohne_eigenschaften: number | null = null;
 
     constructor(tisch?: Tisch, aufnehmer?: Aufnehmer) {
 
