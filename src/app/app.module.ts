@@ -11,8 +11,7 @@ import { SettingsService } from './services/settings/settings.service';
 import { BestellungenHandlerService } from './services/bestellungen/bestellungen-handler.service';
 import { PipesModule } from './pipes/pipes.module';
 import { FrontendService } from './services/frontend/frontend.service';
-import { BestellungKontrollePageModule } from './modals/bestellung-kontrolle/bestellung-kontrolle.module';
-import { BestellungspositionEditModalPageModule } from './modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.module';
+import { ModalsModule } from './modals/modals.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
@@ -25,8 +24,7 @@ import { environment } from '../environments/environment';
         AppRoutingModule,
         HttpClientModule,
         PipesModule,
-        BestellungspositionEditModalPageModule,
-        BestellungKontrollePageModule,
+        ModalsModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
             // Register the ServiceWorker as soon as the application is stable

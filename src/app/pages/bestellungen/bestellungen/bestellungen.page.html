@@ -3,7 +3,7 @@
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Bestellungen</ion-title>
         <ion-buttons slot="end">
-            <ion-button (click)="openQrScanner()">
+            <ion-button (click)="qrScanOpen()">
                 <ion-icon name="qr-code" slot="icon-only"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -19,11 +19,6 @@
 </ion-content>
 
 <ion-content>
-
-    <div class="scanner">
-        <zxing-scanner [enable]="scannerEnabled"></zxing-scanner>
-    </div>
-
     <ion-list>
         <ion-item *ngFor="let bestellung of bestellungen" [routerLink]="['/bestellungen', bestellung.id]">
             <ion-label>
