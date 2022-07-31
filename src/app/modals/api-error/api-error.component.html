@@ -1,3 +1,41 @@
-<p>
-  api-error works!
-</p>
+<ion-content>
+    <h3>API Error</h3>
+    <ion-list>
+        <ion-item>
+            <ion-label>
+                <h3>{{ error.name }}</h3>
+                <p>Name</p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <h3>{{ error.status }}</h3>
+                <p>Status Code</p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <h3>{{ error.message }}</h3>
+                <p>Status Code</p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <h3>{{ error.statusText }}</h3>
+                <p>Status Text</p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <h3>{{ error.url }}</h3>
+                <p>URL</p>
+            </ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                <code>{{ error.headers | json }}</code>
+                <p>Headers</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>

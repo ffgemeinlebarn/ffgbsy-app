@@ -10,43 +10,34 @@ export class FrontendService {
     public alert: any;
     public loadingSpinner: any;
 
-    constructor(public toastController: ToastController, public alertController: AlertController, public loadingController: LoadingController) {
+    constructor(
+        public toastController: ToastController,
+        public alertController: AlertController,
+        public loadingController: LoadingController) {
 
     }
 
-    showLoadingSpinner(sendOrReceive?, msg?) {
-        console.log("show");
-
-        // if (sendOrReceive === undefined && msg === undefined) {
-        //     sendOrReceive = 'receive';
-        //     msg = 'Empfange Daten';
-        // } else if (sendOrReceive != 'receive' && msg === undefined) {
-        //     sendOrReceive == 'send';
-        //     msg = 'Sende Daten';
-        // }
-
-        // this.loadingController.create({
-        //     spinner: 'lines-small',
-        //     message: msg,
-        //     translucent: true
-        // }).then(loading => {
-        //     this.loadingSpinner = loading;
-        //     this.loadingSpinner.present();
-        // });
+    showLoadingSpinner() {
+        this.loadingController.create({
+            spinner: 'lines-small',
+            message: 'FFGBSY Schnitstelle',
+            translucent: true
+        }).then(loading => {
+            this.loadingSpinner = loading;
+            this.loadingSpinner.present();
+        });
 
     }
 
     hideLoadingSpinner() {
-        console.log("hide");
-
-        // if (this.loadingSpinner) {
-        //     this.loadingSpinner.dismiss();
-        // } else {
-        //     let tmp_this = this;
-        //     setTimeout(function () {
-        //         tmp_this.hideLoadingSpinner();
-        //     }, 300);
-        // }
+        if (this.loadingSpinner) {
+            this.loadingSpinner.dismiss();
+        } else {
+            let tmp_this = this;
+            setTimeout(function () {
+                tmp_this.hideLoadingSpinner();
+            }, 300);
+        }
     }
 
     showOkAlert(header, message) {
@@ -57,7 +48,7 @@ export class FrontendService {
                 message: message,
                 buttons: [{
                     text: 'OK',
-                    handler: (blah) => {
+                    handler: (_) => {
                         resolve(true);
                     }
                 }]
@@ -81,7 +72,7 @@ export class FrontendService {
                         text: 'Nein',
                         role: 'Nein',
                         cssClass: 'secondary',
-                        handler: (blah) => {
+                        handler: (_) => {
                             reject();
                         }
                     }, {
