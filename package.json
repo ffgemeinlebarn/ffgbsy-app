@@ -39,6 +39,7 @@
         "@angular-devkit/build-angular": "^14.1.0",
         "@angular-devkit/core": "^14.1.0",
         "@angular-devkit/schematics": "^14.1.0",
+        "@ionic/cli": "^6.20.1",
         "@angular/cli": "^14.1.0",
         "@angular/compiler-cli": "^14.1.0",
         "@angular/language-service": "^14.1.0",
