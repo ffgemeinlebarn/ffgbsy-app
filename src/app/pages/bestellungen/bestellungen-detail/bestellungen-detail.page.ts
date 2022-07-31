@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { ApiService } from 'src/app/services/api/api.service';
+import { AlertController } from '@ionic/angular';
+import { FrontendService } from 'src/app/services/frontend/frontend.service';
 
 @Component({
     selector: 'app-bestellungen-detail',
@@ -15,70 +17,76 @@ export class BestellungenDetailPage implements OnInit {
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private api: ApiService) { }
+        private api: ApiService,
+        private frontend: FrontendService,
+        private alertController: AlertController) { }
 
     ngOnInit() {
-        this.api.getBestellung(+this.activatedRoute.snapshot.paramMap.get('id')).subscribe(bestellung => this.bestellung = bestellung);
+        this.loadBestellung(+this.activatedRoute.snapshot.paramMap.get('id'));
     }
 
-    printBon(drucker_id) {
-        // this.bestellungsHandler.printAnsichtsbestellungBestellpositionBon(drucker_id).then((data: any) => {
-        //   this.bestellungsHandler.loadAnsichtsbestellung(this.idParam);
-        //   if (data.all_success){
-        //     this.frontend.showToast("Bon wurde erfolgreich gedruckt!", 2000);
-        //   }else{
-        //     this.frontend.showOkAlert('Fehler beim Drucken', 'Der Bon konnte leider nicht gedruckt werden!');
-        //   }
-        // });
+    loadBestellung(id: number) {
+        this.api.getBestellung(id).subscribe(bestellung => this.bestellung = bestellung);
+    }
+
+    printBon(bestellungenId: number, druckerId: number) {
+        this.api.druckBon(bestellungenId, druckerId).subscribe(bon => {
+
+            this.loadBestellung(bestellungenId);
+
+            if (bon.result) {
+                this.frontend.showToast("Bon wurde erfolgreich gedruckt!", 2000);
+            } else {
+                this.frontend.showOkAlert('Fehler beim Drucken', 'Der Bon konnte leider nicht gedruckt werden!');
+            }
+        });
     }
 
     async askStornoAnzahl(bestellposition: Bestellposition) {
 
-        // const alert = await this.alertController.create({
-        //   header: 'Prompt!',
-        //   inputs: [
-        //     {
-        //       placeholder: "Anzahl",
-        //       name: 'anzahl',
-        //       type: 'number',
-        //       value: 1,
-        //       min: 1,
-        //       max: bestellposition.anzahl - bestellposition.anzahl_storno
-        //     }
-        //   ],
-        //   buttons: [
-        //     {
-        //       text: 'Abbrechen',
-        //       role: 'cancel',
-        //       cssClass: 'secondary',
-        //       handler: () => { return true; }
-        //     }, {
-        //       text: 'Anzahl stornieren',
-        //       handler: (res) => {
-        //         let anzahl = parseInt(res.anzahl);
+        const alert = await this.alertController.create({
+            header: 'Bestellposition stornieren',
+            inputs: [
+                {
+                    placeholder: "Anzahl",
+                    name: 'anzahl',
+                    type: 'number',
+                    value: 1,
+                    min: 1,
+                    max: bestellposition.anzahl - bestellposition.anzahl_storno
+                }
+            ],
+            buttons: [
+                {
+                    text: 'Abbrechen',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => { return true; }
+                }, {
+                    text: 'Anzahl stornieren',
+                    handler: (res) => {
+                        let anzahl = parseInt(res.anzahl);
 
-        //         if ((anzahl > 0) && (anzahl <= (bestellposition.anzahl - bestellposition.anzahl_storno))){
-        //           this.bestellungsHandler.stornoAnsichtsbestellungBestellposition(bestellposition, anzahl).then((data: any) => {
+                        if ((anzahl > 0) && (anzahl <= (bestellposition.anzahl - bestellposition.anzahl_storno))) {
 
-        //             this.bestellungsHandler.loadAnsichtsbestellung(bestellposition.bestellungen_id);
+                            this.api.stornoBestellposition(bestellposition, anzahl).subscribe((bon) => {
+                                this.loadBestellung(bestellposition.bestellungen_id);
 
-        //             if (data.insert.result && data.bon_result.result){
-        //               this.frontend.showToast("Storno-Position und Bon wurden erfolgreich eingefügt und gedruckt!", 3000);
-        //             }else if (data.insert.result && !data.bon_result.result){
-        //               this.frontend.showOkAlert('Fehler beim Storno-Bon-Druck', 'Die Storno-Bestellposition wurde in die Datenbank eingefügt, konnte aber nicht gedruckt werden!');
-        //             }else{
-        //               this.frontend.showOkAlert('Fehler beim Einfügen in die Datenbank', 'Die Storno-Bestellposition konnte nicht in die Datenbank eingefügt werden!');
-        //             }
-        //           });
-        //           return true;
-        //         }
-        //         return false;
-        //       }
-        //     }
-        //   ]
-        // });
+                                if (bon.result) {
+                                    this.frontend.showToast("Storno-Bon wurde erfolgreich gedruckt!", 2000);
+                                } else {
+                                    this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten der Storno-Bon nicht gedruckt werden!');
+                                }
+                            });
+                            return true;
+                        }
+                        return false;
+                    }
+                }
+            ]
+        });
 
-        // await alert.present();
+        await alert.present();
     }
 
 }

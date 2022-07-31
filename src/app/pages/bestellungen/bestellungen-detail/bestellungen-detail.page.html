@@ -96,7 +96,6 @@
             <ion-label>
                 <h3>
                     {{ bon.drucker.name }}
-                    <!-- {{ bon.result ? 'Erfolgreich' : 'Fehlgeschlagen' }} -->
                     <ion-text [hidden]="bon.result" color="primary"><br />{{ bon.result_message }}</ion-text>
                 </h3>
                 <p>Laufnummer: {{ bon.laufnummer }}</p>
@@ -105,7 +104,7 @@
                 {{ bon.timestamp_gedruckt | date: 'dd.MM.yyyy' }}<br />
                 {{ bon.timestamp_gedruckt | date: 'HH:mm:ss' }} Uhr
             </ion-note>
-            <ion-button slot="end" size="small" shape="round" fill="outline" (click)="printBon(bon.id)">
+            <ion-button slot="end" size="small" shape="round" fill="outline" (click)="printBon(bestellung.id, bon.drucker.id)">
                 <ion-icon name="print" slot="icon-only"></ion-icon>
             </ion-button>
         </ion-item>
