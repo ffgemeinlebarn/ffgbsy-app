@@ -34,7 +34,7 @@ export class BestellungenPage implements OnInit {
         this.getBestellungen();
     }
 
-    getBestellungen() {
+    getBestellungen(tischId = null, aufnehmerId = null, limit = 25) {
         return this.api.getBestellungen().subscribe(bestellungen => this.bestellungen = bestellungen);
     }
 

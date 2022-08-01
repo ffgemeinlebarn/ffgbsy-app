@@ -15,6 +15,7 @@ export class Bestellposition {
     calc_correction: any = 0.00;
     eigenschaften: Array<any>;
     bestellungen_id: number;
+    drucker_id: number;
 
     constructor(produkt: Produkt) {
         this.produkt = produkt;

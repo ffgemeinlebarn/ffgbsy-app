@@ -1,7 +1,8 @@
 import { Bestellposition } from "./bestellposition.class";
 import { Aufnehmer } from "./aufnehmer.class";
 import { Tisch } from "./tisch.class";
-import { Bon } from "./bon";
+import { Bestellbon } from "./bestellbon";
+import { Stornobon } from "./stornobon";
 
 export class Bestellung {
     public id: number;
@@ -13,7 +14,8 @@ export class Bestellung {
     public timestamp_begonnen: any = null;
     public timestamp_beendet: any = null;
     public bestellpositionen: Array<Bestellposition> = Array();
-    public bons: Array<Bon> = Array();
+    public bestellbons: Array<Bestellbon> = Array();
+    public stornobons: Array<Stornobon> = Array();
 
     public summe: number | null = null;
     public summe_ohne_eigenschaften: number | null = null;

@@ -6,12 +6,15 @@ import { tap, retry, catchError, map } from 'rxjs/operators';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { Bestellung } from 'src/app/classes/bestellung.class';
-import { Bon } from 'src/app/classes/bon';
+import { Bestellbon } from 'src/app/classes/bestellbon';
 import { Daten } from 'src/app/interfaces/daten';
 import { ApiErrorComponent } from 'src/app/modals/api-error/api-error.component';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
+import { BestellbonDruck } from 'src/app/classes/bestellbonDruck';
+import { Stornobon } from 'src/app/classes/stornobon';
+import { StornobonDruck } from 'src/app/classes/stornobonDruck';
 
 @Injectable({
     providedIn: 'root'
@@ -95,10 +98,10 @@ export class ApiService {
             );
     }
 
-    public druckBestellung(bestellung: Bestellung): Observable<Array<Bon>> {
+    public druckBestellbons(bestellbons: Array<Bestellbon>): Observable<Array<BestellbonDruck>> {
         this.frontend.showLoadingSpinner();
         return this.http
-            .post(`${this.url}/print/bestellung/${bestellung.id}`, null, { headers: this.headers })
+            .post(`${this.url}/bestellbons/druck`, bestellbons, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
@@ -106,10 +109,10 @@ export class ApiService {
             );
     }
 
-    public druckBon(bestellungenId: number, druckerId: number): Observable<Bon> {
+    public druckBestellbon(bestellbon: Bestellbon): Observable<BestellbonDruck> {
         this.frontend.showLoadingSpinner();
         return this.http
-            .post(`${this.url}/print/bestellung/${bestellungenId}/drucker/${druckerId}`, null, { headers: this.headers })
+            .post(`${this.url}/bestellbons/${bestellbon.id}/druck`, bestellbon, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
@@ -150,10 +153,17 @@ export class ApiService {
             );
     }
 
-    public stornoBestellposition(bestellposition: Bestellposition, anzahl: number): Observable<Bon> {
+    public createStornobon(bestellposition: Bestellposition, anzahl: number): Observable<Stornobon> {
         this.frontend.showLoadingSpinner();
         return this.http
-            .post(`${this.url}/bestellungen/${bestellposition.bestellungen_id}/storno/${bestellposition.id}`, { anzahl }, { headers: this.headers })
+            .post(`${this.url}/stornobons`, {
+                bestellungen_id: bestellposition.bestellungen_id,
+                drucker_id: bestellposition.drucker_id,
+                bestellpositionen: [{
+                    anzahl,
+                    id: bestellposition.id
+                }]
+            }, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
@@ -161,5 +171,14 @@ export class ApiService {
             );
     }
 
-
+    public druckStornobon(stornobon: Stornobon): Observable<StornobonDruck> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .post(`${this.url}/stornobons/${stornobon.id}/druck`, stornobon, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
 }
