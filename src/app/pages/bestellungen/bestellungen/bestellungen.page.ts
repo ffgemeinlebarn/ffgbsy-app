@@ -5,6 +5,8 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { QrScanComponent } from 'src/app/modals/qr-scan/qr-scan.component';
+import { DataService } from 'src/app/services/data/data.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
     selector: 'app-bestellungen',
@@ -15,27 +17,42 @@ export class BestellungenPage implements OnInit {
 
     public scannerEnabled: boolean = false;
     public bestellungen: Array<Bestellung>;
-    public filter: any = {
-        aufnehmerId: null,
-        tischeId: null
+    public usedFilter: any = {
+        aufnehmer: '*',
+        tisch: '*',
+        limit: 10
+    };
+
+    public availableFilter: any = {
+        aufnehmer: [],
+        tische: [],
+        limits: [10, 25, 50, 100]
     };
 
     constructor(
         private api: ApiService,
         private bestellungsHandler: BestellungenHandlerService,
         private router: Router,
-        private modalCtrl: ModalController
-    ) {
-        this.filter.aufnehmerId = this.bestellungsHandler.aufnehmer;
-        this.filter.tischeId = null;
-    }
+        private modalCtrl: ModalController,
+        private data: DataService
+    ) { }
 
     ngOnInit() {
-        this.getBestellungen();
+        this.availableFilter.aufnehmer = this.data.aufnehmer;
+        this.availableFilter.tische = this.data.tische;
+
+        this.usedFilter.aufnehmer = this.bestellungsHandler.aufnehmer ?? '*';
+        this.usedFilter.tisch = '*';
     }
 
-    getBestellungen(tischId = null, aufnehmerId = null, limit = 25) {
-        return this.api.getBestellungen().subscribe(bestellungen => this.bestellungen = bestellungen);
+    getBestellungen() {
+        const params = new HttpParams().appendAll({
+            aufnehmerId: this.usedFilter.aufnehmer?.id ?? null,
+            tischId: this.usedFilter.tisch?.id ?? null,
+            limit: this.usedFilter.limit
+        });
+
+        return this.api.getBestellungen(params).subscribe(bestellungen => this.bestellungen = bestellungen);
     }
 
     async qrScanOpen() {

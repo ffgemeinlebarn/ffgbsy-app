@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Observable, throwError } from 'rxjs';
@@ -120,10 +120,10 @@ export class ApiService {
             );
     }
 
-    public getBestellungen(): Observable<Array<Bestellung>> {
+    public getBestellungen(params: HttpParams = new HttpParams()): Observable<Array<Bestellung>> {
         this.frontend.showLoadingSpinner();
         return this.http
-            .get(`${this.url}/bestellungen`, { headers: this.headers })
+            .get(`${this.url}/bestellungen`, { headers: this.headers, params })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
