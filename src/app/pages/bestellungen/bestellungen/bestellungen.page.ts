@@ -46,11 +46,17 @@ export class BestellungenPage implements OnInit {
     }
 
     getBestellungen() {
-        const params = new HttpParams().appendAll({
-            aufnehmerId: this.usedFilter.aufnehmer?.id ?? null,
-            tischId: this.usedFilter.tisch?.id ?? null,
-            limit: this.usedFilter.limit
-        });
+        let params = new HttpParams();
+
+        if (this.usedFilter.aufnehmer?.id) {
+            params = params.append("aufnehmerId", this.usedFilter.aufnehmer?.id);
+        }
+
+        if (this.usedFilter.tisch?.id) {
+            params = params.append("tischId", this.usedFilter.aufnehmer?.id);
+        }
+
+        params = params.append("limit", this.usedFilter.limit);
 
         return this.api.getBestellungen(params).subscribe(bestellungen => this.bestellungen = bestellungen);
     }
