@@ -18,15 +18,15 @@ export class BestellungenPage implements OnInit {
     public scannerEnabled: boolean = false;
     public bestellungen: Array<Bestellung>;
     public usedFilter: any = {
-        aufnehmer: '*',
-        tisch: '*',
+        aufnehmerId: '*',
+        tischId: '*',
         limit: 10
     };
 
     public availableFilter: any = {
         aufnehmer: [],
         tische: [],
-        limits: [10, 25, 50, 100]
+        limits: [5, 10, 25, 50, 100]
     };
 
     constructor(
@@ -40,20 +40,19 @@ export class BestellungenPage implements OnInit {
     ngOnInit() {
         this.availableFilter.aufnehmer = this.data.aufnehmer;
         this.availableFilter.tische = this.data.tische;
-
-        this.usedFilter.aufnehmer = this.bestellungsHandler.aufnehmer ?? '*';
-        this.usedFilter.tisch = '*';
+        this.usedFilter.aufnehmerId = this.bestellungsHandler.aufnehmer?.id ?? '*';
+        this.usedFilter.tischId = '*';
     }
 
     getBestellungen() {
         let params = new HttpParams();
 
-        if (this.usedFilter.aufnehmer?.id) {
-            params = params.append("aufnehmerId", this.usedFilter.aufnehmer?.id);
+        if (this.usedFilter.aufnehmerId != '*') {
+            params = params.append("aufnehmerId", this.usedFilter.aufnehmerId);
         }
 
-        if (this.usedFilter.tisch?.id) {
-            params = params.append("tischId", this.usedFilter.aufnehmer?.id);
+        if (this.usedFilter.tischId != '*') {
+            params = params.append("tischId", this.usedFilter.tischId);
         }
 
         params = params.append("limit", this.usedFilter.limit);
