@@ -49,9 +49,10 @@ export class BestellungenPage implements OnInit {
         modal.present();
 
         const { data, role } = await modal.onWillDismiss();
+        const parsedData = JSON.parse(data);
 
-        if (role == 'success') {
-            this.router.navigate(['bestellungen', data]);
+        if (role == 'success' && parsedData.bestellungen_id) {
+            this.router.navigate(['bestellungen', parsedData.bestellungen_id]);
         }
     }
 }
