@@ -107,9 +107,12 @@
         <ng-container *ngFor="let bestellbon of bestellung?.bestellbons">
             <ion-item>
                 <ion-label>
-                    {{ bestellbon.drucker.name }} (Bestellbon Id: {{ bestellbon.id }})
+                    {{ bestellbon.drucker.name }}
                 </ion-label>
-                <ion-button slot="end" size="small" shape="round" fill="outline" (click)="printBestellbon(bestellbon)">
+                <ion-chip>
+                    Bestellbon Id: {{ bestellbon.id }}
+                </ion-chip>
+                <ion-button class="print-button" slot="end" shape="round" fill="outline" (click)="printBestellbon(bestellbon)">
                     <ion-icon name="print" slot="icon-only"></ion-icon>
                 </ion-button>
             </ion-item>
@@ -132,9 +135,12 @@
         <ng-container *ngFor="let stornobon of bestellung?.stornobons">
             <ion-item>
                 <ion-label>
-                    {{ stornobon.drucker.name }} (Stornobon Id: {{ stornobon.id }})
+                    {{ stornobon.drucker.name }}
                 </ion-label>
-                <ion-button slot="end" size="small" shape="round" fill="outline" (click)="printStornobon(stornobon)">
+                <ion-chip>
+                    Stornobon Id: {{ stornobon.id }}
+                </ion-chip>
+                <ion-button class="print-button" slot="end" shape="round" fill="outline" (click)="printStornobon(stornobon)">
                     <ion-icon name="print" slot="icon-only"></ion-icon>
                 </ion-button>
             </ion-item>
@@ -150,7 +156,5 @@
                 </ion-label>
             </ion-item>
         </ng-container>
-
-
     </ion-list>
 </ion-content>
