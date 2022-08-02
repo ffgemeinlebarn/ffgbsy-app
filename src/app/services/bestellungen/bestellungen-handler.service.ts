@@ -49,14 +49,16 @@ export class BestellungenHandlerService {
             this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
             this.clearNeubestellung();
 
-            this.api.druckBestellung(bestellung).subscribe((bons) => {
-                if (bons.filter(b => !b.result).length == 0) {
+            this.api.druckBestellbons(bestellung.bestellbons).subscribe((bons) => {
+                if (bons.filter(b => !b.success).length == 0) {
                     this.frontend.showToast("Alle Bons wurden erfolgreich gedruckt!", 2000);
                 } else {
                     this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten nicht alle Bons gedruckt werden!\n\nWeitere Details unter dem Menüpunkt "Bestellungen".');
                 }
             }, (error) => this.frontend.showOkAlert('Fehler beim Drucken der Bons', error.message));
 
-        }, (error) => this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', error.message));
+        }, (errResult) => {
+            this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', errResult.error.error.description);
+        });
     }
 }

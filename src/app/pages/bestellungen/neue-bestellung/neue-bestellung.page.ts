@@ -6,8 +6,8 @@ import { Tisch } from 'src/app/classes/tisch.class';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
-import { BestellungspositionEditModalPage } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.page';
-import { BestellungKontrollePage } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle.page';
+import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
+import { BestellungKontrolleModalComponent } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { SettingsService } from 'src/app/services/settings/settings.service';
 
@@ -50,6 +50,10 @@ export class NeueBestellungPage implements OnInit {
 
     changeFilterTischkategorieId(tischkategorie_id: number) {
         this.filterTischkategorieId = tischkategorie_id;
+    }
+
+    changeTisch() {
+        this.bestellungsHandler.neubestellung.status = 'tischauswahl';
     }
 
 
@@ -98,7 +102,7 @@ export class NeueBestellungPage implements OnInit {
         let reverseIndex = this.bestellungsHandler.neubestellung.bestellung.bestellpositionen.length - 1 - nonReverseIndex;
 
         const modal = await this.modalController.create({
-            component: BestellungspositionEditModalPage,
+            component: BestellungspositionEditModalComponent,
             componentProps: {
                 bestellposition: bestellposition,
                 index: reverseIndex
@@ -143,7 +147,7 @@ export class NeueBestellungPage implements OnInit {
     async kontrolliereBestellung() {
 
         const modal = await this.modalController.create({
-            component: BestellungKontrollePage,
+            component: BestellungKontrolleModalComponent,
             componentProps: {
                 bestellung: this.bestellungsHandler.neubestellung.bestellung
             },
@@ -164,13 +168,9 @@ export class NeueBestellungPage implements OnInit {
         return modal.present();
     }
 
-
-
     /*******************************************************************************
     *** Sonstiges
     *******************************************************************************/
-
-    // Cancel Bestellung
 
     async askForCancelBestellung() {
         await this.frontend.showJaNeinAlert(
@@ -180,10 +180,6 @@ export class NeueBestellungPage implements OnInit {
             this.bestellungsHandler.neubestellung.bestellung = null;
             this.bestellungsHandler.neubestellung.status = null;
         });
-    }
-
-    changeTisch() {
-        this.bestellungsHandler.neubestellung.status = 'tischauswahl';
     }
 
 }

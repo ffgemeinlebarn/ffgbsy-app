@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { BestellungKontrollePage } from './bestellung-kontrolle/bestellung-kontrolle.page';
+import { BestellungKontrolleModalComponent } from './bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { PipesModule } from "../pipes/pipes.module";
-import { BestellungspositionEditModalPage } from './bestellungsposition-edit-modal/bestellungsposition-edit-modal.page';
+import { BestellungspositionEditModalComponent } from './bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrScanComponent } from './qr-scan/qr-scan.component';
+import { ApiErrorComponent } from './api-error/api-error.component';
 
 @NgModule({
     imports: [
@@ -17,9 +18,10 @@ import { QrScanComponent } from './qr-scan/qr-scan.component';
         ZXingScannerModule
     ],
     declarations: [
-        BestellungKontrollePage,
-        BestellungspositionEditModalPage,
-        QrScanComponent
+        BestellungKontrolleModalComponent,
+        BestellungspositionEditModalComponent,
+        QrScanComponent,
+        ApiErrorComponent
     ]
 })
 export class ModalsModule { }
