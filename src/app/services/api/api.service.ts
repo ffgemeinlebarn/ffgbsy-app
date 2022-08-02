@@ -39,7 +39,11 @@ export class ApiService {
 
     public errorHandler(error: Error | any): Observable<any> {
         this.frontend.hideLoadingSpinner();
-        this.showModal(error);
+
+        if (error.status == 500) {
+            this.showModal(error);
+        }
+
         return throwError(error);
     }
     async showModal(error: Error | any) {

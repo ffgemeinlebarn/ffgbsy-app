@@ -57,6 +57,8 @@ export class BestellungenHandlerService {
                 }
             }, (error) => this.frontend.showOkAlert('Fehler beim Drucken der Bons', error.message));
 
-        }, (error) => this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', error.message));
+        }, (errResult) => {
+            this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', errResult.error.error.description);
+        });
     }
 }
