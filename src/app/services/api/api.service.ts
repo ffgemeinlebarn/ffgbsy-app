@@ -181,4 +181,15 @@ export class ApiService {
                 catchError((error) => this.errorHandler(error))
             );
     }
+
+    public getStatisticsTimeline(): Observable<any> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .get(`${this.url}/statistiken/timeline`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
 }
