@@ -5,8 +5,7 @@ import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AlertController } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { Bestellbon } from 'src/app/classes/bestellbon';
-import { Stornobon } from 'src/app/classes/stornobon';
+import { Bon } from 'src/app/classes/bon';
 
 @Component({
     selector: 'app-bestellungen-detail',
@@ -31,28 +30,15 @@ export class BestellungenDetailPage implements OnInit {
         this.api.getBestellung(id).subscribe(bestellung => this.bestellung = bestellung);
     }
 
-    printBestellbon(bestellbon: Bestellbon) {
-        this.api.druckBestellbon(bestellbon).subscribe(bestellbonDruck => {
+    printBon(bon: Bon) {
+        this.api.druckBon(bon).subscribe(bonDruck => {
 
-            this.loadBestellung(bestellbon.bestellungen_id);
+            this.loadBestellung(bon.bestellungen_id);
 
-            if (bestellbonDruck.success) {
+            if (bonDruck.success) {
                 this.frontend.showToast("Bestellbon wurde erfolgreich gedruckt!", 2000);
             } else {
                 this.frontend.showOkAlert('Fehler beim Drucken', 'Der Bestellbon konnte leider nicht gedruckt werden!');
-            }
-        });
-    }
-
-    printStornobon(stornobon: Stornobon) {
-        this.api.druckStornobon(stornobon).subscribe(stornobonDruck => {
-
-            this.loadBestellung(stornobon.bestellungen_id);
-
-            if (stornobonDruck.success) {
-                this.frontend.showToast("Stornobon wurde erfolgreich gedruckt!", 2000);
-            } else {
-                this.frontend.showOkAlert('Fehler beim Drucken', 'Der Stornobon konnte leider nicht gedruckt werden!');
             }
         });
     }
@@ -82,15 +68,18 @@ export class BestellungenDetailPage implements OnInit {
                     handler: (res) => {
                         let anzahl = parseInt(res.anzahl);
 
-                        this.api.createStornobon(bestellposition, anzahl).subscribe((stornobon) => this.api.druckStornobon(stornobon).subscribe((druck) => {
-                            this.loadBestellung(bestellposition.bestellungen_id);
+                        this.api.createStornoBestellposition(bestellposition, anzahl).subscribe((stornoposition) => {
+                            this.api.createStornoBon(stornoposition).subscribe((bon) => this.api.druckBon(bon).subscribe((druck) => {
 
-                            if (druck.success) {
-                                this.frontend.showToast("Stornobon wurde erfolgreich gedruckt!", 2000);
-                            } else {
-                                this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten der Stornobon nicht gedruckt werden!');
-                            }
-                        }));
+                                if (druck.success) {
+                                    this.frontend.showToast("Stornobon wurde erfolgreich gedruckt!", 2000);
+                                } else {
+                                    this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten der Stornobon nicht gedruckt werden!');
+                                }
+
+                                this.loadBestellung(bestellposition.bestellungen_id);
+                            }));
+                        });
 
                         return true;
                     }
