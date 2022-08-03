@@ -9,7 +9,8 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class StatisticsPage implements OnInit {
 
-    public ready = false;
+    public readyTimeline = false;
+    public readyPie = false;
     public chartTimelineBestellungen: ChartConfiguration<'line'>['data'] = {
         labels: [],
         datasets: []
@@ -22,10 +23,14 @@ export class StatisticsPage implements OnInit {
         labels: [],
         datasets: []
     };
-    public lineChartOptions: ChartOptions<'line'> = {
+    public chartKennzahlenUmsatz: ChartConfiguration<'pie'>['data'] = {
+        labels: [],
+        datasets: []
+    };
+    public chartOptions: ChartOptions = {
         responsive: true
     };
-    public lineChartLegend = true;
+    public chartLegend = true;
 
     private colors = [{
         borderColor: 'rgb(136, 17, 17)',
@@ -83,8 +88,20 @@ export class StatisticsPage implements OnInit {
                 });
             });
 
-            this.ready = true;
+            setTimeout(_ => {
+                this.api.getStatisticsKennzahlen().subscribe(kennzahlen => {
+                    this.chartKennzahlenUmsatz.labels = kennzahlen.taeglich.map(x => x.label);
+                    this.chartKennzahlenUmsatz.datasets = [{
+                        data: kennzahlen.taeglich.map(x => x.summe)
+                    }];
+
+                    this.readyPie = true;
+                });
+            }, 300);
+
+            this.readyTimeline = true;
         });
+
     }
 
     private formatDate(date) {

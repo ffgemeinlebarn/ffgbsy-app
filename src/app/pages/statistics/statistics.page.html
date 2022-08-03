@@ -7,14 +7,18 @@
 <ion-content>
     <div class="chart-container">
         <h2>Anzahl Bestellungen</h2>
-        <canvas *ngIf="ready" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineBestellungen" [options]="lineChartOptions" [legend]="lineChartLegend"></canvas>
+        <canvas *ngIf="readyTimeline" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineBestellungen" [options]="chartOptions" [legend]="chartLegend"></canvas>
     </div>
     <div class="chart-container">
         <h2>Bestellfrequenz</h2>
-        <canvas *ngIf="ready" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineFrequenz" [options]="lineChartOptions" [legend]="lineChartLegend"></canvas>
+        <canvas *ngIf="readyTimeline" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineFrequenz" [options]="chartOptions" [legend]="chartLegend"></canvas>
     </div>
     <div class="chart-container">
         <h2>Umsatz</h2>
-        <canvas *ngIf="ready" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineUmsatz" [options]="lineChartOptions" [legend]="lineChartLegend"></canvas>
+        <canvas *ngIf="readyTimeline" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineUmsatz" [options]="chartOptions" [legend]="chartLegend"></canvas>
+    </div>
+    <div class="chart-container chart-container--pie">
+        <canvas baseChart *ngIf="readyPie" width="300" height="300" [type]="'pie'" [datasets]="chartKennzahlenUmsatz.datasets" [labels]="chartKennzahlenUmsatz.labels" [options]="chartOptions" [legend]="chartLegend">
+        </canvas>
     </div>
 </ion-content>

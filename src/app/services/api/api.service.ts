@@ -191,5 +191,16 @@ export class ApiService {
                 tap(() => this.frontend.hideLoadingSpinner()),
                 catchError((error) => this.errorHandler(error))
             );
+
+    }
+    public getStatisticsKennzahlen(): Observable<any> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .get(`${this.url}/statistiken/kennzahlen`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
     }
 }
