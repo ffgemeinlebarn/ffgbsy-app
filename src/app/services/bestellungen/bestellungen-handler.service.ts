@@ -49,7 +49,7 @@ export class BestellungenHandlerService {
             this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
             this.clearNeubestellung();
 
-            this.api.druckBestellbons(bestellung.bestellbons).subscribe((bons) => {
+            this.api.druckBons(bestellung.bestellbons).subscribe((bons) => {
                 if (bons.filter(b => !b.success).length == 0) {
                     this.frontend.showToast("Alle Bons wurden erfolgreich gedruckt!", 2000);
                 } else {

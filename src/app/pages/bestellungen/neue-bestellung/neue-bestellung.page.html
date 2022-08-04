@@ -131,18 +131,19 @@
                 <ion-title>Aufnehmer auswählen</ion-title>
             </ion-toolbar>
         </ion-header>
-        <ion-content al>
+        <ion-content>
             <ion-radio-group [(ngModel)]="bestellungsHandler.aufnehmer" allow-empty-selection="false">
-                <ion-item *ngFor="let aufnehmer of data.aufnehmer">
+                <ion-item *ngFor="let aufnehmer of data.aufnehmer" (click)="aufnehmerModal.dismiss()">
                     <ion-label>{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-label>
                     <ion-radio [value]="aufnehmer"></ion-radio>
                 </ion-item>
             </ion-radio-group>
-            <div class="ion-text-center ion-margin-top ion-margin-bottom">
-                <ion-button class="round-button" (click)="aufnehmerModal.dismiss()" shape="round">
-                    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
-                </ion-button>
-            </div>
         </ion-content>
+        <ion-footer class="aufnehmer-auswahl-footer">
+            <ion-button (click)="aufnehmerModal.dismiss()">
+                <ion-icon slot="start" name="close-outline"></ion-icon>
+                Auswahl abbrechen
+            </ion-button>
+        </ion-footer>
     </ng-template>
 </ion-modal>

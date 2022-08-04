@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Statistiken</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="chart-container">
+        <h2>Anzahl Bestellungen</h2>
+        <canvas *ngIf="readyTimeline" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineBestellungen" [options]="chartOptions" [legend]="chartLegend"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Bestellfrequenz</h2>
+        <canvas *ngIf="readyTimeline" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineFrequenz" [options]="chartOptions" [legend]="chartLegend"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Umsatz</h2>
+        <canvas *ngIf="readyTimeline" baseChart width="600" height="300" [type]="'line'" [data]="chartTimelineUmsatz" [options]="chartOptions" [legend]="chartLegend"></canvas>
+    </div>
+    <div class="chart-container chart-container--pie">
+        <canvas baseChart *ngIf="readyPie" width="300" height="300" [type]="'pie'" [datasets]="chartKennzahlenUmsatz.datasets" [labels]="chartKennzahlenUmsatz.labels" [options]="chartOptions" [legend]="chartLegend">
+        </canvas>
+    </div>
+</ion-content>

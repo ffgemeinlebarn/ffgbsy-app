@@ -1,8 +1,8 @@
 import { Drucker } from "./drucker.class";
 
-export class BestellbonDruck {
+export class BonDruck {
     id: number;
-    bestellbons_id: number;
+    bons_id: number;
     datum: Date | string;
     laufnummer: boolean;
     timestamp: Date | string | null;

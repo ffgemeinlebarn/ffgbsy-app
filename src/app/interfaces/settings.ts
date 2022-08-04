@@ -1,5 +1,4 @@
 import { environment } from 'src/environments/environment';
-import { Aufnehmer } from '../classes/aufnehmer.class';
 
 // App
 export interface AppSettings {
@@ -26,14 +25,11 @@ export interface StorageSettings {
 export class LocaleSettings {
     deviceName: string;
     api: string;
+    adminPin: string;
 
     constructor() {
         this.deviceName = '';
         this.api = environment.api;
+        this.adminPin = '';
     }
-}
-
-// Local
-export interface SessionSettings {
-    aufnehmer: Aufnehmer
 }

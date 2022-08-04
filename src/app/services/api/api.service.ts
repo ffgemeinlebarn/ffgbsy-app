@@ -6,15 +6,13 @@ import { tap, retry, catchError, map } from 'rxjs/operators';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { Bestellung } from 'src/app/classes/bestellung.class';
-import { Bestellbon } from 'src/app/classes/bestellbon';
+import { Bon } from 'src/app/classes/bon';
 import { Daten } from 'src/app/interfaces/daten';
 import { ApiErrorComponent } from 'src/app/modals/api-error/api-error.component';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
-import { BestellbonDruck } from 'src/app/classes/bestellbonDruck';
-import { Stornobon } from 'src/app/classes/stornobon';
-import { StornobonDruck } from 'src/app/classes/stornobonDruck';
+import { BonDruck } from 'src/app/classes/bonDruck';
 
 @Injectable({
     providedIn: 'root'
@@ -102,10 +100,15 @@ export class ApiService {
             );
     }
 
-    public druckBestellbons(bestellbons: Array<Bestellbon>): Observable<Array<BestellbonDruck>> {
+    public createStornoBon(bestellposition: Bestellposition): Observable<Bon> {
         this.frontend.showLoadingSpinner();
         return this.http
-            .post(`${this.url}/bestellbons/druck`, bestellbons, { headers: this.headers })
+            .post(`${this.url}/bons`, {
+                type: "storno",
+                bestellungen_id: bestellposition.bestellungen_id,
+                drucker_id: bestellposition.drucker_id,
+                bestellpositionen: [bestellposition]
+            }, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
@@ -113,10 +116,21 @@ export class ApiService {
             );
     }
 
-    public druckBestellbon(bestellbon: Bestellbon): Observable<BestellbonDruck> {
+    public druckBons(bons: Array<Bon>): Observable<Array<BonDruck>> {
         this.frontend.showLoadingSpinner();
         return this.http
-            .post(`${this.url}/bestellbons/${bestellbon.id}/druck`, bestellbon, { headers: this.headers })
+            .post(`${this.url}/bons/druck`, bons, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public druckBon(bon: Bon): Observable<BonDruck> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .post(`${this.url}/bons/${bon.id}/druck`, bon, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
@@ -157,17 +171,10 @@ export class ApiService {
             );
     }
 
-    public createStornobon(bestellposition: Bestellposition, anzahl: number): Observable<Stornobon> {
+    public createStornoBestellposition(bestellposition: Bestellposition, anzahl: number): Observable<Bestellposition> {
         this.frontend.showLoadingSpinner();
         return this.http
-            .post(`${this.url}/stornobons`, {
-                bestellungen_id: bestellposition.bestellungen_id,
-                drucker_id: bestellposition.drucker_id,
-                bestellpositionen: [{
-                    anzahl,
-                    id: bestellposition.id
-                }]
-            }, { headers: this.headers })
+            .post(`${this.url}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl }, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
@@ -175,10 +182,21 @@ export class ApiService {
             );
     }
 
-    public druckStornobon(stornobon: Stornobon): Observable<StornobonDruck> {
+    public getStatisticsTimeline(): Observable<any> {
         this.frontend.showLoadingSpinner();
         return this.http
-            .post(`${this.url}/stornobons/${stornobon.id}/druck`, stornobon, { headers: this.headers })
+            .get(`${this.url}/statistiken/timeline`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+
+    }
+    public getStatisticsKennzahlen(): Observable<any> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .get(`${this.url}/statistiken/kennzahlen`, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
