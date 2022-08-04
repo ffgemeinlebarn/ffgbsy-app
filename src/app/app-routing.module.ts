@@ -9,7 +9,6 @@ const routes: Routes = [
     { path: 'bestellungen', loadChildren: () => import('./pages/bestellungen/bestellungen/bestellungen.module').then(m => m.BestellungenPageModule) },
     { path: 'bestellungen/:id', loadChildren: () => import('./pages/bestellungen/bestellungen-detail/bestellungen-detail.module').then(m => m.BestellungenDetailPageModule) },
     { path: 'systemstatus', loadChildren: () => import('./pages/systemstatus/systemstatus.module').then(m => m.SystemstatusPageModule) },
-    { path: 'imprint', loadChildren: () => import('./pages/imprint/imprint.module').then(m => m.ImprintPageModule) },
     {
         path: 'statistics',
         loadChildren: () => import('./pages/statistics/statistics.module').then(m => m.StatisticsPageModule)
