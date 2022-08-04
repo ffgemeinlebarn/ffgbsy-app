@@ -12,12 +12,23 @@ const routes: Routes = [
     {
         path: 'statistics',
         loadChildren: () => import('./pages/statistics/statistics.module').then(m => m.StatisticsPageModule)
-    },  {
-    path: 'aufnehmer-edit',
-    loadChildren: () => import('./pages/aufnehmer-edit/aufnehmer-edit.module').then( m => m.AufnehmerEditPageModule)
-  }
-
-
+    },
+    {
+        path: 'aufnehmer-edit',
+        loadChildren: () => import('./pages/aufnehmer-edit/aufnehmer-edit.module').then(m => m.AufnehmerEditPageModule)
+    },
+    {
+        path: 'notifications',
+        loadChildren: () => import('./pages/admin/notifications/notifications.module').then(m => m.NotificationsPageModule)
+    },
+    {
+        path: 'notifications',
+        loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
+    },
+    {
+        path: 'grundprodukte',
+        loadChildren: () => import('./pages/admin/grundprodukte/grundprodukte.module').then(m => m.GrundproduktePageModule)
+    }
 ];
 
 @NgModule({
