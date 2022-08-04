@@ -39,10 +39,10 @@ export class DataService implements Daten {
     public loadfromStorage() {
         this.ready = new Promise((resolve, reject) => this.settings.ready.then(() => this.storage.get(this.settings.StoragePrefix + this.storageKey).then((jsonObject: any) => {
 
-            console.log('[FFGBSY]', 'Data ', 'Loaded from Storage');
+            console.log('[FFGBSY]', 'Data', 'Loaded from Storage');
 
             if (jsonObject == null) {
-                console.log('[FFGBSY]', 'Data ', 'Keine lokalen Daten vorhanden!');
+                console.log('[FFGBSY]', 'Data', 'Keine lokalen Daten vorhanden!');
             } else {
 
                 const dataObject = <{
@@ -67,7 +67,7 @@ export class DataService implements Daten {
 
     public async download() {
 
-        console.log('[FFGBSY]', 'Data ', 'Start Download');
+        console.log('[FFGBSY]', 'Data', 'Start Download');
 
         this.api.getDaten().subscribe((data) => {
 

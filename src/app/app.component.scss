@@ -6,6 +6,18 @@ ion-menu{
         flex-direction: column;
         height: 100%;
 
+        ion-item {
+            --padding-start: 24px;
+
+            ion-label{
+                line-height: 44px;
+            }
+
+            ion-icon[slot=start] {
+                margin-inline-end: 24px;
+            }
+        }
+
         // Items
         .sidemenu-main-menu{
             padding-top: 0px;
