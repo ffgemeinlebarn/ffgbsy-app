@@ -38,7 +38,7 @@
             <ion-item color="light">
                 <ion-icon slot="start" name="people-outline"></ion-icon>
                 <ion-label>Aufnehmer</ion-label>
-                <ion-select interface="popover" placeholder="Aufnehmer" [(ngModel)]="usedFilter.aufnehmerId">
+                <ion-select interface="action-sheet" placeholder="Aufnehmer" [(ngModel)]="usedFilter.aufnehmerId">
                     <ion-select-option value="*">Alle</ion-select-option>
                     <ion-select-option *ngFor="let aufnehmer of availableFilter.aufnehmer" [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
                 </ion-select>
@@ -46,7 +46,7 @@
             <ion-item color="light">
                 <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
                 <ion-label>Tisch</ion-label>
-                <ion-select interface="popover" placeholder="Tische" [(ngModel)]="usedFilter.tischId">
+                <ion-select interface="action-sheet" placeholder="Tische" [(ngModel)]="usedFilter.tischId">
                     <ion-select-option value="*">Alle</ion-select-option>
                     <ion-select-option *ngFor="let tisch of availableFilter.tische" [value]="tisch.id">{{ tisch.reihe }} {{ tisch.nummer }}</ion-select-option>
                 </ion-select>
@@ -54,7 +54,7 @@
             <ion-item color="light">
                 <ion-icon slot="start" name="timer-outline"></ion-icon>
                 <ion-label>Letzte Bestellungen</ion-label>
-                <ion-select interface="popover" placeholder="Letzte Bestellungen" [(ngModel)]="usedFilter.limit">
+                <ion-select interface="action-sheet" placeholder="Letzte Bestellungen" [(ngModel)]="usedFilter.limit">
                     <ion-select-option *ngFor="let limit of availableFilter.limits" [value]="limit">{{ limit }}</ion-select-option>
                 </ion-select>
             </ion-item>

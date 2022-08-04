@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { APISettings, AppSettings, StorageSettings, LocaleSettings, SessionSettings } from 'src/app/interfaces/settings';
+import { LocaleSettings } from 'src/app/interfaces/settings';
 
 import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
@@ -15,7 +15,8 @@ export class SettingsService {
 
     public locale: LocaleSettings = {
         deviceName: '',
-        api: ''
+        api: '',
+        adminPin: ''
     };
 
     constructor(
@@ -26,7 +27,7 @@ export class SettingsService {
         this.loadLocal();
     }
 
-    private loadLocal() {
+    public loadLocal() {
         console.log('[FFGBSY]', 'Load Local');
         this.ready = new Promise((resolve, reject) => this.ionicStorage.get(this.StoragePrefix + 'locale').then(async (val) => {
             console.log('[FFGBSY]', 'Settings ', 'Loaded: ', val);
@@ -49,8 +50,7 @@ export class SettingsService {
         console.log('[FFGBSY]', 'Save Local');
         await this.ionicStorage.set(this.StoragePrefix + 'locale', JSON.stringify(this.locale));
         this.loadLocal();
+        this.frontend.showToast("Die lokalen Einstellungen wurden gespeichert!");
     }
-
-    public saveAufnehmer() { }
 
 }

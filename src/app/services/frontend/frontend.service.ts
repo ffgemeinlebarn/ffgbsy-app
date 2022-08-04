@@ -92,7 +92,7 @@ export class FrontendService {
 
     }
 
-    async showToast(msg, duration) {
+    async showToast(msg, duration = 2000) {
 
         this.toast = await this.toastController.create({
             message: msg,

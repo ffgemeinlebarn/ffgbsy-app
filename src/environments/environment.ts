@@ -1,4 +1,5 @@
 export const environment = {
     production: false,
-    api: 'https://internal.ffgbsy.ff-gemeinlebarn.at/v1'
+    api: 'https://internal.ffgbsy.ff-gemeinlebarn.at',
+    localAdminPin: '17108'
 };

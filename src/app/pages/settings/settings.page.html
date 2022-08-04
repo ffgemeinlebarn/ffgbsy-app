@@ -12,7 +12,8 @@
 
 <ion-content>
 
-    <ion-list *ngIf="bestellungsHandler.aufnehmer">
+    <!-- TODO: Move to eigene Page -->
+    <!-- <ion-list *ngIf="bestellungsHandler.aufnehmer">
         <ion-item-divider>
             <ion-label>Meine Aufnehmer-Einstellungen</ion-label>
         </ion-item-divider>
@@ -32,13 +33,12 @@
                 <ion-select-option [value]="3">Level 3</ion-select-option>
             </ion-select>
         </ion-item>
-    </ion-list>
+    </ion-list> -->
 
     <ion-list>
         <ion-item-divider>
             <ion-label>API</ion-label>
         </ion-item-divider>
-
         <ion-item>
             <ion-label position="stacked">Base URL</ion-label>
             <ion-input [(ngModel)]="settings.locale.api"></ion-input>
@@ -50,6 +50,14 @@
         <ion-item>
             <ion-label position="stacked">Gerätename</ion-label>
             <ion-input [(ngModel)]="settings.locale.deviceName"></ion-input>
+        </ion-item>
+
+        <ion-item-divider>
+            <ion-label>Administration</ion-label>
+        </ion-item-divider>
+        <ion-item>
+            <ion-label position="stacked">Freitschaltungs PIN</ion-label>
+            <ion-input type="password" [(ngModel)]="settings.locale.adminPin"></ion-input>
         </ion-item>
     </ion-list>
 

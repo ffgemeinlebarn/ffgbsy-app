@@ -12,8 +12,6 @@ ion-menu{
             flex: 1;
 
             ion-item{
-                border-bottom: 1px solid #ddd;
-
                 ion-label{
                     line-height: 60px;
                 }
@@ -39,24 +37,6 @@ ion-menu{
         }
     }
 }
-
-// Content - Center All
-
-
-// :host ::ng-deep {
-
-//     ion-content.center{
-
-//         >ion-grid.center{
-//             height: 100%;
-
-//             >ion-row.center{
-//                 height: 100%;
-//                 flex-direction: column;
-//             }
-//         }
-//     }
-// }
 
 // Ion-Select Alert
 

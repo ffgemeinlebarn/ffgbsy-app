@@ -6,35 +6,59 @@
             <ion-content>
                 <div class="container">
                     <!-- Menu Links -->
-                    <ion-list class="sidemenu-main-menu">
+                    <ion-list class="sidemenu-main-menu" lines="full">
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/neue-bestellung']" lines="none" menuClose>
+                            <ion-item [routerLink]="['/neue-bestellung']" menuClose>
                                 <ion-label>Neue Bestellung</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/bestellungen']" lines="none" menuClose>
+                            <ion-item [routerLink]="['/bestellungen']" menuClose>
                                 <ion-label>Bestellungen</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/systemstatus']" lines="none" menuClose>
+                            <ion-item [routerLink]="['/systemstatus']" menuClose>
                                 <ion-label>Systemstatus</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/settings']" lines="none" menuClose>
+                            <ion-item [routerLink]="['/settings']" menuClose>
                                 <ion-label>Systemeinstellungen</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/statistics']" lines="none" menuClose>
+                            <ion-item [routerLink]="['/imprint']" menuClose>
+                                <ion-label>Impressum</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                    </ion-list>
+
+                    <ion-list *ngIf="isAdmin" class="sidemenu-admin-menu" lines="full">
+                        <ion-item-divider>
+                            <ion-label>Information</ion-label>
+                        </ion-item-divider>
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/statistics']" menuClose>
                                 <ion-label>Statistiken</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/imprint']" lines="none" menuClose>
-                                <ion-label>Impressum</ion-label>
+                            <ion-item [routerLink]="['/statistics']" menuClose>
+                                <ion-label>Benachrichtigungen</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                        <ion-item-divider>
+                            <ion-label>Daten</ion-label>
+                        </ion-item-divider>
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/statistics']" menuClose>
+                                <ion-label>Grundprodukte</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/statistics']" menuClose>
+                                <ion-label>Produkte</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                     </ion-list>
