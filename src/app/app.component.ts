@@ -4,6 +4,7 @@ import { BestellungenHandlerService } from './services/bestellungen/bestellungen
 import { FrontendService } from './services/frontend/frontend.service';
 import { DataService } from './services/data/data.service';
 import { environment } from 'src/environments/environment';
+import { NotificationService } from './services/notification/notification.service';
 
 @Component({
     selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent {
         public bestellungsHandler: BestellungenHandlerService,
         public data: DataService,
         public settings: SettingsService,
-        public frontend: FrontendService
+        public frontend: FrontendService,
+        public notification: NotificationService
     ) {
         this.settings.ready.then(() => {
             this.isAdmin = environment.localAdminPin == this.settings.locale.adminPin;
