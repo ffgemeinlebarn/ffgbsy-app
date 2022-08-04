@@ -8,23 +8,28 @@
                     <!-- Menu Links -->
                     <ion-list class="sidemenu-main-menu" lines="full">
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/neue-bestellung']" menuClose>
+                            <ion-item [routerLink]="['/neue-bestellung']">
                                 <ion-label>Neue Bestellung</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/bestellungen']" menuClose>
+                            <ion-item [routerLink]="['/bestellungen']">
                                 <ion-label>Bestellungen</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/systemstatus']" menuClose>
+                            <ion-item [routerLink]="['/systemstatus']">
                                 <ion-label>Systemstatus</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/settings']" menuClose>
+                            <ion-item [routerLink]="['/settings']">
                                 <ion-label>Systemeinstellungen</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/aufnehmer-edit']" [disabled]="!bestellungsHandler?.aufnehmer">
+                                <ion-label>Aufnehmer Einstellungen</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                     </ion-list>
@@ -34,12 +39,12 @@
                             <ion-label>Information</ion-label>
                         </ion-item-divider>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/statistics']" menuClose>
+                            <ion-item [routerLink]="['/statistics']">
                                 <ion-label>Statistiken</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/statistics']" menuClose>
+                            <ion-item [routerLink]="['/statistics']">
                                 <ion-label>Benachrichtigungen</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
@@ -47,12 +52,12 @@
                             <ion-label>Daten</ion-label>
                         </ion-item-divider>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/statistics']" menuClose>
+                            <ion-item [routerLink]="['/statistics']">
                                 <ion-label>Grundprodukte</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/statistics']" menuClose>
+                            <ion-item [routerLink]="['/statistics']">
                                 <ion-label>Produkte</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
