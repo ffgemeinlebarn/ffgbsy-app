@@ -1,29 +1,22 @@
 import { Eigenschaft } from "./eigenschaft.class";
+import { Grundprodukt } from "./grundprodukt.class";
+import { Produkteinteilung } from "./produkteinteilung.class";
 
 export class Produkt {
     id: number;
     name: string;
     formal_name: string;
-    einzahl: any;
+    einzahl: number;
     einheit: string;
-    preis: any;
+    preis: number;
+    aktiv: boolean;
+    sortierindex: number;
     produkteinteilungen_id: number;
-    drucker_id_level_2: any;
-    sortierindex: any;
+    grundprodukte_id: number | null;
+    grundprodukte_multiplikator: number;
+    celebration_active: boolean;
+    celebration_last: number;
+    produkteinteilung: Produkteinteilung;
+    grundprodukt: Grundprodukt | null;
     eigenschaften: Array<Eigenschaft>;
-    hash: string;
-
-    constructor(id, name, formal_name, einzahl, einheit, preis, produkteinteilungen_id, drucker_id_level_2, sortierindex, eigenschaften) {
-        this.id = id;
-        this.name = name;
-        this.formal_name = formal_name;
-        this.einzahl = einzahl;
-        this.einheit = einheit;
-        this.preis = preis;
-        this.produkteinteilungen_id = produkteinteilungen_id;
-        this.drucker_id_level_2 = drucker_id_level_2;
-        this.sortierindex = sortierindex;
-        this.hash = Math.random().toString(36).substr(2, 9);
-        this.eigenschaften = eigenschaften;
-    }
 }

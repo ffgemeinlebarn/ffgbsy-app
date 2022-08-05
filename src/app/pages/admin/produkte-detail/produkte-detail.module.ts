@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
-import { ProduktePageRoutingModule } from './produkte-routing.module';
-
-import { ProduktePage } from './produkte.page';
+import { ProdukteDetailPageRoutingModule } from './produkte-detail-routing.module';
+import { ProdukteDetailPage } from './produkte-detail.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 @NgModule({
@@ -14,9 +11,9 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
         CommonModule,
         FormsModule,
         IonicModule,
-        ProduktePageRoutingModule,
+        ProdukteDetailPageRoutingModule,
         PipesModule
     ],
-    declarations: [ProduktePage]
+    declarations: [ProdukteDetailPage]
 })
-export class ProduktePageModule { }
+export class ProdukteDetailPageModule { }

@@ -32,8 +32,15 @@ const routes: Routes = [
     {
         path: 'admin/produkte',
         loadChildren: () => import('./pages/admin/produkte/produkte.module').then(m => m.ProduktePageModule)
+    },
+    {
+        path: 'admin/produkte/:id',
+        loadChildren: () => import('./pages/admin/produkte-detail/produkte-detail.module').then(m => m.ProdukteDetailPageModule)
+    },
+    {
+        path: 'admin/grundprodukte/:id',
+        loadChildren: () => import('./pages/admin/grundprodukte-detail/grundprodukte-detail.module').then(m => m.GrundprodukteDetailPageModule)
     }
-
 ];
 
 @NgModule({

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
-import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +8,9 @@ export class FrontendService {
 
     public toast: any;
     public alert: any;
-    public loadingSpinner: any;
+
+    public loadingSpinnerActiveCount: number = 0;
+    public loadingSpinner: any = null;
 
     constructor(
         public toastController: ToastController,
@@ -17,26 +18,32 @@ export class FrontendService {
         public loadingController: LoadingController
     ) { }
 
-    showLoadingSpinner() {
-        this.loadingController.create({
-            spinner: 'lines-small',
-            message: 'FFGBSY Schnitstelle',
-            translucent: true
-        }).then(loading => {
-            this.loadingSpinner = loading;
-            this.loadingSpinner.present();
-        });
+    public showLoadingSpinner() {
 
+        this.loadingSpinnerActiveCount++;
+        console.log("[FFGBSY]", "Show Loading Spinner", "Number =", this.loadingSpinnerActiveCount);
+
+        if (this.loadingSpinnerActiveCount == 1) {
+            this.loadingController.create({
+                spinner: 'lines-small',
+                message: 'Sende & empfange Daten'
+            }).then((loading) => {
+                this.loadingSpinner = loading;
+                this.loadingSpinner.present();
+            });
+        }
     }
 
-    hideLoadingSpinner() {
+    public hideLoadingSpinner() {
+        console.log("[FFGBSY]", "Hide Loading Spinner", "Number =", this.loadingSpinnerActiveCount);
+
         if (this.loadingSpinner) {
-            this.loadingSpinner.dismiss();
+            if (this.loadingSpinnerActiveCount > 0) {
+                this.loadingSpinner.dismiss();
+            }
+            this.loadingSpinnerActiveCount--;
         } else {
-            let tmp_this = this;
-            setTimeout(function () {
-                tmp_this.hideLoadingSpinner();
-            }, 300);
+            setTimeout(() => this.hideLoadingSpinner(), 300);
         }
     }
 

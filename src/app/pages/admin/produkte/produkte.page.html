@@ -6,5 +6,13 @@
 </ion-header>
 
 <ion-content>
-
+    <ion-list>
+        <ion-item *ngFor="let produkt of edit.produkte" [routerLink]="[produkt.id]">
+            <ion-label>
+                <h3>{{ produkt.name }}</h3>
+                <p>{{ produkt.produkteinteilung.name }} ({{ produkt.produkteinteilung.produktkategorie.name }})</p>
+            </ion-label>
+            <ion-chip>{{ produkt.preis | euroPreis }}</ion-chip>
+        </ion-item>
+    </ion-list>
 </ion-content>
