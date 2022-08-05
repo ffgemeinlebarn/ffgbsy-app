@@ -54,7 +54,7 @@ export class BestellungenDetailPage implements OnInit {
                     type: 'number',
                     value: 1,
                     min: 1,
-                    max: 100
+                    max: bestellposition.anzahl
                 }
             ],
             buttons: [
