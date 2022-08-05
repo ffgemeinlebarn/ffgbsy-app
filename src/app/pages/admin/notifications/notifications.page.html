@@ -6,5 +6,19 @@
 </ion-header>
 
 <ion-content>
-
+    <ion-list>
+        <ion-item>
+            <ion-label position="stacked">Titel</ion-label>
+            <ion-input [(ngModel)]="notification.title"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Autor</ion-label>
+            <ion-input [(ngModel)]="notification.author"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Nachricht</ion-label>
+            <ion-textarea [(ngModel)]="notification.message"></ion-textarea>
+        </ion-item>
+        <ion-button expand="block" (click)="sendNewNotification()">Senden</ion-button>
+    </ion-list>
 </ion-content>

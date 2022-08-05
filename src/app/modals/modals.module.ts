@@ -8,6 +8,7 @@ import { BestellungspositionEditModalComponent } from './bestellungsposition-edi
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrScanComponent } from './qr-scan/qr-scan.component';
 import { ApiErrorComponent } from './api-error/api-error.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { ApiErrorComponent } from './api-error/api-error.component';
         BestellungKontrolleModalComponent,
         BestellungspositionEditModalComponent,
         QrScanComponent,
-        ApiErrorComponent
+        ApiErrorComponent,
+        NotificationComponent
     ]
 })
 export class ModalsModule { }
