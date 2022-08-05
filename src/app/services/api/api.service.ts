@@ -15,6 +15,7 @@ import { SettingsService } from '../settings/settings.service';
 import { BonDruck } from 'src/app/classes/bonDruck';
 import { Notification } from 'src/app/classes/notification.class';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
+import { Produkt } from 'src/app/classes/produkt.class';
 
 @Injectable({
     providedIn: 'root'
@@ -269,6 +270,52 @@ export class ApiService {
         this.frontend.showLoadingSpinner();
         return this.http
             .put(`${this.url}/grundprodukte/${grundprodukt.id}`, grundprodukt, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    // Produkte
+
+    public readProdukte(): Observable<Array<Produkt>> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .get(`${this.url}/produkte`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public readProdukt(id: number): Observable<Produkt> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .get(`${this.url}/produkte/${id}`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public updateProdukt(grundprodukt: Produkt): Observable<Produkt> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .put(`${this.url}/produkte/${grundprodukt.id}`, grundprodukt, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public createProdukt(grundprodukt: Produkt): Observable<Produkt> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .post(`${this.url}/produkte/${grundprodukt.id}`, grundprodukt, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),

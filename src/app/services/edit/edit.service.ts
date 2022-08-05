@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { ApiService } from '../api/api.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,8 +12,11 @@ export class EditService {
     public grundprodukte: Array<Grundprodukt> = [];
     public produkte: Array<Produkt> = [];
 
-    constructor(private api: ApiService) {
-        this.readGrundprodukte();
+    constructor(private settings: SettingsService, private api: ApiService) {
+        this.settings.ready.then(() => {
+            this.readGrundprodukte();
+            this.readProdukte();
+        });
     }
 
     public readGrundprodukte() {
@@ -29,7 +33,15 @@ export class EditService {
 
 
     public readProdukte() {
-        // this.api.readProdukte().subscribe((produkte) => this.produkte = produkte);
+        this.api.readProdukte().subscribe((produkte) => this.produkte = produkte);
+    }
+
+    public readProdukt(id: number) {
+        return this.api.readProdukt(id);
+    }
+
+    public updateProdukt(produkt: Produkt) {
+        return this.api.updateProdukt(produkt);
     }
 
 }
