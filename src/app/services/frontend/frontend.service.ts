@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
-import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +8,7 @@ export class FrontendService {
 
     public toast: any;
     public alert: any;
-    public loadingSpinner: any;
+    public loadingSpinner: any = null;
 
     constructor(
         public toastController: ToastController,
@@ -17,26 +16,24 @@ export class FrontendService {
         public loadingController: LoadingController
     ) { }
 
-    showLoadingSpinner() {
+    public showLoadingSpinner() {
+        console.log("[FFGBSY]", "Show Loading Spinner");
         this.loadingController.create({
             spinner: 'lines-small',
-            message: 'FFGBSY Schnitstelle',
-            translucent: true
-        }).then(loading => {
+            message: 'Sende & empfange Daten'
+        }).then((loading) => {
             this.loadingSpinner = loading;
             this.loadingSpinner.present();
         });
-
     }
 
-    hideLoadingSpinner() {
+    public hideLoadingSpinner() {
+        console.log("[FFGBSY]", "Hide Loading Spinner");
+
         if (this.loadingSpinner) {
             this.loadingSpinner.dismiss();
         } else {
-            let tmp_this = this;
-            setTimeout(function () {
-                tmp_this.hideLoadingSpinner();
-            }, 300);
+            setTimeout(() => this.hideLoadingSpinner(), 300);
         }
     }
 

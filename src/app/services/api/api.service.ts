@@ -14,6 +14,7 @@ import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
 import { BonDruck } from 'src/app/classes/bonDruck';
 import { Notification } from 'src/app/classes/notification.class';
+import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 
 @Injectable({
     providedIn: 'root'
@@ -207,6 +208,8 @@ export class ApiService {
             );
     }
 
+    // Notifications
+
     public getNotificationsSince(since: Date): Observable<Array<Notification>> {
         const isoDateTime = new Date(since.getTime() - (since.getTimezoneOffset() * 60000)).toISOString();
         return this.http
@@ -231,6 +234,41 @@ export class ApiService {
         this.frontend.showLoadingSpinner();
         return this.http
             .post(`${this.url}/notifications`, notification, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    // Grundprodukte
+
+    public readGrundprodukte(): Observable<Array<Grundprodukt>> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .get(`${this.url}/grundprodukte`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public readGrundprodukt(id: number): Observable<Grundprodukt> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .get(`${this.url}/grundprodukte/${id}`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public updateGrundprodukt(grundprodukt: Grundprodukt): Observable<Grundprodukt> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .put(`${this.url}/grundprodukte/${grundprodukt.id}`, grundprodukt, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
