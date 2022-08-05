@@ -4,6 +4,38 @@
     height: 100%;
 }
 
+.notifications{
+    position: fixed;
+    z-index: 1;
+    font-weight: bold;
+    margin: 0px;
+    animation-name: pulse;
+    animation-duration: 1000ms;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+
+    &.md{
+        right: 50px;
+        top: 28px;
+    }
+
+    &.ios{
+        right: 50px;
+        top: 22px;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.03);
+    }
+}
+
 ion-menu{
     --side-max-width: 400px;
 

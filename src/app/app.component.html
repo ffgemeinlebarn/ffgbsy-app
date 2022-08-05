@@ -92,16 +92,15 @@
         </ion-menu>
 
         <div id="main-content">
-            <!-- Router Outlet -->
-            <ion-router-outlet></ion-router-outlet>
 
             <!-- Notifications -->
-            <ion-tabs>
-                <ion-tab-bar slot="top" color="warning" class="ripple-parent" (click)="notification.showUnread()" *ngIf="notification.unread.length">
-                    <ion-title color="dark">Ungelesene Benachrichtigungen!</ion-title>
-                    <ion-ripple-effect></ion-ripple-effect>
-                </ion-tab-bar>
-            </ion-tabs>
+            <ion-button class="notifications" color="warning" shape="round" (click)="notification.showUnread()" *ngIf="notification.unread.length">
+                <ion-icon color="dark" slot="start" name="notifications-outline"></ion-icon>
+                <ion-label color="dark">Neue Benachrichtigung</ion-label>
+            </ion-button>
+
+            <!-- Router Outlet -->
+            <ion-router-outlet> </ion-router-outlet>
 
         </div>
 

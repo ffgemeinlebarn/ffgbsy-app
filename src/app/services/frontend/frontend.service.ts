@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
+import { NotificationService } from '../notification/notification.service';
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +14,8 @@ export class FrontendService {
     constructor(
         public toastController: ToastController,
         public alertController: AlertController,
-        public loadingController: LoadingController) {
-
-    }
+        public loadingController: LoadingController
+    ) { }
 
     showLoadingSpinner() {
         this.loadingController.create({

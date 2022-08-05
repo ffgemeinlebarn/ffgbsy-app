@@ -14,6 +14,7 @@ import { FrontendService } from './services/frontend/frontend.service';
 import { ModalsModule } from './modals/modals.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [AppComponent],

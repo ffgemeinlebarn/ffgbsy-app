@@ -1,0 +1,21 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>{{ notification?.title }}</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <ion-item lines="none">
+        <ion-label position="stacked">Nachticht</ion-label>
+        <p class="message">{{ notification?.message }}</p>
+    </ion-item>
+    <ion-item lines="none">
+        <ion-label position="stacked">Datum & Uhrzeit</ion-label>
+        <p>{{ notification?.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }}</p>
+    </ion-item>
+    <ion-item lines="none">
+        <ion-label position="stacked">Autor</ion-label>
+        <p>{{ notification?.author }}</p>
+    </ion-item>
+    <ion-button *ngIf="notifications.length" (click)="readNext()" class="read-next" expand="block" color="warning">Weitere ungelesene Benachrichtigung</ion-button>
+    <ion-button class="close" expand="block" (click)="close()">Schließen</ion-button>
+</ion-content>
