@@ -106,14 +106,14 @@
             <div class="submit">
                 <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" [disabled]="bestellungsHandler.neubestellung.bestellung?.bestellpositionen.length == 0">
                     <ion-label>Abschluss </ion-label>
-                    <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+                    <ion-icon slot="start" name="checkmark-circle"></ion-icon>
                 </ion-button>
             </div>
         </div>
         <div class="footer-right">
             <div class="kachelwand">
                 <div class="kachel produktkategorie-kachel" *ngFor="let produktkategorie of data.produktkategorien">
-                    <div class="kachel__inner" [ngStyle]="{'background-color': produktkategorie.color}">
+                    <div class="kachel__inner" [ngClass]="produktkategorie.color">
                         <ion-button text-wrap text-normal expand="full" (click)="changeFilterProduktkategorie(produktkategorie)">
                             <span class="button-inner">{{produktkategorie.name}}</span>
                         </ion-button>

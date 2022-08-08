@@ -26,12 +26,33 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 :root {
-    --ion-color-primary: #150061;
-    --ion-color-primary-rgb: 21, 0, 97;
+
+    // Palette: https://coolors.co/palette/d9ed92-b5e48c-99d98c-76c893-52b69a-34a0a4-168aad-1a759f-1e6091-184e77
+
+    --ion-color-primary: #1e6091;
+    --ion-color-primary-rgb: 30, 96, 145;
     --ion-color-primary-contrast: #ffffff;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
-    --ion-color-primary-shade: #09002d;
-    --ion-color-primary-tint: #09002d;
+    --ion-color-primary-shade: #184e77;
+    --ion-color-primary-tint: #1a759f;
+
+    --ion-color-primary--shade-1: #1a759f;
+    --ion-color-primary--shade-2: #168aad;
+    --ion-color-primary--shade-3: #34a0a4;
+    --ion-color-primary--shade-4: #52b69a;
+    --ion-color-primary--shade-5: #76c893;
+
+    --ion-color-success: #24b15c;
+    --ion-color-success-rgb: 36, 177, 92;
+}
+
+
+
+@function customLighten($color-variable, $value) {
+    $color-variable-h: var(#{$color-variable + "-h"});
+    $color-variable-s: var(#{$color-variable + "-s"});
+    $color-variable-l: calc(var(#{$color-variable + "-l"}) - #{$value+"%"});
+    @return hsl($color-variable-h, $color-variable-s, $color-variable-l);
 }
 
 .center-wrapper{
