@@ -58,7 +58,7 @@ export class NotificationService {
 
     private pollNew() {
 
-        this.logger.debug('[Notification Serivce] - Poll new Notifications!');
+        this.logger.debug('[Notification Serivce] Poll new Notifications!');
 
         const newLastPoll = new Date();
         this.api.getNotificationsSince(this.lastPoll).subscribe((notifications) => {
