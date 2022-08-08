@@ -7,7 +7,6 @@ import { PipesModule } from "../pipes/pipes.module";
 import { BestellungspositionEditModalComponent } from './bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrScanComponent } from './qr-scan/qr-scan.component';
-import { ApiErrorComponent } from './api-error/api-error.component';
 import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
@@ -22,7 +21,6 @@ import { NotificationComponent } from './notification/notification.component';
         BestellungKontrolleModalComponent,
         BestellungspositionEditModalComponent,
         QrScanComponent,
-        ApiErrorComponent,
         NotificationComponent
     ]
 })

@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ModalController } from '@ionic/angular';
 import { Observable, throwError } from 'rxjs';
 import { tap, retry, catchError, map } from 'rxjs/operators';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
@@ -8,7 +7,6 @@ import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { Bon } from 'src/app/classes/bon';
 import { Daten } from 'src/app/interfaces/daten';
-import { ApiErrorComponent } from 'src/app/modals/api-error/api-error.component';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
@@ -28,7 +26,6 @@ export class ApiService {
     constructor(
         private logger: NGXLogger,
         private http: HttpClient,
-        private modalCtrl: ModalController,
         public frontend: FrontendService,
         public settings: SettingsService
     ) {
@@ -49,18 +46,6 @@ export class ApiService {
         this.logger.error('[API Service] Error Handling', error);
 
         return throwError(error);
-    }
-
-    async showModal(error: Error | any) {
-        const modal = await this.modalCtrl.create({
-            component: ApiErrorComponent,
-            componentProps: {
-                error
-            },
-            cssClass: 'api-error'
-        });
-
-        modal.present();
     }
 
     public getCurrentVersion(): Observable<number> {
