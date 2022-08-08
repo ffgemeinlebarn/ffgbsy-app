@@ -6,14 +6,13 @@ export class Produkt {
     id: number;
     name: string;
     formal_name: string;
-    einzahl: number;
-    einheit: string;
     preis: number;
+    drucker_id_level_2: number | null;
     aktiv: boolean;
     sortierindex: number;
     produkteinteilungen_id: number;
     grundprodukte_id: number | null;
-    grundprodukte_multiplikator: number;
+    grundprodukte_multiplikator: number | null;
     celebration_active: boolean;
     celebration_last: number;
     produkteinteilung: Produkteinteilung;

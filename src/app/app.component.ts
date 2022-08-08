@@ -26,6 +26,11 @@ export class AppComponent {
     ) {
         this.settings.ready.then(() => {
             this.isAdmin = environment.localAdminPin == this.settings.locale.adminPin;
-        })
+        });
+
+        setInterval(() => {
+            this.frontend.showLoadingSpinner();
+            setTimeout(() => this.frontend.hideLoadingSpinner(), 5000);
+        }, 6000);
     }
 }

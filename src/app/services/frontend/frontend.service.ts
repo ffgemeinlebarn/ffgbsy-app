@@ -10,7 +10,7 @@ export class FrontendService {
     public alert: any;
 
     public loadingSpinnerActiveCount: number = 0;
-    public loadingSpinner: any = null;
+    public loadingSpinnerMessage: string = '';
 
     constructor(
         public toastController: ToastController,
@@ -18,33 +18,15 @@ export class FrontendService {
         public loadingController: LoadingController
     ) { }
 
-    public showLoadingSpinner() {
-
+    public showLoadingSpinner(message: string = '') {
+        this.loadingSpinnerMessage = message;
         this.loadingSpinnerActiveCount++;
         console.log("[FFGBSY]", "Show Loading Spinner", "Number =", this.loadingSpinnerActiveCount);
-
-        if (this.loadingSpinnerActiveCount == 1) {
-            this.loadingController.create({
-                spinner: 'lines-small',
-                message: 'Sende & empfange Daten'
-            }).then((loading) => {
-                this.loadingSpinner = loading;
-                this.loadingSpinner.present();
-            });
-        }
     }
 
     public hideLoadingSpinner() {
+        this.loadingSpinnerActiveCount--;
         console.log("[FFGBSY]", "Hide Loading Spinner", "Number =", this.loadingSpinnerActiveCount);
-
-        if (this.loadingSpinner) {
-            if (this.loadingSpinnerActiveCount > 0) {
-                this.loadingSpinner.dismiss();
-            }
-            this.loadingSpinnerActiveCount--;
-        } else {
-            setTimeout(() => this.hideLoadingSpinner(), 300);
-        }
     }
 
     showOkAlert(header, message) {

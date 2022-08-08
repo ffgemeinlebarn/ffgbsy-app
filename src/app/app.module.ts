@@ -15,6 +15,7 @@ import { ModalsModule } from './modals/modals.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { CommonModule } from '@angular/common';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { CommonModule } from '@angular/common';
         HttpClientModule,
         PipesModule,
         ModalsModule,
+        ComponentsModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
             // Register the ServiceWorker as soon as the application is stable

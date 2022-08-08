@@ -19,6 +19,8 @@
             <ion-label position="stacked">Nachricht</ion-label>
             <ion-textarea [(ngModel)]="notification.message"></ion-textarea>
         </ion-item>
-        <ion-button expand="block" (click)="sendNewNotification()">Senden</ion-button>
     </ion-list>
+    <div class="ion-padding">
+        <ion-button expand="block" (click)="sendNewNotification()">Senden</ion-button>
+    </div>
 </ion-content>
