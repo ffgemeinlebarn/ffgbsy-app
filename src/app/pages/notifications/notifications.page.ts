@@ -2,7 +2,7 @@ import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
-    selector: 'app-notifications',
+    selector: 'ffgbsy-notifications',
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
 })

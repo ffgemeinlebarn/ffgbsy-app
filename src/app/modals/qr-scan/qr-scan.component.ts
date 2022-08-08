@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-    selector: 'app-qr-scan',
+    selector: 'ffgbsy-qr-scan',
     templateUrl: './qr-scan.component.html',
     styleUrls: ['./qr-scan.component.scss'],
 })

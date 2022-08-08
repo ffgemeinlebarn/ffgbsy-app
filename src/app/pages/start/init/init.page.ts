@@ -10,7 +10,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { version } from 'src/environments/version';
 
 @Component({
-    selector: 'app-init',
+    selector: 'ffgbsy-init',
     templateUrl: './init.page.html',
     styleUrls: ['./init.page.scss'],
 })

@@ -5,7 +5,7 @@ import { SettingsService } from 'src/app/services/settings/settings.service';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
-    selector: 'app-systemstatus',
+    selector: 'ffgbsy-systemstatus',
     templateUrl: './systemstatus.page.html',
     styleUrls: ['./systemstatus.page.scss'],
 })

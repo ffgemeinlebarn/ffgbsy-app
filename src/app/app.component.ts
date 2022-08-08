@@ -8,7 +8,7 @@ import { NotificationService } from './services/notification/notification.servic
 import { EditService } from './services/edit/edit.service';
 
 @Component({
-    selector: 'app-root',
+    selector: 'ffgbsy-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss']
 })

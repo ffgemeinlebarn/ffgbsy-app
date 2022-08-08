@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { EditService } from 'src/app/services/edit/edit.service';
 
 @Component({
-    selector: 'app-produkte-detail',
+    selector: 'ffgbsy-produkte-detail',
     templateUrl: './produkte-detail.page.html',
     styleUrls: ['./produkte-detail.page.scss'],
 })

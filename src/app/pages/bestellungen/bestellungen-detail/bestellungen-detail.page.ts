@@ -8,7 +8,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { Bon } from 'src/app/classes/bon';
 
 @Component({
-    selector: 'app-bestellungen-detail',
+    selector: 'ffgbsy-bestellungen-detail',
     templateUrl: './bestellungen-detail.page.html',
     styleUrls: ['./bestellungen-detail.page.scss'],
 })

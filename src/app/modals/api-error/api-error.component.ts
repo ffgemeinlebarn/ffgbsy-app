@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-    selector: 'app-api-error',
+    selector: 'ffgbsy-api-error',
     templateUrl: './api-error.component.html',
     styleUrls: ['./api-error.component.scss'],
 })

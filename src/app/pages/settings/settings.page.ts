@@ -5,7 +5,7 @@ import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestel
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 
 @Component({
-    selector: 'app-settings',
+    selector: 'ffgbsy-settings',
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
 })

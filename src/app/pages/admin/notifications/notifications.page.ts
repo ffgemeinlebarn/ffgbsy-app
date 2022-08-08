@@ -4,7 +4,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 
 @Component({
-    selector: 'app-notifications',
+    selector: 'ffgbsy-notifications',
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
 })

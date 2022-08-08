@@ -9,7 +9,7 @@ import { DataService } from 'src/app/services/data/data.service';
 import { HttpParams } from '@angular/common/http';
 
 @Component({
-    selector: 'app-bestellungen',
+    selector: 'ffgbsy-bestellungen',
     templateUrl: './bestellungen.page.html',
     styleUrls: ['./bestellungen.page.scss'],
 })
