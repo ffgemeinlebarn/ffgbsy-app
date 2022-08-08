@@ -1,3 +1,7 @@
+ion-header:after {
+        background-image: none;
+      }
+
 .logo{
     max-width: 100px;
     width: 100%;
@@ -18,11 +22,6 @@
     margin-bottom: 2em;
 }
 
-.cards{
-    margin-top: 2em;
-    width: 100%;
-    max-width: 640px;
-}
 
 .button-systemstatus-abrufen{
     position: fixed;
@@ -37,40 +36,54 @@
 
 .centered{
     width: 100%;
-    padding: 2em;
+    padding: 3em;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.start-icon{
-    font-size: 2em;
 }
 
 ion-col{
     --ion-grid-column-padding: 0.65em;
 }
 
+.tile-divider{
+    width: 100%;
+    border-bottom: 1px #ccc solid;
+    margin: 2em 0em;
+}
+
 .tile{
     background-color: #f4f4f4;
-    padding: 2em;
+    padding: 1em;
     border-radius: 0.7em;
     width: 100%;
+    margin-top: 1.5em;
+
+    .start-icon{
+        font-size: 1.75em;
+        margin-right: 0.5em;
+    }
 
     h4{
         font-weight: bold;
-        font-size: 1.25em;
+        font-size: 1.15em;
         margin: 0px;
         line-height: 1;
     }
 
     p{
         line-height: 1;
+        margin-top: 0.5em;
         margin-bottom: 0px;
     }
 
     &--success{
-        background-color: rgb(68, 68, 158);
+        background-color: var(--ion-color-success);
+        color: #fff;
+    }
+
+    &--clickable{
+        background-color: var(--ion-color-primary);
         color: #fff;
     }
 }

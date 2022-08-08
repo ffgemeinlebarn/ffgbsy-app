@@ -4,7 +4,7 @@ import { Bestellposition } from '../../classes/bestellposition.class';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 
 @Component({
-    selector: 'app-bestellungsposition-edit-modal',
+    selector: 'ffgbsy-bestellungsposition-edit-modal',
     templateUrl: './bestellungsposition-edit-modal.component.html',
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
 })

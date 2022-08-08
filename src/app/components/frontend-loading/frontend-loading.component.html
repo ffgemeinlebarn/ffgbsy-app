@@ -1,0 +1,5 @@
+<ion-backdrop class="loading-backdrop" [hidden]="!frontend.loadingSpinnerActiveCount" [visible]="frontend.loadingSpinnerActiveCount"></ion-backdrop>
+<div class="loading-content" [hidden]="!frontend.loadingSpinnerActiveCount">
+    <ion-spinner slot="loading-content__spinner" name="lines-small"></ion-spinner>
+    <h3 *ngIf="frontend.loadingSpinnerMessage?.length" class="loading-content__message">{{ frontend.loadingSpinnerMessage }}</h3>
+</div>

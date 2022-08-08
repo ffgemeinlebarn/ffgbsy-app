@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 
 @Component({
-    selector: 'app-bestellung-kontrolle-modal',
+    selector: 'ffgbsy-bestellung-kontrolle-modal',
     templateUrl: './bestellung-kontrolle-modal.component.html',
     styleUrls: ['./bestellung-kontrolle-modal.component.scss'],
 })

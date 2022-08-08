@@ -1,0 +1,35 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.loading-backdrop{
+    z-index: 998;
+    opacity: 0.3;
+}
+
+.loading-content{
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2em;
+    border-radius: 0.25em;
+
+    &__spinner{
+    }
+
+    &__message{
+        line-height: 1;
+        padding: 0px;
+        margin: 0px;
+        margin-top: 1em;
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+}

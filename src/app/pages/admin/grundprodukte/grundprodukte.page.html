@@ -15,7 +15,7 @@
                 <ion-icon name="alert-circle"></ion-icon>
                 <ion-label>{{ grundprodukt.bestand }} {{ grundprodukt.einheit }}</ion-label>
             </ion-chip>
-            <ion-chip color="primary" *ngIf="grundprodukt.bestand === null || grundprodukt.bestand > 20">
+            <ion-chip color="success" *ngIf="grundprodukt.bestand === null || grundprodukt.bestand >= 20">
                 <ion-icon name="checkmark-circle"></ion-icon>
                 <ion-label>
                     <span *ngIf="grundprodukt.bestand === null">Unlimitiert</span>

@@ -3,7 +3,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
-    selector: 'app-statistics',
+    selector: 'ffgbsy-statistics',
     templateUrl: './statistics.page.html',
     styleUrls: ['./statistics.page.scss'],
 })

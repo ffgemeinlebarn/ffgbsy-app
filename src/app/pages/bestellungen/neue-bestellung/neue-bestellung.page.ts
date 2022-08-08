@@ -12,7 +12,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { SettingsService } from 'src/app/services/settings/settings.service';
 
 @Component({
-    selector: 'app-neue-bestellung',
+    selector: 'ffgbsy-neue-bestellung',
     templateUrl: './neue-bestellung.page.html',
     styleUrls: ['./neue-bestellung.page.scss'],
 })

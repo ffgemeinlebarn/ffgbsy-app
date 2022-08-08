@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
+import { NGXLogger } from "ngx-logger";
 
 @Injectable({
     providedIn: 'root'
@@ -10,41 +11,28 @@ export class FrontendService {
     public alert: any;
 
     public loadingSpinnerActiveCount: number = 0;
-    public loadingSpinner: any = null;
+    public loadingSpinnerMessage: string = '';
 
     constructor(
+        private logger: NGXLogger,
         public toastController: ToastController,
         public alertController: AlertController,
         public loadingController: LoadingController
     ) { }
 
-    public showLoadingSpinner() {
-
+    public showLoadingSpinner(message: string = '') {
+        this.loadingSpinnerMessage = message;
         this.loadingSpinnerActiveCount++;
-        console.log("[FFGBSY]", "Show Loading Spinner", "Number =", this.loadingSpinnerActiveCount);
-
-        if (this.loadingSpinnerActiveCount == 1) {
-            this.loadingController.create({
-                spinner: 'lines-small',
-                message: 'Sende & empfange Daten'
-            }).then((loading) => {
-                this.loadingSpinner = loading;
-                this.loadingSpinner.present();
-            });
-        }
+        this.logger.trace('[Frontend Service] Show Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
     }
 
     public hideLoadingSpinner() {
-        console.log("[FFGBSY]", "Hide Loading Spinner", "Number =", this.loadingSpinnerActiveCount);
-
-        if (this.loadingSpinner) {
-            if (this.loadingSpinnerActiveCount > 0) {
-                this.loadingSpinner.dismiss();
-            }
+        if (this.loadingSpinnerActiveCount > 0) {
             this.loadingSpinnerActiveCount--;
         } else {
-            setTimeout(() => this.hideLoadingSpinner(), 300);
+            this.logger.warn('[Frontend Service] Hide Loading Spinner on Count == 0');
         }
+        this.logger.trace('[Frontend Service] Hide Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
     }
 
     showOkAlert(header, message) {

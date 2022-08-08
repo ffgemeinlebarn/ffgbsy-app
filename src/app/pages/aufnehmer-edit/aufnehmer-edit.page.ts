@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 
 @Component({
-    selector: 'app-aufnehmer-edit',
+    selector: 'ffgbsy-aufnehmer-edit',
     templateUrl: './aufnehmer-edit.page.html',
     styleUrls: ['./aufnehmer-edit.page.scss'],
 })

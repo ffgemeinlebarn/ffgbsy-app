@@ -5,7 +5,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { EditService } from 'src/app/services/edit/edit.service';
 
 @Component({
-    selector: 'app-grundprodukte-detail',
+    selector: 'ffgbsy-grundprodukte-detail',
     templateUrl: './grundprodukte-detail.page.html',
     styleUrls: ['./grundprodukte-detail.page.scss'],
 })

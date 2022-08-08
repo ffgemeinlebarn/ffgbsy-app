@@ -58,7 +58,7 @@
                     <ion-select-option *ngFor="let limit of availableFilter.limits" [value]="limit">{{ limit }}</ion-select-option>
                 </ion-select>
             </ion-item>
-            <ion-item class="search-button ion-text-center ion-activatable ripple-parent" (click)="getBestellungen()" lines="none" color="primary">
+            <ion-item class="search-button ion-text-center ion-activatable ripple-parent" (click)="searchBestellungen()" lines="none" color="primary">
                 <ion-label>
                     <ion-icon name="search-outline"></ion-icon>
                     Suchen

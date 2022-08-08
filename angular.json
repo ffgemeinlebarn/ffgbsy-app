@@ -7,7 +7,7 @@
             "root": "",
             "sourceRoot": "src",
             "projectType": "application",
-            "prefix": "app",
+            "prefix": "ffgbsy",
             "schematics": {},
             "architect": {
                 "build": {
@@ -146,8 +146,8 @@
         }
     },
     "cli": {
-      "schematicCollections": [
-          "@ionic/angular-toolkit"
+        "schematicCollections": [
+            "@ionic/angular-toolkit"
         ],
         "analytics": false
     },

@@ -3,7 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Notification } from 'src/app/classes/notification.class';
 
 @Component({
-    selector: 'app-notification',
+    selector: 'ffgbsy-notification',
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.scss'],
 })

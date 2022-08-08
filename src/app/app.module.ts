@@ -14,7 +14,8 @@ import { FrontendService } from './services/frontend/frontend.service';
 import { ModalsModule } from './modals/modals.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { CommonModule } from '@angular/common';
+import { ComponentsModule } from './components/components.module';
+import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
 
 @NgModule({
     declarations: [AppComponent],
@@ -24,8 +25,16 @@ import { CommonModule } from '@angular/common';
         IonicStorageModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
+        LoggerModule.forRoot({
+            serverLoggingUrl: `${environment.api}/logs`,
+            serverLogLevel: NgxLoggerLevel.INFO,
+            level: NgxLoggerLevel.DEBUG,
+            context: "FFGBSY",
+            disableFileDetails: true
+        }),
         PipesModule,
         ModalsModule,
+        ComponentsModule,
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
             // Register the ServiceWorker as soon as the application is stable

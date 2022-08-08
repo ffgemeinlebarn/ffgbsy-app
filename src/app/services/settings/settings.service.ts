@@ -4,6 +4,7 @@ import { LocaleSettings } from 'src/app/interfaces/settings';
 import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
 import { FrontendService } from '../frontend/frontend.service';
+import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,7 @@ export class SettingsService {
     };
 
     constructor(
+        private logger: NGXLogger,
         public ionicStorage: Storage,
         public http: HttpClient,
         public frontend: FrontendService
@@ -28,26 +30,26 @@ export class SettingsService {
     }
 
     public loadLocal() {
-        console.log('[FFGBSY]', 'Load Local');
+        this.logger.debug('[Settings Service] Load Local');
         this.ready = new Promise((resolve, reject) => this.ionicStorage.get(this.StoragePrefix + 'locale').then(async (val) => {
-            console.log('[FFGBSY]', 'Settings ', 'Loaded: ', val);
+            this.logger.debug('[Settings Service] Loaded', val);
 
             if (val == null) {
-                console.log('[FFGBSY]', 'Settings ', 'Keine lokalen Einstellungen vorhanden!');
+                this.logger.debug('[Settings Service] Keine lokalen Einstellungen vorhanden!');
                 this.locale = new LocaleSettings();
                 await this.ionicStorage.set(this.StoragePrefix + 'locale', JSON.stringify(this.locale));
             } else {
                 this.locale = <LocaleSettings>JSON.parse(val);
             }
 
-            console.log('[FFGBSY]', 'Settings', 'Local Object: ', this.locale);
-            console.log('[FFGBSY]', 'Settings', 'Service is Ready!');
+            this.logger.debug('[Settings Service] Local Object:', this.locale);
+            this.logger.debug('[Settings Service] Service is Ready!');
             resolve(this.locale);
         }));
     }
 
     public async saveLocal() {
-        console.log('[FFGBSY]', 'Save Local');
+        this.logger.debug('[Settings Service] Save Local');
         await this.ionicStorage.set(this.StoragePrefix + 'locale', JSON.stringify(this.locale));
         this.loadLocal();
         this.frontend.showToast("Die lokalen Einstellungen wurden gespeichert!");
