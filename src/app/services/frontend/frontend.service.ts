@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
+import { NGXLogger } from "ngx-logger";
 
 @Injectable({
     providedIn: 'root'
@@ -13,6 +14,7 @@ export class FrontendService {
     public loadingSpinnerMessage: string = '';
 
     constructor(
+        private logger: NGXLogger,
         public toastController: ToastController,
         public alertController: AlertController,
         public loadingController: LoadingController
@@ -21,12 +23,12 @@ export class FrontendService {
     public showLoadingSpinner(message: string = '') {
         this.loadingSpinnerMessage = message;
         this.loadingSpinnerActiveCount++;
-        console.log("[FFGBSY]", "Show Loading Spinner", "Number =", this.loadingSpinnerActiveCount);
+        this.logger.info("Show Loading Spinner - Number =", this.loadingSpinnerActiveCount);
     }
 
     public hideLoadingSpinner() {
         this.loadingSpinnerActiveCount--;
-        console.log("[FFGBSY]", "Hide Loading Spinner", "Number =", this.loadingSpinnerActiveCount);
+        this.logger.info("Hide Loading Spinner - Number =", this.loadingSpinnerActiveCount);
     }
 
     showOkAlert(header, message) {
