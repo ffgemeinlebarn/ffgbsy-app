@@ -23,12 +23,16 @@ export class FrontendService {
     public showLoadingSpinner(message: string = '') {
         this.loadingSpinnerMessage = message;
         this.loadingSpinnerActiveCount++;
-        this.logger.info("Show Loading Spinner - Number =", this.loadingSpinnerActiveCount);
+        this.logger.trace('[Frontend Service] Show Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
     }
 
     public hideLoadingSpinner() {
-        this.loadingSpinnerActiveCount--;
-        this.logger.info("Hide Loading Spinner - Number =", this.loadingSpinnerActiveCount);
+        if (this.loadingSpinnerActiveCount > 0) {
+            this.loadingSpinnerActiveCount--;
+        } else {
+            this.logger.warn('[Frontend Service] Hide Loading Spinner on Count == 0');
+        }
+        this.logger.trace('[Frontend Service] Hide Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
     }
 
     showOkAlert(header, message) {

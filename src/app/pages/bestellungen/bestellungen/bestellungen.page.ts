@@ -44,7 +44,7 @@ export class BestellungenPage implements OnInit {
         this.usedFilter.tischId = '*';
     }
 
-    getBestellungen() {
+    public searchBestellungen() {
         let params = new HttpParams();
 
         if (this.usedFilter.aufnehmerId != '*') {
@@ -57,7 +57,7 @@ export class BestellungenPage implements OnInit {
 
         params = params.append("limit", this.usedFilter.limit);
 
-        return this.api.getBestellungen(params).subscribe(bestellungen => this.bestellungen = bestellungen);
+        return this.api.searchBestellungen(params).subscribe(bestellungen => this.bestellungen = bestellungen);
     }
 
     async qrScanOpen() {
@@ -71,10 +71,14 @@ export class BestellungenPage implements OnInit {
         modal.present();
 
         const { data, role } = await modal.onWillDismiss();
-        const parsedData = JSON.parse(data);
 
-        if (role == 'success' && parsedData.bestellungen_id) {
-            this.router.navigate(['bestellungen', parsedData.bestellungen_id]);
+        if (role == 'success') {
+
+            const parsedData = JSON.parse(data);
+
+            if (parsedData.bestellungen_id) {
+                this.router.navigate(['bestellungen', parsedData.bestellungen_id]);
+            }
         }
     }
 }

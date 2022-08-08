@@ -4,10 +4,10 @@ import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { SettingsService } from 'src/app/services/settings/settings.service';
 import { ActionSheetController } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 import { version } from 'src/environments/version';
+import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'ffgbsy-init',
@@ -24,22 +24,22 @@ export class InitPage implements OnInit {
     public systemstatus: any = [];
 
     constructor(
+        private logger: NGXLogger,
+        private router: Router,
+        public api: ApiService,
         public actionSheetController: ActionSheetController,
-        public bestellungsHandler: BestellungenHandlerService,
         public data: DataService,
         public settings: SettingsService,
-        private router: Router,
-        public frontend: FrontendService,
-        private api: ApiService
+        public frontend: FrontendService
     ) {
         this.data.ready.then(() => {
 
             // Check Version
-            this.api.getCurrentVersion().subscribe((version) => {
-                console.log('[FFGBSY]', 'Init ', 'Vergleiche Current mit local Version:', this.data.version, '==', version);
+            this.api.getCurrentVersion().subscribe((resultedVersion: number) => {
+                this.logger.debug('[Init Page] Vergleiche Current mit local Version', this.data.version, '==', resultedVersion);
 
-                if (this.data.version !== version) {
-                    console.log('[FFGBSY]', 'Init ', 'Neuere Datenversion vorhanden!');
+                if (this.data.version !== resultedVersion) {
+                    this.logger.debug('[Init Page] Neuere Datenversion vorhanden!', 'Neu: ', resultedVersion);
                     this.downloadData();
                 }
             });
@@ -47,11 +47,11 @@ export class InitPage implements OnInit {
         });
     }
 
+    public ngOnInit() { }
+
     public initComplete() {
         this.router.navigateByUrl('/neue-bestellung');
     }
-
-    ngOnInit() { }
 
     public async downloadData() {
         await this.data.download();

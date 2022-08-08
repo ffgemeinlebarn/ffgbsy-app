@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'init', pathMatch: 'full' },
-    { path: 'init', loadChildren: () => import('./pages/start/init/init.module').then(m => m.InitPageModule) },
+    { path: '', loadChildren: () => import('./pages/start/init/init.module').then(m => m.InitPageModule) },
     { path: 'settings', loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule) },
     { path: 'neue-bestellung', loadChildren: () => import('./pages/bestellungen/neue-bestellung/neue-bestellung.module').then(m => m.NeueBestellungPageModule) },
     { path: 'bestellungen', loadChildren: () => import('./pages/bestellungen/bestellungen/bestellungen.module').then(m => m.BestellungenPageModule) },

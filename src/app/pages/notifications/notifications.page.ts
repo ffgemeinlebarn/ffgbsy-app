@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterViewChecked, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
@@ -6,20 +6,7 @@ import { NotificationService } from 'src/app/services/notification/notification.
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
 })
-export class NotificationsPage implements OnInit, AfterViewInit, AfterContentChecked, AfterViewChecked {
-    constructor(public notifications: NotificationService) {
-        console.log("CTOR");
-    }
-    ngAfterViewChecked(): void {
-        console.log("ngAfterViewChecked");
-    }
-    ngAfterContentChecked(): void {
-        console.log("ngAfterContentChecked");
-    }
-    ngOnInit() {
-        console.log("ngOnInit");
-    }
-    ngAfterViewInit() {
-        console.log("ngAfterViewInit");
-    }
+export class NotificationsPage implements OnInit {
+    constructor(public notifications: NotificationService) { }
+    public ngOnInit() { }
 }
