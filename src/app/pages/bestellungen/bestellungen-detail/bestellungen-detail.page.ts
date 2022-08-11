@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { AlertController } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { Bon } from 'src/app/classes/bon';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
@@ -20,7 +21,9 @@ export class BestellungenDetailPage implements OnInit {
         private activatedRoute: ActivatedRoute,
         private api: ApiService,
         private frontend: FrontendService,
-        private alertController: AlertController) { }
+        private alertController: AlertController,
+        public notification: NotificationService
+    ) { }
 
     ngOnInit() {
         this.loadBestellung(+this.activatedRoute.snapshot.paramMap.get('id'));

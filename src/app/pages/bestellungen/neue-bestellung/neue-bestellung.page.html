@@ -3,6 +3,13 @@
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Neue Bestellung</ion-title>
         <ion-buttons slot="end">
+
+            <!-- Notifications -->
+            <ion-button fill="solid" color="success" shape="round" (click)="notification.showUnread()" *ngIf="notification.unread.length">
+                <ion-icon slot="start" name="notifications-outline"></ion-icon>
+                <ion-label>Ungelesene Benachrichtigung</ion-label>
+            </ion-button>
+
             <ion-button (click)="askForCancelBestellung()" [hidden]="bestellungsHandler.neubestellung.bestellung === null">
                 <ion-icon name="close-circle" slot="icon-only"></ion-icon>
             </ion-button>

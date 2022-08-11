@@ -7,6 +7,7 @@ import { ModalController } from '@ionic/angular';
 import { QrScanComponent } from 'src/app/modals/qr-scan/qr-scan.component';
 import { DataService } from 'src/app/services/data/data.service';
 import { HttpParams } from '@angular/common/http';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
@@ -34,7 +35,8 @@ export class BestellungenPage implements OnInit {
         private bestellungsHandler: BestellungenHandlerService,
         private router: Router,
         private modalCtrl: ModalController,
-        private data: DataService
+        private data: DataService,
+        public notification: NotificationService
     ) { }
 
     ngOnInit() {

@@ -9,20 +9,20 @@ import { BestellungenDetailPage } from './bestellungen-detail.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: BestellungenDetailPage
-  }
+    {
+        path: '',
+        component: BestellungenDetailPage
+    }
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes),
-    PipesModule
-  ],
-  declarations: [BestellungenDetailPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        PipesModule
+    ],
+    declarations: [BestellungenDetailPage]
 })
-export class BestellungenDetailPageModule {}
+export class BestellungenDetailPageModule { }
