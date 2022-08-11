@@ -2,29 +2,35 @@
     <ion-toolbar>
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Benachrichtigungen</ion-title>
+        <ion-buttons slot="end">
+            <ion-button fill="solid" color="success" shape="round" (click)="notification.showUnread()" *ngIf="notification.unread.length">
+                <ion-icon slot="start" name="notifications-outline"></ion-icon>
+                <ion-label>Ungelesene Benachrichtigung</ion-label>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-list>
-        <ion-item-divider *ngIf="notifications.unread.length">Ungelesen</ion-item-divider>
-        <ion-item *ngFor="let notification of notifications.unread">
+        <ion-item-divider *ngIf="notification.unread.length">Ungelesen</ion-item-divider>
+        <ion-item *ngFor="let item of notification.unread">
             <ion-label class="ion-text-wrap">
-                <h3 class="title">{{ notification.title }}</h3>
-                <p class="author">{{ notification.author }}</p>
-                <p class="message">{{ notification.message }}</p>
+                <h3 class="title">{{ item.title }}</h3>
+                <p class="author">{{ item.author }}</p>
+                <p class="message">{{ item.message }}</p>
             </ion-label>
-            <ion-chip slot="end">{{ notification?.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }}</ion-chip>
+            <ion-chip slot="end">{{ item?.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }}</ion-chip>
         </ion-item>
 
-        <ion-item-divider *ngIf="notifications.archive.length">Archiv</ion-item-divider>
-        <ion-item *ngFor="let notification of notifications.archive">
+        <ion-item-divider *ngIf="notification.archive.length">Archiv</ion-item-divider>
+        <ion-item *ngFor="let item of notification.archive">
             <ion-label class="ion-text-wrap">
-                <h3 class="title">{{ notification.title }}</h3>
-                <p class="author">{{ notification.author }}</p>
-                <p class="message">{{ notification.message }}</p>
+                <h3 class="title">{{ item.title }}</h3>
+                <p class="author">{{ item.author }}</p>
+                <p class="message">{{ item.message }}</p>
             </ion-label>
-            <ion-chip slot="end">{{ notification?.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }}</ion-chip>
+            <ion-chip slot="end">{{ item?.timestamp | date: 'dd.MM.yyyy HH:mm:ss' }}</ion-chip>
         </ion-item>
     </ion-list>
 </ion-content>

@@ -4,6 +4,12 @@
             <ion-back-button defaultHref="bestellungen"></ion-back-button>
         </ion-buttons>
         <ion-title>Bestellung</ion-title>
+        <ion-buttons slot="end">
+            <ion-button fill="solid" color="success" shape="round" (click)="notification.showUnread()" *ngIf="notification.unread.length">
+                <ion-icon slot="start" name="notifications-outline"></ion-icon>
+                <ion-label>Ungelesene Benachrichtigung</ion-label>
+            </ion-button>
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 

@@ -10,6 +10,7 @@ import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellung
 import { BestellungKontrolleModalComponent } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { SettingsService } from 'src/app/services/settings/settings.service';
+import { NotificationService } from 'src/app/services/notification/notification.service';
 
 @Component({
     selector: 'ffgbsy-neue-bestellung',
@@ -26,6 +27,7 @@ export class NeueBestellungPage implements OnInit {
         public data: DataService,
         public settings: SettingsService,
         public frontend: FrontendService,
+        public notification: NotificationService,
         private modalController: ModalController
     ) {
         this.filterTischkategorieId = this.data.tischkategorien[0].id;

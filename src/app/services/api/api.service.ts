@@ -9,7 +9,6 @@ import { Bon } from 'src/app/classes/bon';
 import { Daten } from 'src/app/interfaces/daten';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
-import { SettingsService } from '../settings/settings.service';
 import { BonDruck } from 'src/app/classes/bonDruck';
 import { Notification } from 'src/app/classes/notification.class';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
@@ -26,14 +25,13 @@ export class ApiService {
     constructor(
         private logger: NGXLogger,
         private http: HttpClient,
-        public frontend: FrontendService,
-        public settings: SettingsService
+        public frontend: FrontendService
     ) {
         this.loadEnvironment();
     }
 
     public loadEnvironment() {
-        this.url = this.settings?.locale?.api.length ? this.settings.locale.api : environment.api;
+        this.url = environment.api;
     }
 
     public errorHandler(error: Error | any): Observable<any> {

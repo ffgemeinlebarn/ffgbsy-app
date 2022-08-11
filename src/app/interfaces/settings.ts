@@ -23,13 +23,13 @@ export interface StorageSettings {
 
 // Local
 export class LocaleSettings {
+    notificationPoll: boolean;
     deviceName: string;
-    api: string;
     adminPin: string;
 
     constructor() {
         this.deviceName = '';
-        this.api = environment.api;
+        this.notificationPoll = true;
         this.adminPin = '';
     }
 }

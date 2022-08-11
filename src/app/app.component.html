@@ -92,13 +92,6 @@
         </ion-menu>
 
         <div id="main-content">
-
-            <!-- Notifications -->
-            <ion-button class="notifications" color="warning" shape="round" (click)="notification.showUnread()" *ngIf="notification.unread.length">
-                <ion-icon color="dark" slot="start" name="notifications-outline"></ion-icon>
-                <ion-label color="dark">Neue Benachrichtigung</ion-label>
-            </ion-button>
-
             <!-- Router Outlet -->
             <ion-router-outlet> </ion-router-outlet>
         </div>
