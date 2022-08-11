@@ -30,7 +30,7 @@ export class FrontendService {
         if (this.loadingSpinnerActiveCount > 0) {
             this.loadingSpinnerActiveCount--;
         } else {
-            this.logger.warn('[Frontend Service] Hide Loading Spinner on Count == 0');
+            this.logger.warn('[Frontend Service] Wanted to hide Loading Spinner, which is already hidden');
         }
         this.logger.trace('[Frontend Service] Hide Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
     }
