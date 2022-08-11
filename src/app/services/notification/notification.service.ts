@@ -26,9 +26,11 @@ export class NotificationService {
             this.api.getNotificationsUntil(this.lastPoll).subscribe((notifications) => {
                 this.archive = notifications;
 
-                setInterval(() => {
-                    this.pollNew();
-                }, 10 * 1000);
+                if (this.settings.locale.notificationPoll) {
+                    setInterval(() => {
+                        this.pollNew();
+                    }, 10 * 1000);
+                }
             });
         });
     }

@@ -15,8 +15,8 @@ export class SettingsService {
     public StoragePrefix = 'ffgbsy_';
 
     public locale: LocaleSettings = {
+        notificationPoll: true,
         deviceName: '',
-        api: '',
         adminPin: ''
     };
 

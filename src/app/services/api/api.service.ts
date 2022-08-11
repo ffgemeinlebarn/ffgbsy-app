@@ -26,14 +26,13 @@ export class ApiService {
     constructor(
         private logger: NGXLogger,
         private http: HttpClient,
-        public frontend: FrontendService,
-        public settings: SettingsService
+        public frontend: FrontendService
     ) {
         this.loadEnvironment();
     }
 
     public loadEnvironment() {
-        this.url = this.settings?.locale?.api.length ? this.settings.locale.api : environment.api;
+        this.url = environment.api;
     }
 
     public errorHandler(error: Error | any): Observable<any> {
