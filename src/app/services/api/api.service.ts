@@ -9,7 +9,6 @@ import { Bon } from 'src/app/classes/bon';
 import { Daten } from 'src/app/interfaces/daten';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
-import { SettingsService } from '../settings/settings.service';
 import { BonDruck } from 'src/app/classes/bonDruck';
 import { Notification } from 'src/app/classes/notification.class';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
