@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgxLoggerLevel } from 'ngx-logger';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -25,6 +26,10 @@ export class LogsPage implements OnInit {
     ngOnInit() { }
 
     public searchLogs() {
-        this.api.searchLogs().subscribe((logs) => this.logs = logs);
+        let params = new HttpParams();
+        params = params.append("level", this.usedFilter.level);
+        params = params.append("limit", this.usedFilter.limit);
+
+        this.api.searchLogs(params).subscribe((logs) => this.logs = logs);
     }
 }
