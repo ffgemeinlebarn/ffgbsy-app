@@ -11,6 +11,8 @@ export class StatisticsPage implements OnInit {
 
     public readyTimeline = false;
     public readyPie = false;
+    public tableProduktbereiche = null;
+    public tableProduktkategorien = null;
     public chartTimelineBestellungen: ChartConfiguration<'line'>['data'] = {
         labels: [],
         datasets: []
@@ -48,6 +50,11 @@ export class StatisticsPage implements OnInit {
 
     constructor(private api: ApiService) { }
     ngOnInit() {
+        this.loadStatistics();
+    }
+
+    public loadStatistics() {
+        console.log("dload");
         this.api.getStatisticsTimeline().subscribe(timeline => {
 
             timeline.forEach((day, i) => {
@@ -88,20 +95,25 @@ export class StatisticsPage implements OnInit {
                 });
             });
 
-            setTimeout(_ => {
-                this.api.getStatisticsKennzahlen().subscribe(kennzahlen => {
-                    this.chartKennzahlenUmsatz.labels = kennzahlen.taeglich.map(x => x.label);
-                    this.chartKennzahlenUmsatz.datasets = [{
-                        data: kennzahlen.taeglich.map(x => x.summe)
-                    }];
-
-                    this.readyPie = true;
-                });
-            }, 300);
-
             this.readyTimeline = true;
         });
 
+        this.api.getStatisticsKennzahlen().subscribe(kennzahlen => {
+            this.chartKennzahlenUmsatz.labels = kennzahlen.taeglich.map(x => x.label);
+            this.chartKennzahlenUmsatz.datasets = [{
+                data: kennzahlen.taeglich.map(x => x.summe)
+            }];
+
+            this.readyPie = true;
+        });
+
+        this.api.getStatisticsProduktbereiche().subscribe(stats => {
+            this.tableProduktbereiche = stats;
+        });
+
+        this.api.getStatisticsProduktkategorien().subscribe(stats => {
+            this.tableProduktkategorien = stats;
+        });
     }
 
     private formatDate(date) {
