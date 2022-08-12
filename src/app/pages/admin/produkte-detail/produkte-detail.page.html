@@ -37,7 +37,7 @@
             <ion-label position="stacked">Letztes Jubiläum</ion-label>
             <ion-input type="number" step="1" [(ngModel)]="produkt.celebration_last"></ion-input>
         </ion-item>
-        <ion-item-divider>Eigenschaften</ion-item-divider>
+        <ion-item-divider>Direkte Eigenschaftendes Produktes</ion-item-divider>
         <ion-item *ngFor="let eigenschaft of produkt.eigenschaften">
             <ion-label>
                 <h3>{{ eigenschaft.name }}</h3>
