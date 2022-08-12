@@ -27,7 +27,7 @@ import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
         HttpClientModule,
         LoggerModule.forRoot({
             serverLoggingUrl: `${environment.api}/logs`,
-            serverLogLevel: NgxLoggerLevel.INFO,
+            serverLogLevel: NgxLoggerLevel.LOG,
             level: NgxLoggerLevel.DEBUG,
             context: "FFGBSY",
             disableFileDetails: true

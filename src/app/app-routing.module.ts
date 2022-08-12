@@ -39,7 +39,12 @@ const routes: Routes = [
     {
         path: 'admin/grundprodukte/:id',
         loadChildren: () => import('./pages/admin/grundprodukte-detail/grundprodukte-detail.module').then(m => m.GrundprodukteDetailPageModule)
+    },
+    {
+        path: 'admin/logs',
+        loadChildren: () => import('./pages/admin/logs/logs.module').then(m => m.LogsPageModule)
     }
+
 ];
 
 @NgModule({
