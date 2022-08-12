@@ -34,11 +34,18 @@ export class ApiService {
         this.url = environment.api;
     }
 
-    public errorHandler(error: Error | any): Observable<any> {
-        this.frontend.hideLoadingSpinner();
+    public errorHandler(error: Error | any, silent: boolean = false): Observable<any> {
 
-        if (error.status == 500) {
-            this.frontend.alert("Es ist bei der Kommunikation mit der Schnittstelle leider ein unbekannter Fehler aufgetreten!");
+        if (!silent) {
+            this.frontend.hideLoadingSpinner();
+
+            if (error.status == 0) {
+                this.frontend.showOkAlert("Es konnte keine Verbindung hergestellt werden!", error.message);
+            }
+
+            if (error.status == 500) {
+                this.frontend.showOkAlert("Unbekannter Kommunikationsfehler aufgetreten!", error.message);
+            }
         }
 
         this.logger.error('[API Service] Error Handling', error);
@@ -204,7 +211,7 @@ export class ApiService {
             .get(`${this.url}/notifications/since/${isoDateTime}`, { headers: this.headers })
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandler(error))
+                catchError((error) => this.errorHandler(error, true))
             );
     }
 
@@ -214,7 +221,7 @@ export class ApiService {
             .get(`${this.url}/notifications/until/${isoDateTime}`, { headers: this.headers })
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandler(error))
+                catchError((error) => this.errorHandler(error, true))
             );
     }
 
