@@ -203,6 +203,28 @@ export class ApiService {
             );
     }
 
+    public getStatisticsProduktbereiche(): Observable<any> {
+        this.frontend.showLoadingSpinner('Empfange Produktbereiche Statistik');
+        return this.http
+            .get(`${this.url}/statistiken/produktbereiche`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
+    public getStatisticsProduktkategorien(): Observable<any> {
+        this.frontend.showLoadingSpinner('Empfange Produktkategorien Statistik');
+        return this.http
+            .get(`${this.url}/statistiken/produktkategorien`, { headers: this.headers })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
+
     // Notifications
 
     public getNotificationsSince(since: Date): Observable<Array<Notification>> {
