@@ -309,4 +309,15 @@ export class ApiService {
                 catchError((error) => this.errorHandler(error))
             );
     }
+
+    public searchLogs(params: HttpParams = new HttpParams()): Observable<Array<any>> {
+        this.frontend.showLoadingSpinner();
+        return this.http
+            .get(`${this.url}/logs`, { headers: this.headers, params })
+            .pipe(
+                retry(1),
+                tap(() => this.frontend.hideLoadingSpinner()),
+                catchError((error) => this.errorHandler(error))
+            );
+    }
 }

@@ -84,7 +84,27 @@ export class FrontendService {
             });
 
         });
+    }
 
+    showLog(log: any) {
+        return new Promise((resolve) => {
+
+            this.alertController.create({
+                header: log.timestamp,
+                message: log.additional,
+                cssClass: 'log-alert',
+                buttons: [{
+                    text: 'OK',
+                    handler: (_) => {
+                        resolve(true);
+                    }
+                }]
+            }).then((alert) => {
+                this.alert = alert;
+                this.alert.present();
+            });
+
+        });
     }
 
     async showToast(msg, duration = 2000) {

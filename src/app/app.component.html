@@ -62,6 +62,12 @@
                                 <ion-label>Benachrichtigungen</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/admin/logs']">
+                                <ion-icon name="bug-outline" slot="start"></ion-icon>
+                                <ion-label>Logs</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
                         <ion-item-divider>
                             <ion-label>Daten</ion-label>
                         </ion-item-divider>
