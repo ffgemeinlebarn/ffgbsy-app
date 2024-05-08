@@ -22,7 +22,7 @@
     "@angular/platform-browser-dynamic": "^17.3.7",
     "@angular/router": "^17.3.7",
     "@angular/service-worker": "^17.3.7",
-    "@ionic/angular": "^7.8.6",
+    "@ionic/angular": "^8.1.0",
     "@ionic/angular-server": "^7.8.6",
     "@ionic/storage": "^2.3.1",
     "@ionic/storage-angular": "^3.0.6",
