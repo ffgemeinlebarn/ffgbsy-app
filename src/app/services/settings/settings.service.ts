@@ -26,7 +26,7 @@ export class SettingsService {
         public http: HttpClient,
         public frontend: FrontendService
     ) {
-        this.loadLocal();
+        // this.loadLocal();
     }
 
     public loadLocal() {

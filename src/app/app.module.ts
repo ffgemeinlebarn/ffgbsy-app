@@ -14,6 +14,7 @@ import { ModalsModule } from './modals/modals.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
+import { IonicStorageModule } from '@ionic/storage-angular';
 // import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
 
 @NgModule({
@@ -21,7 +22,7 @@ import { ComponentsModule } from './components/components.module';
     imports: [
         BrowserModule,
         IonicModule.forRoot(),
-        // IonicStorageModule.forRoot(),
+        IonicStorageModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
         // LoggerModule.forRoot({

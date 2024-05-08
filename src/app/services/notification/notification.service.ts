@@ -21,18 +21,18 @@ export class NotificationService {
         private modalCtrl: ModalController,
         private settings: SettingsService
     ) {
-        this.settings.ready.then(_ => {
-            this.lastPoll = new Date();
-            this.api.getNotificationsUntil(this.lastPoll).subscribe((notifications) => {
-                this.archive = notifications;
+        // this.settings.ready.then(_ => {
+        //     this.lastPoll = new Date();
+        //     this.api.getNotificationsUntil(this.lastPoll).subscribe((notifications) => {
+        //         this.archive = notifications;
 
-                if (this.settings.locale.notificationPoll) {
-                    setInterval(() => {
-                        this.pollNew();
-                    }, 10 * 1000);
-                }
-            });
-        });
+        //         if (this.settings.locale.notificationPoll) {
+        //             setInterval(() => {
+        //                 this.pollNew();
+        //             }, 10 * 1000);
+        //         }
+        //     });
+        // });
     }
 
     public showUnread() {
