@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { BestellungKontrolleModalComponent } from './bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { PipesModule } from "../pipes/pipes.module";
 import { BestellungspositionEditModalComponent } from './bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
+// import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QrScanComponent } from './qr-scan/qr-scan.component';
 import { NotificationComponent } from './notification/notification.component';
 
@@ -15,7 +15,7 @@ import { NotificationComponent } from './notification/notification.component';
         FormsModule,
         IonicModule,
         PipesModule,
-        ZXingScannerModule
+        // ZXingScannerModule
     ],
     declarations: [
         BestellungKontrolleModalComponent,
