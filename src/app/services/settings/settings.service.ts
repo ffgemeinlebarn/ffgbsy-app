@@ -26,7 +26,8 @@ export class SettingsService {
         public http: HttpClient,
         public frontend: FrontendService
     ) {
-        // this.loadLocal();
+        this.ionicStorage.create();
+        this.loadLocal();
     }
 
     public loadLocal() {
