@@ -9,7 +9,7 @@ import { Produkt } from 'src/app/classes/produkt.class';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { ApiService } from '../api/api.service';
-import { NGXLogger } from 'ngx-logger';
+// import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +30,7 @@ export class DataService implements Daten {
     public saved: Date | null = null;
 
     constructor(
-        private logger: NGXLogger,
+        // private logger: NGXLogger,
         private api: ApiService,
         private storage: Storage,
         private settings: SettingsService
@@ -41,10 +41,10 @@ export class DataService implements Daten {
     public loadfromStorage() {
         this.ready = new Promise((resolve, reject) => this.settings.ready.then(() => this.storage.get(this.settings.StoragePrefix + this.storageKey).then((jsonObject: any) => {
 
-            this.logger.debug('[Data Service] - Loaded from Storage')
+            // this.logger.debug('[Data Service] - Loaded from Storage')
 
             if (jsonObject == null) {
-                this.logger.debug('[Data Service] - Keine lokalen Daten vorhanden!')
+                // this.logger.debug('[Data Service] - Keine lokalen Daten vorhanden!')
             } else {
 
                 const dataObject = <{
@@ -69,7 +69,7 @@ export class DataService implements Daten {
 
     public async download() {
 
-        this.logger.debug('[Data Service] - Start Download!')
+        // this.logger.debug('[Data Service] - Start Download!')
 
         this.api.getDaten().subscribe((data) => {
 

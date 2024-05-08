@@ -7,7 +7,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 import { version } from 'src/environments/version';
-import { NGXLogger } from 'ngx-logger';
+// import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'ffgbsy-init',
@@ -24,7 +24,7 @@ export class InitPage implements OnInit {
     public systemstatus: any = [];
 
     constructor(
-        private logger: NGXLogger,
+        // private logger: NGXLogger,
         private router: Router,
         public api: ApiService,
         public actionSheetController: ActionSheetController,
@@ -36,10 +36,10 @@ export class InitPage implements OnInit {
 
             // Check Version
             this.api.getCurrentVersion().subscribe((resultedVersion: number) => {
-                this.logger.debug('[Init Page] Vergleiche Current mit local Version', this.data.version, '==', resultedVersion);
+                // this.logger.debug('[Init Page] Vergleiche Current mit local Version', this.data.version, '==', resultedVersion);
 
                 if (this.data.version !== resultedVersion) {
-                    this.logger.debug('[Init Page] Neuere Datenversion vorhanden!', 'Neu: ', resultedVersion);
+                    // this.logger.debug('[Init Page] Neuere Datenversion vorhanden!', 'Neu: ', resultedVersion);
                     this.downloadData();
                 }
             });

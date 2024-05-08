@@ -13,7 +13,7 @@ import { BonDruck } from 'src/app/classes/bonDruck';
 import { Notification } from 'src/app/classes/notification.class';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { Produkt } from 'src/app/classes/produkt.class';
-import { NGXLogger } from 'ngx-logger';
+// import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
@@ -23,7 +23,7 @@ export class ApiService {
     private headers: HttpHeaders = null;
 
     constructor(
-        private logger: NGXLogger,
+        // private logger: NGXLogger,
         private http: HttpClient,
         public frontend: FrontendService
     ) {
@@ -48,7 +48,7 @@ export class ApiService {
             }
         }
 
-        this.logger.error('[API Service] Error Handling', error);
+        // this.logger.error('[API Service] Error Handling', error);
 
         return throwError(error);
     }

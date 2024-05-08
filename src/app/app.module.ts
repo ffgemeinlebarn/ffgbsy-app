@@ -15,7 +15,7 @@ import { ModalsModule } from './modals/modals.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ComponentsModule } from './components/components.module';
-import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
+// import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
 
 @NgModule({
     declarations: [AppComponent],

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { NGXLogger } from 'ngx-logger';
+// import { NGXLogger } from 'ngx-logger';
 import { Notification } from 'src/app/classes/notification.class';
 import { NotificationComponent } from 'src/app/modals/notification/notification.component';
 import { ApiService } from '../api/api.service';
@@ -16,7 +16,7 @@ export class NotificationService {
     public lastPoll = null;
 
     constructor(
-        private logger: NGXLogger,
+        // private logger: NGXLogger,
         private api: ApiService,
         private modalCtrl: ModalController,
         private settings: SettingsService
@@ -60,7 +60,7 @@ export class NotificationService {
 
     private pollNew() {
 
-        this.logger.debug('[Notification Serivce] Poll new Notifications!');
+        // this.logger.debug('[Notification Serivce] Poll new Notifications!');
 
         const newLastPoll = new Date();
         this.api.getNotificationsSince(this.lastPoll).subscribe((notifications) => {
