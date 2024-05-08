@@ -25,13 +25,13 @@ import { ComponentsModule } from './components/components.module';
         IonicStorageModule.forRoot(),
         AppRoutingModule,
         HttpClientModule,
-        LoggerModule.forRoot({
-            serverLoggingUrl: `${environment.api}/logs`,
-            serverLogLevel: NgxLoggerLevel.LOG,
-            level: NgxLoggerLevel.DEBUG,
-            context: "FFGBSY",
-            disableFileDetails: true
-        }),
+        // LoggerModule.forRoot({
+        //     serverLoggingUrl: `${environment.api}/logs`,
+        //     serverLogLevel: NgxLoggerLevel.LOG,
+        //     level: NgxLoggerLevel.DEBUG,
+        //     context: "FFGBSY",
+        //     disableFileDetails: true
+        // }),
         PipesModule,
         ModalsModule,
         ComponentsModule,
