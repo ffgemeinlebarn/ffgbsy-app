@@ -7,9 +7,37 @@ import { environment } from 'src/environments/environment';
 import { NotificationService } from './services/notification/notification.service';
 import { EditService } from './services/edit/edit.service';
 import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
-import { NgClass } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
 import { RouterLink } from '@angular/router';
+import { addIcons } from 'ionicons';
+import {
+    alertCircle,
+    arrowUndo,
+    checkmarkCircle,
+    closeCircle,
+    closeOutline,
+    createOutline,
+    cubeOutline,
+    fileTrayOutline,
+    gitPullRequest,
+    navigateCircleOutline,
+    notificationsOutline,
+    peopleOutline,
+    personOutline,
+    phonePortraitOutline,
+    pulseOutline,
+    radioButtonOff,
+    refreshOutline,
+    rocketOutline,
+    save,
+    searchOutline,
+    send,
+    settingsOutline,
+    shieldCheckmarkOutline,
+    star,
+    timerOutline,
+} from 'ionicons/icons';
 
 @Component({
     selector: 'ffgbsy-root',
@@ -20,6 +48,7 @@ import { RouterLink } from '@angular/router';
         FrontendLoadingComponent,
         RouterLink,
         NgClass,
+        NgIf,
         IonApp,
         IonSplitPane,
         IonMenu,
@@ -46,6 +75,34 @@ export class AppComponent {
     ) {
         this.settings.ready.then(() => {
             this.isAdmin = environment.localAdminPin == this.settings.locale.adminPin;
+        });
+
+        addIcons({
+            alertCircle,
+            arrowUndo,
+            checkmarkCircle,
+            closeCircle,
+            closeOutline,
+            createOutline,
+            cubeOutline,
+            fileTrayOutline,
+            gitPullRequest,
+            navigateCircleOutline,
+            notificationsOutline,
+            peopleOutline,
+            personOutline,
+            phonePortraitOutline,
+            pulseOutline,
+            radioButtonOff,
+            refreshOutline,
+            rocketOutline,
+            save,
+            searchOutline,
+            send,
+            settingsOutline,
+            shieldCheckmarkOutline,
+            star,
+            timerOutline,
         });
     }
 }
