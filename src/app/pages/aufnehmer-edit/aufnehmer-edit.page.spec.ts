@@ -9,9 +9,8 @@ describe('AufnehmerEditPage', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [AufnehmerEditPage],
-            imports: [IonicModule.forRoot()]
-        }).compileComponents();
+    imports: [IonicModule.forRoot(), AufnehmerEditPage]
+}).compileComponents();
 
         fixture = TestBed.createComponent(AufnehmerEditPage);
         component = fixture.componentInstance;

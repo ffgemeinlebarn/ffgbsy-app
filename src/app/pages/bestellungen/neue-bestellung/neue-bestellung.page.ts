@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { DataService } from 'src/app/services/data/data.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { Produkt } from 'src/app/classes/produkt.class';
@@ -11,11 +11,23 @@ import { BestellungKontrolleModalComponent } from 'src/app/modals/bestellung-kon
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { SettingsService } from 'src/app/services/settings/settings.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
+import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor, NgClass } from '@angular/common';
 
 @Component({
     selector: 'ffgbsy-neue-bestellung',
     templateUrl: './neue-bestellung.page.html',
     styleUrls: ['./neue-bestellung.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        NgFor,
+        NgClass,
+        FormsModule,
+        EuroPreisPipe,
+    ],
 })
 export class NeueBestellungPage implements OnInit {
 

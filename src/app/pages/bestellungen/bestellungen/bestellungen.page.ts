@@ -2,17 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { ApiService } from 'src/app/services/api/api.service';
-import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular';
+import { Router, RouterLink } from '@angular/router';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { QrScanComponent } from 'src/app/modals/qr-scan/qr-scan.component';
 import { DataService } from 'src/app/services/data/data.service';
 import { HttpParams } from '@angular/common/http';
 import { NotificationService } from 'src/app/services/notification/notification.service';
+import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
+import { FormsModule } from '@angular/forms';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
     templateUrl: './bestellungen.page.html',
     styleUrls: ['./bestellungen.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        NgFor,
+        RouterLink,
+        FormsModule,
+        DatePipe,
+        EuroPreisPipe,
+    ],
 })
 export class BestellungenPage implements OnInit {
 

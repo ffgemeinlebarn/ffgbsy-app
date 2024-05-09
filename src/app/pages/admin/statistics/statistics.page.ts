@@ -1,11 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { ApiService } from 'src/app/services/api/api.service';
+import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
+import { NgChartsModule } from 'ng2-charts';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
     selector: 'ffgbsy-statistics',
     templateUrl: './statistics.page.html',
     styleUrls: ['./statistics.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        NgChartsModule,
+        NgFor,
+        DatePipe,
+        EuroPreisPipe,
+    ],
 })
 export class StatisticsPage implements OnInit {
 

@@ -16,12 +16,12 @@ describe('AppComponent', () => {
         platformSpy = jasmine.createSpyObj('Platform', { ready: platformReadySpy });
 
         TestBed.configureTestingModule({
-            declarations: [AppComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-            providers: [
-                { provide: Platform, useValue: platformSpy },
-            ],
-        }).compileComponents();
+    declarations: [AppComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    providers: [
+        { provide: Platform, useValue: platformSpy },
+    ],
+}).compileComponents();
     }));
 
     it('should create the app', () => {

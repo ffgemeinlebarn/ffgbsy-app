@@ -1,11 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { Notification } from 'src/app/classes/notification.class';
+import { NgIf, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'ffgbsy-notification',
     templateUrl: './notification.component.html',
     styleUrls: ['./notification.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        DatePipe,
+    ],
 })
 export class NotificationComponent implements OnInit {
 

@@ -9,9 +9,9 @@ describe('BestellungenPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BestellungenPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [BestellungenPage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
     .compileComponents();
   }));
 

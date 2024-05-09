@@ -6,6 +6,7 @@ import { ModalController } from '@ionic/angular';
     selector: 'ffgbsy-qr-scan',
     templateUrl: './qr-scan.component.html',
     styleUrls: ['./qr-scan.component.scss'],
+    standalone: true,
 })
 export class QrScanComponent implements OnInit {
 

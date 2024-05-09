@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Notification } from 'src/app/classes/notification.class';
 import { ApiService } from 'src/app/services/api/api.service';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
+import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
     selector: 'ffgbsy-notifications',
     templateUrl: './notifications.page.html',
     styleUrls: ['./notifications.page.scss'],
+    standalone: true,
+    imports: [IonicModule, FormsModule],
 })
 export class NotificationsPage implements OnInit {
 
