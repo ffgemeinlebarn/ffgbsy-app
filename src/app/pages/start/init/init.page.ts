@@ -20,7 +20,7 @@ import { NgClass, NgIf, DatePipe } from '@angular/common';
         NgClass,
         NgIf,
         RouterLink,
-        DatePipe,
+        DatePipe
     ],
 })
 export class InitPage implements OnInit {
