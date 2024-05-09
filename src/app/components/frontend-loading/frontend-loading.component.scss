@@ -1,18 +1,22 @@
-:host{
+:host {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
+
+    [hidden] {
+        display: none !important;
+    }
 }
 
-.loading-backdrop{
+.loading-backdrop {
     z-index: 998;
     opacity: 0.3;
 }
 
-.loading-content{
+.loading-content {
     z-index: 999;
     background-color: rgba(255, 255, 255, 0.8);
     display: flex;
@@ -21,10 +25,9 @@
     padding: 2em;
     border-radius: 0.25em;
 
-    &__spinner{
-    }
+    &__spinner {}
 
-    &__message{
+    &__message {
         line-height: 1;
         padding: 0px;
         margin: 0px;

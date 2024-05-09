@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { NGXLogger } from 'ngx-logger';
+// import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'ffgbsy-qr-scan',
@@ -12,7 +12,7 @@ export class QrScanComponent implements OnInit {
     public enabled = false;
 
     constructor(
-        private logger: NGXLogger,
+        // private logger: NGXLogger,
         private modalCtrl: ModalController
     ) { }
 
@@ -29,13 +29,13 @@ export class QrScanComponent implements OnInit {
     }
 
     public onSuccess(data) {
-        this.logger.debug("[QR Scan Component] onSuccess", data);
+        // this.logger.debug("[QR Scan Component] onSuccess", data);
         this.close();
         return this.modalCtrl.dismiss(data, 'success');
     }
 
     public onError(error) {
-        this.logger.warn("[QR Scan Component] onError", error);
+        // this.logger.warn("[QR Scan Component] onError", error);
         this.close();
         return this.modalCtrl.dismiss(error, 'error');
     }

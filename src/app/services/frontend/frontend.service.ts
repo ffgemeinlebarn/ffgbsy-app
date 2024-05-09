@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
-import { NGXLogger } from "ngx-logger";
+// import { NGXLogger } from "ngx-logger";
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +14,7 @@ export class FrontendService {
     public loadingSpinnerMessage: string = '';
 
     constructor(
-        private logger: NGXLogger,
+        // private logger: NGXLogger,
         public toastController: ToastController,
         public alertController: AlertController,
         public loadingController: LoadingController
@@ -23,16 +23,16 @@ export class FrontendService {
     public showLoadingSpinner(message: string = '') {
         this.loadingSpinnerMessage = message;
         this.loadingSpinnerActiveCount++;
-        this.logger.trace('[Frontend Service] Show Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
+        // this.logger.trace('[Frontend Service] Show Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
     }
 
     public hideLoadingSpinner() {
         if (this.loadingSpinnerActiveCount > 0) {
             this.loadingSpinnerActiveCount--;
         } else {
-            this.logger.warn('[Frontend Service] Wanted to hide Loading Spinner, which is already hidden');
+            // this.logger.warn('[Frontend Service] Wanted to hide Loading Spinner, which is already hidden');
         }
-        this.logger.trace('[Frontend Service] Hide Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
+        // this.logger.trace('[Frontend Service] Hide Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
     }
 
     showOkAlert(header, message) {

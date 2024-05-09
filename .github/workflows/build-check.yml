@@ -1,8 +1,11 @@
 name: Build Check for Pull Request
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches:
+      - feature/*
+      - bugfix/*
+      - maintenance/*
 
 jobs:
   build:
@@ -11,13 +14,13 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
-          cache: "npm"
+          node-version: '20.x'
+          cache: 'npm'
           cache-dependency-path: package-lock.json
 
       - name: Install Dependencies
