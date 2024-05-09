@@ -3,15 +3,25 @@ import { ActivatedRoute } from '@angular/router';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { ApiService } from 'src/app/services/api/api.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonicModule } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { Bon } from 'src/app/classes/bon';
 import { NotificationService } from 'src/app/services/notification/notification.service';
+import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
+import { NgIf, NgFor, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
     templateUrl: './bestellungen-detail.page.html',
     styleUrls: ['./bestellungen-detail.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        NgFor,
+        DatePipe,
+        EuroPreisPipe,
+    ],
 })
 export class BestellungenDetailPage implements OnInit {
 

@@ -13,8 +13,8 @@ import { NotificationsPage } from './notifications.page';
         CommonModule,
         FormsModule,
         IonicModule,
-        NotificationsPageRoutingModule
-    ],
-    declarations: [NotificationsPage]
+        NotificationsPageRoutingModule,
+        NotificationsPage
+    ]
 })
 export class NotificationsPageModule { }

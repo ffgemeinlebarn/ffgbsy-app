@@ -13,8 +13,8 @@ import { GrundprodukteDetailPage } from './grundprodukte-detail.page';
         CommonModule,
         FormsModule,
         IonicModule,
-        GrundprodukteDetailPageRoutingModule
-    ],
-    declarations: [GrundprodukteDetailPage]
+        GrundprodukteDetailPageRoutingModule,
+        GrundprodukteDetailPage
+    ]
 })
 export class GrundprodukteDetailPageModule { }

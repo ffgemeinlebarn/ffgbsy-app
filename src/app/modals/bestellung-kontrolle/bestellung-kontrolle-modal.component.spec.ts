@@ -9,9 +9,9 @@ describe('BestellungKontrolleModalComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [BestellungKontrolleModalComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        })
+    imports: [BestellungKontrolleModalComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
             .compileComponents();
     }));
 

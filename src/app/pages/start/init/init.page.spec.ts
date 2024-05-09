@@ -9,9 +9,9 @@ describe('InitPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InitPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [InitPage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
     .compileComponents();
   }));
 

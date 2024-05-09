@@ -9,12 +9,12 @@ import { GrundproduktePageRoutingModule } from './grundprodukte-routing.module';
 import { GrundproduktePage } from './grundprodukte.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    GrundproduktePageRoutingModule
-  ],
-  declarations: [GrundproduktePage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        GrundproduktePageRoutingModule,
+        GrundproduktePage
+    ]
 })
 export class GrundproduktePageModule {}

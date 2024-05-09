@@ -10,8 +10,8 @@ import { AufnehmerEditPage } from './aufnehmer-edit.page';
         CommonModule,
         FormsModule,
         IonicModule,
-        AufnehmerEditPageRoutingModule
-    ],
-    declarations: [AufnehmerEditPage]
+        AufnehmerEditPageRoutingModule,
+        AufnehmerEditPage
+    ]
 })
 export class AufnehmerEditPageModule { }

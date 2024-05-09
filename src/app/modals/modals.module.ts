@@ -15,13 +15,10 @@ import { NotificationComponent } from './notification/notification.component';
         FormsModule,
         IonicModule,
         PipesModule,
-        // ZXingScannerModule
-    ],
-    declarations: [
         BestellungKontrolleModalComponent,
         BestellungspositionEditModalComponent,
         QrScanComponent,
-        NotificationComponent
+        NotificationComponent,
     ]
 })
 export class ModalsModule { }

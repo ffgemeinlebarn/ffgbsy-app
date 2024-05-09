@@ -14,8 +14,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
         IonicModule,
         NgChartsModule,
         StatisticsPageRoutingModule,
-        PipesModule
-    ],
-    declarations: [StatisticsPage]
+        PipesModule,
+        StatisticsPage
+    ]
 })
 export class StatisticsPageModule { }

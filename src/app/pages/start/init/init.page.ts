@@ -2,17 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../../services/data/data.service';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { SettingsService } from 'src/app/services/settings/settings.service';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, IonicModule } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 import { version } from 'src/environments/version';
+import { NgClass, NgIf, DatePipe } from '@angular/common';
 // import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'ffgbsy-init',
     templateUrl: './init.page.html',
     styleUrls: ['./init.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgClass,
+        NgIf,
+        RouterLink,
+        DatePipe,
+    ],
 })
 export class InitPage implements OnInit {
 

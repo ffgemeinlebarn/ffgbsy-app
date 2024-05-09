@@ -12,8 +12,8 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
         FormsModule,
         IonicModule,
         ProdukteDetailPageRoutingModule,
-        PipesModule
-    ],
-    declarations: [ProdukteDetailPage]
+        PipesModule,
+        ProdukteDetailPage
+    ]
 })
 export class ProdukteDetailPageModule { }

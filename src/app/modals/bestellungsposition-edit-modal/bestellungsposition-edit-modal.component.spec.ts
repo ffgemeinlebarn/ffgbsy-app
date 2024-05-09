@@ -9,9 +9,9 @@ describe('BestellungspositionEditModalComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [BestellungspositionEditModalComponent],
-            schemas: [CUSTOM_ELEMENTS_SCHEMA],
-        })
+    imports: [BestellungspositionEditModalComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
             .compileComponents();
     }));
 

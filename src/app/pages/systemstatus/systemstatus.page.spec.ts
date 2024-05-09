@@ -9,9 +9,9 @@ describe('SystemstatusPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SystemstatusPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [SystemstatusPage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
     .compileComponents();
   }));
 

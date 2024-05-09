@@ -2,11 +2,8 @@ import { NgModule } from '@angular/core';
 import { EuroPreisPipe } from './euro-preis/euro-preis.pipe';
 
 @NgModule({
-    declarations: [
-        EuroPreisPipe
-    ],
     imports: [
-
+        EuroPreisPipe
     ],
     exports: [
         EuroPreisPipe

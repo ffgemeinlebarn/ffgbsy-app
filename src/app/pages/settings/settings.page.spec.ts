@@ -9,9 +9,9 @@ describe('SettingsPage', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SettingsPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    imports: [SettingsPage],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
     .compileComponents();
   }));
 

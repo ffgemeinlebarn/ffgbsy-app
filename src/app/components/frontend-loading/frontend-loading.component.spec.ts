@@ -9,9 +9,8 @@ describe('FrontendLoadingComponent', () => {
 
     beforeEach(waitForAsync(() => {
         TestBed.configureTestingModule({
-            declarations: [FrontendLoadingComponent],
-            imports: [IonicModule.forRoot()]
-        }).compileComponents();
+    imports: [IonicModule.forRoot(), FrontendLoadingComponent]
+}).compileComponents();
 
         fixture = TestBed.createComponent(FrontendLoadingComponent);
         component = fixture.componentInstance;

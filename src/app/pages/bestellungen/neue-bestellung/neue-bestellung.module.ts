@@ -21,8 +21,8 @@ const routes: Routes = [
         FormsModule,
         IonicModule,
         RouterModule.forChild(routes),
-        PipesModule
-    ],
-    declarations: [NeueBestellungPage]
+        PipesModule,
+        NeueBestellungPage
+    ]
 })
 export class NeueBestellungPageModule { }

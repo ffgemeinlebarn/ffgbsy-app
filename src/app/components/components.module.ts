@@ -4,12 +4,10 @@ import { IonicModule } from '@ionic/angular';
 import { FrontendLoadingComponent } from './frontend-loading/frontend-loading.component';
 
 @NgModule({
-    declarations: [
-        FrontendLoadingComponent
-    ],
     imports: [
         CommonModule,
-        IonicModule
+        IonicModule,
+        FrontendLoadingComponent
     ],
     exports: [
         FrontendLoadingComponent
