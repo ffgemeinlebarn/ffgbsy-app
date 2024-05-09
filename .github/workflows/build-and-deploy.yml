@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    types:
-      - closed
-    branches:
-      - main
+  # pull_request:
+  #   types:
+  #     - closed
+  #   branches:
+  #     - main
 
 jobs:
   build:
@@ -50,7 +50,7 @@ jobs:
           path: ./dist/
 
       - name: 📂 Upload PWA
-        uses: SamKirkland/FTP-Deploy-Action@4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: ${{ secrets.FTP_DEPLOY_HOST }}
           username: ${{ secrets.FTP_DEPLOY_USERNAME }}
