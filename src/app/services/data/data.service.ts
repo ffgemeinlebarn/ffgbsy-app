@@ -9,7 +9,6 @@ import { Produkt } from 'src/app/classes/produkt.class';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { ApiService } from '../api/api.service';
-// import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'

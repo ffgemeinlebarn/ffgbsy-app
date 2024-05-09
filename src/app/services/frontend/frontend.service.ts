@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
-// import { NGXLogger } from "ngx-logger";
 
 @Injectable({
     providedIn: 'root'

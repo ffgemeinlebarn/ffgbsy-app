@@ -8,7 +8,6 @@ import { Router, RouterLink } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 import { version } from 'src/environments/version';
 import { NgClass, NgIf, DatePipe } from '@angular/common';
-// import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'ffgbsy-init',

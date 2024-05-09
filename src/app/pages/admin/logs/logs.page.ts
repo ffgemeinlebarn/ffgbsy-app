@@ -1,6 +1,5 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, inject } from '@angular/core';
-// import { NgxLoggerLevel } from 'ngx-logger';
 import { ApiService } from 'src/app/services/api/api.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +23,7 @@ export class LogsPage {
 
     public logs: Array<any>;
     public usedFilter: any = {
-        // level: NgxLoggerLevel.INFO,
+        level: 'info',
         limit: 10
     };
 

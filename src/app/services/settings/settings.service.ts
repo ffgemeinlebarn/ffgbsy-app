@@ -4,7 +4,6 @@ import { LocaleSettings } from 'src/app/interfaces/settings';
 import { Storage } from '@ionic/storage';
 import { HttpClient } from '@angular/common/http';
 import { FrontendService } from '../frontend/frontend.service';
-// import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'

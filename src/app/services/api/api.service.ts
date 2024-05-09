@@ -13,7 +13,6 @@ import { BonDruck } from 'src/app/classes/bonDruck';
 import { Notification } from 'src/app/classes/notification.class';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { Produkt } from 'src/app/classes/produkt.class';
-// import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'

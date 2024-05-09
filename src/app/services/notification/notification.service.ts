@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-// import { NGXLogger } from 'ngx-logger';
 import { Notification } from 'src/app/classes/notification.class';
 import { NotificationComponent } from 'src/app/modals/notification/notification.component';
 import { ApiService } from '../api/api.service';

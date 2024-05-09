@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-// import { NGXLogger } from 'ngx-logger';
 
 @Component({
     selector: 'ffgbsy-qr-scan',
