@@ -31,7 +31,7 @@ jobs:
         run: npm run ci:build:production
 
       - name: Upload Debug Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: PWA
           path: ./www/
