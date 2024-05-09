@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { LocaleSettings } from 'src/app/interfaces/settings';
 
 import { Storage } from '@ionic/storage';
@@ -10,6 +10,9 @@ import { FrontendService } from '../frontend/frontend.service';
     providedIn: 'root'
 })
 export class SettingsService {
+    public ionicStorage = inject(Storage);
+    public http = inject(HttpClient);
+    public frontend = inject(FrontendService);
 
     public ready: Promise<any>;
     public StoragePrefix = 'ffgbsy_';
@@ -20,12 +23,7 @@ export class SettingsService {
         adminPin: ''
     };
 
-    constructor(
-        // private logger: NGXLogger,
-        public ionicStorage: Storage,
-        public http: HttpClient,
-        public frontend: FrontendService
-    ) {
+    constructor() {
         this.ionicStorage.create();
         this.loadLocal();
     }

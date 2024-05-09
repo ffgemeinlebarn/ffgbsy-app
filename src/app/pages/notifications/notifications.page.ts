@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -15,7 +15,6 @@ import { IonicModule } from '@ionic/angular';
         DatePipe,
     ],
 })
-export class NotificationsPage implements OnInit {
-    constructor(public notification: NotificationService) { }
-    public ngOnInit() { }
+export class NotificationsPage {
+    notification = inject(NotificationService);
 }

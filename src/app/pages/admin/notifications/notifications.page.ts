@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Notification } from 'src/app/classes/notification.class';
 import { ApiService } from 'src/app/services/api/api.service';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
@@ -14,12 +14,14 @@ import { IonicModule } from '@ionic/angular';
 })
 export class NotificationsPage implements OnInit {
 
+    private api = inject(ApiService);
+    private bestellungenHandler = inject(BestellungenHandlerService);
+
     public notification: Notification;
 
-    constructor(private api: ApiService, private bestellungenHandler: BestellungenHandlerService) {
+    ngOnInit() {
         this.reset();
     }
-    ngOnInit() { }
 
     public reset() {
         this.notification = new Notification();

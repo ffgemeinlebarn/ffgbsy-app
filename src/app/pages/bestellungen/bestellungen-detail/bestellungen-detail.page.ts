@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
@@ -25,15 +25,13 @@ import { NgIf, NgFor, DatePipe } from '@angular/common';
 })
 export class BestellungenDetailPage implements OnInit {
 
-    public bestellung: Bestellung;
+    public activatedRoute = inject(ActivatedRoute);
+    private api = inject(ApiService);
+    private frontend = inject(FrontendService);
+    private alertController = inject(AlertController);
+    public notification = inject(NotificationService);
 
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private api: ApiService,
-        private frontend: FrontendService,
-        private alertController: AlertController,
-        public notification: NotificationService
-    ) { }
+    public bestellung: Bestellung;
 
     ngOnInit() {
         this.loadBestellung(+this.activatedRoute.snapshot.paramMap.get('id'));

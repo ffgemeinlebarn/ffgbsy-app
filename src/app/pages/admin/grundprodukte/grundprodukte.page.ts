@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { EditService } from 'src/app/services/edit/edit.service';
 import { RouterLink } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
@@ -16,7 +16,6 @@ import { IonicModule } from '@ionic/angular';
         NgIf,
     ],
 })
-export class GrundproduktePage implements OnInit {
-    constructor(public edit: EditService) { }
-    ngOnInit() { }
+export class GrundproduktePage {
+    edit = inject(EditService);
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 // import { NGXLogger } from 'ngx-logger';
 
@@ -10,12 +10,9 @@ import { ModalController } from '@ionic/angular';
 })
 export class QrScanComponent implements OnInit {
 
-    public enabled = false;
+    private modalCtrl = inject(ModalController);
 
-    constructor(
-        // private logger: NGXLogger,
-        private modalCtrl: ModalController
-    ) { }
+    public enabled = false;
 
     public ngOnInit() {
         this.start();

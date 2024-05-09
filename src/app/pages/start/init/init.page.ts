@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DataService } from '../../../services/data/data.service';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { SettingsService } from 'src/app/services/settings/settings.service';
@@ -23,7 +23,14 @@ import { NgClass, NgIf, DatePipe } from '@angular/common';
         DatePipe
     ],
 })
-export class InitPage implements OnInit {
+export class InitPage {
+
+    router = inject(Router);
+    api = inject(ApiService);
+    actionSheetController = inject(ActionSheetController);
+    data = inject(DataService);
+    settings = inject(SettingsService);
+    frontend = inject(FrontendService);
 
     public version = version;
     public datenSynchronisierungLaeuft: boolean = false;
@@ -32,15 +39,7 @@ export class InitPage implements OnInit {
 
     public systemstatus: any = [];
 
-    constructor(
-        // private logger: NGXLogger,
-        private router: Router,
-        public api: ApiService,
-        public actionSheetController: ActionSheetController,
-        public data: DataService,
-        public settings: SettingsService,
-        public frontend: FrontendService
-    ) {
+    constructor() {
         this.data.ready.then(() => {
 
             // Check Version
@@ -55,8 +54,6 @@ export class InitPage implements OnInit {
 
         });
     }
-
-    public ngOnInit() { }
 
     public initComplete() {
         this.router.navigateByUrl('/neue-bestellung');

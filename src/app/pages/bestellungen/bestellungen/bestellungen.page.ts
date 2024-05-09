@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -29,6 +29,13 @@ import { NgIf, NgFor, DatePipe } from '@angular/common';
 })
 export class BestellungenPage implements OnInit {
 
+    private api = inject(ApiService);
+    private bestellungsHandler = inject(BestellungenHandlerService);
+    private router = inject(Router);
+    private modalCtrl = inject(ModalController);
+    private data = inject(DataService);
+    public notification = inject(NotificationService);
+
     public scannerEnabled: boolean = false;
     public bestellungen: Array<Bestellung>;
     public usedFilter: any = {
@@ -42,15 +49,6 @@ export class BestellungenPage implements OnInit {
         tische: [],
         limits: [5, 10, 25, 50, 100]
     };
-
-    constructor(
-        private api: ApiService,
-        private bestellungsHandler: BestellungenHandlerService,
-        private router: Router,
-        private modalCtrl: ModalController,
-        private data: DataService,
-        public notification: NotificationService
-    ) { }
 
     ngOnInit() {
         this.availableFilter.aufnehmer = this.data.aufnehmer;

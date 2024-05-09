@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { AlertController, ToastController, LoadingController } from '@ionic/angular';
 // import { NGXLogger } from "ngx-logger";
 
@@ -7,18 +7,14 @@ import { AlertController, ToastController, LoadingController } from '@ionic/angu
 })
 export class FrontendService {
 
+    private toastController = inject(ToastController);
+    private alertController = inject(AlertController);
+
     public toast: any;
     public alert: any;
 
     public loadingSpinnerActiveCount: number = 0;
     public loadingSpinnerMessage: string = '';
-
-    constructor(
-        // private logger: NGXLogger,
-        public toastController: ToastController,
-        public alertController: AlertController,
-        public loadingController: LoadingController
-    ) { }
 
     public showLoadingSpinner(message: string = '') {
         this.loadingSpinnerMessage = message;

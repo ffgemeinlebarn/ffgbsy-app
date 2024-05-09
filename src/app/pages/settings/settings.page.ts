@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { DataService } from 'src/app/services/data/data.service';
 import { SettingsService } from 'src/app/services/settings/settings.service';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
@@ -13,16 +13,13 @@ import { IonicModule } from '@ionic/angular';
     standalone: true,
     imports: [IonicModule, FormsModule],
 })
-export class SettingsPage implements OnInit {
-    constructor(
-        public bestellungsHandler: BestellungenHandlerService,
-        public data: DataService,
-        public settings: SettingsService,
-        public bestellungen: BestellungenHandlerService,
-        public frontend: FrontendService
-    ) { }
+export class SettingsPage {
 
-    ngOnInit(): void { /* Complaint */ }
+    bestellungsHandler = inject(BestellungenHandlerService);
+    data = inject(DataService);
+    settings = inject(SettingsService);
+    bestellungen = inject(BestellungenHandlerService);
+    frontend = inject(FrontendService);
 
     save() {
         this.settings.saveLocal();

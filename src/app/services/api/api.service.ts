@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { tap, retry, catchError, map } from 'rxjs/operators';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
@@ -19,14 +19,13 @@ import { Produkt } from 'src/app/classes/produkt.class';
     providedIn: 'root'
 })
 export class ApiService {
+    private http = inject(HttpClient);
+    public frontend = inject(FrontendService);
+
     private url: string = null;
     private headers: HttpHeaders = null;
 
-    constructor(
-        // private logger: NGXLogger,
-        private http: HttpClient,
-        public frontend: FrontendService
-    ) {
+    constructor() {
         this.loadEnvironment();
     }
 

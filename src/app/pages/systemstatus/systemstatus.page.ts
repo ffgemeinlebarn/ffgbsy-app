@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { SettingsService } from 'src/app/services/settings/settings.service';
@@ -19,18 +19,15 @@ import { IonicModule } from '@ionic/angular';
         DatePipe,
     ],
 })
-export class SystemstatusPage implements OnInit {
+export class SystemstatusPage {
+
+    api = inject(ApiService);
+    settings = inject(SettingsService);
+    frontend = inject(FrontendService);
+    data = inject(DataService);
 
     public systemstatus: any = null;
     public systemstatusDateTime: Date = null;
-
-    constructor(
-        private api: ApiService,
-        public settings: SettingsService,
-        public frontend: FrontendService,
-        public data: DataService) { }
-
-    ngOnInit() { }
 
     systemstatusAbrufen() {
 

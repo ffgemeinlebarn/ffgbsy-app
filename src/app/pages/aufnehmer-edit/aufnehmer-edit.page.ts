@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { FormsModule } from '@angular/forms';
@@ -16,10 +16,10 @@ import { IonicModule } from '@ionic/angular';
         FormsModule,
     ],
 })
-export class AufnehmerEditPage implements OnInit {
+export class AufnehmerEditPage {
 
-    constructor(public bestellungsHandler: BestellungenHandlerService, private api: ApiService) { }
-    ngOnInit() { }
+    public bestellungsHandler = inject(BestellungenHandlerService);
+    private api = inject(ApiService);
 
     public save() {
         this.api.updateAufnehmer(this.bestellungsHandler.aufnehmer).subscribe();

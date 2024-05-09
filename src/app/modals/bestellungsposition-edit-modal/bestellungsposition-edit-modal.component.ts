@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { ModalController, NavParams, IonicModule } from '@ionic/angular';
 import { Bestellposition } from '../../classes/bestellposition.class';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
@@ -20,15 +20,16 @@ import { NgFor } from '@angular/common';
 })
 export class BestellungspositionEditModalComponent implements OnInit {
 
+    private modalCtrl = inject(ModalController);
+    public navParams = inject(NavParams);
+    private bestellungsHandler = inject(BestellungenHandlerService);
+
     public bestellposition: Bestellposition;
     public index: number;
 
-    constructor(private modalCtrl: ModalController, public navParams: NavParams, private bestellungsHandler: BestellungenHandlerService) {
+    ngOnInit() {
         this.bestellposition = this.navParams.get('bestellposition');
         this.index = this.navParams.get('index');
-    }
-
-    ngOnInit() {
     }
 
     closeModal() {

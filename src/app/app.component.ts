@@ -63,16 +63,16 @@ import {
 })
 export class AppComponent {
 
+    public settings = inject(SettingsService);
+    public bestellungsHandler = inject(BestellungenHandlerService);
+    public data = inject(DataService);
+    public frontend = inject(FrontendService);
+    public notification = inject(NotificationService);
+    public edit = inject(EditService);
+
     public isAdmin: boolean = false;
 
-    constructor(
-        public settings: SettingsService,
-        public bestellungsHandler: BestellungenHandlerService,
-        public data: DataService,
-        public frontend: FrontendService,
-        public notification: NotificationService,
-        public edit: EditService
-    ) {
+    constructor() {
         this.settings.ready.then(() => {
             this.isAdmin = environment.localAdminPin == this.settings.locale.adminPin;
         });

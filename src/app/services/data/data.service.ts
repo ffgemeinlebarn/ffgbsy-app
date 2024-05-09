@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { Daten } from 'src/app/interfaces/daten';
 import { SettingsService } from '../settings/settings.service';
@@ -16,6 +16,10 @@ import { ApiService } from '../api/api.service';
 })
 export class DataService implements Daten {
 
+    private api = inject(ApiService);
+    private storage = inject(Storage);
+    private settings = inject(SettingsService);
+
     public ready: Promise<any>;
     private storageKey = 'data';
 
@@ -29,12 +33,7 @@ export class DataService implements Daten {
     public version: number = 0;
     public saved: Date | null = null;
 
-    constructor(
-        // private logger: NGXLogger,
-        private api: ApiService,
-        private storage: Storage,
-        private settings: SettingsService
-    ) {
+    constructor() {
         this.loadfromStorage();
     }
 

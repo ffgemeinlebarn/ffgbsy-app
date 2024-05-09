@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { ModalController, IonicModule } from '@ionic/angular';
@@ -31,22 +31,20 @@ import { NgIf, NgFor, NgClass } from '@angular/common';
 })
 export class NeueBestellungPage implements OnInit {
 
+    bestellungsHandler = inject(BestellungenHandlerService);
+    data = inject(DataService);
+    settings = inject(SettingsService);
+    frontend = inject(FrontendService);
+    notification = inject(NotificationService);
+    modalController = inject(ModalController);
+
     public filterTischkategorieId: number = null;
     public filterProduktkategorie: Produktkategorie = null;
 
-    constructor(
-        public bestellungsHandler: BestellungenHandlerService,
-        public data: DataService,
-        public settings: SettingsService,
-        public frontend: FrontendService,
-        public notification: NotificationService,
-        private modalController: ModalController
-    ) {
+    ngOnInit(): void {
         this.filterTischkategorieId = this.data.tischkategorien[0].id;
         this.filterProduktkategorie = this.data.produktkategorien[0];
     }
-
-    ngOnInit(): void { /* Compliant */ }
 
     /*******************************************************************************
     *** Tischauswahl

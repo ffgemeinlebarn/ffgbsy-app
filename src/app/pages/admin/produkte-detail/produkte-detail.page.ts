@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -23,9 +23,11 @@ import { IonicModule } from '@ionic/angular';
 })
 export class ProdukteDetailPage implements OnInit {
 
-    public produkt: Produkt = new Produkt();
+    private api = inject(ApiService);
+    private activatedRoute = inject(ActivatedRoute);
+    public edit = inject(EditService);
 
-    constructor(private activatedRoute: ActivatedRoute, private api: ApiService, public edit: EditService) { }
+    public produkt: Produkt = new Produkt();
 
     ngOnInit() {
         this.api.readProdukt(+this.activatedRoute.snapshot.paramMap.get('id')).subscribe((produkt) => {

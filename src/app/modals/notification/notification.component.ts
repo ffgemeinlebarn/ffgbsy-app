@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { Notification } from 'src/app/classes/notification.class';
 import { NgIf, DatePipe } from '@angular/common';
@@ -16,10 +16,11 @@ import { NgIf, DatePipe } from '@angular/common';
 })
 export class NotificationComponent implements OnInit {
 
+    private modalCtrl = inject(ModalController);
+
     public notifications: Array<Notification> = [];
     public notification: Notification = null;
 
-    constructor(private modalCtrl: ModalController) { }
     ngOnInit() {
         this.readNext();
     }

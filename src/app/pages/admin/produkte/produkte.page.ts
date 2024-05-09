@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { EditService } from 'src/app/services/edit/edit.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { RouterLink } from '@angular/router';
@@ -17,7 +17,6 @@ import { IonicModule } from '@ionic/angular';
         EuroPreisPipe,
     ],
 })
-export class ProduktePage implements OnInit {
-    constructor(public edit: EditService) { }
-    ngOnInit() { }
+export class ProduktePage {
+    public edit = inject(EditService);
 }

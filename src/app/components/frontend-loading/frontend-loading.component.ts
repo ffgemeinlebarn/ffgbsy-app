@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { NgIf } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -10,7 +10,6 @@ import { IonicModule } from '@ionic/angular';
     standalone: true,
     imports: [IonicModule, NgIf],
 })
-export class FrontendLoadingComponent implements OnInit {
-    constructor(public frontend: FrontendService) { }
-    ngOnInit() { }
+export class FrontendLoadingComponent {
+    frontend = inject(FrontendService);
 }

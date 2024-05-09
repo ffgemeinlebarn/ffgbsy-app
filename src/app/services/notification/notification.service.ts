@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 // import { NGXLogger } from 'ngx-logger';
 import { Notification } from 'src/app/classes/notification.class';
@@ -10,17 +10,15 @@ import { SettingsService } from '../settings/settings.service';
     providedIn: 'root'
 })
 export class NotificationService {
+    private api = inject(ApiService);
+    private modalCtrl = inject(ModalController);
+    private settings = inject(SettingsService);
 
     public unread: Array<Notification> = [];
     public archive: Array<Notification> = [];
     public lastPoll = null;
 
-    constructor(
-        // private logger: NGXLogger,
-        private api: ApiService,
-        private modalCtrl: ModalController,
-        private settings: SettingsService
-    ) {
+    constructor() {
         // this.settings.ready.then(_ => {
         //     this.lastPoll = new Date();
         //     this.api.getNotificationsUntil(this.lastPoll).subscribe((notifications) => {
