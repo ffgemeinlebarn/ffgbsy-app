@@ -46,8 +46,6 @@
     --ion-color-success-rgb: 36, 177, 92;
 }
 
-
-
 @function customLighten($color-variable, $value) {
     $color-variable-h: var(#{$color-variable + "-h"});
     $color-variable-s: var(#{$color-variable + "-s"});
@@ -55,23 +53,27 @@
     @return hsl($color-variable-h, $color-variable-s, $color-variable-l);
 }
 
-.center-wrapper{
+[hidden] {
+    display: none !important;
+}
+
+.center-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
 
-    .center-content{
+    .center-content {
         display: flex;
         flex-direction: column;
     }
 }
 
-.qr-modal{
+.qr-modal {
     --height: 400px;
 }
 
-.log-alert{
+.log-alert {
     font-family: monospace;
     white-space: pre-wrap;
 }
