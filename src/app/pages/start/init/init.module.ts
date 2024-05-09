@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { InitPage } from './init.page';
-import { ComponentsModule } from 'src/app/components/components.module';
+
 
 const routes: Routes = [
     {
@@ -15,12 +15,11 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        RouterModule.forChild(routes),
-        ComponentsModule,
-        InitPage
-    ]
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    InitPage
+]
 })
 export class InitPageModule { }

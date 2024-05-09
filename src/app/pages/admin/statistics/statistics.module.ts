@@ -5,17 +5,16 @@ import { IonicModule } from '@ionic/angular';
 import { StatisticsPageRoutingModule } from './statistics-routing.module';
 import { StatisticsPage } from './statistics.page';
 import { NgChartsModule } from 'ng2-charts';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        NgChartsModule,
-        StatisticsPageRoutingModule,
-        PipesModule,
-        StatisticsPage
-    ]
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    NgChartsModule,
+    StatisticsPageRoutingModule,
+    StatisticsPage
+]
 })
 export class StatisticsPageModule { }

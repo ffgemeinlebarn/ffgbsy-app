@@ -6,7 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { NeueBestellungPage } from './neue-bestellung.page';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+
 
 const routes: Routes = [
     {
@@ -17,12 +17,11 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        RouterModule.forChild(routes),
-        PipesModule,
-        NeueBestellungPage
-    ]
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    RouterModule.forChild(routes),
+    NeueBestellungPage
+]
 })
 export class NeueBestellungPageModule { }

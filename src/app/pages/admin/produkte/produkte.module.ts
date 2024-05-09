@@ -7,16 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ProduktePageRoutingModule } from './produkte-routing.module';
 
 import { ProduktePage } from './produkte.page';
-import { PipesModule } from 'src/app/pipes/pipes.module';
+
 
 @NgModule({
     imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        ProduktePageRoutingModule,
-        PipesModule,
-        ProduktePage
-    ]
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    ProduktePageRoutingModule,
+    ProduktePage
+]
 })
 export class ProduktePageModule { }
