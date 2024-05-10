@@ -27,7 +27,7 @@ export class BestellungenHandlerService {
         if (this.neubestellung.bestellung === null) {
             this.neubestellung.bestellung = new Bestellung();
             this.neubestellung.bestellung.aufnehmer = this.aufnehmer;
-            this.neubestellung.bestellung.device_name = this.settings.locale.deviceName;
+            this.neubestellung.bestellung.device_name = this.settings.local().deviceName;
             this.neubestellung.status = 'begonnen';
             return true;
         }

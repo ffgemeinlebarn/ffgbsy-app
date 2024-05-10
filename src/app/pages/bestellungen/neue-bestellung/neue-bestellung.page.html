@@ -131,7 +131,7 @@
     </div>
 </ion-footer>
 
-<ion-modal #aufnehmerModal *ngIf="data.ready" trigger="select-aufnehmer" [isOpen]="false" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="1" [canDismiss]="true">
+<ion-modal #aufnehmerModal trigger="select-aufnehmer" [isOpen]="false" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="1" [canDismiss]="true">
     <ng-template>
         <ion-header>
             <ion-toolbar>
@@ -140,7 +140,11 @@
         </ion-header>
         <ion-content>
             <ion-radio-group [(ngModel)]="bestellungsHandler.aufnehmer" allow-empty-selection="false">
-                <ion-item *ngFor="let aufnehmer of data.aufnehmer" (click)="aufnehmerModal.dismiss()">
+                <!-- @for(let aufnehmer of data.aufnehmer(); track aufnehmer.id)
+                {
+
+                } -->
+                <ion-item *ngFor="let aufnehmer of data.aufnehmer()" (click)="aufnehmerModal.dismiss()">
                     <ion-label>{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-label>
                     <ion-radio [value]="aufnehmer"></ion-radio>
                 </ion-item>

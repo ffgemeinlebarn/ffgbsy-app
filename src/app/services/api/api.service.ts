@@ -21,7 +21,7 @@ export class ApiService {
     private http = inject(HttpClient);
     public frontend = inject(FrontendService);
 
-    private url: string = null;
+    public url: string = null;
     private headers: HttpHeaders = null;
 
     constructor() {
@@ -47,8 +47,7 @@ export class ApiService {
         }
 
         // this.logger.error('[API Service] Error Handling', error);
-
-        return throwError(error);
+        throw error;
     }
 
     public getCurrentVersion(): Observable<number> {

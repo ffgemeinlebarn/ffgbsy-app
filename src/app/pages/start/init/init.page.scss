@@ -1,13 +1,13 @@
 ion-header:after {
-        background-image: none;
-      }
+    background-image: none;
+}
 
-.logo{
+.logo {
     max-width: 100px;
     width: 100%;
 }
 
-.tagline{
+.tagline {
     text-align: center;
     font-size: 1.25em;
     font-weight: bold;
@@ -15,7 +15,7 @@ ion-header:after {
     margin-top: 2em;
 }
 
-.version{
+.version {
     color: #aaa;
     font-size: 1em;
     margin-top: 0.4em;
@@ -23,18 +23,18 @@ ion-header:after {
 }
 
 
-.button-systemstatus-abrufen{
+.button-systemstatus-abrufen {
     position: fixed;
     right: 20px;
     --ion-color-primary: #ccc;
     font-size: 0.8em;
 }
 
-    .button-systemstatus-abrufen{
-        bottom: 16px;
-    }
+.button-systemstatus-abrufen {
+    bottom: 16px;
+}
 
-.centered{
+.centered {
     width: 100%;
     padding: 3em;
     display: flex;
@@ -42,48 +42,12 @@ ion-header:after {
     align-items: center;
 }
 
-ion-col{
+ion-col {
     --ion-grid-column-padding: 0.65em;
 }
 
-.tile-divider{
+.tile-divider {
     width: 100%;
     border-bottom: 1px #ccc solid;
     margin: 2em 0em;
-}
-
-.tile{
-    background-color: #f4f4f4;
-    padding: 1em;
-    border-radius: 0.7em;
-    width: 100%;
-    margin-top: 1.5em;
-
-    .start-icon{
-        font-size: 1.75em;
-        margin-right: 0.5em;
-    }
-
-    h4{
-        font-weight: bold;
-        font-size: 1.15em;
-        margin: 0px;
-        line-height: 1;
-    }
-
-    p{
-        line-height: 1;
-        margin-top: 0.5em;
-        margin-bottom: 0px;
-    }
-
-    &--success{
-        background-color: var(--ion-color-success);
-        color: #fff;
-    }
-
-    &--clickable{
-        background-color: var(--ion-color-primary);
-        color: #fff;
-    }
 }

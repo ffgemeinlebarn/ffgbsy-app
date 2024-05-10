@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, Signal, computed, effect, inject, signal } from '@angular/core';
 import { DataService } from '../../../services/data/data.service';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { SettingsService } from 'src/app/services/settings/settings.service';
@@ -8,6 +8,10 @@ import { Router, RouterLink } from '@angular/router';
 import { ApiService } from 'src/app/services/api/api.service';
 import { version } from 'src/environments/version';
 import { NgClass, NgIf, DatePipe } from '@angular/common';
+import { InitTileComponent } from 'src/app/components/init-tile/init-tile.component';
+import { AppService } from 'src/app/services/app/app.service';
+import { SettingsPage } from '../../settings/settings.page';
+import { formatDate } from "@angular/common";
 
 @Component({
     selector: 'ffgbsy-init',
@@ -19,79 +23,79 @@ import { NgClass, NgIf, DatePipe } from '@angular/common';
         NgClass,
         NgIf,
         RouterLink,
-        DatePipe
+        InitTileComponent
     ],
 })
 export class InitPage {
 
-    router = inject(Router);
-    api = inject(ApiService);
-    actionSheetController = inject(ActionSheetController);
-    data = inject(DataService);
-    settings = inject(SettingsService);
-    frontend = inject(FrontendService);
+    private app = inject(AppService);
+    private data = inject(DataService);
 
     public version = version;
-    public datenSynchronisierungLaeuft: boolean = false;
 
-    public aufnehmer: Aufnehmer | null = null;
+    public aufnehmerNameForTile: Signal<string> = computed(() => this.app.aufnehmer() ? `${this.app.aufnehmer()?.vorname} ${this.app.aufnehmer()?.nachname}` : "nicht ausgewählt");
+    public deviceNameForTile: Signal<string> = computed(() => this.app.deviceName() ? this.app.deviceName() : "Der Gerätename fehlt!");
+    public dataLastSyncedForTile = computed(() => this.data.loaded() ? formatDate(this.data.loadedDatetime(), 'dd.MM.YYYY HH:mm:ss', 'en-US') : "Daten nicht vollständig geladen!");
 
-    public systemstatus: any = [];
-
-    constructor() {
-        this.data.ready.then(() => {
-
-            // Check Version
-            this.api.getCurrentVersion().subscribe((resultedVersion: number) => {
-                // this.logger.debug('[Init Page] Vergleiche Current mit local Version', this.data.version, '==', resultedVersion);
-
-                if (this.data.version !== resultedVersion) {
-                    // this.logger.debug('[Init Page] Neuere Datenversion vorhanden!', 'Neu: ', resultedVersion);
-                    this.downloadData();
-                }
-            });
-
-        });
+    public dataShowLoadedDetails() {
+        this.data.showLoadedReport();
     }
 
-    public initComplete() {
-        this.router.navigateByUrl('/neue-bestellung');
-    }
+    // constructor() {
 
-    public async downloadData() {
-        await this.data.download();
-    }
+    //     // this.data.ready.then(() => {
 
-    public systemstatusAbrufen() {
-        this.api.getSystemstatus().subscribe((data) => {
+    //     //     // Check Version
+    //     //     this.api.getCurrentVersion().subscribe((resultedVersion: number) => {
+    //     //         // this.logger.debug('[Init Page] Vergleiche Current mit local Version', this.data.version, '==', resultedVersion);
 
-            const systemstatus = [
-                {
-                    text: 'API',
-                    icon: data.api ? 'checkmark-circle' : 'alert',
-                    cssClass: data.api ? 'systemstatus-success' : 'systemstatus-danger',
-                    handler: () => { return false; }
-                }
-            ];
+    //     //         if (this.data.version !== resultedVersion) {
+    //     //             // this.logger.debug('[Init Page] Neuere Datenversion vorhanden!', 'Neu: ', resultedVersion);
+    //     //             this.downloadData();
+    //     //         }
+    //     //     });
 
-            for (const item of data.drucker) {
-                systemstatus.push({
-                    text: 'Drucker ' + item.drucker.name,
-                    icon: item.result ? 'checkmark-circle' : 'alert',
-                    cssClass: item.result ? 'systemstatus-success' : 'systemstatus-danger',
-                    handler: () => { return false; }
-                });
-            }
+    //     // });
+    // }
 
-            this.showSystemstatus(systemstatus);
-        });
-    }
+    // public initComplete() {
+    //     this.router.navigateByUrl('/neue-bestellung');
+    // }
 
-    public async showSystemstatus(status) {
-        const actionSheet = await this.actionSheetController.create({
-            header: 'Systemstatus Kurzbericht',
-            buttons: status
-        });
-        await actionSheet.present();
-    }
+    // public async downloadData() {
+    //     await this.data.download();
+    // }
+
+    // public systemstatusAbrufen() {
+    //     this.api.getSystemstatus().subscribe((data) => {
+
+    //         const systemstatus = [
+    //             {
+    //                 text: 'API',
+    //                 icon: data.api ? 'checkmark-circle' : 'alert',
+    //                 cssClass: data.api ? 'systemstatus-success' : 'systemstatus-danger',
+    //                 handler: () => { return false; }
+    //             }
+    //         ];
+
+    //         for (const item of data.drucker) {
+    //             systemstatus.push({
+    //                 text: 'Drucker ' + item.drucker.name,
+    //                 icon: item.result ? 'checkmark-circle' : 'alert',
+    //                 cssClass: item.result ? 'systemstatus-success' : 'systemstatus-danger',
+    //                 handler: () => { return false; }
+    //             });
+    //         }
+
+    //         this.showSystemstatus(systemstatus);
+    //     });
+    // }
+
+    // public async showSystemstatus(status) {
+    //     const actionSheet = await this.actionSheetController.create({
+    //         header: 'Systemstatus Kurzbericht',
+    //         buttons: status
+    //     });
+    //     await actionSheet.present();
+    // }
 }

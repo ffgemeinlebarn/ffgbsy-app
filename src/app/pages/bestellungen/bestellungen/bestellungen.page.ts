@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -11,6 +11,7 @@ import { NotificationService } from 'src/app/services/notification/notification.
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
@@ -45,7 +46,7 @@ export class BestellungenPage implements OnInit {
     };
 
     public availableFilter: any = {
-        aufnehmer: [],
+        aufnehmer: signal<Aufnehmer[]>([]),
         tische: [],
         limits: [5, 10, 25, 50, 100]
     };

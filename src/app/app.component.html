@@ -1,4 +1,4 @@
-<ion-app [ngClass]="'zoom-level--' + (bestellungsHandler?.aufnehmer?.zoom_level ?? 1)">
+<ion-app [ngClass]="'zoom-level--' + (aufnehmer()?.zoom_level ?? 1)">
 
     <ion-split-pane contentId="main-content" when="lg">
 
@@ -39,14 +39,26 @@
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/aufnehmer-edit']" [disabled]="!bestellungsHandler?.aufnehmer">
+                            <ion-item [routerLink]="['/aufnehmer-edit']" [disabled]="!aufnehmer()">
                                 <ion-icon name="person-outline" slot="start"></ion-icon>
-                                <ion-label>Aufnehmer Einstellungen</ion-label>
+                                <ion-label>
+                                    <span>Einstellungen für </span>
+                                    @if(aufnehmer())
+                                    {
+                                    {{ aufnehmer()?.vorname }} {{ aufnehmer()?.nachname }}
+                                    }
+                                    @else
+                                    {
+                                    Aufnehmer
+                                    }
+                                </ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                     </ion-list>
 
-                    <ion-list *ngIf="isAdmin" class="sidemenu-admin-menu" lines="full">
+                    @if(isAdmin())
+                    {
+                    <ion-list class="sidemenu-admin-menu" lines="full">
                         <ion-item-divider>
                             <ion-label>Information</ion-label>
                         </ion-item-divider>
@@ -84,6 +96,7 @@
                             </ion-item>
                         </ion-menu-toggle>
                     </ion-list>
+                    }
 
                     <!-- Session Info - Session Beenden -->
                     <div class="init-button">

@@ -14,6 +14,7 @@ import { NotificationService } from 'src/app/services/notification/notification.
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor, NgClass } from '@angular/common';
+import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
 
 @Component({
     selector: 'ffgbsy-neue-bestellung',

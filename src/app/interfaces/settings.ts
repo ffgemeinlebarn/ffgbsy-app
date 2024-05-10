@@ -22,14 +22,9 @@ export interface StorageSettings {
 }
 
 // Local
-export class LocaleSettings {
+export interface LocalSettings {
     notificationPoll: boolean;
     deviceName: string;
     adminPin: string;
-
-    constructor() {
-        this.deviceName = '';
-        this.notificationPoll = true;
-        this.adminPin = '';
-    }
+    apiBaseUrl: string;
 }

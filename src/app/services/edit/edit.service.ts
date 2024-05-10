@@ -16,10 +16,10 @@ export class EditService {
     public produkte: Array<Produkt> = [];
 
     constructor() {
-        this.settings.ready.then(() => {
-            this.readGrundprodukte();
-            this.readProdukte();
-        });
+        // this.settings.ready.then(() => {
+        //     this.readGrundprodukte();
+        //     this.readProdukte();
+        // });
     }
 
     public readGrundprodukte() {

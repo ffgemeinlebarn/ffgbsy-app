@@ -37,7 +37,9 @@ import {
     shieldCheckmarkOutline,
     star,
     timerOutline,
+    alertCircleOutline
 } from 'ionicons/icons';
+import { AppService } from './services/app/app.service';
 
 @Component({
     selector: 'ffgbsy-root',
@@ -63,19 +65,22 @@ import {
 })
 export class AppComponent {
 
-    public settings = inject(SettingsService);
-    public bestellungsHandler = inject(BestellungenHandlerService);
-    public data = inject(DataService);
-    public frontend = inject(FrontendService);
-    public notification = inject(NotificationService);
-    public edit = inject(EditService);
+    private appService = inject(AppService);
 
-    public isAdmin: boolean = false;
+    public aufnehmer = this.appService.aufnehmer;
+    public isAdmin = this.appService.isAdmin;
+
+    // public settings = inject(SettingsService);
+    // public bestellungsHandler = inject(BestellungenHandlerService);
+    // public data = inject(DataService);
+    // public frontend = inject(FrontendService);
+    // public notification = inject(NotificationService);
+    // public edit = inject(EditService);
 
     constructor() {
-        this.settings.ready.then(() => {
-            this.isAdmin = environment.localAdminPin == this.settings.locale.adminPin;
-        });
+        // this.settings.ready.then(() => {
+        //     this.isAdmin = environment.localAdminPin == this.settings.local().adminPin;
+        // });
 
         addIcons({
             alertCircle,
@@ -103,6 +108,7 @@ export class AppComponent {
             shieldCheckmarkOutline,
             star,
             timerOutline,
+            alertCircleOutline
         });
     }
 }
