@@ -1,19 +1,16 @@
-import { Component, inject } from '@angular/core';
-import { SettingsService } from './services/settings/settings.service';
-import { BestellungenHandlerService } from './services/bestellungen/bestellungen-handler.service';
-import { FrontendService } from './services/frontend/frontend.service';
-import { DataService } from './services/data/data.service';
-import { environment } from 'src/environments/environment';
-import { NotificationService } from './services/notification/notification.service';
-import { EditService } from './services/edit/edit.service';
-import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
+import { Component, computed, inject } from '@angular/core';
+import { IonApp, IonButton, IonContent, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
 import { NgClass, NgIf } from '@angular/common';
 import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
 import { RouterLink } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
     alertCircle,
+    alertCircleOutline,
     arrowUndo,
+    beerOutline,
+    bookmarkOutline,
+    bugOutline,
     checkmarkCircle,
     closeCircle,
     closeOutline,
@@ -21,6 +18,7 @@ import {
     cubeOutline,
     fileTrayOutline,
     gitPullRequest,
+    logOutOutline,
     navigateCircleOutline,
     notificationsOutline,
     peopleOutline,
@@ -29,15 +27,17 @@ import {
     pulseOutline,
     radioButtonOff,
     refreshOutline,
+    restaurantOutline,
     rocketOutline,
     save,
     searchOutline,
     send,
+    sendOutline,
     settingsOutline,
     shieldCheckmarkOutline,
     star,
-    timerOutline,
-    alertCircleOutline
+    statsChartOutline,
+    timerOutline
 } from 'ionicons/icons';
 import { AppService } from './services/app/app.service';
 
@@ -60,7 +60,8 @@ import { AppService } from './services/app/app.service';
         IonItem,
         IonIcon,
         IonLabel,
-        IonRouterOutlet
+        IonRouterOutlet,
+        IonButton
     ]
 })
 export class AppComponent {
@@ -69,22 +70,17 @@ export class AppComponent {
 
     public aufnehmer = this.appService.aufnehmer;
     public isAdmin = this.appService.isAdmin;
-
-    // public settings = inject(SettingsService);
-    // public bestellungsHandler = inject(BestellungenHandlerService);
-    // public data = inject(DataService);
-    // public frontend = inject(FrontendService);
-    // public notification = inject(NotificationService);
-    // public edit = inject(EditService);
+    public zoomLevel = computed(() => `zoom-level--${this.aufnehmer()?.zoom_level ?? 1}`);
 
     constructor() {
-        // this.settings.ready.then(() => {
-        //     this.isAdmin = environment.localAdminPin == this.settings.local().adminPin;
-        // });
 
         addIcons({
             alertCircle,
+            alertCircleOutline,
             arrowUndo,
+            beerOutline,
+            bookmarkOutline,
+            bugOutline,
             checkmarkCircle,
             closeCircle,
             closeOutline,
@@ -92,6 +88,7 @@ export class AppComponent {
             cubeOutline,
             fileTrayOutline,
             gitPullRequest,
+            logOutOutline,
             navigateCircleOutline,
             notificationsOutline,
             peopleOutline,
@@ -100,15 +97,21 @@ export class AppComponent {
             pulseOutline,
             radioButtonOff,
             refreshOutline,
+            restaurantOutline,
             rocketOutline,
             save,
             searchOutline,
             send,
+            sendOutline,
             settingsOutline,
             shieldCheckmarkOutline,
             star,
-            timerOutline,
-            alertCircleOutline
+            statsChartOutline,
+            timerOutline
         });
+    }
+
+    public logout() {
+        this.appService.clearAufnehmer();
     }
 }

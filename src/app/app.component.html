@@ -1,4 +1,4 @@
-<ion-app [ngClass]="'zoom-level--' + (aufnehmer()?.zoom_level ?? 1)">
+<ion-app [ngClass]="zoomLevel()">
 
     <ion-split-pane contentId="main-content" when="lg">
 
@@ -8,6 +8,12 @@
                 <div class="container">
                     <!-- Menu Links -->
                     <ion-list class="sidemenu-main-menu" lines="full">
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/']">
+                                <ion-icon name="bookmark-outline" slot="start"></ion-icon>
+                                <ion-label>Start</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
                             <ion-item [routerLink]="['/neue-bestellung']">
                                 <ion-icon name="create-outline" slot="start"></ion-icon>
@@ -98,14 +104,17 @@
                     </ion-list>
                     }
 
-                    <!-- Session Info - Session Beenden -->
+                    <!-- Clear Aufnehmer -->
+                    @if (aufnehmer())
+                    {
                     <div class="init-button">
                         <ion-menu-toggle auto-hide="false">
-                            <ion-button routerLink="/" color="primary">
-                                <ion-icon slot="start" name="refresh-outline"></ion-icon> Initialisierung
+                            <ion-button color="primary" (click)="logout()">
+                                <ion-icon slot="start" name="log-out-outline"></ion-icon> ausloggen
                             </ion-button>
                         </ion-menu-toggle>
                     </div>
+                    }
                 </div>
             </ion-content>
         </ion-menu>

@@ -13,8 +13,21 @@
             <h4 class="tagline">FF Gemeinlebarn Bestellsystem</h4>
             <h4 class="version">Version {{ version.number }}</h4>
 
+            @if(readyToGo())
+            {
+            <ion-button>Starte Bestellung</ion-button>
+            }
+            @else if(!aufnehmerSelected())
+            {
+            <p>Kein:e Aufnehmer:in ausgewählt!</p>
+            }
+            @else
+            {
+            <p>Die Systeme müssen verfügbar sein!</p>
+            }
+
             <div class="tiles">
-                <app-init-tile title="Aufnehmer" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></app-init-tile>
+                <app-init-tile title="Aufnehmer" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></app-init-tile>
                 <app-init-tile title="Gerät" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></app-init-tile>
                 <app-init-tile title="Daten" (click)="dataShowLoadedDetails()" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></app-init-tile>
                 <app-init-tile title="System" (click)="dataShowAvailabilityDetails()" [subtitle]="availabilityStatusForSubtitle()" iconName="shield-checkmark-outline"></app-init-tile>

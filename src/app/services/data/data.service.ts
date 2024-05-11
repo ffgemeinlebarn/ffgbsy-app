@@ -1,20 +1,13 @@
 import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { Daten } from 'src/app/interfaces/daten';
-import { SettingsService } from '../settings/settings.service';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { Produktbereich } from 'src/app/classes/produktbereich.class';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { Tisch } from 'src/app/classes/tisch.class';
-import { ApiService } from '../api/api.service';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FrontendService } from '../frontend/frontend.service';
 import { AufnehmerService } from '../aufnehmer/aufnehmer.service';
-import { forkJoin } from 'rxjs';
 import { ModalController } from '@ionic/angular';
-import { DataLoadedReportModalComponent } from 'src/app/components/data-loaded-report/data-loaded-report-modal/data-loaded-report-modal.component';
+import { DataLoadedReportModalComponent } from 'src/app/components/data-loaded-report-modal/data-loaded-report-modal.component';
 
 @Injectable({
     providedIn: 'root'
