@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
+import { Bestellung } from 'src/app/classes/bestellung.class';
 import { Observable, catchError, retry, tap } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
@@ -8,23 +8,23 @@ import { ErrorHandlingService } from '../error-handling/error-handling.service';
 @Injectable({
     providedIn: 'root'
 })
-export class AufnehmerService {
+export class BestellungenService {
     http = inject(HttpClient);
     settings = inject(SettingsService);
     errorHandling = inject(ErrorHandlingService);
 
-    public create(aufnehmer: Aufnehmer) {
+    public create(bestellungen: Bestellung) {
         return this.http
-            .post<Aufnehmer>(`${this.settings.apiBaseUrl()}/aufnehmer`, aufnehmer)
+            .post<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellungen)
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
     }
 
-    public readAll(): Observable<Aufnehmer[]> {
+    public readAll(): Observable<Bestellung[]> {
         return this.http
-            .get<Aufnehmer[]>(`${this.settings.apiBaseUrl()}/aufnehmer`)
+            .get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`)
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
@@ -33,16 +33,16 @@ export class AufnehmerService {
 
     public read(id: number) {
         return this.http
-            .get<Aufnehmer>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`)
+            .get<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`)
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
     }
 
-    public update(aufnehmer: Aufnehmer) {
+    public update(bestellungen: Bestellung) {
         return this.http
-            .put<Aufnehmer>(`${this.settings.apiBaseUrl()}/aufnehmer/${aufnehmer.id}`, aufnehmer)
+            .put<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${bestellungen.id}`, bestellungen)
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
@@ -51,7 +51,7 @@ export class AufnehmerService {
 
     public delete(id: number) {
         return this.http
-            .delete<boolean>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`)
+            .delete<boolean>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`)
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))

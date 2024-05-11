@@ -73,26 +73,4 @@ export class BestellungenPage implements OnInit {
 
         return this.api.searchBestellungen(params).subscribe(bestellungen => this.bestellungen = bestellungen);
     }
-
-    async qrScanOpen() {
-        this.scannerEnabled = true;
-
-        const modal = await this.modalCtrl.create({
-            component: QrScanComponent,
-            cssClass: 'qr-modal'
-        });
-
-        modal.present();
-
-        const { data, role } = await modal.onWillDismiss();
-
-        if (role == 'success') {
-
-            const parsedData = JSON.parse(data);
-
-            if (parsedData.bestellungen_id) {
-                this.router.navigate(['bestellungen', parsedData.bestellungen_id]);
-            }
-        }
-    }
 }
