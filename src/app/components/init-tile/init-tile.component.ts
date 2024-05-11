@@ -1,4 +1,5 @@
-import { Component, OnInit, input } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, OnInit, computed, input } from '@angular/core';
 import { IonCol, IonGrid, IonIcon, IonRippleEffect, IonRow } from '@ionic/angular/standalone';
 
 @Component({
@@ -11,13 +12,15 @@ import { IonCol, IonGrid, IonIcon, IonRippleEffect, IonRow } from '@ionic/angula
         IonRow,
         IonCol,
         IonIcon,
-        IonRippleEffect
+        IonRippleEffect,
+        NgClass
     ]
 })
 export class InitTileComponent {
-
     iconName = input<string>();
     title = input.required<string>();
     subtitle = input<string>();
+    success = input<boolean>(false);
 
+    tileClass = computed(() => this.success() ? 'tile--success' : '');
 }

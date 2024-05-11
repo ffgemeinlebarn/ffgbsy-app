@@ -23,14 +23,14 @@
             }
             @else
             {
-            <p>Die Systeme müssen verfügbar sein!</p>
+            <p>Daten und Systeme müssen verfügbar sein!</p>
             }
 
             <div class="tiles">
-                <app-init-tile title="Aufnehmer" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></app-init-tile>
-                <app-init-tile title="Gerät" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></app-init-tile>
-                <app-init-tile title="Daten" (click)="dataShowLoadedDetails()" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></app-init-tile>
-                <app-init-tile title="System" (click)="dataShowAvailabilityDetails()" [subtitle]="availabilityStatusForSubtitle()" iconName="shield-checkmark-outline"></app-init-tile>
+                <app-init-tile title="Aufnehmer" [success]="aufnehmerSelected()" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></app-init-tile>
+                <app-init-tile title="Gerät" [success]="deviceNameSet()" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></app-init-tile>
+                <app-init-tile title="Daten" [success]="dataLoaded()" (click)="dataShowLoadedDetails()" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></app-init-tile>
+                <app-init-tile title="System" [success]="allSystemsAvailable()" (click)="dataShowAvailabilityDetails()" [subtitle]="availabilityStatusForSubtitle()" iconName="shield-checkmark-outline"></app-init-tile>
             </div>
         </div>
     </div>

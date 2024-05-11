@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { IonApp, IonButton, IonContent, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
+import { IonApp, IonButton, IonContent, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
 import { NgClass, NgIf } from '@angular/common';
 import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
 import { RouterLink } from '@angular/router';
@@ -58,6 +58,7 @@ import { AppService } from './services/app/app.service';
         IonList,
         IonMenuToggle,
         IonItem,
+        IonItemDivider,
         IonIcon,
         IonLabel,
         IonRouterOutlet,

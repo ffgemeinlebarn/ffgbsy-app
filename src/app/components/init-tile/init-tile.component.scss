@@ -25,13 +25,14 @@
         }
 
         &--success {
-            background-color: var(--ion-color-success);
-            color: #fff;
-        }
-
-        &--clickable {
+            // background-color: var(--ion-color-success);
             background-color: var(--ion-color-primary);
             color: #fff;
         }
+
+        // &--clickable {
+        //     background-color: var(--ion-color-primary);
+        //     color: #fff;
+        // }
     }
 }

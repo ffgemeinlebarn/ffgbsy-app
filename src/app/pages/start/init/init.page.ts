@@ -30,10 +30,14 @@ export class InitPage {
     public version = version;
 
     public aufnehmerNameForSubtitle: Signal<string> = computed(() => this.app.aufnehmer() ? `${this.app.aufnehmer()?.vorname} ${this.app.aufnehmer()?.nachname}` : "nicht ausgewählt");
-    public aufnehmerSelected = computed(() => this.app.aufnehmer() ? true : false);
     public deviceNameForSubtitle: Signal<string> = computed(() => this.app.deviceName() ? this.app.deviceName() : "Der Gerätename fehlt!");
     public dataLastSyncedForSubtitle = computed(() => this.data.loaded() ? formatDate(this.data.loadedDatetime(), 'dd.MM.YYYY HH:mm:ss', 'en-US') : "Daten nicht vollständig geladen!");
     public availabilityStatusForSubtitle = computed(() => this.availability.all() ? 'Alle Systeme verfügbar!' : 'Systeme nicht vollständig erreichbar!');
+
+    public aufnehmerSelected = computed(() => this.app.aufnehmer() ? true : false);
+    public deviceNameSet = computed(() => this.app.deviceName() ? true : false);
+    public dataLoaded = this.data.loaded;
+    public allSystemsAvailable = this.availability.all;
     public readyToGo = this.app.readyToGo;
 
     public selectAufnehmer() {
