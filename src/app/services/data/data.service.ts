@@ -8,6 +8,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { AufnehmerService } from '../aufnehmer/aufnehmer.service';
 import { ModalController } from '@ionic/angular';
 import { DataLoadedReportModalComponent } from 'src/app/components/data-loaded-report-modal/data-loaded-report-modal.component';
+import { ProduktbereicheService } from '../produktbereiche/produktbereiche.service';
+import { ProduktkategorienService } from '../produktkategorien/produktkategorien.service';
+import { ProdukteService } from '../produkte/produkte.service';
+import { TischkategorienService } from '../tischkategorien/tischkategorien.service';
+import { TischeService } from '../tische/tische.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +20,11 @@ import { DataLoadedReportModalComponent } from 'src/app/components/data-loaded-r
 export class DataService {
     private modalController = inject(ModalController);
     private aufnehmerService = inject(AufnehmerService);
+    private produktbereicheService = inject(ProduktbereicheService);
+    private produktkategorienService = inject(ProduktkategorienService);
+    private produkteService = inject(ProdukteService);
+    private tischkategorienService = inject(TischkategorienService);
+    private tischeService = inject(TischeService);
 
     public loaded = computed<boolean>(() => this.loadedReport().filter(report => !report.loaded).length == 0);
 
@@ -40,7 +50,7 @@ export class DataService {
             numberOfItems: this.produkte().length
         },
         {
-            name: "tischkategorien",
+            name: "Tischkategorien",
             loaded: this.tischkategorien().length > 0,
             numberOfItems: this.tischkategorien().length
         },
@@ -54,26 +64,11 @@ export class DataService {
     public loadedDatetime = computed<Date>(() => this.loaded() ? new Date() : null);
 
     public aufnehmer = toSignal(this.aufnehmerService.readAll(), { initialValue: [] });
-    public produktbereiche = signal<Produktbereich[]>([]);
-    public produktkategorien = signal<Produktkategorie[]>([]);
-    public produkte = signal<Produkt[]>([]);
-    public tischkategorien = signal<Tischkategorie[]>([]);
-    public tische = signal<Tisch[]>([]);
-    // public produktbereiche = toSignal(this.aufnehmerService.readAll(), { initialValue: [] });
-    // public produktkategorien = toSignal(this.aufnehmerService.readAll(), { initialValue: [] });
-    // public produkte = toSignal(this.aufnehmerService.readAll(), { initialValue: [] });
-    // public tischkategorien = toSignal(this.aufnehmerService.readAll(), { initialValue: [] });
-    // public tische = toSignal(this.aufnehmerService.readAll(), { initialValue: [] });
-
-    // public ready = toSignal(forkJoin([this.aufnehmerService.readAll()]));
-    // private storageKey = 'data';
-
-    // public produktbereiche: Produktbereich[];
-    // public produktkategorien: Produktkategorie[];
-    // public produkte: Produkt[];
-    // public tischkategorien: Tischkategorie[];
-    // public tische: Tisch[];
-
+    public produktbereiche = toSignal(this.produktbereicheService.readAll(), { initialValue: [] });
+    public produktkategorien = toSignal(this.produktkategorienService.readAll(), { initialValue: [] });
+    public produkte = toSignal(this.produkteService.readAll(), { initialValue: [] });
+    public tischkategorien = toSignal(this.tischkategorienService.readAll(), { initialValue: [] });
+    public tische = toSignal(this.tischeService.readAll(), { initialValue: [] });
 
     public async showLoadedReport() {
         const modal = await this.modalController.create({
@@ -87,77 +82,6 @@ export class DataService {
 
     public version: number = 0;
     public saved: Date | null = null;
-
-    // constructor() {
-    //     this.loadDataFromApi();
-    //     // this.loadfromStorage();
-    // }
-
-    // public loadDataFromApi() {
-    //     //this.aufnehmer = toSignal(this.aufnehmerService.readAll());
-    // }
-
-    // public loadfromStorage() {
-    //     // this.ready = new Promise((resolve, reject) => this.settings.ready.then(() => this.storage.get(this.settings.StoragePrefix + this.storageKey).then((jsonObject: any) => {
-
-    //     //     // this.logger.debug('[Data Service] - Loaded from Storage')
-
-    //     //     if (jsonObject == null) {
-    //     //         // this.logger.debug('[Data Service] - Keine lokalen Daten vorhanden!')
-    //     //     } else {
-
-    //     //         const dataObject = <{
-    //     //             saved: Date,
-    //     //             data: any
-    //     //         }>JSON.parse(jsonObject);
-
-    //     //         this.aufnehmer = signal(dataObject.data.aufnehmer);
-    //     //         this.produktbereiche = dataObject.data.produktbereiche;
-    //     //         this.produktkategorien = dataObject.data.produktkategorien;
-    //     //         this.produkte = dataObject.data.produkte;
-    //     //         this.tischkategorien = dataObject.data.tischkategorien;
-    //     //         this.tische = dataObject.data.tische;
-    //     //         this.version = dataObject.data.version;
-
-    //     //         this.saved = new Date(dataObject.saved);
-    //     //     }
-
-    //     //     resolve(this.saved);
-    //     // })));
-    // }
-
-    // public async download() {
-
-    //     // this.logger.debug('[Data Service] - Start Download!')
-
-    //     this.api
-    //         .getDaten()
-    //         .subscribe({
-    //             next: (data: Daten) => {
-
-    //                 const saved = new Date();
-
-    //                 this.storage.set(this.settings.localStoragePrefix + this.storageKey, JSON.stringify({
-    //                     saved,
-    //                     data
-    //                 }));
-
-    //                 // this.aufnehmer.set(data.aufnehmer);
-    //                 this.produktbereiche = data.produktbereiche;
-    //                 this.produktkategorien = data.produktkategorien;
-    //                 this.produkte = data.produkte;
-    //                 this.tischkategorien = data.tischkategorien;
-    //                 this.tische = data.tische;
-    //                 this.version = data.version;
-
-    //                 this.saved = saved;
-
-    //                 // this.ready = Promise.resolve(saved);
-
-    //             },
-    //             error: () => this.frontend.toast("Daten wurden nicht synchronisiert!")
-    //         });
-    // }
 
     getProduktById(id: number) {
         for (let p of this.produkte()) {
