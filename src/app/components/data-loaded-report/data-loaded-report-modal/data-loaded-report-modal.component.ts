@@ -3,9 +3,9 @@ import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabe
 import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
-    selector: 'app-data-loaded-report',
-    templateUrl: './data-loaded-report.component.html',
-    styleUrls: ['./data-loaded-report.component.scss'],
+    selector: 'app-data-loaded-report-modal',
+    templateUrl: './data-loaded-report-modal.component.html',
+    styleUrls: ['./data-loaded-report-modal.component.scss'],
     standalone: true,
     imports: [
         IonHeader,
@@ -20,7 +20,7 @@ import { DataService } from 'src/app/services/data/data.service';
         IonIcon
     ]
 })
-export class DataLoadedReportComponent {
+export class DataLoadedReportModalComponent {
 
     private data = inject(DataService);
     private modalController = inject(ModalController);

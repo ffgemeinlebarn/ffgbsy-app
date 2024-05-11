@@ -14,7 +14,7 @@ import { FrontendService } from '../frontend/frontend.service';
 import { AufnehmerService } from '../aufnehmer/aufnehmer.service';
 import { forkJoin } from 'rxjs';
 import { ModalController } from '@ionic/angular';
-import { DataLoadedReportComponent } from 'src/app/components/data-loaded-report/data-loaded-report/data-loaded-report.component';
+import { DataLoadedReportModalComponent } from 'src/app/components/data-loaded-report/data-loaded-report-modal/data-loaded-report-modal.component';
 
 @Injectable({
     providedIn: 'root'
@@ -84,7 +84,7 @@ export class DataService {
 
     public async showLoadedReport() {
         const modal = await this.modalController.create({
-            component: DataLoadedReportComponent,
+            component: DataLoadedReportModalComponent,
             canDismiss: true,
             breakpoints: [0.1, 0.5, 1],
             initialBreakpoint: 1

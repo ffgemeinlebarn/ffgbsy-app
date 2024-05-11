@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { DataLoadedReportComponent } from './data-loaded-report.component';
+import { AvailabilityModalComponent } from './availability-modal.component';
 
-describe('DataLoadedReportComponent', () => {
-  let component: DataLoadedReportComponent;
-  let fixture: ComponentFixture<DataLoadedReportComponent>;
+describe('AvailabilityModalComponent', () => {
+  let component: AvailabilityModalComponent;
+  let fixture: ComponentFixture<AvailabilityModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataLoadedReportComponent ],
+      declarations: [ AvailabilityModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DataLoadedReportComponent);
+    fixture = TestBed.createComponent(AvailabilityModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -12,6 +12,7 @@ import { InitTileComponent } from 'src/app/components/init-tile/init-tile.compon
 import { AppService } from 'src/app/services/app/app.service';
 import { SettingsPage } from '../../settings/settings.page';
 import { formatDate } from "@angular/common";
+import { AvailabilityService } from 'src/app/services/availability/availability.service';
 
 @Component({
     selector: 'ffgbsy-init',
@@ -27,18 +28,22 @@ import { formatDate } from "@angular/common";
     ],
 })
 export class InitPage {
-
     private app = inject(AppService);
     private data = inject(DataService);
+    private availability = inject(AvailabilityService);
 
     public version = version;
 
-    public aufnehmerNameForTile: Signal<string> = computed(() => this.app.aufnehmer() ? `${this.app.aufnehmer()?.vorname} ${this.app.aufnehmer()?.nachname}` : "nicht ausgewählt");
-    public deviceNameForTile: Signal<string> = computed(() => this.app.deviceName() ? this.app.deviceName() : "Der Gerätename fehlt!");
-    public dataLastSyncedForTile = computed(() => this.data.loaded() ? formatDate(this.data.loadedDatetime(), 'dd.MM.YYYY HH:mm:ss', 'en-US') : "Daten nicht vollständig geladen!");
+    public aufnehmerNameForSubtitle: Signal<string> = computed(() => this.app.aufnehmer() ? `${this.app.aufnehmer()?.vorname} ${this.app.aufnehmer()?.nachname}` : "nicht ausgewählt");
+    public deviceNameForSubtitle: Signal<string> = computed(() => this.app.deviceName() ? this.app.deviceName() : "Der Gerätename fehlt!");
+    public dataLastSyncedForSubtitle = computed(() => this.data.loaded() ? formatDate(this.data.loadedDatetime(), 'dd.MM.YYYY HH:mm:ss', 'en-US') : "Daten nicht vollständig geladen!");
+    public availabilityStatusForSubtitle = computed(() => this.availability.all() ? 'Alle Systeme verfügbar!' : 'Systeme nicht vollständig erreichbar!');;
 
     public dataShowLoadedDetails() {
         this.data.showLoadedReport();
+    }
+    public dataShowAvailabilityDetails() {
+        this.availability.showDetailsModal();
     }
 
     // constructor() {
