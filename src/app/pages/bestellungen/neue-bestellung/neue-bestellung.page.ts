@@ -35,7 +35,7 @@ import { Bestellung } from 'src/app/classes/bestellung.class';
 export class NeueBestellungPage {
 
     private app = inject(AppService);
-    bestellungsHandler = inject(BestellungenHandlerService);
+    // bestellungsHandler = inject(BestellungenHandlerService);
     private data = inject(DataService);
     frontend = inject(FrontendService);
     notification = inject(NotificationService);
@@ -83,7 +83,6 @@ export class NeueBestellungPage {
     changeTisch() {
         this.bestellung().status = 'tischauswahl';
     }
-
 
     /*******************************************************************************
     *** Aufnahme der Bestellpositionen
@@ -188,7 +187,7 @@ export class NeueBestellungPage {
         modal.onDidDismiss()
             .then((data) => {
                 if (data.data) {
-                    this.bestellungsHandler.sendNeubestellungBestellung();
+                    this.app.createBestellung();
                 }
 
             });
