@@ -10,6 +10,8 @@ export class Bestellung {
     public device_name: string;
     public device_ip: string | null = null;
 
+    public status: null | 'tischauswahl' | 'bestellpositionen';
+
     public timestamp_begonnen: any = null;
     public timestamp_beendet: any = null;
     public bestellpositionen: Array<Bestellposition> = Array();

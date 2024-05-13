@@ -6,6 +6,8 @@ import { DataService } from '../data/data.service';
 import { AvailabilityService } from '../availability/availability.service';
 import { ModalController } from '@ionic/angular/standalone';
 import { SelectAufnehmerModalComponent } from 'src/app/components/select-aufnehmer-modal/select-aufnehmer-modal.component';
+import { Bestellung } from 'src/app/classes/bestellung.class';
+import { Tisch } from 'src/app/classes/tisch.class';
 
 @Injectable({
     providedIn: 'root'
@@ -16,11 +18,14 @@ export class AppService {
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
 
+    // State Management
     public readyToGo = computed<boolean>(() => this.aufnehmer() && this.deviceName() && this.availability.api && this.data.loaded());
-
     public aufnehmer = signal<Aufnehmer>(null);
     public deviceName = computed<string>(() => this.settings.local().deviceName);
     public isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
+
+    // Manage new Bestellung
+    public bestellung = signal<Bestellung>(null);
 
     public async showSelectAufnehmerModal() {
         const modal = await this.modalController.create({
@@ -38,5 +43,31 @@ export class AppService {
 
     public selectAufnehmer(aufnehmer: Aufnehmer) {
         this.aufnehmer.set(aufnehmer);
+    }
+
+    public createNewBestellung() {
+        if (this.bestellung()) {
+            throw new Error("Es besteht eine begonnene Bestellung. Es kann daher keine neue Bestellung gestartet werden.");
+        }
+
+        const bestellung = new Bestellung();
+        bestellung.aufnehmer = this.aufnehmer();
+        bestellung.device_name = this.deviceName();
+        bestellung.status = 'tischauswahl';
+
+        this.bestellung.set(bestellung);
+    }
+
+    public setTischOfBestellung(tisch: Tisch) {
+        this.bestellung().tisch = tisch;
+        this.bestellung().setTimestampBegonnen();
+    }
+
+    public cancelBestellung() {
+        this.bestellung = null;
+    }
+
+    public createBestellung() {
+        console.log("Call the API...");
     }
 }

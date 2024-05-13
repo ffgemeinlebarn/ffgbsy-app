@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { ModalController, IonicModule } from '@ionic/angular';
@@ -15,6 +15,8 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
 import { NgIf, NgFor, NgClass } from '@angular/common';
 import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
+import { AppService } from 'src/app/services/app/app.service';
+import { Bestellung } from 'src/app/classes/bestellung.class';
 
 @Component({
     selector: 'ffgbsy-neue-bestellung',
@@ -30,43 +32,56 @@ import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
         EuroPreisPipe,
     ],
 })
-export class NeueBestellungPage implements OnInit {
+export class NeueBestellungPage {
 
+    private app = inject(AppService);
     bestellungsHandler = inject(BestellungenHandlerService);
-    data = inject(DataService);
-    settings = inject(SettingsService);
+    private data = inject(DataService);
     frontend = inject(FrontendService);
     notification = inject(NotificationService);
     modalController = inject(ModalController);
 
-    public filterTischkategorieId: number = null;
-    public filterProduktkategorie: Produktkategorie = null;
+    public bestellung = this.app.bestellung;
+    public aufnehmer = this.app.aufnehmer;
+    public filterTischkategorieId = signal<number>(null);
+    public filterProduktkategorie = signal<Produktkategorie>(null);
 
-    ngOnInit(): void {
-        this.filterTischkategorieId = this.data.tischkategorien[0].id;
-        this.filterProduktkategorie = this.data.produktkategorien[0];
+    public produktkategorien = this.data.produktkategorien;
+
+    constructor() {
+        effect(
+            () => this.filterTischkategorieId.set(this.data.tischkategorien()[0]?.id ?? null),
+            { allowSignalWrites: true }
+        );
+        effect(
+            () => this.filterProduktkategorie.set(this.data.produktkategorien()[0] ?? null),
+            { allowSignalWrites: true }
+        );
+    }
+
+    changeFilterTischkategorieId(tischkategorie_id: number) {
+        this.filterTischkategorieId.set(tischkategorie_id);
+    }
+
+    public selectAufnehmer() {
+        this.app.showSelectAufnehmerModal();
+    }
+
+    public starteBestellvorgang() {
+        this.app.createNewBestellung();
     }
 
     /*******************************************************************************
     *** Tischauswahl
     *******************************************************************************/
 
-    starteTischAuswahl() {
-        this.bestellungsHandler.newNeubestellung();
-        this.bestellungsHandler.neubestellung.status = 'tischauswahl';
-    }
-
     selectTisch(tisch: Tisch) {
-        this.bestellungsHandler.addTischToNeubestellung(tisch);
-        this.bestellungsHandler.neubestellung.status = 'bestellpositionen';
-    }
-
-    changeFilterTischkategorieId(tischkategorie_id: number) {
-        this.filterTischkategorieId = tischkategorie_id;
+        this.bestellung().tisch = tisch;
+        this.bestellung().status = 'bestellpositionen';
     }
 
     changeTisch() {
-        this.bestellungsHandler.neubestellung.status = 'tischauswahl';
+        this.bestellung().status = 'tischauswahl';
     }
 
 
@@ -75,7 +90,7 @@ export class NeueBestellungPage implements OnInit {
     *******************************************************************************/
 
     changeFilterProduktkategorie(produktkategorie: Produktkategorie) {
-        this.filterProduktkategorie = produktkategorie;
+        this.filterProduktkategorie.set(produktkategorie);
     }
 
     addBestellposition(produkt: Produkt, form: string, event: any) {
@@ -88,7 +103,7 @@ export class NeueBestellungPage implements OnInit {
 
         if (form == 'standard') {
 
-            for (let bp of this.bestellungsHandler.neubestellung.bestellung.bestellpositionen) {
+            for (let bp of this.bestellung().bestellpositionen) {
                 if (
                     bp.produkt.id == produkt.id &&
                     bp.display.eigenschaften.mit.length == 0 &&  // <= nur unmodifiziertes Produkt automatisch hochzählen
@@ -102,7 +117,7 @@ export class NeueBestellungPage implements OnInit {
         }
 
         if (!added) {
-            this.bestellungsHandler.neubestellung.bestellung.addBestellposition(new Bestellposition(produkt));
+            this.bestellung().addBestellposition(new Bestellposition(produkt));
         }
     }
 
@@ -112,7 +127,7 @@ export class NeueBestellungPage implements OnInit {
 
     async editBestellungsposition(bestellposition: Bestellposition, nonReverseIndex: number) {
 
-        let reverseIndex = this.bestellungsHandler.neubestellung.bestellung.bestellpositionen.length - 1 - nonReverseIndex;
+        let reverseIndex = this.bestellung().bestellpositionen.length - 1 - nonReverseIndex;
 
         const modal = await this.modalController.create({
             component: BestellungspositionEditModalComponent,
@@ -162,7 +177,7 @@ export class NeueBestellungPage implements OnInit {
         const modal = await this.modalController.create({
             component: BestellungKontrolleModalComponent,
             componentProps: {
-                bestellung: this.bestellungsHandler.neubestellung.bestellung
+                bestellung: this.app.bestellung()
             },
             cssClass: 'classic-modal',
             showBackdrop: true,
@@ -189,10 +204,7 @@ export class NeueBestellungPage implements OnInit {
         await this.frontend.showJaNeinAlert(
             'Abbruch der Bestellung',
             'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.'
-        ).then(_ => {
-            this.bestellungsHandler.neubestellung.bestellung = null;
-            this.bestellungsHandler.neubestellung.status = null;
-        });
+        ).then(_ => this.app.cancelBestellung());
     }
 
 }

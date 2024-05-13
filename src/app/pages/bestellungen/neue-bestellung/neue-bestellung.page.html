@@ -10,7 +10,7 @@
                 <ion-label>Ungelesene Benachrichtigung</ion-label>
             </ion-button>
 
-            <ion-button (click)="askForCancelBestellung()" [hidden]="bestellungsHandler.neubestellung.bestellung === null">
+            <ion-button (click)="askForCancelBestellung()" [hidden]="bestellung() === null">
                 <ion-icon name="close-circle" slot="icon-only"></ion-icon>
             </ion-button>
         </ion-buttons>
@@ -18,55 +18,70 @@
 </ion-header>
 
 <!-- Keine aktuelle Bestellung im BestellungenService -->
-<ion-content class="center ion-padding" [hidden]="bestellungsHandler.neubestellung.bestellung !== null">
+@if(!bestellung())
+{
+<ion-content class="center ion-padding">
     <div class="center-wrapper">
         <div class="center-content">
 
-            <!-- Ready -->
-            <ion-button *ngIf="bestellungsHandler.aufnehmer" (click)="starteTischAuswahl()" class="neue-bestellung">Neue Bestellung starten</ion-button>
-
-            <!-- Aufnehmer -->
-            <h4 class="aufnehmer" *ngIf="!bestellungsHandler.aufnehmer">Keine Aufnehmer ausgewählt!</h4>
-            <h4 class="aufnehmer" *ngIf="bestellungsHandler.aufnehmer">Du nimmtst die Bestellungen als <strong>{{ bestellungsHandler.aufnehmer?.vorname }} {{ bestellungsHandler.aufnehmer?.nachname }}</strong> auf!</h4>
+            <!-- New Order possible, if aufnehmer selected -->
+            @if(aufnehmer())
+            {
+            <ion-button (click)="starteBestellvorgang()" class="neue-bestellung">Neue Bestellung starten</ion-button>
+            <h4 class="aufnehmer">Du nimmtst die Bestellungen als <strong>{{ aufnehmer().vorname }} {{ aufnehmer().nachname }}</strong> auf!</h4>
+            }
+            @else {
+            <ion-button (click)="selectAufnehmer()">Aufnehmer auswählen</ion-button>
+            <h4 class="aufnehmer">Keine Aufnehmer:in ausgewählt!</h4>
+            }
         </div>
     </div>
 </ion-content>
-
-<ion-footer class="neubestellung-footer" [hidden]="bestellungsHandler.neubestellung.bestellung !== null">
-    <ion-button id="select-aufnehmer">Aufnehmer auswählen</ion-button>
-</ion-footer>
-
-<!-- Tischauswahl -->
-<ion-content [hidden]="bestellungsHandler.neubestellung.status != 'tischauswahl'">
+}
+@else if(bestellung().status == 'tischauswahl')
+{
+<ion-content>
     <div class="kachelwand">
-        <div *ngFor="let tisch of data.tische" [hidden]="tisch.tischkategorien_id != filterTischkategorieId" [ngClass]="{'kachel': true, 'tisch-kachel': true, 'tisch-kachel--big-1': (tisch.reihe.length > 7), 'tisch-kachel--big-2': (tisch.reihe.length > 14)}">
+
+        @for(tisch of data.tische(); track tisch.id)
+        {
+        @if (tisch.tischkategorien_id == filterTischkategorieId()) {
+
+        <div [ngClass]="{'kachel': true, 'tisch-kachel': true, 'tisch-kachel--big-1': (tisch.reihe.length > 7), 'tisch-kachel--big-2': (tisch.reihe.length > 14)}">
             <div class="kachel__inner">
                 <ion-button text-wrap text-normal expand="full" (click)="selectTisch(tisch)">
                     <span class="button-inner">{{ tisch.reihe }} {{ tisch.nummer }}</span>
                 </ion-button>
             </div>
         </div>
+        }
+        }
     </div>
 </ion-content>
 
-<ion-footer [hidden]="bestellungsHandler.neubestellung.status != 'tischauswahl'">
+<ion-footer>
     <div class="kachelwand">
-        <div class="kachel tischkategorie-kachel" *ngFor="let tischkategorie of data.tischkategorien">
+        @for(tischkategorie of data.tischkategorien(); track tischkategorie.id)
+        {
+        <div class="kachel tischkategorie-kachel">
             <div class="kachel__inner">
                 <ion-button text-wrap text-normal expand="full" (click)="changeFilterTischkategorieId(tischkategorie.id)">
                     <span class="button-inner">{{ tischkategorie.name }}</span>
                 </ion-button>
             </div>
         </div>
+        }
     </div>
 </ion-footer>
+}
+@else if(bestellung().status == 'bestellpositionen')
+{
 
-<!-- Bestellpositionen & Produktauswahl -->
-<ion-content class="status-current-bestellpositionen" [hidden]="bestellungsHandler.neubestellung.status != 'bestellpositionen'">
+<ion-content class="status-current-bestellpositionen">
     <div class="content">
         <div class="content-left">
             <div class="tisch">
-                <h1>{{ bestellungsHandler.neubestellung.bestellung?.tisch?.reihe }} {{ bestellungsHandler.neubestellung.bestellung?.tisch?.nummer }}</h1>
+                <h1>{{ bestellung().tisch?.reihe }} {{ bestellung().tisch?.nummer }}</h1>
                 <ion-button fill="outline" size="small" color="light" (click)="changeTisch()">
                     <ion-label>ändern</ion-label>
                     <ion-icon name="settings-outline" slot="end"></ion-icon>
@@ -74,7 +89,8 @@
             </div>
             <div class="bestellpositionen">
                 <ion-list>
-                    <ion-item button *ngFor="let bp of bestellungsHandler.neubestellung.bestellung?.bestellpositionen.slice().reverse(); index as nonReverseIndex" (click)="editBestellungsposition(bp, nonReverseIndex)">
+                    @for(bp of bestellung().bestellpositionen.slice().reverse(); track $index){
+                    <ion-item button (click)="editBestellungsposition(bp, $index)">
                         <ion-label text-wrap>
                             <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
                             <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
@@ -83,6 +99,7 @@
                             <p *ngIf="bp.notiz"><strong>Notiz:</strong> {{ bp.notiz }}</p>
                         </ion-label>
                     </ion-item>
+                    }
                 </ion-list>
             </div>
         </div>
@@ -103,15 +120,15 @@
     </div>
 </ion-content>
 
-<ion-footer class="status-current-bestellpositionen" [hidden]="bestellungsHandler.neubestellung.status != 'bestellpositionen'">
+<ion-footer class="status-current-bestellpositionen">
     <div class="footer">
         <div class="footer-left">
             <div class="summe">
                 <span class="summe__euro">€</span>
-                <span class="summe__betrag">{{ bestellungsHandler.neubestellung.bestellung?.calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
+                <span class="summe__betrag">{{ bestellung().calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
             </div>
             <div class="submit">
-                <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" [disabled]="bestellungsHandler.neubestellung.bestellung?.bestellpositionen.length == 0">
+                <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" [disabled]="bestellung().bestellpositionen.length == 0">
                     <ion-label>Abschluss </ion-label>
                     <ion-icon slot="start" name="checkmark-circle"></ion-icon>
                 </ion-button>
@@ -119,7 +136,7 @@
         </div>
         <div class="footer-right">
             <div class="kachelwand">
-                <div class="kachel produktkategorie-kachel" *ngFor="let produktkategorie of data.produktkategorien">
+                <div class="kachel produktkategorie-kachel" *ngFor="let produktkategorie of produktkategorien()">
                     <div class="kachel__inner" [ngClass]="produktkategorie.color">
                         <ion-button text-wrap text-normal expand="full" (click)="changeFilterProduktkategorie(produktkategorie)">
                             <span class="button-inner">{{produktkategorie.name}}</span>
@@ -130,31 +147,4 @@
         </div>
     </div>
 </ion-footer>
-
-<ion-modal #aufnehmerModal trigger="select-aufnehmer" [isOpen]="false" [breakpoints]="[0.1, 0.5, 1]" [initialBreakpoint]="1" [canDismiss]="true">
-    <ng-template>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Aufnehmer auswählen</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content>
-            <ion-radio-group [(ngModel)]="bestellungsHandler.aufnehmer" allow-empty-selection="false">
-                <!-- @for(let aufnehmer of data.aufnehmer(); track aufnehmer.id)
-                {
-
-                } -->
-                <ion-item *ngFor="let aufnehmer of data.aufnehmer()" (click)="aufnehmerModal.dismiss()">
-                    <ion-label>{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-label>
-                    <ion-radio [value]="aufnehmer"></ion-radio>
-                </ion-item>
-            </ion-radio-group>
-        </ion-content>
-        <ion-footer class="aufnehmer-auswahl-footer">
-            <ion-button (click)="aufnehmerModal.dismiss()">
-                <ion-icon slot="start" name="close-outline"></ion-icon>
-                Auswahl abbrechen
-            </ion-button>
-        </ion-footer>
-    </ng-template>
-</ion-modal>
+}
