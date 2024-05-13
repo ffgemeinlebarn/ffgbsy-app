@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
-import { Observable, catchError, map, retry, tap } from 'rxjs';
-import { SettingsService } from '../settings/settings.service';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Drucker } from 'src/app/classes/drucker.class';
 import { ModalController } from '@ionic/angular/standalone';
+import { Observable, map, retry } from 'rxjs';
+import { Drucker } from 'src/app/classes/drucker.class';
 import { AvailabilityModalComponent } from 'src/app/components/availability-modal/availability-modal.component';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
     providedIn: 'root'
