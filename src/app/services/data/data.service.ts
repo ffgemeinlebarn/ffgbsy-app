@@ -7,12 +7,13 @@ import { Tisch } from 'src/app/classes/tisch.class';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { AufnehmerService } from '../aufnehmer/aufnehmer.service';
 import { ModalController } from '@ionic/angular';
-import { DataLoadedReportModalComponent } from 'src/app/components/data-loaded-report-modal/data-loaded-report-modal.component';
+import { DataLoadedReportModalComponent } from 'src/app/modals/data-loaded-report-modal/data-loaded-report-modal.component';
 import { ProduktbereicheService } from '../produktbereiche/produktbereiche.service';
 import { ProduktkategorienService } from '../produktkategorien/produktkategorien.service';
 import { ProdukteService } from '../produkte/produkte.service';
 import { TischkategorienService } from '../tischkategorien/tischkategorien.service';
 import { TischeService } from '../tische/tische.service';
+import { ProdukteinteilungenService } from '../produkteinteilungen/produkteinteilungen.service';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,7 @@ export class DataService {
     private aufnehmerService = inject(AufnehmerService);
     private produktbereicheService = inject(ProduktbereicheService);
     private produktkategorienService = inject(ProduktkategorienService);
+    private produkteinteilungenService = inject(ProdukteinteilungenService);
     private produkteService = inject(ProdukteService);
     private tischkategorienService = inject(TischkategorienService);
     private tischeService = inject(TischeService);
@@ -45,6 +47,11 @@ export class DataService {
             numberOfItems: this.produktkategorien().length
         },
         {
+            name: "Produkteinteilungen",
+            loaded: this.produkteinteilungen().length > 0,
+            numberOfItems: this.produkteinteilungen().length
+        },
+        {
             name: "Produkte",
             loaded: this.produkte().length > 0,
             numberOfItems: this.produkte().length
@@ -66,6 +73,7 @@ export class DataService {
     public aufnehmer = toSignal(this.aufnehmerService.readAll(), { initialValue: [] });
     public produktbereiche = toSignal(this.produktbereicheService.readAll(), { initialValue: [] });
     public produktkategorien = toSignal(this.produktkategorienService.readAll(), { initialValue: [] });
+    public produkteinteilungen = toSignal(this.produkteinteilungenService.readAll(), { initialValue: [] });
     public produkte = toSignal(this.produkteService.readAll(), { initialValue: [] });
     public tischkategorien = toSignal(this.tischkategorienService.readAll(), { initialValue: [] });
     public tische = toSignal(this.tischeService.readAll(), { initialValue: [] });

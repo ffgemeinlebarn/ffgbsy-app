@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ModalController } from '@ionic/angular/standalone';
 import { Observable, map, retry } from 'rxjs';
 import { Drucker } from 'src/app/classes/drucker.class';
-import { AvailabilityModalComponent } from 'src/app/components/availability-modal/availability-modal.component';
+import { AvailabilityModalComponent } from 'src/app/modals/availability-modal/availability-modal.component';
 import { SettingsService } from '../settings/settings.service';
 
 @Injectable({

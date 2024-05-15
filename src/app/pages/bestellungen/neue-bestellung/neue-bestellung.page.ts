@@ -1,5 +1,4 @@
-import { Component, OnInit, computed, effect, inject, signal } from '@angular/core';
-import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
+import { Component, Signal, computed, effect, inject, signal } from '@angular/core';
 import { DataService } from 'src/app/services/data/data.service';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { Tisch } from 'src/app/classes/tisch.class';
@@ -9,14 +8,14 @@ import { Bestellposition } from 'src/app/classes/bestellposition.class';
 import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
 import { BestellungKontrolleModalComponent } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { SettingsService } from 'src/app/services/settings/settings.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor, NgClass } from '@angular/common';
-import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
+import { NgIf, NgFor, NgClass, JsonPipe } from '@angular/common';
 import { AppService } from 'src/app/services/app/app.service';
-import { Bestellung } from 'src/app/classes/bestellung.class';
+import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
+import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'ffgbsy-neue-bestellung',
@@ -30,6 +29,7 @@ import { Bestellung } from 'src/app/classes/bestellung.class';
         NgClass,
         FormsModule,
         EuroPreisPipe,
+        JsonPipe
     ],
 })
 export class NeueBestellungPage {
@@ -43,24 +43,33 @@ export class NeueBestellungPage {
 
     public bestellung = this.app.bestellung;
     public aufnehmer = this.app.aufnehmer;
-    public filterTischkategorieId = signal<number>(null);
-    public filterProduktkategorie = signal<Produktkategorie>(null);
 
+    public selectedTischkategorie = signal<Tischkategorie>(null);
+    public selectedProduktkategorie = signal<Produktkategorie>(null);
+    public filtredTischeToDisplay = signal<Tisch[]>([]);
+    public filtredProdukteinteilungenToDisplay = signal<Produkteinteilung[]>([]);
+    public tischkategorien = this.data.tischkategorien;
     public produktkategorien = this.data.produktkategorien;
 
     constructor() {
-        effect(
-            () => this.filterTischkategorieId.set(this.data.tischkategorien()[0]?.id ?? null),
-            { allowSignalWrites: true }
-        );
-        effect(
-            () => this.filterProduktkategorie.set(this.data.produktkategorien()[0] ?? null),
-            { allowSignalWrites: true }
-        );
-    }
+        effect(() => {
+            if (this.selectedTischkategorie() == null) {
+                this.selectTischkategorie(this.tischkategorien()[0]);
+            }
 
-    changeFilterTischkategorieId(tischkategorie_id: number) {
-        this.filterTischkategorieId.set(tischkategorie_id);
+            this.filtredTischeToDisplay.set(this.data.tische().filter(tisch => tisch.tischkategorien_id == this.selectedTischkategorie()?.id) ?? []);
+        }, { allowSignalWrites: true });
+
+        effect(() => {
+            if (this.selectedProduktkategorie() == null) {
+                this.selectProduktkategorie(this.produktkategorien()[0]);
+            }
+
+            console.log(this.data.produktkategorien().find(produktkategorie => produktkategorie == this.selectedProduktkategorie()));
+            console.log(this.data.produktkategorien().find(produktkategorie => produktkategorie.id == this.selectedProduktkategorie()?.id));
+
+            this.filtredProdukteinteilungenToDisplay.set(this.data.produktkategorien().find(produktkategorie => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? []);
+        }, { allowSignalWrites: true });
     }
 
     public selectAufnehmer() {
@@ -75,6 +84,10 @@ export class NeueBestellungPage {
     *** Tischauswahl
     *******************************************************************************/
 
+    selectTischkategorie(tischkategorie: Tischkategorie) {
+        this.selectedTischkategorie.set(tischkategorie);
+    }
+
     selectTisch(tisch: Tisch) {
         this.bestellung().tisch = tisch;
         this.bestellung().status = 'bestellpositionen';
@@ -88,8 +101,8 @@ export class NeueBestellungPage {
     *** Aufnahme der Bestellpositionen
     *******************************************************************************/
 
-    changeFilterProduktkategorie(produktkategorie: Produktkategorie) {
-        this.filterProduktkategorie.set(produktkategorie);
+    selectProduktkategorie(produktkategorie: Produktkategorie) {
+        this.selectedProduktkategorie.set(produktkategorie);
     }
 
     addBestellposition(produkt: Produkt, form: string, event: any) {

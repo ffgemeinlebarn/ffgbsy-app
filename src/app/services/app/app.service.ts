@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { DataService } from '../data/data.service';
 import { AvailabilityService } from '../availability/availability.service';
 import { ModalController } from '@ionic/angular/standalone';
-import { SelectAufnehmerModalComponent } from 'src/app/components/select-aufnehmer-modal/select-aufnehmer-modal.component';
+import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { Tisch } from 'src/app/classes/tisch.class';
 

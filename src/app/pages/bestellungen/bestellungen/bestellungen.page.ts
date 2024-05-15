@@ -4,7 +4,6 @@ import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestel
 import { ApiService } from 'src/app/services/api/api.service';
 import { Router, RouterLink } from '@angular/router';
 import { ModalController, IonicModule } from '@ionic/angular';
-import { QrScanComponent } from 'src/app/modals/qr-scan/qr-scan.component';
 import { DataService } from 'src/app/services/data/data.service';
 import { HttpParams } from '@angular/common/http';
 import { NotificationService } from 'src/app/services/notification/notification.service';
