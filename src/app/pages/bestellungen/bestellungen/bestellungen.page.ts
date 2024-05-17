@@ -6,7 +6,6 @@ import { Router, RouterLink } from '@angular/router';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { DataService } from 'src/app/services/data/data.service';
 import { HttpParams } from '@angular/common/http';
-import { NotificationService } from 'src/app/services/notification/notification.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
@@ -32,7 +31,6 @@ export class BestellungenPage implements OnInit {
     private router = inject(Router);
     private modalCtrl = inject(ModalController);
     private data = inject(DataService);
-    public notification = inject(NotificationService);
 
     public scannerEnabled: boolean = false;
     public bestellungen: Array<Bestellung>;

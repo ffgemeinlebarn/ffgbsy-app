@@ -6,7 +6,6 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { Bon } from 'src/app/classes/bon';
-import { NotificationService } from 'src/app/services/notification/notification.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { DatePipe } from '@angular/common';
 
@@ -16,10 +15,10 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./bestellungen-detail.page.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    DatePipe,
-    EuroPreisPipe
-],
+        IonicModule,
+        DatePipe,
+        EuroPreisPipe
+    ],
 })
 export class BestellungenDetailPage implements OnInit {
 
@@ -27,7 +26,6 @@ export class BestellungenDetailPage implements OnInit {
     private api = inject(ApiService);
     private frontend = inject(FrontendService);
     private alertController = inject(AlertController);
-    public notification = inject(NotificationService);
 
     public bestellung: Bestellung;
 

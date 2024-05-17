@@ -4,12 +4,6 @@
         <ion-title>Neue Bestellung</ion-title>
         <ion-buttons slot="end">
 
-            <!-- Notifications -->
-            <!-- <ion-button fill="solid" color="success" shape="round" (click)="notification.showUnread()" (keypress)="notification.showUnread()" *ngIf="notification.unread.length">
-                <ion-icon slot="start" name="notifications-outline"></ion-icon>
-                <ion-label>Ungelesene Benachrichtigung</ion-label>
-            </ion-button> -->
-
             @if(bestellung())
             {
             <ion-button (click)="askForCancelBestellung()" (keypress)="askForCancelBestellung()">

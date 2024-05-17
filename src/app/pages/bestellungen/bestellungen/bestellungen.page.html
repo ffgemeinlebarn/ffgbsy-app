@@ -2,14 +2,6 @@
     <ion-toolbar>
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Bestellungen</ion-title>
-        <ion-buttons slot="end">
-            @if (notification.unread.length) {
-            <ion-button fill="solid" color="success" shape="round" (click)="notification.showUnread()">
-                <ion-icon slot="start" name="notifications-outline"></ion-icon>
-                <ion-label>Ungelesene Benachrichtigung</ion-label>
-            </ion-button>
-            }
-        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 

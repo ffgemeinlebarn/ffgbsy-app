@@ -8,39 +8,37 @@ export const routes: Routes = [
     { path: 'bestellungen/:id', loadComponent: () => import('./pages/bestellungen/bestellungen-detail/bestellungen-detail.page').then(m => m.BestellungenDetailPage) },
     { path: 'systemstatus', loadComponent: () => import('./pages/systemstatus/systemstatus.page').then(m => m.SystemstatusPage) },
     {
-        path: 'notifications',
-        loadComponent: () => import('./pages/notifications/notifications.page').then(m => m.NotificationsPage)
-    },
-    {
         path: 'aufnehmer-edit',
         loadComponent: () => import('./pages/aufnehmer-edit/aufnehmer-edit.page').then(m => m.AufnehmerEditPage)
     },
     {
-        path: 'admin/statistics',
-        loadComponent: () => import('./pages/admin/statistics/statistics.page').then(m => m.StatisticsPage)
-    },
-    {
-        path: 'admin/notifactions',
-        loadComponent: () => import('./pages/admin/notifications/notifications.page').then(m => m.NotificationsPage)
-    },
-    {
-        path: 'admin/grundprodukte',
-        loadComponent: () => import('./pages/admin/grundprodukte/grundprodukte.page').then(m => m.GrundproduktePage)
-    },
-    {
-        path: 'admin/produkte',
-        loadComponent: () => import('./pages/admin/produkte/produkte.page').then(m => m.ProduktePage)
-    },
-    {
-        path: 'admin/produkte/:id',
-        loadComponent: () => import('./pages/admin/produkte-detail/produkte-detail.page').then(m => m.ProdukteDetailPage)
-    },
-    {
-        path: 'admin/grundprodukte/:id',
-        loadComponent: () => import('./pages/admin/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
-    },
-    {
-        path: 'admin/logs',
-        loadComponent: () => import('./pages/admin/logs/logs.page').then(m => m.LogsPage)
+        path: 'admin',
+        children: [
+
+            {
+                path: 'statistics',
+                loadComponent: () => import('./pages/admin/statistics/statistics.page').then(m => m.StatisticsPage)
+            },
+            {
+                path: 'grundprodukte',
+                loadComponent: () => import('./pages/admin/grundprodukte/grundprodukte.page').then(m => m.GrundproduktePage)
+            },
+            {
+                path: 'produkte',
+                loadComponent: () => import('./pages/admin/produkte/produkte.page').then(m => m.ProduktePage)
+            },
+            {
+                path: 'produkte/:id',
+                loadComponent: () => import('./pages/admin/produkte-detail/produkte-detail.page').then(m => m.ProdukteDetailPage)
+            },
+            {
+                path: 'grundprodukte/:id',
+                loadComponent: () => import('./pages/admin/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
+            },
+            {
+                path: 'logs',
+                loadComponent: () => import('./pages/admin/logs/logs.page').then(m => m.LogsPage)
+            }
+        ]
     }
 ];

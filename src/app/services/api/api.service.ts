@@ -10,7 +10,6 @@ import { Daten } from 'src/app/interfaces/daten';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
 import { BonDruck } from 'src/app/classes/bonDruck';
-import { Notification } from 'src/app/classes/notification.class';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { Produkt } from 'src/app/classes/produkt.class';
 
@@ -215,39 +214,6 @@ export class ApiService {
         this.frontend.showLoadingSpinner('Empfange Produktkategorien Statistik');
         return this.http
             .get(`${this.url}/statistiken/produktkategorien`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
-
-    // Notifications
-
-    public getNotificationsSince(since: Date): Observable<Array<Notification>> {
-        const isoDateTime = new Date(since.getTime() - (since.getTimezoneOffset() * 60000)).toISOString();
-        return this.http
-            .get(`${this.url}/notifications/since/${isoDateTime}`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                catchError((error) => this.errorHandler(error, true))
-            );
-    }
-
-    public getNotificationsUntil(until: Date): Observable<Array<Notification>> {
-        const isoDateTime = new Date(until.getTime() - (until.getTimezoneOffset() * 60000)).toISOString();
-        return this.http
-            .get(`${this.url}/notifications/until/${isoDateTime}`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                catchError((error) => this.errorHandler(error, true))
-            );
-    }
-
-    public createNotification(notification: Notification): Observable<Notification> {
-        this.frontend.showLoadingSpinner('Sende Benachrichtigung');
-        return this.http
-            .post(`${this.url}/notifications`, notification, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
