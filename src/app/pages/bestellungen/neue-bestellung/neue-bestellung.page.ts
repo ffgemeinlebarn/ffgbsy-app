@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Tisch } from 'src/app/classes/tisch.class';
@@ -14,14 +14,12 @@ import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
     styleUrls: ['./neue-bestellung.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgIf,
-        NgFor,
-        NgClass,
-        AufnehmerAuswahlComponent,
-        TischAuswahlComponent,
-        BestellungEditComponent
-    ],
+    IonicModule,
+    NgClass,
+    AufnehmerAuswahlComponent,
+    TischAuswahlComponent,
+    BestellungEditComponent
+],
 })
 export class NeueBestellungPage {
 

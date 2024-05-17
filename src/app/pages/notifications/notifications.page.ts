@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification/notification.service';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -9,11 +9,9 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./notifications.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgIf,
-        NgFor,
-        DatePipe,
-    ],
+    IonicModule,
+    DatePipe
+],
 })
 export class NotificationsPage {
     notification = inject(NotificationService);

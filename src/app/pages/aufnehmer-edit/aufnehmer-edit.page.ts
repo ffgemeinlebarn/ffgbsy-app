@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -11,10 +11,9 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./aufnehmer-edit.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgIf,
-        FormsModule,
-    ],
+    IonicModule,
+    FormsModule
+],
 })
 export class AufnehmerEditPage {
 

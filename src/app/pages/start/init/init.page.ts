@@ -3,7 +3,7 @@ import { DataService } from '../../../services/data/data.service';
 import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
 import { version } from 'src/environments/version';
-import { NgClass, NgIf, DatePipe } from '@angular/common';
+import { NgClass, DatePipe } from '@angular/common';
 import { InitTileComponent } from 'src/app/components/init-tile/init-tile.component';
 import { AppService } from 'src/app/services/app/app.service';
 import { formatDate } from "@angular/common";
@@ -15,12 +15,11 @@ import { AvailabilityService } from 'src/app/services/availability/availability.
     styleUrls: ['./init.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgClass,
-        NgIf,
-        RouterLink,
-        InitTileComponent
-    ],
+    IonicModule,
+    NgClass,
+    RouterLink,
+    InitTileComponent
+],
 })
 export class InitPage {
     private app = inject(AppService);

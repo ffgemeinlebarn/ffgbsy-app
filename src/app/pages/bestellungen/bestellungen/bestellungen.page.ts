@@ -9,7 +9,7 @@ import { HttpParams } from '@angular/common/http';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 
 @Component({
@@ -18,14 +18,12 @@ import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
     styleUrls: ['./bestellungen.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgIf,
-        NgFor,
-        RouterLink,
-        FormsModule,
-        DatePipe,
-        EuroPreisPipe,
-    ],
+    IonicModule,
+    RouterLink,
+    FormsModule,
+    DatePipe,
+    EuroPreisPipe
+],
 })
 export class BestellungenPage implements OnInit {
 

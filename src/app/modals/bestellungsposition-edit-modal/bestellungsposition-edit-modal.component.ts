@@ -4,7 +4,7 @@ import { Bestellposition } from '../../classes/bestellposition.class';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'ffgbsy-bestellungsposition-edit-modal',
@@ -12,11 +12,10 @@ import { NgFor } from '@angular/common';
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgFor,
-        FormsModule,
-        EuroPreisPipe,
-    ],
+    IonicModule,
+    FormsModule,
+    EuroPreisPipe
+],
 })
 export class BestellungspositionEditModalComponent implements OnInit {
 

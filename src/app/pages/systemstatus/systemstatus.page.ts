@@ -3,7 +3,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { DataService } from 'src/app/services/data/data.service';
 import { SettingsService } from 'src/app/services/settings/settings.service';
 import { ApiService } from 'src/app/services/api/api.service';
-import { NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
@@ -13,11 +13,10 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./systemstatus.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        RouterLink,
-        NgFor,
-        DatePipe,
-    ],
+    IonicModule,
+    RouterLink,
+    DatePipe
+],
 })
 export class SystemstatusPage {
 

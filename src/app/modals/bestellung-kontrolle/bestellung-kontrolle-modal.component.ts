@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ModalController, NavParams, IonicModule } from '@ionic/angular';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
-import { NgFor, NgIf } from '@angular/common';
+
 
 @Component({
     selector: 'ffgbsy-bestellung-kontrolle-modal',
@@ -9,11 +9,9 @@ import { NgFor, NgIf } from '@angular/common';
     styleUrls: ['./bestellung-kontrolle-modal.component.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgFor,
-        NgIf,
-        EuroPreisPipe,
-    ],
+    IonicModule,
+    EuroPreisPipe
+],
 })
 export class BestellungKontrolleModalComponent implements OnInit {
 

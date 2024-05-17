@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { EditService } from 'src/app/services/edit/edit.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { RouterLink } from '@angular/router';
-import { NgFor } from '@angular/common';
+
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -11,11 +11,10 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./produkte.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgFor,
-        RouterLink,
-        EuroPreisPipe,
-    ],
+    IonicModule,
+    RouterLink,
+    EuroPreisPipe
+],
 })
 export class ProduktePage {
     public edit = inject(EditService);

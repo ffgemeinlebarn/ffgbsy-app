@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { ApiService } from 'src/app/services/api/api.service';
 import { EditService } from 'src/app/services/edit/edit.service';
-import { NgIf } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
@@ -13,10 +13,9 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./grundprodukte-detail.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        FormsModule,
-        NgIf,
-    ],
+    IonicModule,
+    FormsModule
+],
 })
 export class GrundprodukteDetailPage implements OnInit {
 

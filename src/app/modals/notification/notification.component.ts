@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ModalController, IonicModule } from '@ionic/angular';
 import { Notification } from 'src/app/classes/notification.class';
-import { NgIf, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'ffgbsy-notification',
@@ -9,10 +9,9 @@ import { NgIf, DatePipe } from '@angular/common';
     styleUrls: ['./notification.component.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgIf,
-        DatePipe,
-    ],
+    IonicModule,
+    DatePipe
+],
 })
 export class NotificationComponent implements OnInit {
 

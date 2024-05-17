@@ -8,7 +8,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { Bon } from 'src/app/classes/bon';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
@@ -16,12 +16,10 @@ import { NgIf, NgFor, DatePipe } from '@angular/common';
     styleUrls: ['./bestellungen-detail.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgIf,
-        NgFor,
-        DatePipe,
-        EuroPreisPipe,
-    ],
+    IonicModule,
+    DatePipe,
+    EuroPreisPipe
+],
 })
 export class BestellungenDetailPage implements OnInit {
 
