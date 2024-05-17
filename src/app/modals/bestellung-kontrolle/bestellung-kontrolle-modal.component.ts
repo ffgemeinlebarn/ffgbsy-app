@@ -9,9 +9,9 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
     styleUrls: ['./bestellung-kontrolle-modal.component.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    EuroPreisPipe
-],
+        IonicModule,
+        EuroPreisPipe
+    ],
 })
 export class BestellungKontrolleModalComponent implements OnInit {
 

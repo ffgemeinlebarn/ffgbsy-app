@@ -3,43 +3,8 @@ import { IonApp, IonButton, IonContent, IonIcon, IonItem, IonItemDivider, IonLab
 import { NgClass } from '@angular/common';
 import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
 import { RouterLink } from '@angular/router';
-import { addIcons } from 'ionicons';
-import {
-    alertCircle,
-    alertCircleOutline,
-    arrowUndo,
-    beerOutline,
-    bookmarkOutline,
-    bugOutline,
-    checkmarkCircle,
-    closeCircle,
-    closeOutline,
-    createOutline,
-    cubeOutline,
-    fileTrayOutline,
-    gitPullRequest,
-    logOutOutline,
-    navigateCircleOutline,
-    notificationsOutline,
-    peopleOutline,
-    personOutline,
-    phonePortraitOutline,
-    pulseOutline,
-    radioButtonOff,
-    refreshOutline,
-    restaurantOutline,
-    rocketOutline,
-    save,
-    searchOutline,
-    send,
-    sendOutline,
-    settingsOutline,
-    shieldCheckmarkOutline,
-    star,
-    statsChartOutline,
-    timerOutline
-} from 'ionicons/icons';
 import { AppService } from './services/app/app.service';
+import { IonIconsService } from './services/ion-icons/ion-icons.service';
 
 @Component({
     selector: 'ffgbsy-root',
@@ -47,25 +12,26 @@ import { AppService } from './services/app/app.service';
     styleUrls: ['app.component.scss'],
     standalone: true,
     imports: [
-    FrontendLoadingComponent,
-    RouterLink,
-    NgClass,
-    IonApp,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonMenuToggle,
-    IonItem,
-    IonItemDivider,
-    IonIcon,
-    IonLabel,
-    IonRouterOutlet,
-    IonButton
-]
+        FrontendLoadingComponent,
+        RouterLink,
+        NgClass,
+        IonApp,
+        IonSplitPane,
+        IonMenu,
+        IonContent,
+        IonList,
+        IonMenuToggle,
+        IonItem,
+        IonItemDivider,
+        IonIcon,
+        IonLabel,
+        IonRouterOutlet,
+        IonButton
+    ]
 })
 export class AppComponent {
 
+    private ionicIcons = inject(IonIconsService);
     private appService = inject(AppService);
 
     public aufnehmer = this.appService.aufnehmer;
@@ -73,42 +39,7 @@ export class AppComponent {
     public zoomLevel = computed(() => `zoom-level--${this.aufnehmer()?.zoom_level ?? 1}`);
 
     constructor() {
-
-        addIcons({
-            alertCircle,
-            alertCircleOutline,
-            arrowUndo,
-            beerOutline,
-            bookmarkOutline,
-            bugOutline,
-            checkmarkCircle,
-            closeCircle,
-            closeOutline,
-            createOutline,
-            cubeOutline,
-            fileTrayOutline,
-            gitPullRequest,
-            logOutOutline,
-            navigateCircleOutline,
-            notificationsOutline,
-            peopleOutline,
-            personOutline,
-            phonePortraitOutline,
-            pulseOutline,
-            radioButtonOff,
-            refreshOutline,
-            restaurantOutline,
-            rocketOutline,
-            save,
-            searchOutline,
-            send,
-            sendOutline,
-            settingsOutline,
-            shieldCheckmarkOutline,
-            star,
-            statsChartOutline,
-            timerOutline
-        });
+        this.ionicIcons.useDefinedIcons();
     }
 
     public logout() {

@@ -11,10 +11,10 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./produkte.page.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    RouterLink,
-    EuroPreisPipe
-],
+        IonicModule,
+        RouterLink,
+        EuroPreisPipe
+    ],
 })
 export class ProduktePage {
     public edit = inject(EditService);

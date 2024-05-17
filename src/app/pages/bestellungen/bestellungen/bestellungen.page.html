@@ -1,83 +1,83 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-menu-button slot="start"></ion-menu-button>
-    <ion-title>Bestellungen</ion-title>
-    <ion-buttons slot="end">
-      @if (notification.unread.length) {
-        <ion-button fill="solid" color="success" shape="round" (click)="notification.showUnread()">
-          <ion-icon slot="start" name="notifications-outline"></ion-icon>
-          <ion-label>Ungelesene Benachrichtigung</ion-label>
-        </ion-button>
-      }
-    </ion-buttons>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Bestellungen</ion-title>
+        <ion-buttons slot="end">
+            @if (notification.unread.length) {
+            <ion-button fill="solid" color="success" shape="round" (click)="notification.showUnread()">
+                <ion-icon slot="start" name="notifications-outline"></ion-icon>
+                <ion-label>Ungelesene Benachrichtigung</ion-label>
+            </ion-button>
+            }
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content [hidden]="bestellungen?.length > 0">
-  <div class="center-wrapper">
-    <div class="centered ion-text-center">
-      <ion-icon name="search-outline"></ion-icon>
-      <p>Benutzen Sie die untenstehende Filter- und Suchfunktion, um Bestellungen zu finden!</p>
+    <div class="center-wrapper">
+        <div class="centered ion-text-center">
+            <ion-icon name="search-outline"></ion-icon>
+            <p>Benutzen Sie die untenstehende Filter- und Suchfunktion, um Bestellungen zu finden!</p>
+        </div>
     </div>
-  </div>
 </ion-content>
 
 @if (bestellungen) {
-  <ion-content>
+<ion-content>
     <ion-list>
-      @for (bestellung of bestellungen; track bestellung) {
+        @for (bestellung of bestellungen; track bestellung) {
         <ion-item [routerLink]="['/bestellungen', bestellung.id]">
-          <ion-label>
-            <h2>{{ bestellung?.tisch?.reihe }} {{ bestellung?.tisch?.nummer }}</h2>
-            <p>Datum: <strong>{{ bestellung?.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bestellung?.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</strong></p>
-            <p>Summe: <strong>{{ bestellung?.summe | euroPreis }}</strong></p>
-          </ion-label>
-          <ion-note slot="end">{{ bestellung?.aufnehmer?.vorname }} {{ bestellung?.aufnehmer?.nachname }}</ion-note>
+            <ion-label>
+                <h2>{{ bestellung?.tisch?.reihe }} {{ bestellung?.tisch?.nummer }}</h2>
+                <p>Datum: <strong>{{ bestellung?.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bestellung?.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</strong></p>
+                <p>Summe: <strong>{{ bestellung?.summe | euroPreis }}</strong></p>
+            </ion-label>
+            <ion-note slot="end">{{ bestellung?.aufnehmer?.vorname }} {{ bestellung?.aufnehmer?.nachname }}</ion-note>
         </ion-item>
-      }
+        }
     </ion-list>
-  </ion-content>
+</ion-content>
 }
 
 <ion-footer>
-  <ion-toolbar>
-    <ion-list>
-      <ion-item color="light">
-        <ion-icon slot="start" name="people-outline"></ion-icon>
-        <ion-label>Aufnehmer</ion-label>
-        <ion-select interface="action-sheet" placeholder="Aufnehmer" [(ngModel)]="usedFilter.aufnehmerId">
-          <ion-select-option value="*">Alle</ion-select-option>
-          @for (aufnehmer of availableFilter.aufnehmer; track aufnehmer) {
-            <ion-select-option [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
-          }
-        </ion-select>
-      </ion-item>
-      <ion-item color="light">
-        <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
-        <ion-label>Tisch</ion-label>
-        <ion-select interface="action-sheet" placeholder="Tische" [(ngModel)]="usedFilter.tischId">
-          <ion-select-option value="*">Alle</ion-select-option>
-          @for (tisch of availableFilter.tische; track tisch) {
-            <ion-select-option [value]="tisch.id">{{ tisch.reihe }} {{ tisch.nummer }}</ion-select-option>
-          }
-        </ion-select>
-      </ion-item>
-      <ion-item color="light">
-        <ion-icon slot="start" name="timer-outline"></ion-icon>
-        <ion-label>Letzte Bestellungen</ion-label>
-        <ion-select interface="action-sheet" placeholder="Letzte Bestellungen" [(ngModel)]="usedFilter.limit">
-          @for (limit of availableFilter.limits; track limit) {
-            <ion-select-option [value]="limit">{{ limit }}</ion-select-option>
-          }
-        </ion-select>
-      </ion-item>
-      <ion-item class="search-button ion-text-center ion-activatable ripple-parent" (click)="searchBestellungen()" lines="none" color="primary">
-        <ion-label>
-          <ion-icon name="search-outline"></ion-icon>
-          Suchen
-        </ion-label>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-item>
-    </ion-list>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-list>
+            <!-- <ion-item color="light">
+                <ion-icon slot="start" name="people-outline"></ion-icon>
+                <ion-label>Aufnehmer</ion-label>
+                <ion-select interface="action-sheet" placeholder="Aufnehmer" [(ngModel)]="usedFilter.aufnehmerId">
+                    <ion-select-option value="*">Alle</ion-select-option>
+                    @for (aufnehmer of availableFilter?.aufnehmer; track aufnehmer) {
+                    <ion-select-option [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-item>
+            <ion-item color="light">
+                <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
+                <ion-label>Tisch</ion-label>
+                <ion-select interface="action-sheet" placeholder="Tische" [(ngModel)]="usedFilter.tischId">
+                    <ion-select-option value="*">Alle</ion-select-option>
+                    @for (tisch of availableFilter.tische; track tisch) {
+                    <ion-select-option [value]="tisch.id">{{ tisch.reihe }} {{ tisch.nummer }}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-item>
+            <ion-item color="light">
+                <ion-icon slot="start" name="timer-outline"></ion-icon>
+                <ion-label>Letzte Bestellungen</ion-label>
+                <ion-select interface="action-sheet" placeholder="Letzte Bestellungen" [(ngModel)]="usedFilter.limit">
+                    @for (limit of availableFilter.limits; track limit) {
+                    <ion-select-option [value]="limit">{{ limit }}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-item>
+            <ion-item class="search-button ion-text-center ion-activatable ripple-parent" (click)="searchBestellungen()" lines="none" color="primary">
+                <ion-label>
+                    <ion-icon name="search-outline"></ion-icon>
+                    Suchen
+                </ion-label>
+                <ion-ripple-effect></ion-ripple-effect>
+            </ion-item> -->
+        </ion-list>
+    </ion-toolbar>
 </ion-footer>

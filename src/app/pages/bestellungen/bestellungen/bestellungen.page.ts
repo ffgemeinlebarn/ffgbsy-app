@@ -18,12 +18,12 @@ import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
     styleUrls: ['./bestellungen.page.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    RouterLink,
-    FormsModule,
-    DatePipe,
-    EuroPreisPipe
-],
+        IonicModule,
+        RouterLink,
+        FormsModule,
+        DatePipe,
+        EuroPreisPipe
+    ],
 })
 export class BestellungenPage implements OnInit {
 
