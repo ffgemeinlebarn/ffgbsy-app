@@ -2,6 +2,7 @@ import { Bestellposition } from "./bestellposition.class";
 import { Aufnehmer } from "./aufnehmer.class";
 import { Tisch } from "./tisch.class";
 import { Bon } from "./bon";
+import { Bestellstatus } from "../types/bestellstatus.type";
 
 export class Bestellung {
     public id: number;
@@ -10,7 +11,7 @@ export class Bestellung {
     public device_name: string;
     public device_ip: string | null = null;
 
-    public status: null | 'tischauswahl' | 'bestellpositionen';
+    public status: Bestellstatus;
 
     public timestamp_begonnen: any = null;
     public timestamp_beendet: any = null;
