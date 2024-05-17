@@ -1,21 +1,23 @@
-import { Component, Signal, computed, effect, inject, signal } from '@angular/core';
-import { DataService } from 'src/app/services/data/data.service';
-import { ModalController, IonicModule } from '@ionic/angular';
-import { Tisch } from 'src/app/classes/tisch.class';
-import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
-import { Produkt } from 'src/app/classes/produkt.class';
+import { JsonPipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { Component, effect, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
-import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
+import { Produkt } from 'src/app/classes/produkt.class';
+import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
+import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
+import { Tisch } from 'src/app/classes/tisch.class';
+import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { BestellungKontrolleModalComponent } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle-modal.component';
+import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
+import { AppService } from 'src/app/services/app/app.service';
+import { DataService } from 'src/app/services/data/data.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { NotificationService } from 'src/app/services/notification/notification.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
-import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor, NgClass, JsonPipe } from '@angular/common';
-import { AppService } from 'src/app/services/app/app.service';
-import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
-import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { AufnehmerAuswahlComponent } from './aufnehmer-auswahl/aufnehmer-auswahl.component';
+import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
+import { BestellungEditComponent } from './bestellung-edit/bestellung-edit.component';
 
 @Component({
     selector: 'ffgbsy-neue-bestellung',
@@ -29,13 +31,15 @@ import { toObservable } from '@angular/core/rxjs-interop';
         NgClass,
         FormsModule,
         EuroPreisPipe,
-        JsonPipe
+        JsonPipe,
+        AufnehmerAuswahlComponent,
+        TischAuswahlComponent,
+        BestellungEditComponent
     ],
 })
 export class NeueBestellungPage {
 
     private app = inject(AppService);
-    // bestellungsHandler = inject(BestellungenHandlerService);
     private data = inject(DataService);
     frontend = inject(FrontendService);
     notification = inject(NotificationService);
@@ -44,49 +48,24 @@ export class NeueBestellungPage {
     public bestellung = this.app.bestellung;
     public aufnehmer = this.app.aufnehmer;
 
-    public selectedTischkategorie = signal<Tischkategorie>(null);
     public selectedProduktkategorie = signal<Produktkategorie>(null);
-    public filtredTischeToDisplay = signal<Tisch[]>([]);
     public filtredProdukteinteilungenToDisplay = signal<Produkteinteilung[]>([]);
-    public tischkategorien = this.data.tischkategorien;
     public produktkategorien = this.data.produktkategorien;
 
     constructor() {
-        effect(() => {
-            if (this.selectedTischkategorie() == null) {
-                this.selectTischkategorie(this.tischkategorien()[0]);
-            }
-
-            this.filtredTischeToDisplay.set(this.data.tische().filter(tisch => tisch.tischkategorien_id == this.selectedTischkategorie()?.id) ?? []);
-        }, { allowSignalWrites: true });
 
         effect(() => {
             if (this.selectedProduktkategorie() == null) {
                 this.selectProduktkategorie(this.produktkategorien()[0]);
             }
 
-            console.log(this.data.produktkategorien().find(produktkategorie => produktkategorie == this.selectedProduktkategorie()));
-            console.log(this.data.produktkategorien().find(produktkategorie => produktkategorie.id == this.selectedProduktkategorie()?.id));
-
             this.filtredProdukteinteilungenToDisplay.set(this.data.produktkategorien().find(produktkategorie => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? []);
         }, { allowSignalWrites: true });
-    }
-
-    public selectAufnehmer() {
-        this.app.showSelectAufnehmerModal();
-    }
-
-    public starteBestellvorgang() {
-        this.app.createNewBestellung();
     }
 
     /*******************************************************************************
     *** Tischauswahl
     *******************************************************************************/
-
-    selectTischkategorie(tischkategorie: Tischkategorie) {
-        this.selectedTischkategorie.set(tischkategorie);
-    }
 
     selectTisch(tisch: Tisch) {
         this.bestellung().tisch = tisch;

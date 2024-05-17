@@ -18,58 +18,14 @@
 </ion-header>
 
 <!-- Keine aktuelle Bestellung im BestellungenService -->
-@if(!bestellung())
-{
-<ion-content class="center ion-padding">
-    <div class="center-wrapper">
-        <div class="center-content">
 
-            <!-- New Order possible, if aufnehmer selected -->
-            @if(aufnehmer())
-            {
-            <ion-button (click)="starteBestellvorgang()" (keypress)="starteBestellvorgang()" class="neue-bestellung">Neue Bestellung starten</ion-button>
-            <h4 class="aufnehmer">Du nimmtst die Bestellungen als <strong>{{ aufnehmer().vorname }} {{ aufnehmer().nachname }}</strong> auf!</h4>
-            }
-            @else {
-            <ion-button (click)="selectAufnehmer()" (keypress)="selectAufnehmer()">Aufnehmer auswählen</ion-button>
-            <h4 class="aufnehmer">Keine Aufnehmer:in ausgewählt!</h4>
-            }
-        </div>
-    </div>
-</ion-content>
+@if(!aufnehmer() || !bestellung())
+{
+<app-aufnehmer-auswahl [aufnehmer]="aufnehmer()"></app-aufnehmer-auswahl>
 }
 @else if(bestellung().status == 'tischauswahl')
 {
-<ion-content>
-    <div class="kachelwand">
-
-        @for(tisch of filtredTischeToDisplay(); track tisch.id)
-        {
-        <div [ngClass]="{'kachel': true, 'tisch-kachel': true, 'tisch-kachel--big-1': (tisch.reihe.length > 7), 'tisch-kachel--big-2': (tisch.reihe.length > 14)}">
-            <div class="kachel__inner">
-                <ion-button text-wrap text-normal expand="full" (click)="selectTisch(tisch)" (keypress)="selectTisch(tisch)">
-                    <span class="button-inner">{{ tisch.reihe }} {{ tisch.nummer }}</span>
-                </ion-button>
-            </div>
-        </div>
-        }
-    </div>
-</ion-content>
-
-<ion-footer>
-    <div class="kachelwand">
-        @for(tischkategorie of tischkategorien(); track tischkategorie.id)
-        {
-        <div class="kachel tischkategorie-kachel">
-            <div class="kachel__inner">
-                <ion-button text-wrap text-normal expand="full" (click)="selectTischkategorie(tischkategorie)" (keypress)="selectTischkategorie(tischkategorie)">
-                    <span class="button-inner">{{ tischkategorie.name }}</span>
-                </ion-button>
-            </div>
-        </div>
-        }
-    </div>
-</ion-footer>
+<app-tisch-auswahl (onTischSelected)="selectTisch($event)"></app-tisch-auswahl>
 }
 @else if(bestellung().status == 'bestellpositionen')
 {

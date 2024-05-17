@@ -1,32 +1,27 @@
-import { Injectable, Signal, WritableSignal, computed, inject, signal } from '@angular/core';
-import { Produktbereich } from 'src/app/classes/produktbereich.class';
-import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
-import { Produkt } from 'src/app/classes/produkt.class';
-import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
-import { Tisch } from 'src/app/classes/tisch.class';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { AufnehmerService } from '../aufnehmer/aufnehmer.service';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { catchError, retry } from 'rxjs';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
+import { Produkt } from 'src/app/classes/produkt.class';
+import { Produktbereich } from 'src/app/classes/produktbereich.class';
+import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
+import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
+import { Tisch } from 'src/app/classes/tisch.class';
+import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
+import { Daten } from 'src/app/interfaces/daten';
 import { DataLoadedReportModalComponent } from 'src/app/modals/data-loaded-report-modal/data-loaded-report-modal.component';
-import { ProduktbereicheService } from '../produktbereiche/produktbereiche.service';
-import { ProduktkategorienService } from '../produktkategorien/produktkategorien.service';
-import { ProdukteService } from '../produkte/produkte.service';
-import { TischkategorienService } from '../tischkategorien/tischkategorien.service';
-import { TischeService } from '../tische/tische.service';
-import { ProdukteinteilungenService } from '../produkteinteilungen/produkteinteilungen.service';
+import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DataService {
     private modalController = inject(ModalController);
-    private aufnehmerService = inject(AufnehmerService);
-    private produktbereicheService = inject(ProduktbereicheService);
-    private produktkategorienService = inject(ProduktkategorienService);
-    private produkteinteilungenService = inject(ProdukteinteilungenService);
-    private produkteService = inject(ProdukteService);
-    private tischkategorienService = inject(TischkategorienService);
-    private tischeService = inject(TischeService);
+    private http = inject(HttpClient);
+    private settings = inject(SettingsService);
+    private errorHandling = inject(ErrorHandlingService);
 
     public loaded = computed<boolean>(() => this.loadedReport().filter(report => !report.loaded).length == 0);
 
@@ -70,13 +65,25 @@ export class DataService {
 
     public loadedDatetime = computed<Date>(() => this.loaded() ? new Date() : null);
 
-    public aufnehmer = toSignal(this.aufnehmerService.readAll(), { initialValue: [] });
-    public produktbereiche = toSignal(this.produktbereicheService.readAll(), { initialValue: [] });
-    public produktkategorien = toSignal(this.produktkategorienService.readAll(), { initialValue: [] });
-    public produkteinteilungen = toSignal(this.produkteinteilungenService.readAll(), { initialValue: [] });
-    public produkte = toSignal(this.produkteService.readAll(), { initialValue: [] });
-    public tischkategorien = toSignal(this.tischkategorienService.readAll(), { initialValue: [] });
-    public tische = toSignal(this.tischeService.readAll(), { initialValue: [] });
+    public aufnehmer = signal<Aufnehmer[]>([]);
+    public produktbereiche = signal<Produktbereich[]>([]);
+    public produktkategorien = signal<Produktkategorie[]>([]);
+    public produkteinteilungen = signal<Produkteinteilung[]>([]);
+    public produkte = signal<Produkt[]>([]);
+    public tischkategorien = signal<Tischkategorie[]>([]);
+    public tische = signal<Tisch[]>([]);
+
+    constructor() {
+        this.loadAllLookupData().subscribe((data) => {
+            this.aufnehmer.set(data.aufnehmer);
+            this.produktbereiche.set(data.produktbereiche);
+            this.produktkategorien.set(data.produktkategorien);
+            this.produkteinteilungen.set(data.produkteinteilungen);
+            this.produkte.set(data.produkte);
+            this.tischkategorien.set(data.tischkategorien);
+            this.tische.set(data.tische);
+        });
+    }
 
     public async showLoadedReport() {
         const modal = await this.modalController.create({
@@ -91,19 +98,12 @@ export class DataService {
     public version: number = 0;
     public saved: Date | null = null;
 
-    getProduktById(id: number) {
-        for (let p of this.produkte()) {
-            if (p.id == id) { return p; }
-        }
-        return null;
+    private loadAllLookupData() {
+        return this.http
+            .get<Daten>(`${this.settings.apiBaseUrl()}/daten/latest`)
+            .pipe(
+                retry(1),
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+            );
     }
-
-    getProduktByIds(ids: Array<number>) {
-        let arr: Array<Produkt>;
-        for (let p of this.produkte()) {
-            if (ids.indexOf(p.id)) { arr.push(p) }
-        }
-        return arr;
-    }
-
 }
