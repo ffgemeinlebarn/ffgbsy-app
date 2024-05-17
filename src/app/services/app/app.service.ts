@@ -45,7 +45,7 @@ export class AppService {
         this.aufnehmer.set(aufnehmer);
     }
 
-    public createNewBestellung() {
+    public createBestellung() {
         if (this.bestellung()) {
             throw new Error("Es besteht eine begonnene Bestellung. Es kann daher keine neue Bestellung gestartet werden.");
         }
@@ -64,10 +64,10 @@ export class AppService {
     }
 
     public cancelBestellung() {
-        this.bestellung = null;
+        this.bestellung.set(null);
     }
 
-    public createBestellung() {
+    public sendBestellung() {
         console.log("Call the API...");
     }
 }

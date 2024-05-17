@@ -20,6 +20,6 @@ export class AufnehmerAuswahlComponent {
     }
 
     public starteBestellvorgang() {
-        this.app.createNewBestellung();
+        this.app.createBestellung();
     }
 }
