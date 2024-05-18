@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { alertCircle, alertCircleOutline, arrowUndo, beerOutline, bookmarkOutline, bugOutline, checkmarkCircle, closeCircle, closeOutline, createOutline, cubeOutline, fileTrayOutline, gitPullRequest, logOutOutline, navigateCircleOutline, notificationsOutline, peopleOutline, personOutline, phonePortraitOutline, pulseOutline, radioButtonOff, refreshOutline, restaurantOutline, rocketOutline, save, searchOutline, send, sendOutline, settingsOutline, shieldCheckmarkOutline, star, statsChartOutline, timerOutline, arrowBack, arrowForward, trash, checkmarkCircleOutline } from 'ionicons/icons';
+import { alertCircle, alertCircleOutline, arrowUndo, beerOutline, bookmarkOutline, bugOutline, checkmarkCircle, closeCircle, closeOutline, createOutline, cubeOutline, fileTrayOutline, gitPullRequest, logOutOutline, navigateCircleOutline, notificationsOutline, peopleOutline, personOutline, phonePortraitOutline, pulseOutline, radioButtonOff, refreshOutline, restaurantOutline, rocketOutline, save, searchOutline, send, sendOutline, settingsOutline, shieldCheckmarkOutline, star, statsChartOutline, timerOutline, arrowBack, arrowForward, trash, checkmarkCircleOutline, albumsOutline, tabletLandscapeOutline, pintOutline, layersOutline } from 'ionicons/icons';
 
 @Injectable({
     providedIn: 'root'
@@ -44,6 +44,10 @@ export class IonIconsService {
         arrowBack,
         arrowForward,
         trash,
-        checkmarkCircleOutline
+        checkmarkCircleOutline,
+        albumsOutline,
+        tabletLandscapeOutline,
+        pintOutline,
+        layersOutline
     });
 }

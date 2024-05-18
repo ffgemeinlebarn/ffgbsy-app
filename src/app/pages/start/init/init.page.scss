@@ -42,12 +42,14 @@ ion-header:after {
     align-items: center;
 }
 
-ion-col {
-    --ion-grid-column-padding: 0.65em;
-}
+.tiles {
+    display: grid;
+    grid-row: auto;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5em;
+    margin-top: 1.5em;
 
-.tile-divider {
-    width: 100%;
-    border-bottom: 1px #ccc solid;
-    margin: 2em 0em;
+    app-init-tile {
+        box-sizing: border-box;
+    }
 }

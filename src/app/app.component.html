@@ -69,12 +69,6 @@
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/admin/notifactions']">
-                                <ion-icon name="send-outline" slot="start"></ion-icon>
-                                <ion-label>Benachrichtigungen</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
                             <ion-item [routerLink]="['/admin/logs']">
                                 <ion-icon name="bug-outline" slot="start"></ion-icon>
                                 <ion-label>Logs</ion-label>
@@ -84,15 +78,45 @@
                             <ion-label>Daten</ion-label>
                         </ion-item-divider>
                         <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/admin/aufnehmer']">
+                                <ion-icon name="people-outline" slot="start"></ion-icon>
+                                <ion-label>Aufnehmer</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                        <ion-menu-toggle auto-hide="false">
                             <ion-item [routerLink]="['/admin/grundprodukte']">
                                 <ion-icon name="restaurant-outline" slot="start"></ion-icon>
                                 <ion-label>Grundprodukte</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                         <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/admin/grundprodukte']">
+                                <ion-icon name="pint-outline" slot="start"></ion-icon>
+                                <ion-label>Produktkategorien</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                        <ion-menu-toggle auto-hide="false">
                             <ion-item [routerLink]="['/admin/produkte']">
                                 <ion-icon name="beer-outline" slot="start"></ion-icon>
                                 <ion-label>Produkte</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/admin/grundprodukte']">
+                                <ion-icon name="layers-outline" slot="start"></ion-icon>
+                                <ion-label>Produkteinteilungen</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/admin/tischkategorien']">
+                                <ion-icon name="albums-outline" slot="start"></ion-icon>
+                                <ion-label>Tischkategorien</ion-label>
+                            </ion-item>
+                        </ion-menu-toggle>
+                        <ion-menu-toggle auto-hide="false">
+                            <ion-item [routerLink]="['/admin/tisch']">
+                                <ion-icon name="tablet-landscape-outline" slot="start"></ion-icon>
+                                <ion-label>Tische</ion-label>
                             </ion-item>
                         </ion-menu-toggle>
                     </ion-list>
