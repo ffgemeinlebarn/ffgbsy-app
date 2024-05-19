@@ -33,14 +33,17 @@
                 <ion-toggle formControlName="celebration_active">Jubiläum feiern</ion-toggle>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Letztes Jubiläum</ion-label>
-                <ion-input type="number" step="1" formControlName="celebration_last"></ion-input>
+                <ion-label>
+                    <h3>{{ produkt()?.celebration_last }}</h3>
+                    <p>Letztes Jubiläum</p>
+                </ion-label>
+
             </ion-item>
         </ion-list>
         <h2 class="ion-padding">
             Drucker
-            <ion-chip color="primary">
-                <ion-icon name="return-down-forward-outline"></ion-icon>
+            <ion-chip color="primary" class="non-clickable">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
                 <ion-label>
                     @if (produkt()?.drucker_id_level_2)
                     {
@@ -91,29 +94,63 @@
                 </ion-label>
             </ion-item>
         </ion-list>
-        <h2 class="ion-padding">Eigenschaften</h2>
+        <h2 class="ion-padding">
+            <span>Eigenschaften</span>
+            <ion-button fill="outline" color="primary" (click)="showEigenschaftSelectionModal()">
+                <ion-icon slot="start" name="add-outline"></ion-icon>
+                Hinzufügen
+            </ion-button>
+        </h2>
         <ion-list lines="full">
-            @for (eigenschaft of produkt()?.eigenschaften; track eigenschaft) {
+            @for (eigenschaft of produkt()?.eigenschaften; track eigenschaft.id) {
+            <ion-item-sliding>
+                <ion-item>
+                    <ion-label>
+                        <h3>{{ eigenschaft.name }}</h3>
+                        <p>{{ eigenschaft.preis | euroPreis }}</p>
+                    </ion-label>
+                    @if (eigenschaft.in_produkt_enthalten) {
+                    <ion-chip color="primary" (click)="toggleEigenschaftEnthalten(eigenschaft)">
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                        <ion-label>enthalten</ion-label>
+                    </ion-chip>
+                    }
+                    @if (!eigenschaft.in_produkt_enthalten) {
+                    <ion-chip color="warning" (click)="toggleEigenschaftEnthalten(eigenschaft)">
+                        <ion-icon name="close-circle"></ion-icon>
+                        <ion-label>nicht enthalten</ion-label>
+                    </ion-chip>
+                    }
+                </ion-item>
+
+                <ion-item-options>
+                    <ion-item-option color="danger" (click)="removeEigenschaft(eigenschaft)">
+                        <ion-icon slot="icon-only" name="trash"></ion-icon>
+                    </ion-item-option>
+                </ion-item-options>
+            </ion-item-sliding>
+            }
+            <ion-item-divider>Vererbungen aus Produktkategorie</ion-item-divider>
+            @for (eigenschaft of produkt()?.produkteinteilung.produktkategorie.eigenschaften; track eigenschaft.id) {
             <ion-item>
                 <ion-label>
                     <h3>{{ eigenschaft.name }}</h3>
                     <p>{{ eigenschaft.preis | euroPreis }}</p>
                 </ion-label>
                 @if (eigenschaft.in_produkt_enthalten) {
-                <ion-chip color="primary">
+                <ion-chip color="primary" class="non-clickable">
                     <ion-icon name="checkmark-circle"></ion-icon>
                     <ion-label>enthalten</ion-label>
                 </ion-chip>
                 }
                 @if (!eigenschaft.in_produkt_enthalten) {
-                <ion-chip color="warning">
+                <ion-chip color="warning" class="non-clickable">
                     <ion-icon name="close-circle"></ion-icon>
                     <ion-label>nicht enthalten</ion-label>
                 </ion-chip>
                 }
             </ion-item>
             }
-            <ion-item-divider>Vererbungen</ion-item-divider>
         </ion-list>
     </form>
 </ion-content>

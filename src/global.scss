@@ -36,6 +36,10 @@
     display: none !important;
 }
 
+ion-chip.non-clickable {
+    pointer-events: none;
+}
+
 .center-wrapper {
     display: flex;
     justify-content: center;

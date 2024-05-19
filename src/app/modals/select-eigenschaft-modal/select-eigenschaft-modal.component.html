@@ -1,0 +1,10 @@
+<ion-list>
+    @for(eigenschaft of eigenschaften(); track eigenschaft.id){
+    <ion-item (click)="selectEigenschaft(eigenschaft)">
+        <ion-label>
+            <h3>{{ eigenschaft.name }}</h3>
+            <p>{{ eigenschaft.preis | euroPreis }}</p>
+        </ion-label>
+    </ion-item>
+    }
+</ion-list>
