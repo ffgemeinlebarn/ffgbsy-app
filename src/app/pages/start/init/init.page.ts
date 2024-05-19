@@ -1,13 +1,12 @@
+import { NgClass, formatDate } from '@angular/common';
 import { Component, Signal, computed, inject } from '@angular/core';
-import { DataService } from '../../../services/data/data.service';
-import { IonicModule } from '@ionic/angular';
 import { RouterLink } from '@angular/router';
-import { version } from 'src/environments/version';
-import { NgClass, DatePipe } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 import { InitTileComponent } from 'src/app/components/init-tile/init-tile.component';
 import { AppService } from 'src/app/services/app/app.service';
-import { formatDate } from "@angular/common";
 import { AvailabilityService } from 'src/app/services/availability/availability.service';
+import { version } from 'src/environments/version';
+import { DataService } from '../../../services/data/data.service';
 
 @Component({
     selector: 'ffgbsy-init',
@@ -15,11 +14,11 @@ import { AvailabilityService } from 'src/app/services/availability/availability.
     styleUrls: ['./init.page.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    NgClass,
-    RouterLink,
-    InitTileComponent
-],
+        IonicModule,
+        NgClass,
+        RouterLink,
+        InitTileComponent
+    ],
 })
 export class InitPage {
     private app = inject(AppService);

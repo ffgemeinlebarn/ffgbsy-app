@@ -15,11 +15,11 @@
 
             @if(readyToGo())
             {
-            <ion-button>Starte Bestellung</ion-button>
+            <ion-button [routerLink]="['/neue-bestellung']">Starte Bestellung</ion-button>
             }
             @else if(!aufnehmerSelected())
             {
-            <ion-button>Aufnehmer:in auswählen</ion-button>
+            <ion-button (click)="selectAufnehmer()">Aufnehmer:in auswählen</ion-button>
             }
             @else
             {
