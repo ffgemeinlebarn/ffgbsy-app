@@ -1,8 +1,9 @@
-import { Component, computed, inject } from '@angular/core';
-import { IonApp, IonButton, IonContent, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
 import { NgClass } from '@angular/common';
-import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { IonApp, IonContent, IonMenu, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
+import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
+import { MenuComponent } from './components/menu/menu/menu.component';
 import { AppService } from './services/app/app.service';
 import { IonIconsService } from './services/ion-icons/ion-icons.service';
 
@@ -19,14 +20,8 @@ import { IonIconsService } from './services/ion-icons/ion-icons.service';
         IonSplitPane,
         IonMenu,
         IonContent,
-        IonList,
-        IonMenuToggle,
-        IonItem,
-        IonItemDivider,
-        IonIcon,
-        IonLabel,
         IonRouterOutlet,
-        IonButton
+        MenuComponent
     ]
 })
 export class AppComponent {
@@ -40,9 +35,5 @@ export class AppComponent {
 
     constructor() {
         this.ionicIcons.useDefinedIcons();
-    }
-
-    public logout() {
-        this.appService.clearAufnehmer();
     }
 }

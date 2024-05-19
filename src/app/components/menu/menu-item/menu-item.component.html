@@ -1,0 +1,10 @@
+<ion-menu-toggle auto-hide="false">
+    <ion-item button [routerLink]="[link()]" [disabled]="disabled()">
+        @if(icon()) {
+        <ion-icon [name]="icon()" slot="start"></ion-icon>
+        }
+        <ion-label>
+            <ng-content></ng-content>
+        </ion-label>
+    </ion-item>
+</ion-menu-toggle>

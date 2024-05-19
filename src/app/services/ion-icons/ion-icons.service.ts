@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { addOutline, arrowForwardOutline, returnDownForwardOutline, albumsOutline, alertCircle, alertCircleOutline, arrowBack, arrowForward, arrowUndo, beerOutline, bookmarkOutline, bugOutline, checkmarkCircle, checkmarkCircleOutline, closeCircle, closeOutline, createOutline, cubeOutline, fileTrayOutline, gitPullRequest, layersOutline, logOutOutline, navigateCircleOutline, notificationsOutline, peopleOutline, personOutline, phonePortraitOutline, pintOutline, printOutline, pulseOutline, radioButtonOff, refreshOutline, restaurantOutline, rocketOutline, save, searchOutline, send, sendOutline, settingsOutline, shieldCheckmarkOutline, star, statsChartOutline, tabletLandscapeOutline, timerOutline, trash } from 'ionicons/icons';
+import { homeOutline, speedometerOutline, addOutline, arrowForwardOutline, returnDownForwardOutline, albumsOutline, alertCircle, alertCircleOutline, arrowBack, arrowForward, arrowUndo, beerOutline, bookmarkOutline, bugOutline, checkmarkCircle, checkmarkCircleOutline, closeCircle, closeOutline, createOutline, cubeOutline, fileTrayOutline, gitPullRequest, layersOutline, logOutOutline, navigateCircleOutline, notificationsOutline, peopleOutline, personOutline, phonePortraitOutline, pintOutline, printOutline, pulseOutline, radioButtonOff, refreshOutline, restaurantOutline, rocketOutline, save, searchOutline, send, sendOutline, settingsOutline, shieldCheckmarkOutline, star, statsChartOutline, tabletLandscapeOutline, timerOutline, trash } from 'ionicons/icons';
 
 @Injectable({
     providedIn: 'root'
@@ -8,6 +8,8 @@ import { addOutline, arrowForwardOutline, returnDownForwardOutline, albumsOutlin
 export class IonIconsService {
 
     public useDefinedIcons = () => addIcons({
+        homeOutline,
+        speedometerOutline,
         addOutline,
         arrowForwardOutline,
         returnDownForwardOutline,
