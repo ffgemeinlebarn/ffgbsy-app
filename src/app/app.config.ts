@@ -1,4 +1,4 @@
-import { RouteReuseStrategy, provideRouter } from '@angular/router';
+import { RouteReuseStrategy, provideRouter, withComponentInputBinding } from '@angular/router';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { provideHttpClient } from '@angular/common/http';
@@ -20,6 +20,6 @@ export const appConfig: ApplicationConfig = {
         importProvidersFrom(CommonModule),
         provideIonicAngular(),
         provideHttpClient(),
-        provideRouter(routes),
+        provideRouter(routes, withComponentInputBinding()),
     ],
 };

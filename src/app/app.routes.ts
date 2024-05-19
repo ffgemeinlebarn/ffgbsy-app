@@ -21,19 +21,19 @@ export const routes: Routes = [
             },
             {
                 path: 'grundprodukte',
-                loadComponent: () => import('./pages/admin/grundprodukte/grundprodukte.page').then(m => m.GrundproduktePage)
+                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte/grundprodukte.page').then(m => m.GrundproduktePage)
             },
             {
                 path: 'produkte',
-                loadComponent: () => import('./pages/admin/produkte/produkte.page').then(m => m.ProduktePage)
+                loadComponent: () => import('./pages/admin/daten/produkte/produkte-list/produkte-list.page').then(m => m.ProdukteListPage)
             },
             {
                 path: 'produkte/:id',
-                loadComponent: () => import('./pages/admin/produkte-detail/produkte-detail.page').then(m => m.ProdukteDetailPage)
+                loadComponent: () => import('./pages/admin/daten/produkte/produkte-detail/produkte-detail.page').then(m => m.ProdukteDetailPage)
             },
             {
                 path: 'grundprodukte/:id',
-                loadComponent: () => import('./pages/admin/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
+                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
             },
             {
                 path: 'logs',

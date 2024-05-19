@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Produkte</ion-title>
+    </ion-toolbar>
+    <ion-toolbar>
+        <ion-searchbar [animated]="true" [debounce]="300" (ionInput)="handleSearchInput($event)"></ion-searchbar>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        @for (produkt of produkteFiltred(); track produkt.id) {
+        <ion-item [routerLink]="[produkt.id]">
+            <ion-label>
+                <h3>{{ produkt.name }}</h3>
+                <p>{{ produkt.produkteinteilung.name }} ({{ produkt.produkteinteilung.produktkategorie.name }})</p>
+            </ion-label>
+            <ion-chip>{{ produkt.preis | euroPreis }}</ion-chip>
+        </ion-item>
+        }
+    </ion-list>
+</ion-content>

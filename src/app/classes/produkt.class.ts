@@ -1,3 +1,4 @@
+import { Drucker } from "./drucker.class";
 import { Eigenschaft } from "./eigenschaft.class";
 import { Grundprodukt } from "./grundprodukt.class";
 import { Produkteinteilung } from "./produkteinteilung.class";
@@ -8,6 +9,7 @@ export class Produkt {
     formal_name: string;
     preis: number;
     drucker_id_level_2: number | null;
+    drucker?: Drucker;
     aktiv: boolean;
     sortierindex: number;
     produkteinteilungen_id: number;

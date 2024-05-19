@@ -1,0 +1,119 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-back-button slot="start" defaultHref="/admin/produkte"></ion-back-button>
+        <ion-title>{{ produkt()?.name }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="save()">
+                <ion-icon name="save" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate>
+
+        <ion-list lines="full">
+            <ion-item>
+                <ion-label position="stacked">Name</ion-label>
+                <ion-input formControlName="name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Formaler Name</ion-label>
+                <ion-input formControlName="formal_name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Preis</ion-label>
+                <ion-input inputmode="decimal" type="number" step=".1" formControlName="preis"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-toggle formControlName="aktiv">Aktiv</ion-toggle>
+            </ion-item>
+            <ion-item>
+                <ion-toggle formControlName="celebration_active">Jubiläum feiern</ion-toggle>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Letztes Jubiläum</ion-label>
+                <ion-input type="number" step="1" formControlName="celebration_last"></ion-input>
+            </ion-item>
+        </ion-list>
+        <h2 class="ion-padding">
+            Drucker
+            <ion-chip color="primary">
+                <ion-icon name="return-down-forward-outline"></ion-icon>
+                <ion-label>
+                    @if (produkt()?.drucker_id_level_2)
+                    {
+                    {{ produkt()?.drucker?.name }}
+                    }@else if (produkt()?.produkteinteilung.produktkategorie.drucker_id_level_1)
+                    {
+                    {{ produkt()?.produkteinteilung.produktkategorie.drucker?.name }}
+                    }@else
+                    {
+                    {{ produkt()?.produkteinteilung.produktkategorie.produktbereich.drucker?.name }}
+                    }
+                </ion-label>
+            </ion-chip>
+        </h2>
+        <ion-list lines="full">
+            <ion-item>
+                <ion-label position="stacked">Ebene Produkt</ion-label>
+                <ion-select formControlName="drucker_id_level_2">
+                    <ion-select-option [value]="null">Kein Drucker definiert</ion-select-option>
+                    @for (drucker of drucker(); track drucker.id) {
+                    <ion-select-option [value]="drucker.id">{{ drucker.name }}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-item>
+            <ion-item-divider>Vererbungen</ion-item-divider>
+            <ion-item>
+                <ion-label>
+                    @if(produkt()?.produkteinteilung.produktkategorie.drucker_id_level_1)
+                    {
+                    <h3>{{ produkt()?.produkteinteilung.produktkategorie.drucker?.name }}</h3>
+                    }
+                    @else {
+                    <h3>Kein Drucker auf dieser Ebene definiert</h3>
+                    }
+                    <p>Produktkategorie</p>
+                </ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label>
+                    @if(produkt()?.produkteinteilung.produktkategorie.produktbereich.drucker_id_level_0)
+                    {
+                    <h3>{{ produkt()?.produkteinteilung.produktkategorie.produktbereich.drucker?.name }}</h3>
+                    }
+                    @else {
+                    <h3>Kein Drucker auf dieser Ebene definiert</h3>
+                    }
+                    <p>Produktbereich</p>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+        <h2 class="ion-padding">Eigenschaften</h2>
+        <ion-list lines="full">
+            @for (eigenschaft of produkt()?.eigenschaften; track eigenschaft) {
+            <ion-item>
+                <ion-label>
+                    <h3>{{ eigenschaft.name }}</h3>
+                    <p>{{ eigenschaft.preis | euroPreis }}</p>
+                </ion-label>
+                @if (eigenschaft.in_produkt_enthalten) {
+                <ion-chip color="primary">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                    <ion-label>enthalten</ion-label>
+                </ion-chip>
+                }
+                @if (!eigenschaft.in_produkt_enthalten) {
+                <ion-chip color="warning">
+                    <ion-icon name="close-circle"></ion-icon>
+                    <ion-label>nicht enthalten</ion-label>
+                </ion-chip>
+                }
+            </ion-item>
+            }
+            <ion-item-divider>Vererbungen</ion-item-divider>
+        </ion-list>
+    </form>
+</ion-content>
