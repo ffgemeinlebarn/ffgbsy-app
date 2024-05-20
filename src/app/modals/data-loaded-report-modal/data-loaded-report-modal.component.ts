@@ -1,5 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
+import { AvailabilityService } from 'src/app/services/availability/availability.service';
 import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
@@ -17,14 +19,14 @@ import { DataService } from 'src/app/services/data/data.service';
         IonList,
         IonItem,
         IonLabel,
-        IonIcon
+        IonIcon,
+        StatusListItemComponent
     ]
 })
 export class DataLoadedReportModalComponent {
 
-    private data = inject(DataService);
+    private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
 
-    public loadedReport = this.data.loadedReport;
     public close = () => this.modalController.dismiss(null, 'cancel');
 }

@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AvailabilityService } from 'src/app/services/availability/availability.service';
 
 @Component({
@@ -18,7 +19,8 @@ import { AvailabilityService } from 'src/app/services/availability/availability.
         IonItem,
         IonItemDivider,
         IonLabel,
-        IonIcon
+        IonIcon,
+        StatusListItemComponent
     ]
 })
 export class AvailabilityModalComponent {
@@ -26,8 +28,8 @@ export class AvailabilityModalComponent {
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
 
-    public api = this.availability.api;
-    public druckerDetails = this.availability.druckerDetails;
+    public apiAvailability = this.availability.apiAvailability;
+    public druckerAvailabilities = this.availability.druckerAvailabilities;
 
     public close = () => this.modalController.dismiss(null, 'cancel');
 }

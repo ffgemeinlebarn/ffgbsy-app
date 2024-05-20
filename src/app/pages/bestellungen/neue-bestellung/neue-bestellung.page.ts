@@ -1,6 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonButton, IonButtons, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { AppService } from 'src/app/services/app/app.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
@@ -14,12 +14,18 @@ import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
     styleUrls: ['./neue-bestellung.page.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    NgClass,
-    AufnehmerAuswahlComponent,
-    TischAuswahlComponent,
-    BestellungEditComponent
-],
+        IonIcon,
+        IonHeader,
+        IonToolbar,
+        IonTitle,
+        IonButtons,
+        IonButton,
+        IonMenuButton,
+        NgClass,
+        AufnehmerAuswahlComponent,
+        TischAuswahlComponent,
+        BestellungEditComponent
+    ],
 })
 export class NeueBestellungPage {
 

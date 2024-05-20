@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Bestellung } from 'src/app/classes/bestellung.class';
+import { Bestellung } from 'src/app/classes/bestellung.model';
 import { Observable, catchError, retry, tap } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';

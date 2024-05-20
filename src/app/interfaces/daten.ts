@@ -1,4 +1,4 @@
-import { Aufnehmer } from '../classes/aufnehmer.class';
+import { Aufnehmer } from '../classes/aufnehmer.model';
 import { Produkt } from "../classes/produkt.class";
 import { Produktkategorie } from '../classes/produktkategorie.class';
 import { Tischkategorie } from '../classes/tischkategorie.class';

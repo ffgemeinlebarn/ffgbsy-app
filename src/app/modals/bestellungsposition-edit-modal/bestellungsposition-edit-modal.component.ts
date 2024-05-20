@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, inject } from '@angular/core';
 import { ModalController, NavParams, IonicModule } from '@ionic/angular';
-import { Bestellposition } from '../../classes/bestellposition.class';
+import { Bestellposition } from '../../classes/bestellposition.model';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
@@ -12,10 +12,10 @@ import { FormsModule } from '@angular/forms';
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    FormsModule,
-    EuroPreisPipe
-],
+        IonicModule,
+        FormsModule,
+        EuroPreisPipe
+    ],
 })
 export class BestellungspositionEditModalComponent implements OnInit {
 
@@ -40,7 +40,7 @@ export class BestellungspositionEditModalComponent implements OnInit {
     }
 
     removeBestellposition() {
-        this.bestellungsHandler.neubestellung.bestellung.bestellpositionen.splice(this.index, 1);
+        // this.bestellungsHandler.neubestellung.bestellung.bestellpositionen.splice(this.index, 1);
         this.modalCtrl.dismiss(this.bestellposition);
     }
 }

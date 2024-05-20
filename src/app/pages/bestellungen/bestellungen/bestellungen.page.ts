@@ -1,5 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
-import { Bestellung } from 'src/app/classes/bestellung.class';
+import { Bestellung } from 'src/app/classes/bestellung.model';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Router, RouterLink } from '@angular/router';
@@ -9,7 +9,7 @@ import { HttpParams } from '@angular/common/http';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
@@ -49,7 +49,7 @@ export class BestellungenPage implements OnInit {
     ngOnInit() {
         this.availableFilter.aufnehmer = this.data.aufnehmer;
         this.availableFilter.tische = this.data.tische;
-        this.usedFilter.aufnehmerId = this.bestellungsHandler.aufnehmer?.id ?? '*';
+        this.usedFilter.aufnehmerId = /* this.bestellungsHandler.aufnehmer?.id ?? */ '*';
         this.usedFilter.tischId = '*';
     }
 

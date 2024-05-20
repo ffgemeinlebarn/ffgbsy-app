@@ -1,8 +1,8 @@
 import { BonDruck } from "./bonDruck";
-import { Bestellung } from "./bestellung.class";
+import { Bestellung } from "./bestellung.model";
 import { Drucker } from "./drucker.class";
 
-export class Bon {
+export interface Bon {
     id: number;
     bestellungen_id: number;
     drucker_id: number;
@@ -10,5 +10,5 @@ export class Bon {
     drucker: Drucker | null;
     bestellung: Bestellung | null;
 
-    drucke: Array<BonDruck> = [];
+    drucke: BonDruck[];
 }

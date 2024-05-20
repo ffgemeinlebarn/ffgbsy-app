@@ -7,16 +7,13 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <ion-list>
-        @for(item of loadedReport(); track item)
+    <!-- <ion-list>
+        @for(item of dataAvailabilities(); track item)
         {
-        <ion-item>
-            <ion-icon [name]="item.loaded ? 'checkmark-circle' : 'alert-circle'"></ion-icon>
-            <ion-label>
-                <h3>{{ item.name }}</h3>
-                <p>{{ item.numberOfItems }} Datensätze</p>
-            </ion-label>
-        </ion-item>
+        <ffgbsy-status-list-item [status]="item.status">
+            <h3>{{ item.entity }}</h3>
+            <p>{{ item.additionalData }} Datensätze</p>
+        </ffgbsy-status-list-item>
         }
-    </ion-list>
+    </ion-list> -->
 </ion-content>

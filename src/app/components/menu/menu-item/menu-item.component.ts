@@ -7,7 +7,8 @@ import { IonIcon, IonItem, IonLabel, IonMenuToggle } from '@ionic/angular/standa
     templateUrl: './menu-item.component.html',
     styleUrls: ['./menu-item.component.scss'],
     standalone: true,
-    imports: [IonIcon,
+    imports: [
+        IonIcon,
         IonMenuToggle,
         IonItem,
         IonLabel,

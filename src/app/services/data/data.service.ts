@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { catchError, retry } from 'rxjs';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
+import { catchError, delay, retry } from 'rxjs';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Produktbereich } from 'src/app/classes/produktbereich.class';
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
@@ -13,6 +13,7 @@ import { Daten } from 'src/app/interfaces/daten';
 import { DataLoadedReportModalComponent } from 'src/app/modals/data-loaded-report-modal/data-loaded-report-modal.component';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
 import { SettingsService } from '../settings/settings.service';
+import { AvailabilityCheck } from 'src/app/classes/availability-check.model';
 
 @Injectable({
     providedIn: 'root'
@@ -23,48 +24,6 @@ export class DataService {
     private settings = inject(SettingsService);
     private errorHandling = inject(ErrorHandlingService);
 
-    public loaded = computed<boolean>(() => this.loadedReport().filter(report => !report.loaded).length == 0);
-
-    public loadedReport = computed<{ name: string, loaded: boolean, numberOfItems: number }[]>(() => [
-        {
-            name: "Aufnehmer",
-            loaded: this.aufnehmer().length > 0,
-            numberOfItems: this.aufnehmer().length
-        },
-        {
-            name: "Produktbereiche",
-            loaded: this.produktbereiche().length > 0,
-            numberOfItems: this.produktbereiche().length
-        },
-        {
-            name: "Produktkategorien",
-            loaded: this.produktkategorien().length > 0,
-            numberOfItems: this.produktkategorien().length
-        },
-        {
-            name: "Produkteinteilungen",
-            loaded: this.produkteinteilungen().length > 0,
-            numberOfItems: this.produkteinteilungen().length
-        },
-        {
-            name: "Produkte",
-            loaded: this.produkte().length > 0,
-            numberOfItems: this.produkte().length
-        },
-        {
-            name: "Tischkategorien",
-            loaded: this.tischkategorien().length > 0,
-            numberOfItems: this.tischkategorien().length
-        },
-        {
-            name: "Tische",
-            loaded: this.tische().length > 0,
-            numberOfItems: this.tische().length
-        }
-    ]);
-
-    public loadedDatetime = computed<Date>(() => this.loaded() ? new Date() : null);
-
     public aufnehmer = signal<Aufnehmer[]>([]);
     public produktbereiche = signal<Produktbereich[]>([]);
     public produktkategorien = signal<Produktkategorie[]>([]);
@@ -73,16 +32,27 @@ export class DataService {
     public tischkategorien = signal<Tischkategorie[]>([]);
     public tische = signal<Tisch[]>([]);
 
+    public lookupDataSetted = computed(() => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische());
+
     constructor() {
-        this.loadAllLookupData().subscribe((data) => {
-            this.aufnehmer.set(data.aufnehmer);
-            this.produktbereiche.set(data.produktbereiche);
-            this.produktkategorien.set(data.produktkategorien);
-            this.produkteinteilungen.set(data.produkteinteilungen);
-            this.produkte.set(data.produkte);
-            this.tischkategorien.set(data.tischkategorien);
-            this.tische.set(data.tische);
-        });
+        this.load();
+    }
+
+    public load() {
+        this.http
+            .get<Daten>(`${this.settings.apiBaseUrl()}/daten/latest`)
+            .pipe(
+                retry(1),
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+            ).subscribe((data) => {
+                this.aufnehmer.set(data.aufnehmer);
+                this.produktbereiche.set(data.produktbereiche);
+                this.produktkategorien.set(data.produktkategorien);
+                this.produkteinteilungen.set(data.produkteinteilungen);
+                this.produkte.set(data.produkte);
+                this.tischkategorien.set(data.tischkategorien);
+                this.tische.set(data.tische);
+            });
     }
 
     public async showLoadedReport() {
@@ -97,13 +67,4 @@ export class DataService {
 
     public version: number = 0;
     public saved: Date | null = null;
-
-    private loadAllLookupData() {
-        return this.http
-            .get<Daten>(`${this.settings.apiBaseUrl()}/daten/latest`)
-            .pipe(
-                retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
-            );
-    }
 }

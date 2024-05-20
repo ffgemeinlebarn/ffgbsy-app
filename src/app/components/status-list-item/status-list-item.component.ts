@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { IonIcon, IonItem, IonLabel } from "@ionic/angular/standalone";
 import { CheckStatus } from 'src/app/types/check-status.type';
 

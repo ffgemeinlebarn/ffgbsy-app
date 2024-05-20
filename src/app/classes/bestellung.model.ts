@@ -1,7 +1,7 @@
-import { Bestellposition } from "./bestellposition.class";
-import { Aufnehmer } from "./aufnehmer.class";
+import { Bestellposition } from "./bestellposition.model";
+import { Aufnehmer } from "./aufnehmer.model";
 import { Tisch } from "./tisch.class";
-import { Bon } from "./bon";
+import { Bon } from "./bon.model";
 import { Bestellstatus } from "../types/bestellstatus.type";
 
 export class Bestellung {

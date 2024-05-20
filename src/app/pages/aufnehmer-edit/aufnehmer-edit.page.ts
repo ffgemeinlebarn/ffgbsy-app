@@ -10,7 +10,8 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
     templateUrl: './aufnehmer-edit.page.html',
     styleUrls: ['./aufnehmer-edit.page.scss'],
     standalone: true,
-    imports: [IonInput,
+    imports: [
+        IonInput,
         FormsModule,
         IonHeader,
         IonToolbar,

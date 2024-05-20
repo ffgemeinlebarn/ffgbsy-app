@@ -9,37 +9,68 @@
 
     <h2 class="ion-padding">Lookup Daten</h2>
     <ion-list lines="full">
-        @for(item of dataItems(); track item)
-        {
-        <ffgbsy-status-list-item [status]="item.loaded ? 'success' : 'error'">
-            <h3>{{ item.name }}</h3>
-            <p>{{ item.numberOfItems }} Datensätze</p>
+        <ion-item>
+            <ion-label>
+                <h3>{{ lookupDataLastSync() }}</h3>
+                <p>Aktualisierung</p>
+            </ion-label>
+        </ion-item>
+        <ffgbsy-status-list-item [status]="aufnehmerDataAvailability().status">
+            <h3>Aufnehmer</h3>
+            <p>{{ aufnehmerDataAvailability().entity }} Datensätze</p>
         </ffgbsy-status-list-item>
-        }
+        <ffgbsy-status-list-item [status]="produktbereicheDataAvailability().status">
+            <h3>Produktbereiche</h3>
+            <p>{{ produktbereicheDataAvailability().entity }} Datensätze</p>
+        </ffgbsy-status-list-item>
+        <ffgbsy-status-list-item [status]="produktkategorienDataAvailability().status">
+            <h3>Produktkategorien</h3>
+            <p>{{ produktkategorienDataAvailability().entity }} Datensätze</p>
+        </ffgbsy-status-list-item>
+        <ffgbsy-status-list-item [status]="produkteinteilungenDataAvailability().status">
+            <h3>Produkteinteilungen</h3>
+            <p>{{ produkteinteilungenDataAvailability().entity }} Datensätze</p>
+        </ffgbsy-status-list-item>
+        <ffgbsy-status-list-item [status]="produkteDataAvailability().status">
+            <h3>Produkte</h3>
+            <p>{{ produkteDataAvailability().entity }} Datensätze</p>
+        </ffgbsy-status-list-item>
+        <ffgbsy-status-list-item [status]="tischkategorienDataAvailability().status">
+            <h3>Tischkategorien</h3>
+            <p>{{ tischkategorienDataAvailability().entity }} Datensätze</p>
+        </ffgbsy-status-list-item>
+        <ffgbsy-status-list-item [status]="tischeDataAvailability().status">
+            <h3>Tische</h3>
+            <p>{{ tischeDataAvailability().entity }} Datensätze</p>
+        </ffgbsy-status-list-item>
     </ion-list>
 
-    <!-- <h2 class="ion-padding"> Daten</h2>
+    <h2 class="ion-padding">
+        <span>Services</span>
+        <ion-chip (click)="checkApi()" color="primary">
+            <ion-icon name="refresh-outline"></ion-icon>
+            <ion-label>API</ion-label>
+        </ion-chip>
+    </h2>
     <ion-list lines="full">
-        @for(item of dataItems(); track item)
-        {
-        <ffgbsy-status-list-item [status]="item.loaded ? 'success' : 'error'">
-            <h3>{{ item.name }}</h3>
-            <p>{{ item.numberOfItems }} Datensätze</p>
-        </ffgbsy-status-list-item>
-        }
-    </ion-list> -->
-
-    <h2 class="ion-padding">Services und Geräte</h2>
-    <ion-list lines="full">
-        <ffgbsy-status-list-item [status]="api() ? 'success' : 'error'">
-            <h3>API</h3>
+        <ffgbsy-status-list-item [status]="apiAvailability().status">
+            <h3>{{ apiAvailability().entity }}</h3>
             <p>Erreichbarkeit</p>
         </ffgbsy-status-list-item>
-        @for(item of druckerItems(); track item)
+    </ion-list>
+    <h2 class="ion-padding">
+        <span>Drucker</span>
+        <ion-chip (click)="checkDrucker()" color="primary">
+            <ion-icon name="refresh-outline"></ion-icon>
+            <ion-label>Drucker</ion-label>
+        </ion-chip>
+    </h2>
+    <ion-list lines="full">
+        @for(item of druckerAvailabilities(); track item)
         {
-        <ffgbsy-status-list-item [status]="item.result">
-            <h3>{{ item.drucker.name }}</h3>
-            <p>{{ item.drucker.ip }}</p>
+        <ffgbsy-status-list-item [status]="item.status">
+            <h3>{{ item.entity.name }}</h3>
+            <p>{{ item.entity.ip }}</p>
         </ffgbsy-status-list-item>
         }
     </ion-list>
