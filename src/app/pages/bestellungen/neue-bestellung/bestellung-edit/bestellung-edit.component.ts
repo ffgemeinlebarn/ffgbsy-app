@@ -1,7 +1,7 @@
 import { NgClass } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
 import { IonButton, IonContent, IonFooter, IonIcon, IonItem, IonLabel, IonList, ModalController, IonItemDivider } from "@ionic/angular/standalone";
-import { Bestellposition } from 'src/app/classes/bestellposition.class';
+import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';

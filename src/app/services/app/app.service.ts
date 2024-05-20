@@ -1,12 +1,12 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { SettingsService } from '../settings/settings.service';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../data/data.service';
 import { AvailabilityService } from '../availability/availability.service';
 import { ModalController } from '@ionic/angular/standalone';
 import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
-import { Bestellung } from 'src/app/classes/bestellung.class';
+import { Bestellung } from 'src/app/classes/bestellung.model';
 import { Tisch } from 'src/app/classes/tisch.class';
 
 @Injectable({

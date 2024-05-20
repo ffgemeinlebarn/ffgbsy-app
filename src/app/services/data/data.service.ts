@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { catchError, retry } from 'rxjs';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Produktbereich } from 'src/app/classes/produktbereich.class';
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';

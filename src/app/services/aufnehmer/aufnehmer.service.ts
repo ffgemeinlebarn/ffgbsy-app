@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Observable, catchError, retry, tap } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
