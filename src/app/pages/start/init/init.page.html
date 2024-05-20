@@ -17,7 +17,7 @@
             {
             <ion-button [routerLink]="['/neue-bestellung']">Starte Bestellung</ion-button>
             }
-            @else if(!aufnehmerSelected())
+            @else if(!isAufnehmerSelected())
             {
             <ion-button (click)="selectAufnehmer()">Aufnehmer:in auswählen</ion-button>
             }
@@ -27,10 +27,11 @@
             }
 
             <div class="tiles">
-                <app-init-tile title="Aufnehmer" [success]="aufnehmerSelected()" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></app-init-tile>
-                <app-init-tile title="Gerät" [success]="deviceNameSet()" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></app-init-tile>
-                <app-init-tile title="Daten" [success]="dataLoaded()" (click)="dataShowLoadedDetails()" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></app-init-tile>
-                <app-init-tile title="System" [success]="allSystemsAvailable()" (click)="dataShowAvailabilityDetails()" [subtitle]="availabilityStatusForSubtitle()" iconName="shield-checkmark-outline"></app-init-tile>
+                <app-init-tile title="Aufnehmer" [success]="isAufnehmerSelected()" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></app-init-tile>
+                <app-init-tile title="Gerät" [success]="isDeviceNameSet()" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></app-init-tile>
+                <app-init-tile title="Lookup Daten" [success]="isLookupDataAvailable()" routerLink="/systemstatus" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></app-init-tile>
+                <app-init-tile title="API" [success]="isApiAvailable()" routerLink="/systemstatus" [subtitle]="apiAvailabilityStatusForSubtitle()" iconName="cloud-outline"></app-init-tile>
+                <app-init-tile title="Drucker" [success]="areDruckerAvailable()" routerLink="/systemstatus" [subtitle]="druckerAvailabilityStatusForSubtitle()" iconName="print-outline"></app-init-tile>
             </div>
         </div>
     </div>

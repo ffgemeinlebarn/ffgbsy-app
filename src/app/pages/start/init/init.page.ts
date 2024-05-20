@@ -22,28 +22,25 @@ import { DataService } from '../../../services/data/data.service';
 })
 export class InitPage {
     private app = inject(AppService);
-    private data = inject(DataService);
     private availability = inject(AvailabilityService);
 
     public version = version;
 
     public aufnehmerNameForSubtitle: Signal<string> = computed(() => this.app.aufnehmer() ? `${this.app.aufnehmer()?.vorname} ${this.app.aufnehmer()?.nachname}` : "nicht ausgewählt");
     public deviceNameForSubtitle: Signal<string> = computed(() => this.app.deviceName() ? this.app.deviceName() : "Der Gerätename fehlt!");
-    public dataLastSyncedForSubtitle = computed(() => this.data.loaded() ? formatDate(this.data.loadedDatetime(), 'dd.MM.YYYY HH:mm:ss', 'en-US') : "Daten nicht vollständig geladen!");
-    public availabilityStatusForSubtitle = computed(() => this.availability.all() ? 'Alle Systeme verfügbar!' : 'Systeme nicht vollständig erreichbar!');
+    public dataLastSyncedForSubtitle = this.availability.lookupDataGrossAvailibilityDatetime;
+    public apiAvailabilityStatusForSubtitle = computed(() => this.availability.apiAvailability() ? 'Schnittstelle erreichbar!' : 'Schnittstelle nicht erreichbar!');
+    public druckerAvailabilityStatusForSubtitle = computed(() => this.availability.druckerGrossAvailability() ? 'Alle Drucker erreichbar!' : 'Fehler bei den Drucker-Verbindungen');
 
-    public aufnehmerSelected = computed(() => this.app.aufnehmer() ? true : false);
-    public deviceNameSet = computed(() => this.app.deviceName() ? true : false);
-    public dataLoaded = this.data.loaded;
-    public allSystemsAvailable = this.availability.all;
+    public isAufnehmerSelected = computed(() => this.app.aufnehmer() ? true : false);
+    public isDeviceNameSet = computed(() => this.app.deviceName() ? true : false);
+    public isLookupDataAvailable = this.availability.lookupDataGrossAvailibility;
+    public isApiAvailable = this.availability.apiAvailability;
+    public areDruckerAvailable = this.availability.druckerGrossAvailability;
     public readyToGo = this.app.readyToGo;
 
     public selectAufnehmer() {
         this.app.showSelectAufnehmerModal();
-    }
-
-    public dataShowLoadedDetails() {
-        this.data.showLoadedReport();
     }
 
     public dataShowAvailabilityDetails() {

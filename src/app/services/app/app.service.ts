@@ -19,7 +19,7 @@ export class AppService {
     private modalController = inject(ModalController);
 
     // State Management
-    public readyToGo = computed<boolean>(() => this.aufnehmer() && this.deviceName() && this.availability.api && this.data.loaded());
+    public readyToGo = computed<boolean>(() => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility());
     public aufnehmer = signal<Aufnehmer>(null);
     public deviceName = computed<string>(() => this.settings.local().deviceName);
     public isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);

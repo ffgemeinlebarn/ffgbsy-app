@@ -12,11 +12,11 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./statistics.page.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    NgChartsModule,
-    DatePipe,
-    EuroPreisPipe
-],
+        IonicModule,
+        NgChartsModule,
+        DatePipe,
+        EuroPreisPipe
+    ],
 })
 export class StatisticsPage implements OnInit {
 
@@ -66,7 +66,6 @@ export class StatisticsPage implements OnInit {
     }
 
     public loadStatistics() {
-        console.log("dload");
         this.api.getStatisticsTimeline().subscribe(timeline => {
 
             timeline.forEach((day, i) => {
