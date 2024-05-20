@@ -18,11 +18,13 @@ export class AvailabilityService {
     public all = computed(() => this.api() && this.druckerDetails().length > 0 && this.drucker());
     public api = toSignal(this.getApiStatus(), { initialValue: false });
     public drucker = computed<boolean>(() => this.druckerDetails().length > 0 && this.druckerDetails().filter(item => !item.result).length == 0);
-    public druckerDetails = toSignal(this.getDruckerStatus(), { initialValue: [] });
+    public druckerDetails = toSignal(this.getStatusOfAllDrucker(), { initialValue: [] });
+
+    // toSignal(this.drucker.readAll().pipe(map((items) => items.map((item) => ({ drucker: item, result: null })))), { initialValue: [] });
 
     public check() {
         this.getApiStatus().subscribe();
-        this.getDruckerStatus().subscribe();
+        this.getStatusOfAllDrucker().subscribe();
     }
 
     public async showDetailsModal() {
@@ -48,9 +50,17 @@ export class AvailabilityService {
             );
     }
 
-    public getDruckerStatus() {
+    public getStatusOfAllDrucker() {
         return this.http
             .get<{ drucker: Drucker, result: boolean }[]>(`${this.settings.apiBaseUrl()}/status/drucker`)
+            .pipe(
+                retry(1)
+            );
+    }
+
+    public getStatusOfDrucker(id: number) {
+        return this.http
+            .get<{ drucker: Drucker, result: boolean }>(`${this.settings.apiBaseUrl()}/status/drucker/${id}`)
             .pipe(
                 retry(1)
             );

@@ -13,7 +13,7 @@
             },
             "root": "",
             "sourceRoot": "src",
-            "prefix": "app",
+            "prefix": "ffgbsy",
             "architect": {
                 "build": {
                     "builder": "@angular-devkit/build-angular:application",
@@ -144,8 +144,15 @@
         "analytics": false
     },
     "schematics": {
+        "@schematics/angular:component": {
+            "style": "scss",
+            "skipTests": true,
+            "standalone": true
+        },
         "@ionic/angular-toolkit:component": {
-            "styleext": "scss"
+            "styleext": "scss",
+            "standalone": true,
+            "skipTests": true
         },
         "@ionic/angular-toolkit:page": {
             "styleext": "scss"

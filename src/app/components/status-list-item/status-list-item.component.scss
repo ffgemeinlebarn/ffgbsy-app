@@ -1,0 +1,18 @@
+:host {
+
+    &[status="busy"] ion-icon {
+        animation-name: pulse;
+        animation-duration: 0.6s;
+        animation-iteration-count: infinite;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.65;
+    }
+}
