@@ -1,6 +1,5 @@
 :host {
-
-    &[status="busy"] ion-icon {
+    ion-icon[name="radio-button-on"] {
         animation-name: pulse;
         animation-duration: 0.6s;
         animation-iteration-count: infinite;

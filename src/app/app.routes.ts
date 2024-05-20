@@ -34,10 +34,6 @@ export const routes: Routes = [
             {
                 path: 'grundprodukte/:id',
                 loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
-            },
-            {
-                path: 'logs',
-                loadComponent: () => import('./pages/admin/logs/logs.page').then(m => m.LogsPage)
             }
         ]
     }

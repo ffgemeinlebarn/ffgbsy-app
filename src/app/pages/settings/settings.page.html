@@ -11,35 +11,27 @@
 </ion-header>
 
 <ion-content>
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <ion-list lines="full">
+            <ion-item-divider>
+                <ion-label>Gerät</ion-label>
+            </ion-item-divider>
+            <ion-item>
+                <ion-label position="stacked">Gerätename</ion-label>
+                <ion-input formControlName="deviceName"></ion-input>
+            </ion-item>
 
-    <ion-list lines="full" [formGroup]="form">
-        <ion-item-divider>
-            <ion-label>API</ion-label>
-        </ion-item-divider>
-        <ion-item>
-            <ion-label position="stacked">Poll Notifications</ion-label>
-            <ion-toggle formControlName="notificationPoll"></ion-toggle>
-        </ion-item>
-
-        <ion-item-divider>
-            <ion-label>Gerät</ion-label>
-        </ion-item-divider>
-        <ion-item>
-            <ion-label position="stacked">Gerätename</ion-label>
-            <ion-input formControlName="deviceName"></ion-input>
-        </ion-item>
-
-        <ion-item-divider>
-            <ion-label>Administration</ion-label>
-        </ion-item-divider>
-        <ion-item>
-            <ion-label position="stacked">Freitschaltungs PIN</ion-label>
-            <ion-input inputmode="numeric" type="password" formControlName="adminPin"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="stacked">API</ion-label>
-            <ion-input type="text" formControlName="apiBaseUrl"></ion-input>
-        </ion-item>
-    </ion-list>
-
+            <ion-item-divider>
+                <ion-label>Administration</ion-label>
+            </ion-item-divider>
+            <ion-item>
+                <ion-label position="stacked">Freitschaltungs PIN</ion-label>
+                <ion-input inputmode="numeric" type="password" formControlName="adminPin"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">API</ion-label>
+                <ion-input type="text" formControlName="apiBaseUrl"></ion-input>
+            </ion-item>
+        </ion-list>
+    </form>
 </ion-content>

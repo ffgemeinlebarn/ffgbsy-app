@@ -36,7 +36,5 @@ export class TischAuswahlComponent {
 
     public selectTisch(tisch: Tisch) {
         this.onTischSelected.emit(tisch);
-        // this.bestellung().tisch = tisch;
-        // this.bestellung().status = 'bestellpositionen';
     }
 }

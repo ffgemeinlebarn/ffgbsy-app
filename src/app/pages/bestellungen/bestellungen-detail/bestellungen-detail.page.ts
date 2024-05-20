@@ -8,6 +8,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { Bon } from 'src/app/classes/bon.model';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { DatePipe } from '@angular/common';
+import { IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonItem, IonItemDivider, IonLabel, IonList, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
@@ -15,7 +16,17 @@ import { DatePipe } from '@angular/common';
     styleUrls: ['./bestellungen-detail.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
+        IonHeader,
+        IonToolbar,
+        IonButtons,
+        IonBackButton,
+        IonTitle,
+        IonContent,
+        IonList,
+        IonItem,
+        IonLabel,
+        IonItemDivider,
+        IonChip,
         DatePipe,
         EuroPreisPipe
     ],

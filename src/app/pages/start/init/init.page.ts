@@ -1,21 +1,22 @@
-import { NgClass, formatDate } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, Signal, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonHeader, IonMenuButton, IonToolbar, IonButton } from '@ionic/angular/standalone';
 import { InitTileComponent } from 'src/app/components/init-tile/init-tile.component';
 import { AppService } from 'src/app/services/app/app.service';
 import { AvailabilityService } from 'src/app/services/availability/availability.service';
 import { version } from 'src/environments/version';
-import { DataService } from '../../../services/data/data.service';
 
 @Component({
     selector: 'ffgbsy-init',
     templateUrl: './init.page.html',
     styleUrls: ['./init.page.scss'],
     standalone: true,
-    imports: [
-        IonicModule,
-        NgClass,
+    imports: [IonButton,
+        IonHeader,
+        IonToolbar,
+        IonMenuButton,
+        IonContent,
         RouterLink,
         InitTileComponent
     ],

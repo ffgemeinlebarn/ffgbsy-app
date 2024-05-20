@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { IonContent, IonButton, IonFooter } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { AppService } from 'src/app/services/app/app.service';
 

@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { IonButton, IonContent, IonHeader, IonList, IonMenuButton, IonTitle, IonToolbar, IonItem, IonLabel, IonIcon, IonChip } from '@ionic/angular/standalone';
+import { IonButton, IonChip, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AvailabilityService } from 'src/app/services/availability/availability.service';
-import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
     selector: 'ffgbsy-systemstatus',

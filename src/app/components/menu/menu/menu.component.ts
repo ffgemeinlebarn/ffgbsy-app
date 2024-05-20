@@ -8,7 +8,10 @@ import { MenuItemComponent } from '../menu-item/menu-item.component';
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
     standalone: true,
-    imports: [IonIcon, IonItemDivider, IonLabel,
+    imports: [
+        IonIcon,
+        IonItemDivider,
+        IonLabel,
         IonList,
         IonMenuToggle,
         IonButton,
