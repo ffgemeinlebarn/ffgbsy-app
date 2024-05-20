@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { Bestellposition } from 'src/app/classes/bestellposition.class';
@@ -6,9 +6,8 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { Bon } from 'src/app/classes/bon';
-import { NotificationService } from 'src/app/services/notification/notification.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
@@ -17,23 +16,18 @@ import { NgIf, NgFor, DatePipe } from '@angular/common';
     standalone: true,
     imports: [
         IonicModule,
-        NgIf,
-        NgFor,
         DatePipe,
-        EuroPreisPipe,
+        EuroPreisPipe
     ],
 })
 export class BestellungenDetailPage implements OnInit {
 
-    public bestellung: Bestellung;
+    public activatedRoute = inject(ActivatedRoute);
+    private api = inject(ApiService);
+    private frontend = inject(FrontendService);
+    private alertController = inject(AlertController);
 
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private api: ApiService,
-        private frontend: FrontendService,
-        private alertController: AlertController,
-        public notification: NotificationService
-    ) { }
+    public bestellung: Bestellung;
 
     ngOnInit() {
         this.loadBestellung(+this.activatedRoute.snapshot.paramMap.get('id'));

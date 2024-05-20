@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { ApiService } from '../api/api.service';
@@ -9,14 +9,17 @@ import { SettingsService } from '../settings/settings.service';
 })
 export class EditService {
 
+    private api = inject(ApiService);
+    private settings = inject(SettingsService);
+
     public grundprodukte: Array<Grundprodukt> = [];
     public produkte: Array<Produkt> = [];
 
-    constructor(private settings: SettingsService, private api: ApiService) {
-        this.settings.ready.then(() => {
-            this.readGrundprodukte();
-            this.readProdukte();
-        });
+    constructor() {
+        // this.settings.ready.then(() => {
+        //     this.readGrundprodukte();
+        //     this.readProdukte();
+        // });
     }
 
     public readGrundprodukte() {

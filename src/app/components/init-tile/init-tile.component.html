@@ -1,0 +1,14 @@
+<div class="tile ion-activatable ripple-parent" [ngClass]="tileClass()">
+    <ion-grid>
+        <ion-row class="ion-align-items-center">
+            <ion-col size="auto">
+                <ion-icon class="start-icon" [name]="iconName()"></ion-icon>
+            </ion-col>
+            <ion-col>
+                <h4>{{ title() }}</h4>
+                <p>{{ subtitle() }}</p>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    <ion-ripple-effect></ion-ripple-effect>
+</div>

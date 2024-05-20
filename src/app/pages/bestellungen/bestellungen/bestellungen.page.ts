@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { Router, RouterLink } from '@angular/router';
 import { ModalController, IonicModule } from '@ionic/angular';
-import { QrScanComponent } from 'src/app/modals/qr-scan/qr-scan.component';
 import { DataService } from 'src/app/services/data/data.service';
 import { HttpParams } from '@angular/common/http';
-import { NotificationService } from 'src/app/services/notification/notification.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
@@ -19,15 +18,19 @@ import { NgIf, NgFor, DatePipe } from '@angular/common';
     standalone: true,
     imports: [
         IonicModule,
-        NgIf,
-        NgFor,
         RouterLink,
         FormsModule,
         DatePipe,
-        EuroPreisPipe,
+        EuroPreisPipe
     ],
 })
 export class BestellungenPage implements OnInit {
+
+    private api = inject(ApiService);
+    private bestellungsHandler = inject(BestellungenHandlerService);
+    private router = inject(Router);
+    private modalCtrl = inject(ModalController);
+    private data = inject(DataService);
 
     public scannerEnabled: boolean = false;
     public bestellungen: Array<Bestellung>;
@@ -38,19 +41,10 @@ export class BestellungenPage implements OnInit {
     };
 
     public availableFilter: any = {
-        aufnehmer: [],
+        aufnehmer: signal<Aufnehmer[]>([]),
         tische: [],
         limits: [5, 10, 25, 50, 100]
     };
-
-    constructor(
-        private api: ApiService,
-        private bestellungsHandler: BestellungenHandlerService,
-        private router: Router,
-        private modalCtrl: ModalController,
-        private data: DataService,
-        public notification: NotificationService
-    ) { }
 
     ngOnInit() {
         this.availableFilter.aufnehmer = this.data.aufnehmer;
@@ -73,27 +67,5 @@ export class BestellungenPage implements OnInit {
         params = params.append("limit", this.usedFilter.limit);
 
         return this.api.searchBestellungen(params).subscribe(bestellungen => this.bestellungen = bestellungen);
-    }
-
-    async qrScanOpen() {
-        this.scannerEnabled = true;
-
-        const modal = await this.modalCtrl.create({
-            component: QrScanComponent,
-            cssClass: 'qr-modal'
-        });
-
-        modal.present();
-
-        const { data, role } = await modal.onWillDismiss();
-
-        if (role == 'success') {
-
-            const parsedData = JSON.parse(data);
-
-            if (parsedData.bestellungen_id) {
-                this.router.navigate(['bestellungen', parsedData.bestellungen_id]);
-            }
-        }
     }
 }

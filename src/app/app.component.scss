@@ -1,65 +1,27 @@
-#main-content{
+#main-content {
     display: block;
     width: 100%;
     height: 100%;
 }
 
-ion-menu{
+ion-menu {
     --side-max-width: 400px;
-
-    .container{
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-
-        ion-item {
-            --padding-start: 24px;
-
-            ion-label{
-                line-height: 44px;
-            }
-
-            ion-icon[slot=start] {
-                margin-inline-end: 24px;
-            }
-        }
-
-        // Items
-        .sidemenu-main-menu{
-            padding-top: 0px;
-            flex: 1;
-
-            ion-item{
-                ion-label{
-                    line-height: 60px;
-                }
-            }
-        }
-
-        .init-button{
-            margin: 1em;
-        }
-    }
 }
 
-
 // Alert & Modal Styles
-
 :host ::ng-deep {
-
     ion-alert {
         --max-width: 350px;
 
-        .alert-message{
+        .alert-message {
             white-space: pre-wrap;
         }
     }
 }
 
 // Ion-Select Alert
-
 :host ::ng-deep {
-    .single-select-alert{
+    .single-select-alert {
         --max-width: 400px;
         --min-width: 350px;
     }
@@ -67,16 +29,15 @@ ion-menu{
 
 
 // Systemcheck auf Init Page
-
 :host ::ng-deep {
-    .systemstatus-success{
-        .action-sheet-icon{
+    .systemstatus-success {
+        .action-sheet-icon {
             color: var(--ion-color-success);
         }
     }
 
-    .systemstatus-danger{
-        .action-sheet-icon{
+    .systemstatus-danger {
+        .action-sheet-icon {
             color: var(--ion-color-danger);
         }
     }
@@ -86,11 +47,11 @@ ion-menu{
 // Zoom Levels
 :host ::ng-deep {
 
-    .zoom-level{
+    .zoom-level {
 
         // Std. Ionic Sizes
 
-        &--2{
+        &--2 {
             $tischkategorie-kachel_font-size: 1.10em;
             $tisch-kachel_font-size: 1.35em;
 
@@ -106,22 +67,45 @@ ion-menu{
             $produktauswahl-item-button_width-height: 40px;
 
             // Classen
-            .tischkategorie-kachel ion-button { font-size: $tischkategorie-kachel_font-size; }
-            .tisch-kachel ion-button { font-size: $tisch-kachel_font-size; }
+            .tischkategorie-kachel ion-button {
+                font-size: $tischkategorie-kachel_font-size;
+            }
 
-            .produktkategorie-kachel ion-button { font-size: $produktkategorie-kachel_font-size; }
+            .tisch-kachel ion-button {
+                font-size: $tisch-kachel_font-size;
+            }
 
-            .content-left ion-list ion-item ion-label h3 { font-size: $bestellposition-h3_font-size; }
-            .content-left ion-list ion-item ion-label p { font-size: $bestellposition-p_font-size; }
+            .produktkategorie-kachel ion-button {
+                font-size: $produktkategorie-kachel_font-size;
+            }
 
-            .content-right ion-list ion-item-divider { font-size: $produktauswahl-produkteinteilung_font-size; }
-            .content-right ion-list ion-item ion-label h2 { font-size: $produktauswahl-item-h2_font-size; }
-            .content-right ion-list ion-item ion-label p { font-size: $produktauswahl-item-p_font-size; }
+            .content-left ion-list ion-item ion-label h3 {
+                font-size: $bestellposition-h3_font-size;
+            }
 
-            .content-right ion-list ion-item ion-button { width: $produktauswahl-item-button_width-height !important; height: $produktauswahl-item-button_width-height !important; }
+            .content-left ion-list ion-item ion-label p {
+                font-size: $bestellposition-p_font-size;
+            }
+
+            .content-right ion-list ion-item-divider {
+                font-size: $produktauswahl-produkteinteilung_font-size;
+            }
+
+            .content-right ion-list ion-item ion-label h2 {
+                font-size: $produktauswahl-item-h2_font-size;
+            }
+
+            .content-right ion-list ion-item ion-label p {
+                font-size: $produktauswahl-item-p_font-size;
+            }
+
+            .content-right ion-list ion-item ion-button {
+                width: $produktauswahl-item-button_width-height !important;
+                height: $produktauswahl-item-button_width-height !important;
+            }
         }
 
-        &--3{
+        &--3 {
             $tischkategorie-kachel_font-size: 1.30em;
             $tisch-kachel_font-size: 1.6em;
 
@@ -137,19 +121,42 @@ ion-menu{
             $produktauswahl-item-button_width-height: 46px;
 
             // Classen
-            .tischkategorie-kachel ion-button { font-size: $tischkategorie-kachel_font-size; }
-            .tisch-kachel ion-button { font-size: $tisch-kachel_font-size; }
+            .tischkategorie-kachel ion-button {
+                font-size: $tischkategorie-kachel_font-size;
+            }
 
-            .produktkategorie-kachel ion-button { font-size: $produktkategorie-kachel_font-size; }
+            .tisch-kachel ion-button {
+                font-size: $tisch-kachel_font-size;
+            }
 
-            .content-left ion-list ion-item ion-label h3 { font-size: $bestellposition-h3_font-size; }
-            .content-left ion-list ion-item ion-label p { font-size: $bestellposition-p_font-size; }
+            .produktkategorie-kachel ion-button {
+                font-size: $produktkategorie-kachel_font-size;
+            }
 
-            .content-right ion-list ion-item-divider { font-size: $produktauswahl-produkteinteilung_font-size; }
-            .content-right ion-list ion-item ion-label h2 { font-size: $produktauswahl-item-h2_font-size; }
-            .content-right ion-list ion-item ion-label p { font-size: $produktauswahl-item-p_font-size; }
+            .content-left ion-list ion-item ion-label h3 {
+                font-size: $bestellposition-h3_font-size;
+            }
 
-            .content-right ion-list ion-item ion-button { width: $produktauswahl-item-button_width-height !important; height: $produktauswahl-item-button_width-height !important; }
+            .content-left ion-list ion-item ion-label p {
+                font-size: $bestellposition-p_font-size;
+            }
+
+            .content-right ion-list ion-item-divider {
+                font-size: $produktauswahl-produkteinteilung_font-size;
+            }
+
+            .content-right ion-list ion-item ion-label h2 {
+                font-size: $produktauswahl-item-h2_font-size;
+            }
+
+            .content-right ion-list ion-item ion-label p {
+                font-size: $produktauswahl-item-p_font-size;
+            }
+
+            .content-right ion-list ion-item ion-button {
+                width: $produktauswahl-item-button_width-height !important;
+                height: $produktauswahl-item-button_width-height !important;
+            }
         }
     }
 }

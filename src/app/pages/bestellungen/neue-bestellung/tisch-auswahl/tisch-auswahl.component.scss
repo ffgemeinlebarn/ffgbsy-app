@@ -1,0 +1,39 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    ion-content {
+        .tisch-kachel {
+            aspect-ratio: 1;
+            flex-basis: var(--base-width-item-tile);
+
+            &--big-1 {
+                flex-basis: calc(var(--base-width-item-tile) * 2);
+                aspect-ratio: 2;
+            }
+
+            &--big-2 {
+                flex-basis: calc(var(--base-width-item-tile) * 3);
+                aspect-ratio: 3;
+            }
+
+            &--big-3 {
+                flex-basis: calc(var(--base-width-item-tile) * 4);
+                aspect-ratio: 4;
+            }
+
+            &--big-4 {
+                flex-basis: calc(var(--base-width-item-tile) * 5);
+                aspect-ratio: 5;
+            }
+        }
+    }
+
+    ion-footer {
+        .tischkategorie-kachel {
+            min-height: 60px;
+            flex-basis: var(--base-width-category-tile);
+        }
+    }
+}

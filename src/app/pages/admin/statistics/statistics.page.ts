@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { ApiService } from 'src/app/services/api/api.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 import { NgChartsModule } from 'ng2-charts';
-import { NgIf, NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -12,15 +12,15 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./statistics.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgIf,
-        NgChartsModule,
-        NgFor,
-        DatePipe,
-        EuroPreisPipe,
-    ],
+    IonicModule,
+    NgChartsModule,
+    DatePipe,
+    EuroPreisPipe
+],
 })
 export class StatisticsPage implements OnInit {
+
+    private api = inject(ApiService);
 
     public readyTimeline = false;
     public readyPie = false;
@@ -61,7 +61,6 @@ export class StatisticsPage implements OnInit {
         backgroundColor: 'rgba(0, 204, 68, 0.3)'
     }];
 
-    constructor(private api: ApiService) { }
     ngOnInit() {
         this.loadStatistics();
     }

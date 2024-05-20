@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Bestellung } from 'src/app/classes/bestellung.class';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
 import { Tisch } from 'src/app/classes/tisch.class';
@@ -12,10 +12,12 @@ import { Neubestellung } from 'src/app/classes/neubestellung.class';
 })
 export class BestellungenHandlerService {
 
+    private api = inject(ApiService);
+    private settings = inject(SettingsService);
+    private frontend = inject(FrontendService);
+
     public aufnehmer: Aufnehmer | null = null;
     public neubestellung: Neubestellung = new Neubestellung();
-
-    constructor(private api: ApiService, private settings: SettingsService, private frontend: FrontendService) { }
 
     /*******************************************************************************
     *** Neubestellung
@@ -25,7 +27,7 @@ export class BestellungenHandlerService {
         if (this.neubestellung.bestellung === null) {
             this.neubestellung.bestellung = new Bestellung();
             this.neubestellung.bestellung.aufnehmer = this.aufnehmer;
-            this.neubestellung.bestellung.device_name = this.settings.locale.deviceName;
+            this.neubestellung.bestellung.device_name = this.settings.local().deviceName;
             this.neubestellung.status = 'begonnen';
             return true;
         }

@@ -1,7 +1,7 @@
 {
     "name": "FFGBSY",
     "short_name": "FFGBSY",
-    "theme_color": "#1976d2",
+    "theme_color": "#1e6091",
     "background_color": "#fafafa",
     "display": "standalone",
     "scope": "./",

@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, inject } from '@angular/core';
 import { ModalController, NavParams, IonicModule } from '@ionic/angular';
 import { Bestellposition } from '../../classes/bestellposition.class';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+
 
 @Component({
     selector: 'ffgbsy-bestellungsposition-edit-modal',
@@ -12,23 +12,23 @@ import { NgFor } from '@angular/common';
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgFor,
-        FormsModule,
-        EuroPreisPipe,
-    ],
+    IonicModule,
+    FormsModule,
+    EuroPreisPipe
+],
 })
 export class BestellungspositionEditModalComponent implements OnInit {
+
+    private modalCtrl = inject(ModalController);
+    public navParams = inject(NavParams);
+    private bestellungsHandler = inject(BestellungenHandlerService);
 
     public bestellposition: Bestellposition;
     public index: number;
 
-    constructor(private modalCtrl: ModalController, public navParams: NavParams, private bestellungsHandler: BestellungenHandlerService) {
+    ngOnInit() {
         this.bestellposition = this.navParams.get('bestellposition');
         this.index = this.navParams.get('index');
-    }
-
-    ngOnInit() {
     }
 
     closeModal() {

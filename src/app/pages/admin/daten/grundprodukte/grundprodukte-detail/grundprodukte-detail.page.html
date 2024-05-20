@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-back-button slot="start" defaultHref="/admin/grundprodukte"></ion-back-button>
+    <ion-title>{{ grundprodukt.name }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">
+        <ion-icon name="save" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list lines="full">
+    <ion-item>
+      <ion-label position="stacked">Name</ion-label>
+      <ion-input [(ngModel)]="grundprodukt.name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Einheit</ion-label>
+      <ion-input [(ngModel)]="grundprodukt.einheit"></ion-input>
+    </ion-item>
+    <ion-item-divider>Bestand</ion-item-divider>
+    <ion-item>
+      <ion-label>Unlimitiert</ion-label>
+      <ion-toggle [(ngModel)]="unlimitiert"></ion-toggle>
+    </ion-item>
+    @if (!unlimitiert) {
+      <ion-item>
+        <ion-label position="stacked">Anzahl</ion-label>
+        <ion-input type="number" [(ngModel)]="grundprodukt.bestand"></ion-input>
+      </ion-item>
+    }
+  </ion-list>
+</ion-content>

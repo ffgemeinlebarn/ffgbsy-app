@@ -1,0 +1,21 @@
+<ion-content class="center ion-padding">
+    <div class="center-wrapper">
+        <div class="center-content">
+            @if(aufnehmer())
+            {
+            <ion-button (click)="starteBestellvorgang()" (keypress)="starteBestellvorgang()" size="large">Neue Bestellung starten</ion-button>
+            <h4 class="aufnehmer">Du nimmtst die Bestellungen als <strong>{{ aufnehmer().vorname }} {{ aufnehmer().nachname }}</strong> auf!</h4>
+            }
+            @else {
+            <ion-button (click)="selectAufnehmer()" (keypress)="selectAufnehmer()" size="large">Aufnehmer auswählen</ion-button>
+            <h4 class="aufnehmer">Keine Aufnehmer:in ausgewählt!</h4>
+            }
+        </div>
+    </div>
+</ion-content>
+@if(aufnehmer())
+{
+<ion-footer>
+    <ion-button color="secondary" shape="round" fill="outline" (click)="selectAufnehmer()" (keypress)="selectAufnehmer()">Aufnehmer:in ändern</ion-button>
+</ion-footer>
+}

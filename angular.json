@@ -13,15 +13,17 @@
             },
             "root": "",
             "sourceRoot": "src",
-            "prefix": "app",
+            "prefix": "ffgbsy",
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-devkit/build-angular:application",
                     "options": {
                         "outputPath": "www",
                         "index": "src/index.html",
-                        "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
+                        "browser": "src/main.ts",
+                        "polyfills": [
+                            "src/polyfills.ts"
+                        ],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
@@ -37,8 +39,7 @@
                             "src/theme/variables.scss"
                         ],
                         "scripts": [],
-                        "serviceWorker": true,
-                        "ngswConfigPath": "ngsw-config.json"
+                        "serviceWorker": "ngsw-config.json"
                     },
                     "configurations": {
                         "production": {
@@ -63,9 +64,7 @@
                             "outputHashing": "all"
                         },
                         "development": {
-                            "buildOptimizer": false,
                             "optimization": false,
-                            "vendorChunk": true,
                             "extractLicenses": false,
                             "sourceMap": true,
                             "namedChunks": true
@@ -145,8 +144,15 @@
         "analytics": false
     },
     "schematics": {
+        "@schematics/angular:component": {
+            "style": "scss",
+            "skipTests": true,
+            "standalone": true
+        },
         "@ionic/angular-toolkit:component": {
-            "styleext": "scss"
+            "styleext": "scss",
+            "standalone": true,
+            "skipTests": true
         },
         "@ionic/angular-toolkit:page": {
             "styleext": "scss"

@@ -1,3 +1,5 @@
+import { Drucker } from "./drucker.class";
+import { Produktbereich } from "./produktbereich.class";
 import { Produkteinteilung } from "./produkteinteilung.class";
 
 export class Produktkategorie {
@@ -6,5 +8,7 @@ export class Produktkategorie {
     produkteinteilungen: Array<Produkteinteilung>;
     color: string;
     drucker_id_level_1: any;
+    drucker?: Drucker
     sortierindex: number;
+    produktbereich?: Produktbereich;
 }

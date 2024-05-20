@@ -1,116 +1,109 @@
-import { Injectable } from '@angular/core';
-import { Storage } from '@ionic/storage';
-import { Daten } from 'src/app/interfaces/daten';
-import { SettingsService } from '../settings/settings.service';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { catchError, retry } from 'rxjs';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
-import { Produktbereich } from 'src/app/classes/produktbereich.class';
-import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { Produkt } from 'src/app/classes/produkt.class';
-import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
+import { Produktbereich } from 'src/app/classes/produktbereich.class';
+import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
+import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { Tisch } from 'src/app/classes/tisch.class';
-import { ApiService } from '../api/api.service';
-// import { NGXLogger } from 'ngx-logger';
+import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
+import { Daten } from 'src/app/interfaces/daten';
+import { DataLoadedReportModalComponent } from 'src/app/modals/data-loaded-report-modal/data-loaded-report-modal.component';
+import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class DataService implements Daten {
+export class DataService {
+    private modalController = inject(ModalController);
+    private http = inject(HttpClient);
+    private settings = inject(SettingsService);
+    private errorHandling = inject(ErrorHandlingService);
 
-    public ready: Promise<any>;
-    private storageKey = 'data';
+    public loaded = computed<boolean>(() => this.loadedReport().filter(report => !report.loaded).length == 0);
 
-    public aufnehmer: Aufnehmer[] = [];
-    public produktbereiche: Produktbereich[];
-    public produktkategorien: Produktkategorie[];
-    public produkte: Produkt[];
-    public tischkategorien: Tischkategorie[];
-    public tische: Tisch[];
+    public loadedReport = computed<{ name: string, loaded: boolean, numberOfItems: number }[]>(() => [
+        {
+            name: "Aufnehmer",
+            loaded: this.aufnehmer().length > 0,
+            numberOfItems: this.aufnehmer().length
+        },
+        {
+            name: "Produktbereiche",
+            loaded: this.produktbereiche().length > 0,
+            numberOfItems: this.produktbereiche().length
+        },
+        {
+            name: "Produktkategorien",
+            loaded: this.produktkategorien().length > 0,
+            numberOfItems: this.produktkategorien().length
+        },
+        {
+            name: "Produkteinteilungen",
+            loaded: this.produkteinteilungen().length > 0,
+            numberOfItems: this.produkteinteilungen().length
+        },
+        {
+            name: "Produkte",
+            loaded: this.produkte().length > 0,
+            numberOfItems: this.produkte().length
+        },
+        {
+            name: "Tischkategorien",
+            loaded: this.tischkategorien().length > 0,
+            numberOfItems: this.tischkategorien().length
+        },
+        {
+            name: "Tische",
+            loaded: this.tische().length > 0,
+            numberOfItems: this.tische().length
+        }
+    ]);
+
+    public loadedDatetime = computed<Date>(() => this.loaded() ? new Date() : null);
+
+    public aufnehmer = signal<Aufnehmer[]>([]);
+    public produktbereiche = signal<Produktbereich[]>([]);
+    public produktkategorien = signal<Produktkategorie[]>([]);
+    public produkteinteilungen = signal<Produkteinteilung[]>([]);
+    public produkte = signal<Produkt[]>([]);
+    public tischkategorien = signal<Tischkategorie[]>([]);
+    public tische = signal<Tisch[]>([]);
+
+    constructor() {
+        this.loadAllLookupData().subscribe((data) => {
+            this.aufnehmer.set(data.aufnehmer);
+            this.produktbereiche.set(data.produktbereiche);
+            this.produktkategorien.set(data.produktkategorien);
+            this.produkteinteilungen.set(data.produkteinteilungen);
+            this.produkte.set(data.produkte);
+            this.tischkategorien.set(data.tischkategorien);
+            this.tische.set(data.tische);
+        });
+    }
+
+    public async showLoadedReport() {
+        const modal = await this.modalController.create({
+            component: DataLoadedReportModalComponent,
+            canDismiss: true,
+            breakpoints: [0.1, 0.5, 1],
+            initialBreakpoint: 1
+        });
+        modal.present();
+    }
 
     public version: number = 0;
     public saved: Date | null = null;
 
-    constructor(
-        // private logger: NGXLogger,
-        private api: ApiService,
-        private storage: Storage,
-        private settings: SettingsService
-    ) {
-        this.loadfromStorage();
+    private loadAllLookupData() {
+        return this.http
+            .get<Daten>(`${this.settings.apiBaseUrl()}/daten/latest`)
+            .pipe(
+                retry(1),
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+            );
     }
-
-    public loadfromStorage() {
-        this.ready = new Promise((resolve, reject) => this.settings.ready.then(() => this.storage.get(this.settings.StoragePrefix + this.storageKey).then((jsonObject: any) => {
-
-            // this.logger.debug('[Data Service] - Loaded from Storage')
-
-            if (jsonObject == null) {
-                // this.logger.debug('[Data Service] - Keine lokalen Daten vorhanden!')
-            } else {
-
-                const dataObject = <{
-                    saved: Date,
-                    data: any
-                }>JSON.parse(jsonObject);
-
-                this.aufnehmer = dataObject.data.aufnehmer;
-                this.produktbereiche = dataObject.data.produktbereiche;
-                this.produktkategorien = dataObject.data.produktkategorien;
-                this.produkte = dataObject.data.produkte;
-                this.tischkategorien = dataObject.data.tischkategorien;
-                this.tische = dataObject.data.tische;
-                this.version = dataObject.data.version;
-
-                this.saved = new Date(dataObject.saved);
-            }
-
-            resolve(this.saved);
-        })));
-    }
-
-    public async download() {
-
-        // this.logger.debug('[Data Service] - Start Download!')
-
-        this.api.getDaten().subscribe((data) => {
-
-            const saved = new Date();
-
-            this.storage.set(this.settings.StoragePrefix + this.storageKey, JSON.stringify({
-                saved,
-                data
-            }));
-
-            this.aufnehmer = data.aufnehmer;
-            this.produktbereiche = data.produktbereiche;
-            this.produktkategorien = data.produktkategorien;
-            this.produkte = data.produkte;
-            this.tischkategorien = data.tischkategorien;
-            this.tische = data.tische;
-            this.version = data.version;
-
-            this.saved = saved;
-
-            this.ready = Promise.resolve(saved);
-
-        }, (err) => {
-            alert("Es trat ein Fehler auf!" + "Daten wurden nicht synchronisiert!");
-            this.ready = Promise.reject(err);
-        });
-    }
-
-    getProduktById(id: number) {
-        for (let p of this.produkte) {
-            if (p.id == id) { return p; }
-        }
-        return null;
-    }
-
-    getProduktByIds(ids: Array<number>) {
-        let arr: Array<Produkt>;
-        for (let p of this.produkte) {
-            if (ids.indexOf(p.id)) { arr.push(p) }
-        }
-        return arr;
-    }
-
 }

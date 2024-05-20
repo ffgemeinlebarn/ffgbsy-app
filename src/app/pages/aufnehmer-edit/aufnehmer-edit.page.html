@@ -3,41 +3,46 @@
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Aufnehmer Einstellungen</ion-title>
         <ion-buttons slot="end">
-            <ion-button (click)="save()" *ngIf="bestellungsHandler?.aufnehmer">
+            @if (aufnehmer()) {
+            <ion-button (click)="save()">
                 <ion-icon name="save" slot="icon-only"></ion-icon>
             </ion-button>
+            }
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
-<ion-content class="center" *ngIf="!bestellungsHandler?.aufnehmer">
+@if (aufnehmer()) {
+<ion-content>
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <ion-list lines="full">
+            <ion-item-divider>
+                <ion-label>Meine persönlichen Einstellungen</ion-label>
+            </ion-item-divider>
+            <ion-item>
+                <ion-label position="stacked">Vorname</ion-label>
+                <ion-input formControlName="vorname"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Nachname</ion-label>
+                <ion-input formControlName="nachname"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Schriftgröße</ion-label>
+                <ion-select formControlName="zoom_level">
+                    <ion-select-option [value]="1">Level 1</ion-select-option>
+                    <ion-select-option [value]="2">Level 2</ion-select-option>
+                    <ion-select-option [value]="3">Level 3</ion-select-option>
+                </ion-select>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>
+}
+@else {
+<ion-content class="center">
     <div class="center-wrapper">
         <h3>Es wurde kein Aufnehmer ausgewählt!</h3>
     </div>
 </ion-content>
-
-<ion-content *ngIf="bestellungsHandler?.aufnehmer">
-
-    <ion-list>
-        <ion-item-divider>
-            <ion-label>Meine Aufnehmer-Einstellungen</ion-label>
-        </ion-item-divider>
-        <ion-item>
-            <ion-label position="stacked">Vorname</ion-label>
-            <ion-input [(ngModel)]="bestellungsHandler.aufnehmer.vorname"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="stacked">Nachname</ion-label>
-            <ion-input [(ngModel)]="bestellungsHandler.aufnehmer.nachname"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label position="stacked">Schriftgröße</ion-label>
-            <ion-select [(ngModel)]="bestellungsHandler.aufnehmer.zoom_level">
-                <ion-select-option [value]="1">Level 1</ion-select-option>
-                <ion-select-option [value]="2">Level 2</ion-select-option>
-                <ion-select-option [value]="3">Level 3</ion-select-option>
-            </ion-select>
-        </ion-item>
-    </ion-list>
-
-</ion-content>
+}

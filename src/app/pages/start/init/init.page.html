@@ -13,77 +13,24 @@
             <h4 class="tagline">FF Gemeinlebarn Bestellsystem</h4>
             <h4 class="version">Version {{ version.number }}</h4>
 
+            @if(readyToGo())
+            {
+            <ion-button [routerLink]="['/neue-bestellung']">Starte Bestellung</ion-button>
+            }
+            @else if(!aufnehmerSelected())
+            {
+            <ion-button (click)="selectAufnehmer()">Aufnehmer:in auswählen</ion-button>
+            }
+            @else
+            {
+            <p>Daten und Systeme müssen verfügbar sein!</p>
+            }
+
             <div class="tiles">
-
-                <div class="tile ion-activatable ripple-parent" (click)="initComplete()" [ngClass]="{'tile--success': settings.locale.deviceName?.length && data.version}">
-                    <ion-grid>
-                        <ion-row class="ion-align-items-center">
-                            <ion-col size="auto">
-                                <ion-icon *ngIf="settings.locale.deviceName?.length && data.version" class="start-icon" name="rocket-outline"></ion-icon>
-                                <ion-icon *ngIf="settings.locale.deviceName?.length == 0 || !data.version" class="start-icon" name="create-outline"></ion-icon>
-                            </ion-col>
-                            <ion-col *ngIf="settings.locale.deviceName?.length && data.version">
-                                <h4>Initilisierung vollständig</h4>
-                                <p>Hier drücken, um fortzufahren!</p>
-                            </ion-col>
-                            <ion-col *ngIf="settings.locale.deviceName?.length == 0 || !data.version">
-                                <h4>Initilisierung unvollständig</h4>
-                                <p>Die Probleme können unten behoben werden</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                    <ion-ripple-effect></ion-ripple-effect>
-                </div>
-
-                <div class="tile-divider"></div>
-
-                <div class="tile ion-activatable ripple-parent" [ngClass]="{'tile--clickable': data.version}">
-                    <ion-grid>
-                        <ion-row class="ion-align-items-center">
-                            <ion-col size="auto">
-                                <ion-icon class="start-icon" name="cube-outline"></ion-icon>
-                            </ion-col>
-                            <ion-col>
-                                <h4>Daten Synchronisierung</h4>
-                                <p *ngIf="data.version">{{ data.saved | date: 'dd.MM.YYYY HH:mm:ss' }}</p>
-                                <p *ngIf="!data.version">Keine Daten vorhanden!</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                    <ion-ripple-effect></ion-ripple-effect>
-                </div>
-
-                <div class="tile ion-activatable ripple-parent" [ngClass]="{'tile--clickable': settings.locale?.deviceName?.length}" routerLink="/settings">
-                    <ion-grid>
-                        <ion-row class="ion-align-items-center">
-                            <ion-col size="auto">
-                                <ion-icon class="start-icon" name="phone-portrait-outline"></ion-icon>
-                            </ion-col>
-                            <ion-col>
-                                <h4>Gerät</h4>
-                                <p *ngIf="!settings.locale.deviceName?.length">Der Gerätename fehlt!</p>
-                                <p *ngIf="settings.locale.deviceName?.length">{{ settings.locale?.deviceName }}</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                    <ion-ripple-effect></ion-ripple-effect>
-                </div>
-
-                <div class="tile tile--clickable ion-activatable ripple-parent" (click)="systemstatusAbrufen()">
-                    <ion-grid>
-                        <ion-row class="ion-align-items-center">
-                            <ion-col size="auto">
-                                <ion-icon class="start-icon" name="shield-checkmark-outline"></ion-icon>
-                            </ion-col>
-                            <ion-col>
-                                <h4>Verbindungen Checken</h4>
-                                <p>API & Drucker</p>
-                            </ion-col>
-                        </ion-row>
-                    </ion-grid>
-                    <ion-ripple-effect></ion-ripple-effect>
-                </div>
-
+                <app-init-tile title="Aufnehmer" [success]="aufnehmerSelected()" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></app-init-tile>
+                <app-init-tile title="Gerät" [success]="deviceNameSet()" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></app-init-tile>
+                <app-init-tile title="Daten" [success]="dataLoaded()" (click)="dataShowLoadedDetails()" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></app-init-tile>
+                <app-init-tile title="System" [success]="allSystemsAvailable()" (click)="dataShowAvailabilityDetails()" [subtitle]="availabilityStatusForSubtitle()" iconName="shield-checkmark-outline"></app-init-tile>
             </div>
         </div>
     </div>

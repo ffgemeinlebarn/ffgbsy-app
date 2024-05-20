@@ -1,10 +1,9 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-// import { NgxLoggerLevel } from 'ngx-logger';
+import { Component, OnInit, inject } from '@angular/core';
 import { ApiService } from 'src/app/services/api/api.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+
 import { IonicModule } from '@ionic/angular';
 
 @Component({
@@ -13,16 +12,17 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./logs.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        NgFor,
-        FormsModule,
-    ],
+    IonicModule,
+    FormsModule
+],
 })
-export class LogsPage implements OnInit {
+export class LogsPage {
+    api = inject(ApiService);
+    frontend = inject(FrontendService);
 
     public logs: Array<any>;
     public usedFilter: any = {
-        // level: NgxLoggerLevel.INFO,
+        level: 'info',
         limit: 10
     };
 
@@ -31,8 +31,6 @@ export class LogsPage implements OnInit {
         limits: [5, 10, 25, 50, 100]
     };
 
-    constructor(private api: ApiService, public frontend: FrontendService) { }
-    ngOnInit() { }
 
     public searchLogs() {
         let params = new HttpParams();

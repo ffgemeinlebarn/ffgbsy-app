@@ -1,43 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { SettingsService } from './services/settings/settings.service';
-import { BestellungenHandlerService } from './services/bestellungen/bestellungen-handler.service';
-import { FrontendService } from './services/frontend/frontend.service';
-import { DataService } from './services/data/data.service';
-import { environment } from 'src/environments/environment';
-import { NotificationService } from './services/notification/notification.service';
-import { EditService } from './services/edit/edit.service';
-import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonMenuToggle, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
-import { NgClass, NgIf } from '@angular/common';
-import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
+import { NgClass } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { addIcons } from 'ionicons';
-import {
-    alertCircle,
-    arrowUndo,
-    checkmarkCircle,
-    closeCircle,
-    closeOutline,
-    createOutline,
-    cubeOutline,
-    fileTrayOutline,
-    gitPullRequest,
-    navigateCircleOutline,
-    notificationsOutline,
-    peopleOutline,
-    personOutline,
-    phonePortraitOutline,
-    pulseOutline,
-    radioButtonOff,
-    refreshOutline,
-    rocketOutline,
-    save,
-    searchOutline,
-    send,
-    settingsOutline,
-    shieldCheckmarkOutline,
-    star,
-    timerOutline,
-} from 'ionicons/icons';
+import { IonApp, IonContent, IonMenu, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
+import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
+import { MenuComponent } from './components/menu/menu/menu.component';
+import { AppService } from './services/app/app.service';
+import { IonIconsService } from './services/ion-icons/ion-icons.service';
 
 @Component({
     selector: 'ffgbsy-root',
@@ -48,61 +16,24 @@ import {
         FrontendLoadingComponent,
         RouterLink,
         NgClass,
-        NgIf,
         IonApp,
         IonSplitPane,
         IonMenu,
         IonContent,
-        IonList,
-        IonMenuToggle,
-        IonItem,
-        IonIcon,
-        IonLabel,
-        IonRouterOutlet
+        IonRouterOutlet,
+        MenuComponent
     ]
 })
 export class AppComponent {
 
-    public isAdmin: boolean = false;
+    private ionicIcons = inject(IonIconsService);
+    private appService = inject(AppService);
 
-    constructor(
-        public settings: SettingsService,
-        public bestellungsHandler: BestellungenHandlerService,
-        public data: DataService,
-        public frontend: FrontendService,
-        public notification: NotificationService,
-        public edit: EditService
-    ) {
-        this.settings.ready.then(() => {
-            this.isAdmin = environment.localAdminPin == this.settings.locale.adminPin;
-        });
+    public aufnehmer = this.appService.aufnehmer;
+    public isAdmin = this.appService.isAdmin;
+    public zoomLevel = computed(() => `zoom-level--${this.aufnehmer()?.zoom_level ?? 1}`);
 
-        addIcons({
-            alertCircle,
-            arrowUndo,
-            checkmarkCircle,
-            closeCircle,
-            closeOutline,
-            createOutline,
-            cubeOutline,
-            fileTrayOutline,
-            gitPullRequest,
-            navigateCircleOutline,
-            notificationsOutline,
-            peopleOutline,
-            personOutline,
-            phonePortraitOutline,
-            pulseOutline,
-            radioButtonOff,
-            refreshOutline,
-            rocketOutline,
-            save,
-            searchOutline,
-            send,
-            settingsOutline,
-            shieldCheckmarkOutline,
-            star,
-            timerOutline,
-        });
+    constructor() {
+        this.ionicIcons.useDefinedIcons();
     }
 }

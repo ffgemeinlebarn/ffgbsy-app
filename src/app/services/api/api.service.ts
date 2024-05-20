@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { tap, retry, catchError, map } from 'rxjs/operators';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.class';
@@ -10,23 +10,20 @@ import { Daten } from 'src/app/interfaces/daten';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
 import { BonDruck } from 'src/app/classes/bonDruck';
-import { Notification } from 'src/app/classes/notification.class';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { Produkt } from 'src/app/classes/produkt.class';
-// import { NGXLogger } from 'ngx-logger';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ApiService {
-    private url: string = null;
+    private http = inject(HttpClient);
+    public frontend = inject(FrontendService);
+
+    public url: string = null;
     private headers: HttpHeaders = null;
 
-    constructor(
-        // private logger: NGXLogger,
-        private http: HttpClient,
-        public frontend: FrontendService
-    ) {
+    constructor() {
         this.loadEnvironment();
     }
 
@@ -49,8 +46,7 @@ export class ApiService {
         }
 
         // this.logger.error('[API Service] Error Handling', error);
-
-        return throwError(error);
+        throw error;
     }
 
     public getCurrentVersion(): Observable<number> {
@@ -218,39 +214,6 @@ export class ApiService {
         this.frontend.showLoadingSpinner('Empfange Produktkategorien Statistik');
         return this.http
             .get(`${this.url}/statistiken/produktkategorien`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
-
-    // Notifications
-
-    public getNotificationsSince(since: Date): Observable<Array<Notification>> {
-        const isoDateTime = new Date(since.getTime() - (since.getTimezoneOffset() * 60000)).toISOString();
-        return this.http
-            .get(`${this.url}/notifications/since/${isoDateTime}`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                catchError((error) => this.errorHandler(error, true))
-            );
-    }
-
-    public getNotificationsUntil(until: Date): Observable<Array<Notification>> {
-        const isoDateTime = new Date(until.getTime() - (until.getTimezoneOffset() * 60000)).toISOString();
-        return this.http
-            .get(`${this.url}/notifications/until/${isoDateTime}`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                catchError((error) => this.errorHandler(error, true))
-            );
-    }
-
-    public createNotification(notification: Notification): Observable<Notification> {
-        this.frontend.showLoadingSpinner('Sende Benachrichtigung');
-        return this.http
-            .post(`${this.url}/notifications`, notification, { headers: this.headers })
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),

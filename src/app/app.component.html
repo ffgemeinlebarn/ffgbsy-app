@@ -1,104 +1,14 @@
-<ion-app [ngClass]="'zoom-level--' + (bestellungsHandler?.aufnehmer?.zoom_level ?? 1)">
+<ion-app [ngClass]="zoomLevel()">
 
     <ion-split-pane contentId="main-content" when="lg">
 
-        <!--  Menu  -->
         <ion-menu side="start" menuId="sidemenu" contentId="main-content">
             <ion-content>
-                <div class="container">
-                    <!-- Menu Links -->
-                    <ion-list class="sidemenu-main-menu" lines="full">
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/neue-bestellung']">
-                                <ion-icon name="create-outline" slot="start"></ion-icon>
-                                <ion-label>Neue Bestellung</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/bestellungen']">
-                                <ion-icon name="file-tray-outline" slot="start"></ion-icon>
-                                <ion-label>Bestellungen</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/notifications']">
-                                <ion-icon name="notifications-outline" slot="start"></ion-icon>
-                                <ion-label>Benachrichtigungen</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/systemstatus']">
-                                <ion-icon name="pulse-outline" slot="start"></ion-icon>
-                                <ion-label>Systemstatus</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/settings']">
-                                <ion-icon name="settings-outline" slot="start"></ion-icon>
-                                <ion-label>Systemeinstellungen</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/aufnehmer-edit']" [disabled]="!bestellungsHandler?.aufnehmer">
-                                <ion-icon name="person-outline" slot="start"></ion-icon>
-                                <ion-label>Aufnehmer Einstellungen</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                    </ion-list>
-
-                    <ion-list *ngIf="isAdmin" class="sidemenu-admin-menu" lines="full">
-                        <ion-item-divider>
-                            <ion-label>Information</ion-label>
-                        </ion-item-divider>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/admin/statistics']">
-                                <ion-icon name="stats-chart-outline" slot="start"></ion-icon>
-                                <ion-label>Statistiken</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/admin/notifactions']">
-                                <ion-icon name="send-outline" slot="start"></ion-icon>
-                                <ion-label>Benachrichtigungen</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/admin/logs']">
-                                <ion-icon name="bug-outline" slot="start"></ion-icon>
-                                <ion-label>Logs</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-item-divider>
-                            <ion-label>Daten</ion-label>
-                        </ion-item-divider>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/admin/grundprodukte']">
-                                <ion-icon name="restaurant-outline" slot="start"></ion-icon>
-                                <ion-label>Grundprodukte</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-item [routerLink]="['/admin/produkte']">
-                                <ion-icon name="beer-outline" slot="start"></ion-icon>
-                                <ion-label>Produkte</ion-label>
-                            </ion-item>
-                        </ion-menu-toggle>
-                    </ion-list>
-
-                    <!-- Session Info - Session Beenden -->
-                    <div class="init-button">
-                        <ion-menu-toggle auto-hide="false">
-                            <ion-button routerLink="/">
-                                <ion-icon slot="start" name="refresh-outline"></ion-icon> Initialisierung
-                            </ion-button>
-                        </ion-menu-toggle>
-                    </div>
-                </div>
+                <ffgbsy-menu></ffgbsy-menu>
             </ion-content>
         </ion-menu>
 
         <div id="main-content">
-            <!-- Router Outlet -->
             <ion-router-outlet> </ion-router-outlet>
         </div>
 

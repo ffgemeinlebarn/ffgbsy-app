@@ -1,0 +1,17 @@
+:host {
+
+    ion-item {
+        --padding-start: var(--ffgbsy-menu-item-padding-start);
+
+        ion-label {
+            height: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        ion-icon[slot=start] {
+            margin-inline-end: 24px;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+:host {
+    --ffgbsy-menu-item-padding-start: 24px;
+
+    h2.ion-padding {
+        padding-left: var(--ffgbsy-menu-item-padding-start);
+        padding-bottom: 10px;
+        margin-bottom: 0;
+    }
+
+    ffgbsy-menu-item {
+        --padding-start: var(--ffgbsy-menu-item-padding-start);
+    }
+}
