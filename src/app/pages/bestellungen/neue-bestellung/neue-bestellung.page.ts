@@ -40,8 +40,16 @@ export class NeueBestellungPage {
     *******************************************************************************/
 
     selectTisch(tisch: Tisch) {
-        this.bestellung().tisch = tisch;
-        this.bestellung().status = 'bestellpositionen';
+        this.bestellung.update((bestellung) => {
+            if (bestellung.tisch == null) {
+                bestellung.setTimestampBegonnen();
+            }
+
+            bestellung.tisch = tisch;
+            bestellung.status = 'bestellpositionen';
+
+            return bestellung;
+        });
     }
 
     /*******************************************************************************
