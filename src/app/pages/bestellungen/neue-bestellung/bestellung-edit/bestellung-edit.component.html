@@ -1,84 +1,84 @@
 <ion-content class="status-current-bestellpositionen">
-  <div class="content">
-    <div class="content-left">
-      <div class="tisch">
-        <h1>{{ bestellung().tisch?.reihe }} {{ bestellung().tisch?.nummer }}</h1>
-        <ion-button fill="outline" size="small" color="light" (click)="changeTisch()" (keypress)="changeTisch()">
-          <ion-label>ändern</ion-label>
-          <ion-icon name="settings-outline" slot="end"></ion-icon>
-        </ion-button>
-      </div>
-      <div class="bestellpositionen">
-        <ion-list>
-          @for(bp of bestellung().bestellpositionen.slice().reverse(); track $index){
-            <ion-item button (click)="editBestellungsposition(bp, $index)" (keypress)="editBestellungsposition(bp, $index)">
-              <ion-label text-wrap>
-                <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
-                <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
-                @if (bp.display.eigenschaften.mit.length) {
-                  <p><strong>Mit:</strong> {{ bp.display.eigenschaften.mit.join(", ") }}</p>
+    <div class="content">
+        <div class="content-left">
+            <div class="tisch">
+                <h1>{{ bestellung().tisch?.reihe }} {{ bestellung().tisch?.nummer }}</h1>
+                <ion-button fill="outline" size="small" color="light" (click)="changeTisch()" (keypress)="changeTisch()">
+                    <ion-label>ändern</ion-label>
+                    <ion-icon name="settings-outline" slot="end"></ion-icon>
+                </ion-button>
+            </div>
+            <div class="bestellpositionen">
+                <ion-list>
+                    @for(bp of bestellung().bestellpositionen.slice().reverse(); track $index){
+                    <ion-item button (click)="editBestellungsposition(bp, $index)" (keypress)="editBestellungsposition(bp, $index)">
+                        <ion-label text-wrap>
+                            <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
+                            <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
+                            @if (bp.display.eigenschaften.mit.length) {
+                            <p><strong>Mit:</strong> {{ bp.display.eigenschaften.mit.join(", ") }}</p>
+                            }
+                            @if (bp.display.eigenschaften.ohne.length) {
+                            <p><strong>Ohne:</strong> {{ bp.display.eigenschaften.ohne.join(", ") }}</p>
+                            }
+                            @if (bp.notiz) {
+                            <p><strong>Notiz:</strong> {{ bp.notiz }}</p>
+                            }
+                        </ion-label>
+                    </ion-item>
+                    }
+                </ion-list>
+            </div>
+        </div>
+        <div class="content-right">
+            <ion-list>
+                @for(produkteinteilung of filtredProdukteinteilungenToDisplay(); track produkteinteilung)
+                {
+                <ion-item-divider>{{ produkteinteilung.name }}</ion-item-divider>
+                @for (produkt of produkteinteilung.produkte; track produkt) {
+                <ion-item button (click)="addBestellposition(produkt, 'standard', $event)" (keypress)="addBestellposition(produkt, 'standard', $event)">
+                    <ion-label text-wrap>
+                        <h2>{{ produkt?.name }}</h2>
+                        <p>{{ produkt?.preis | euroPreis }}</p>
+                    </ion-label>
+                    <ion-button slot="end" shape="round" (click)="addBestellposition(produkt, 'new_line', $event)" (keypress)="addBestellposition(produkt, 'new_line', $event)">
+                        <ion-icon name="git-pull-request" slot="icon-only"></ion-icon>
+                    </ion-button>
+                </ion-item>
                 }
-                @if (bp.display.eigenschaften.ohne.length) {
-                  <p><strong>Ohne:</strong> {{ bp.display.eigenschaften.ohne.join(", ") }}</p>
                 }
-                @if (bp.notiz) {
-                  <p><strong>Notiz:</strong> {{ bp.notiz }}</p>
-                }
-              </ion-label>
-            </ion-item>
-          }
-        </ion-list>
-      </div>
+            </ion-list>
+        </div>
     </div>
-    <div class="content-right">
-      <ion-list>
-        @for(produkteinteilung of filtredProdukteinteilungenToDisplay(); track produkteinteilung)
-          {
-          <ion-item-divider>{{ produkteinteilung.name }}</ion-item-divider>
-          @for (produkt of produkteinteilung.produkte; track produkt) {
-            <ion-item button (click)="addBestellposition(produkt, 'standard', $event)" (keypress)="addBestellposition(produkt, 'standard', $event)">
-              <ion-label text-wrap>
-                <h2>{{ produkt?.name }}</h2>
-                <p>{{ produkt?.preis | euroPreis }}</p>
-              </ion-label>
-              <ion-button slot="end" shape="round" (click)="addBestellposition(produkt, 'new_line', $event)" (keypress)="addBestellposition(produkt, 'new_line', $event)">
-                <ion-icon name="git-pull-request" slot="icon-only"></ion-icon>
-              </ion-button>
-            </ion-item>
-          }
-        }
-      </ion-list>
-    </div>
-  </div>
 </ion-content>
 
 <ion-footer class="status-current-bestellpositionen">
-  <div class="footer">
-    <div class="footer-left">
-      <div class="summe">
-        <span class="summe__euro">€</span>
-        <span class="summe__betrag">{{ bestellung().calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
-      </div>
-      <div class="submit">
-        <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" (keypress)="kontrolliereBestellung()" [disabled]="bestellung().bestellpositionen.length == 0">
-          <ion-label>Abschluss </ion-label>
-          <ion-icon slot="start" name="checkmark-circle"></ion-icon>
-        </ion-button>
-      </div>
-    </div>
-    <div class="footer-right">
-      <div class="kachelwand">
-        @for(produktkategorie of produktkategorien(); track produktkategorie.id)
-          {
-          <div class="kachel produktkategorie-kachel">
-            <div class="kachel__inner" [ngClass]="produktkategorie.color">
-              <ion-button text-wrap text-normal expand="full" (click)="selectProduktkategorie(produktkategorie)" (keypress)="selectProduktkategorie(produktkategorie)">
-                <span class="button-inner">{{produktkategorie.name}}</span>
-              </ion-button>
+    <div class="footer">
+        <div class="footer-left">
+            <div class="summe">
+                <span class="summe__euro">€</span>
+                <span class="summe__betrag">{{ bestellung().calcSumme() | euroPreis: {'symbol': false, 'zerotext': false} }}</span>
             </div>
-          </div>
-        }
-      </div>
+            <div class="submit">
+                <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" (keypress)="kontrolliereBestellung()" [disabled]="bestellung().bestellpositionen.length == 0">
+                    <ion-label>Abschluss </ion-label>
+                    <ion-icon slot="start" name="checkmark-circle"></ion-icon>
+                </ion-button>
+            </div>
+        </div>
+        <div class="footer-right">
+            <div class="kachelwand">
+                @for(produktkategorie of produktkategorien(); track produktkategorie.id)
+                {
+                <div class="kachel produktkategorie-kachel">
+                    <div class="kachel__inner" [ngClass]="produktkategorie.color">
+                        <ion-button text-wrap text-normal expand="full" (click)="selectProduktkategorie(produktkategorie)" (keypress)="selectProduktkategorie(produktkategorie)">
+                            <span class="button-inner">{{produktkategorie.name}}</span>
+                        </ion-button>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
     </div>
-  </div>
 </ion-footer>

@@ -46,7 +46,6 @@ export class BestellungEditComponent {
         this.bestellung().status = 'tischauswahl';
     }
 
-
     /*******************************************************************************
     *** Aufnahme der Bestellpositionen
     *******************************************************************************/
@@ -138,9 +137,6 @@ export class BestellungEditComponent {
 
         const modal = await this.modalController.create({
             component: BestellungKontrolleModalComponent,
-            componentProps: {
-                bestellung: this.app.bestellung()
-            },
             cssClass: 'classic-modal',
             showBackdrop: true,
             backdropDismiss: false,

@@ -1,20 +1,22 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
-import { SettingsService } from '../settings/settings.service';
-import { environment } from 'src/environments/environment';
-import { DataService } from '../data/data.service';
-import { AvailabilityService } from '../availability/availability.service';
 import { ModalController } from '@ionic/angular/standalone';
-import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
+import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { Tisch } from 'src/app/classes/tisch.class';
+import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
+import { environment } from 'src/environments/environment';
+import { ApiService } from '../api/api.service';
+import { AvailabilityService } from '../availability/availability.service';
+import { FrontendService } from '../frontend/frontend.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AppService {
     private settings = inject(SettingsService);
-    private data = inject(DataService);
+    private frontend = inject(FrontendService);
+    private api = inject(ApiService);
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
 
@@ -68,6 +70,31 @@ export class AppService {
     }
 
     public sendBestellung() {
-        console.log("Call the API...");
+        this.api.createBestellung(this.bestellung()).subscribe((bestellung) => {
+        });
+        this.api.createBestellung(this.bestellung()).subscribe({
+            next: (bestellung) => {
+
+                this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
+                this.bestellung.set(null);
+
+                this.api.druckBons(bestellung.bestellbons).subscribe({
+                    next: (bons) => {
+                        if (bons.filter(b => !b.success).length == 0) {
+                            this.frontend.showToast("Alle Bons wurden erfolgreich gedruckt!", 2000);
+                        } else {
+                            this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten nicht alle Bons gedruckt werden!\n\nWeitere Details unter dem Menüpunkt "Bestellungen".');
+                        }
+                    },
+                    error: (error) => {
+                        this.frontend.showOkAlert('Fehler beim Drucken der Bons', error.message);
+                    }
+                });
+
+            },
+            error: (errResult) => {
+                this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', errResult.error.error.description);
+            }
+        });
     }
 }
