@@ -1,8 +1,9 @@
-import { Bestellposition } from "./bestellposition.model";
-import { Aufnehmer } from "./aufnehmer.model";
-import { Tisch } from "./tisch.class";
-import { Bon } from "./bon.model";
+import { parseZone } from "moment";
 import { Bestellstatus } from "../types/bestellstatus.type";
+import { Aufnehmer } from "./aufnehmer.model";
+import { Bestellposition } from "./bestellposition.model";
+import { Bon } from "./bon.model";
+import { Tisch } from "./tisch.class";
 
 export class Bestellung {
     public id: number;
@@ -15,10 +16,10 @@ export class Bestellung {
 
     public timestamp_begonnen: any = null;
     public timestamp_beendet: any = null;
-    public bestellpositionen: Array<Bestellposition> = Array();
-    public stornopositionen: Array<Bestellposition> = Array();
-    public bestellbons: Array<Bon> = Array();
-    public stornobons: Array<Bon> = Array();
+    public bestellpositionen: Bestellposition[] = [];
+    public stornopositionen: Bestellposition[] = [];
+    public bestellbons: Bon[] = [];
+    public stornobons: Bon[] = [];
 
     public summe: number | null = null;
     public summe_ohne_eigenschaften: number | null = null;
@@ -37,9 +38,7 @@ export class Bestellung {
     }
 
     setTimestampBegonnen() {
-        let now = new Date();
-        now.setTime(now.getTime() - now.getTimezoneOffset() * 60 * 1000);
-        this.timestamp_begonnen = now.toISOString().slice(0, 19).replace('T', ' ');
+        this.timestamp_begonnen = parseZone().toISOString(true);
     }
 
     calcSumme() {

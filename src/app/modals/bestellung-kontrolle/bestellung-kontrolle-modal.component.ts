@@ -1,7 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ModalController, NavParams, IonicModule } from '@ionic/angular';
+import { Component, inject } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonLabel, IonList, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { AppService } from 'src/app/services/app/app.service';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
-
 
 @Component({
     selector: 'ffgbsy-bestellung-kontrolle-modal',
@@ -9,27 +10,31 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
     styleUrls: ['./bestellung-kontrolle-modal.component.scss'],
     standalone: true,
     imports: [
-        IonicModule,
-        EuroPreisPipe
+        IonHeader,
+        EuroPreisPipe,
+        IonContent,
+        IonList,
+        IonToolbar,
+        IonHeader,
+        IonTitle,
+        IonFooter,
+        IonButton,
+        IonIcon,
+        IonLabel
     ],
 })
-export class BestellungKontrolleModalComponent implements OnInit {
-
+export class BestellungKontrolleModalComponent {
     private modalCtrl = inject(ModalController);
-    public navParams = inject(NavParams);
+    private app = inject(AppService);
 
-    bestellung: any;
-
-    ngOnInit() {
-        this.bestellung = this.navParams.get('bestellung');
-    }
+    public bestellung = this.app.bestellung;
 
     closeModal() {
-        this.modalCtrl.dismiss(false);
+        this.modalCtrl.dismiss();
     }
 
     sendBestellung() {
-        this.modalCtrl.dismiss(true);
+        this.app.sendBestellung();
+        this.modalCtrl.dismiss();
     }
-
 }
