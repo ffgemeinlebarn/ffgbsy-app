@@ -94,7 +94,10 @@ export class ProdukteDetailPage {
             eigenschaft.in_produkt_enthalten = await (await alert.onWillDismiss()).data;
 
             if (!this.produkt().eigenschaften.find(e => e.id === eigenschaft.id)) {
-                this.produkt().eigenschaften.push(eigenschaft);
+                this.produkt.update((produkt) => {
+                    produkt.eigenschaften.push(eigenschaft);
+                    return produkt;
+                });
             }
         }
     }

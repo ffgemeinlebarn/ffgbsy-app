@@ -1,10 +1,10 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
+import { BaseChartDirective } from 'ng2-charts';
 import { ApiService } from 'src/app/services/api/api.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
-import { NgChartsModule } from 'ng2-charts';
-import { DatePipe } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
 
 @Component({
     selector: 'ffgbsy-statistics',
@@ -13,9 +13,9 @@ import { IonicModule } from '@ionic/angular';
     standalone: true,
     imports: [
         IonicModule,
-        NgChartsModule,
         DatePipe,
-        EuroPreisPipe
+        EuroPreisPipe,
+        BaseChartDirective
     ],
 })
 export class StatisticsPage implements OnInit {
