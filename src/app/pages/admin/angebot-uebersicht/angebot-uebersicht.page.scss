@@ -1,6 +1,19 @@
-.angebot-uebersicht-table {
-    width: 100%;
+.eigenschaften-tables {
+    display: flex;
+    flex-direction: row;
+}
+
+table.angebot-uebersicht-table,
+table.eigenschaften-table {
     font-size: 0.9rem;
+
+    &.angebot-uebersicht-table {
+        width: 100%;
+    }
+
+    &.eigenschaften-table {
+        width: 50%;
+    }
 
     * {
         margin: 0;
