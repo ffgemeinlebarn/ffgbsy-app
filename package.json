@@ -1,8 +1,9 @@
 {
     "name": "@ffgemeinlebarn/ffgbsy",
     "version": "1.0.0",
+    "description": "FF Gemeinlebarn Bestellsystem",
     "author": "Jakob Vesely",
-    "homepage": "https://jakob.fyi",
+    "homepage": "https://www.jakob.fyi",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
@@ -58,6 +59,5 @@
         "ts-node": "~10.9.2",
         "tslint": "^6.1.3",
         "typescript": "~5.5.3"
-    },
-    "description": "An Ionic project"
+    }
 }
