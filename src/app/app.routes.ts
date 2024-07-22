@@ -14,10 +14,13 @@ export const routes: Routes = [
     {
         path: 'admin',
         children: [
-
             {
                 path: 'statistics',
                 loadComponent: () => import('./pages/admin/statistics/statistics.page').then(m => m.StatisticsPage)
+            },
+            {
+                path: 'uebersicht-angebot',
+                loadComponent: () => import('./pages/admin/angebot-uebersicht/angebot-uebersicht.page').then(m => m.AngebotUebersichtPage)
             },
             {
                 path: 'grundprodukte',
@@ -36,5 +39,9 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
             }
         ]
+    },
+    {
+        path: 'angebot-uebersicht',
+        loadComponent: () => import('./pages/admin/angebot-uebersicht/angebot-uebersicht.page').then(m => m.AngebotUebersichtPage)
     }
 ];

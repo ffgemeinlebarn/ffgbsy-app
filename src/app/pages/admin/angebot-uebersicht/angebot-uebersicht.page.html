@@ -1,0 +1,167 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Produkte & Eigenschaften</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="invokePrintingDialog()">
+                <ion-icon name="print-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div #print>
+        <h1 class="ion-padding">Übersicht über Produkte und Eigenschaften</h1>
+        <table class="angebot-uebersicht-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produkt</th>
+                    <th>Preis</th>
+                    <th>Einordnung und formaler Name</th>
+                    <th>Eigenschaften</th>
+                    <th>Drucker</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (produkt of produkte(); track produkt.id) {
+                <tr>
+                    <td class="id">
+                        {{ produkt.id }}
+                    </td>
+                    <td class="produkt">
+                        <p class="name">{{ produkt.name }}</p>
+                    </td>
+                    <td class="preis">
+                        {{ produkt.preis | euroPreis }}
+                    </td>
+                    <td class="meta">
+                        <p class="formal_name">{{ produkt.formal_name }}</p>
+                        <div class="breadcrumbs">
+                            {{ produkt.produkteinteilung?.produktkategorie?.produktbereich?.name }}
+                            <ion-icon name="chevron-forward"></ion-icon>
+                            {{ produkt.produkteinteilung?.produktkategorie?.name }}
+                            <ion-icon name="chevron-forward"></ion-icon>
+                            {{ produkt.produkteinteilung?.name }}
+                        </div>
+                    </td>
+                    <td class="eigenschaften">
+                        @if(produkt.eigenschaften.length){
+                        <div class="eigenschaften-line">
+                            <div class="title">Von Produkt:</div>
+                            @for (e of produkt.eigenschaften; track e) {
+                            @if(e.in_produkt_enthalten){
+                            <div class="eigenschaft">
+                                <ion-icon name="checkmark-circle"></ion-icon>
+                                <span>{{e.name}} ({{e.preis | euroPreis}})</span>
+                            </div>
+                            }
+                            }
+                            @for (e of produkt.eigenschaften; track e) {
+                            @if(!e.in_produkt_enthalten){
+                            <div class="eigenschaft">
+                                <ion-icon name="add-circle-outline"></ion-icon>
+                                <span>{{e.name}} ({{e.preis | euroPreis}})</span>
+                            </div>
+                            }
+                            }
+                        </div>
+                        }
+
+                        @if(produkt.produkteinteilung?.produktkategorie?.eigenschaften.length){
+                        <div class="eigenschaften-line">
+                            <div class="title">Vererbt:</div>
+                            @for (e of produkt.produkteinteilung?.produktkategorie.eigenschaften; track e) {
+                            @if(e.in_produkt_enthalten){
+                            <div class="eigenschaft">
+                                <ion-icon name="checkmark-circle"></ion-icon>
+                                <span>{{e.name}} ({{e.preis | euroPreis}})</span>
+                            </div>
+                            }
+                            }
+                            @for (e of produkt.produkteinteilung?.produktkategorie.eigenschaften; track e) {
+                            @if(!e.in_produkt_enthalten){
+                            <div class="eigenschaft">
+                                <ion-icon name="add-circle-outline"></ion-icon>
+                                <span>{{e.name}} ({{e.preis | euroPreis}})</span>
+                            </div>
+                            }
+                            }
+                        </div>
+                        }
+                    </td>
+                    <td class="drucker">
+                        @if (produkt.drucker_id_level_2)
+                        {
+                        <p>{{ produkt.drucker?.name }}</p>
+                        <p>Level 2 (am Produkt definiert)</p>
+                        }
+                        @else if (produkt.produkteinteilung?.produktkategorie?.drucker_id_level_1)
+                        {
+                        <p>{{ produkt.produkteinteilung?.produktkategorie.drucker?.name }}</p>
+                        <p>Level 1 (Vererbt von Produktkategorie)</p>
+                        }
+                        @else
+                        {
+                        <p>{{ produkt.produkteinteilung?.produktkategorie?.produktbereich?.drucker?.name }}</p>
+                        <p>Level 0 (Vererbt von Produktbereich)</p>
+                        }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <h1 class="ion-padding">Eigenschaften</h1>
+        <div class="eigenschaften-tables">
+            <table class="eigenschaften-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Eigenschaft</th>
+                        <th>Preis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (eigenschaft of eigenschaftenRow1(); track eigenschaft.id) {
+                    <tr>
+                        <td class="id">
+                            {{ eigenschaft.id }}
+                        </td>
+                        <td class="eigenschaft">
+                            <p class="name">{{ eigenschaft.name }}</p>
+                        </td>
+                        <td class="preis">
+                            {{ eigenschaft.preis | euroPreis }}
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <table class="eigenschaften-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Eigenschaft</th>
+                        <th>Preis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (eigenschaft of eigenschaftenRow2(); track eigenschaft.id) {
+                    <tr>
+                        <td class="id">
+                            {{ eigenschaft.id }}
+                        </td>
+                        <td class="eigenschaft">
+                            <p class="name">{{ eigenschaft.name }}</p>
+                        </td>
+                        <td class="preis">
+                            {{ eigenschaft.preis | euroPreis }}
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ion-content>

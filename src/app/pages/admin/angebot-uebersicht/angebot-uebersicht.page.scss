@@ -1,0 +1,96 @@
+.eigenschaften-tables {
+    display: flex;
+    flex-direction: row;
+}
+
+table.angebot-uebersicht-table,
+table.eigenschaften-table {
+    font-size: 0.9rem;
+
+    &.angebot-uebersicht-table {
+        width: 100%;
+    }
+
+    &.eigenschaften-table {
+        width: 50%;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+    }
+
+    thead {
+        tr {
+            border-bottom: 1px solid #000;
+            border-collapse: collapse;
+
+            th {
+                text-align: left;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            border-collapse: collapse;
+
+            td.produkt {
+                .name {
+                    font-size: 1em;
+                    font-weight: bold;
+                    margin-bottom: 1px;
+                }
+            }
+
+            .meta,
+            .eigenschaften,
+            .drucker {
+                font-size: 0.9em;
+            }
+
+            td.meta {
+
+                .formal_name {
+                    margin-bottom: 2px;
+                }
+
+                .breadcrumbs {
+                    color: #999;
+                }
+            }
+
+            td.eigenschaften {
+
+                .eigenschaften-line {
+                    display: block;
+                    margin-bottom: 2px;
+
+                    .title {
+                        font-weight: bold;
+                    }
+
+                    .title,
+                    .eigenschaft {
+                        display: inline-flex;
+                        align-items: center;
+                        margin-right: 2px;
+
+                        ion-icon {
+                            margin-right: 1px;
+                            font-size: 0.9em;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    td,
+    th {
+        padding: 1em;
+    }
+}

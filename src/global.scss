@@ -154,3 +154,85 @@ ion-chip.non-clickable {
         }
     }
 }
+
+@media only print {
+
+    body {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        height: auto;
+        visibility: visible;
+        overflow: visible;
+
+        h1 {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            margin-left: 0 !important;
+            margin-right: 0 !important;
+        }
+
+        .angebot-uebersicht-table,
+        .eigenschaften-table {
+            width: 100%;
+            height: auto;
+            position: relative;
+            visibility: visible;
+            overflow: visible;
+            font-size: 12px !important;
+
+            tr {
+                page-break-inside: avoid;
+
+                th,
+                td {
+                    padding: 2px 0px !important;
+                }
+            }
+        }
+
+        .angebot-uebersicht-table {
+
+            td.id {
+                width: 3%;
+            }
+
+            td.name {
+                width: 15%;
+            }
+
+            td.preis {
+                width: 5%;
+            }
+
+            td.meta {
+                width: 20%;
+            }
+
+            td.eigenschaften {
+                width: 42%;
+            }
+
+            td.drucker {
+                width: 15%;
+            }
+        }
+
+        .eigenschaften-table {
+
+            td.id {
+                width: 10%;
+            }
+
+            td.name {
+                width: 60%;
+            }
+
+            td.preis {
+                width: 30%;
+            }
+        }
+    }
+}
