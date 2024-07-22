@@ -154,3 +154,55 @@ ion-chip.non-clickable {
         }
     }
 }
+
+@media only print {
+
+    body {
+        display: block;
+        position: relative;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        height: auto;
+        visibility: visible;
+        overflow: visible;
+
+        table.angebot-uebersicht-table {
+            width: 100%;
+            height: auto;
+            position: relative;
+            visibility: visible;
+            overflow: visible;
+            font-size: 12px !important;
+
+            tr {
+                page-break-inside: avoid;
+
+                th,
+                td {
+                    padding: 2px 0px !important;
+                }
+
+                td.name {
+                    width: 15%;
+                }
+
+                td.preis {
+                    width: 5%;
+                }
+
+                td.meta {
+                    width: 20%;
+                }
+
+                td.eigenschaften {
+                    width: 45%;
+                }
+
+                td.drucker {
+                    width: 15%;
+                }
+            }
+        }
+    }
+}
