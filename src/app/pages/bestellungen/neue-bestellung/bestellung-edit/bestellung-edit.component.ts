@@ -31,7 +31,6 @@ export class BestellungEditComponent {
     public filtredProdukteinteilungenToDisplay = signal<Produkteinteilung[]>([]);
 
     constructor() {
-
         effect(() => {
             if (this.selectedProduktkategorie() == null) {
                 this.selectProduktkategorie(this.produktkategorien()[0]);
@@ -42,8 +41,11 @@ export class BestellungEditComponent {
     }
 
 
-    changeTisch() {
-        this.bestellung().status = 'tischauswahl';
+    public changeTisch() {
+        this.bestellung.update((bestellung) => {
+            bestellung.status = 'tischauswahl';
+            return bestellung;
+        });
     }
 
     /*******************************************************************************
@@ -78,7 +80,10 @@ export class BestellungEditComponent {
         }
 
         if (!added) {
-            this.bestellung().addBestellposition(new Bestellposition(produkt));
+            this.bestellung.update((bestellung) => {
+                bestellung.addBestellposition(new Bestellposition(produkt));
+                return bestellung;
+            });
         }
     }
 

@@ -2,7 +2,6 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
-import { Tisch } from 'src/app/classes/tisch.class';
 import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../api/api.service';
@@ -58,11 +57,6 @@ export class AppService {
         bestellung.status = 'tischauswahl';
 
         this.bestellung.set(bestellung);
-    }
-
-    public setTischOfBestellung(tisch: Tisch) {
-        this.bestellung().tisch = tisch;
-        this.bestellung().setTimestampBegonnen();
     }
 
     public cancelBestellung() {
