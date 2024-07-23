@@ -5,9 +5,10 @@
     </ion-toolbar>
 </ion-header>
 
+@defer (when grundprodukte()) {
 <ion-content>
     <ion-list>
-        @for (grundprodukt of grundprodukte(); track grundprodukt) {
+        @for (grundprodukt of grundprodukte(); track grundprodukt.id) {
         <ion-item [routerLink]="[grundprodukt.id]">
             <ion-label>
                 <h3>{{ grundprodukt.name }}</h3>
@@ -34,3 +35,8 @@
         }
     </ion-list>
 </ion-content>
+}
+
+@placeholder{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}
