@@ -103,9 +103,8 @@ export class ProdukteDetailPage {
     }
 
     public save() {
-        const patchedProdukt = { ...this.produkt(), ...this.form.value };
         this.produkteService
-            .update(patchedProdukt)
+            .update({ ...this.produkt(), ...this.form.value })
             .subscribe(p => {
                 this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
                 this.produkteService.readAll().subscribe(_ => this.load(this.id()));

@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { EditService } from 'src/app/services/edit/edit.service';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonHeader, IonList, IonMenuButton, IonTitle, IonToolbar } from "@ionic/angular/standalone";
+import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
 
 @Component({
     selector: 'ffgbsy-grundprodukte',
@@ -10,10 +10,17 @@ import { IonicModule } from '@ionic/angular';
     styleUrls: ['./grundprodukte.page.scss'],
     standalone: true,
     imports: [
-    IonicModule,
-    RouterLink
-],
+        IonContent,
+        IonToolbar,
+        IonTitle,
+        IonList,
+        IonHeader,
+        RouterLink,
+        IonMenuButton
+    ],
 })
 export class GrundproduktePage {
-    edit = inject(EditService);
+    private grundProdukteService = inject(GrundprodukteService);
+
+    public grundprodukte = toSignal(this.grundProdukteService.readAll());
 }
