@@ -24,7 +24,7 @@ export const routes: Routes = [
             },
             {
                 path: 'grundprodukte',
-                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte/grundprodukte.page').then(m => m.GrundproduktePage)
+                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-list/grundprodukte-list.page').then(m => m.GrundprodukteListPage)
             },
             {
                 path: 'grundprodukte/:id',
