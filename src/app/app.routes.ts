@@ -61,11 +61,27 @@ export const routes: Routes = [
             {
                 path: 'produkte/:id',
                 loadComponent: () => import('./pages/admin/daten/produkte/produkte-detail/produkte-detail.page').then(m => m.ProdukteDetailPage)
+            },
+            {
+                path: 'aufnehmer',
+                loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-list/aufnehmer-list.page').then(m => m.AufnehmerListPage)
+            },
+            {
+                path: 'aufnehmer/:id',
+                loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-detail/aufnehmer-detail.page').then(m => m.AufnehmerDetailPage)
             }
         ]
     },
     {
         path: 'angebot-uebersicht',
         loadComponent: () => import('./pages/admin/angebot-uebersicht/angebot-uebersicht.page').then(m => m.AngebotUebersichtPage)
+    },
+    {
+        path: 'aufnehmer-list',
+        loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-list/aufnehmer-list.page').then(m => m.AufnehmerListPage)
+    },
+    {
+        path: 'aufnehmer-detail',
+        loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-detail/aufnehmer-detail.page').then(m => m.AufnehmerDetailPage)
     }
 ];
