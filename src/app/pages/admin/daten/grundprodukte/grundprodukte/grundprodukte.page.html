@@ -1,37 +1,48 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-menu-button slot="start"></ion-menu-button>
-    <ion-title>Grundprodukte</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Grundprodukte</ion-title>
+    </ion-toolbar>
 </ion-header>
 
+@defer (when grundprodukte()) {
 <ion-content>
-  <ion-list>
-    @for (grundprodukt of edit.grundprodukte; track grundprodukt) {
-      <ion-item [routerLink]="[grundprodukt.id]">
-        <ion-label>
-          <h3>{{ grundprodukt.name }}</h3>
-        </ion-label>
-        @if (grundprodukt.bestand !== null && grundprodukt.bestand < 20) {
-          <ion-chip color="danger">
-            <ion-icon name="alert-circle"></ion-icon>
-            <ion-label>{{ grundprodukt.bestand }} {{ grundprodukt.einheit }}</ion-label>
-          </ion-chip>
-        }
-        @if (grundprodukt.bestand === null || grundprodukt.bestand >= 20) {
-          <ion-chip color="success">
-            <ion-icon name="checkmark-circle"></ion-icon>
+    <ion-list>
+        @for (grundprodukt of grundprodukte(); track grundprodukt.id) {
+        <ion-item [routerLink]="[grundprodukt.id]">
             <ion-label>
-              @if (grundprodukt.bestand === null) {
-                <span>Unlimitiert</span>
-              }
-              @if (grundprodukt.bestand !== null) {
-                <span>{{ grundprodukt.bestand }} {{ grundprodukt.einheit }}</span>
-              }
+                <h3>{{ grundprodukt.name }}</h3>
             </ion-label>
-          </ion-chip>
+            @if (grundprodukt.bestand === null || grundprodukt.bestand >= 20)
+            {
+            <ion-chip color="success">
+                <ion-icon name="checkmark-circle"></ion-icon>
+                <ion-label>
+                    @if (grundprodukt.bestand)
+                    {
+                    <span>{{ grundprodukt.bestand }} {{ grundprodukt.einheit }}</span>
+                    }
+                    @else
+                    {
+                    <span>Unlimitiert</span>
+                    }
+                </ion-label>
+            </ion-chip>
+            }
+            @else {
+            @let color = grundprodukt.bestand > 0 ? 'warning' : 'danger';
+            <ion-chip [color]="color">
+                <ion-icon name="alert-circle"></ion-icon>
+                <ion-label>{{ grundprodukt.bestand }} {{ grundprodukt.einheit }}</ion-label>
+            </ion-chip>
+            }
+
+        </ion-item>
         }
-      </ion-item>
-    }
-  </ion-list>
+    </ion-list>
 </ion-content>
+}
+
+@placeholder{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}

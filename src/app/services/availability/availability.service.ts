@@ -45,14 +45,13 @@ export class AvailabilityService {
     public apiAvailability = signal(new AvailabilityCheck<string>("API"));
 
     constructor() {
-        effect(() => {
-            this.checkData();
-        });
+        effect(() => this.checkData());
         effect(() => this.checkApi());
         effect(() => this.checkDrucker());
     }
 
     public checkData() {
+        console.debug("AvailabilityService", "checkData()");
         this.setDataEnity(this.aufnehmerDataAvailability(), this.data.aufnehmer());
         this.setDataEnity(this.produktbereicheDataAvailability(), this.data.produktbereiche());
         this.setDataEnity(this.produktkategorienDataAvailability(), this.data.produktkategorien());
@@ -68,6 +67,7 @@ export class AvailabilityService {
     }
 
     public checkDrucker() {
+        console.debug("AvailabilityService", "checkDrucker()");
         this.druckerAvailabilities().forEach(d => d.status = 'busy');
         this.druckerAvailabilities().forEach(d =>
             this.getStatusOfDrucker(d.entity.id).subscribe(r => d.status = r.result ? 'success' : 'error')
@@ -75,6 +75,7 @@ export class AvailabilityService {
     }
 
     public checkApi() {
+        console.debug("AvailabilityService", "checkApi()");
         this.apiAvailability().status = 'busy';
         forkJoin({
             api: this.getApiStatus(),
@@ -93,6 +94,7 @@ export class AvailabilityService {
     }
 
     public getApiStatus(): Observable<boolean> {
+        console.debug("AvailabilityService", "getApiStatus()");
         return this.http
             .get(`${this.settings.apiBaseUrl()}/status/api`, {
                 observe: 'response'
@@ -106,6 +108,7 @@ export class AvailabilityService {
     }
 
     public getStatusOfAllDrucker() {
+        console.debug("AvailabilityService", "getStatusOfAllDrucker()");
         return this.http
             .get<{ drucker: Drucker, result: boolean }[]>(`${this.settings.apiBaseUrl()}/status/drucker`)
             .pipe(
@@ -114,6 +117,7 @@ export class AvailabilityService {
     }
 
     public getStatusOfDrucker(id: number) {
+        console.debug("AvailabilityService", `getStatusOfDrucker(id = ${id})`);
         return this.http
             .get<{ drucker: Drucker, result: boolean }>(`${this.settings.apiBaseUrl()}/status/drucker/${id}`)
             .pipe(
