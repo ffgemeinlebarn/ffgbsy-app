@@ -9,7 +9,6 @@
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-
 <ion-content>
     <form [formGroup]="form" (ngSubmit)="save()">
         <ion-list lines="full">
@@ -20,7 +19,14 @@
                 <ion-label position="stacked">Gerätename</ion-label>
                 <ion-input formControlName="deviceName"></ion-input>
             </ion-item>
-
+            <ion-item>
+                <ion-toggle formControlName="deviceIsPrivate">
+                    <ion-label>
+                        <h3>Privates Gerät</h3>
+                        <p>Aufnehmer:in bleibt gespeichert</p>
+                    </ion-label>
+                </ion-toggle>
+            </ion-item>
             <ion-item-divider>
                 <ion-label>Administration</ion-label>
             </ion-item-divider>

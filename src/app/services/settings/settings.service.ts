@@ -2,8 +2,8 @@ import { Injectable, inject, signal } from '@angular/core';
 import { LocalSettings } from 'src/app/interfaces/settings';
 
 import { Storage } from '@ionic/storage';
-import { FrontendService } from '../frontend/frontend.service';
 import { environment } from 'src/environments/environment';
+import { FrontendService } from '../frontend/frontend.service';
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +17,8 @@ export class SettingsService {
     private readonly initialLocalSettings = {
         notificationPoll: true,
         deviceName: '',
+        deviceIsPrivate: false,
+        deviceAufnehmerId: undefined,
         adminPin: '',
         apiBaseUrl: environment.api
     };
@@ -40,15 +42,18 @@ export class SettingsService {
         if (localSettings == null) {
             await this.saveLocal(this.local());
         } else {
-            this.local.set(JSON.parse(localSettings));
+            this.local.set(localSettings);
         }
     }
 
-    public async saveLocal(settings: LocalSettings) {
+    public async saveLocal(settings: LocalSettings, hideToast = false) {
         // this.logger.debug('[Settings Service] Save Local');
-        await this.ionicStorage.set(this.localSettingsKey, JSON.stringify(settings));
+        await this.ionicStorage.set(this.localSettingsKey, settings);
         this.loadLocal();
-        this.frontend.showToast("Die lokalen Einstellungen wurden gespeichert!");
+
+        if (!hideToast) {
+            this.frontend.showToast("Die lokalen Einstellungen wurden gespeichert!");
+        }
     }
 
 }

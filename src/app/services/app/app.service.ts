@@ -1,4 +1,4 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
@@ -6,6 +6,7 @@ import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-m
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../api/api.service';
 import { AvailabilityService } from '../availability/availability.service';
+import { DataService } from '../data/data.service';
 import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
 
@@ -15,6 +16,7 @@ import { SettingsService } from '../settings/settings.service';
 export class AppService {
     private settings = inject(SettingsService);
     private frontend = inject(FrontendService);
+    private data = inject(DataService);
     private api = inject(ApiService);
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
@@ -28,6 +30,17 @@ export class AppService {
     // Manage new Bestellung
     public bestellung = signal<Bestellung>(null);
 
+    constructor() {
+        effect(() => {
+            if (this.settings.local().deviceAufnehmerId && !this.aufnehmer()) {
+                const aufnehmer = this.data.aufnehmer().find(a => a.id == this.settings.local().deviceAufnehmerId);
+                if (aufnehmer) {
+                    this.selectAufnehmer(aufnehmer);
+                }
+            }
+        }, { allowSignalWrites: true });
+    }
+
     public async showSelectAufnehmerModal() {
         const modal = await this.modalController.create({
             component: SelectAufnehmerModalComponent,
@@ -40,10 +53,12 @@ export class AppService {
 
     public clearAufnehmer() {
         this.aufnehmer.set(null);
+        this.settings.saveLocal({ ...this.settings.local(), deviceAufnehmerId: undefined }, true);
     }
 
     public selectAufnehmer(aufnehmer: Aufnehmer) {
         this.aufnehmer.set(aufnehmer);
+        this.settings.saveLocal({ ...this.settings.local(), deviceAufnehmerId: aufnehmer.id }, true);
     }
 
     public createBestellung() {
