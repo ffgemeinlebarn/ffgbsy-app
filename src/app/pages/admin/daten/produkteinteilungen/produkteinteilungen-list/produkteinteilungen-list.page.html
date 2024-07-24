@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Produkteinteilungen</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+@defer (when produkteinteilungen()) {
+<ion-content>
+    <ion-list lines="full">
+        @for (produkteinteilung of produkteinteilungen(); track produkteinteilung.id) {
+        <ion-item [routerLink]="[produkteinteilung.id]">
+            <ion-label>
+                <h3>{{ produkteinteilung.name }}</h3>
+                <p>{{ produkteinteilung.produktkategorie?.name }}</p>
+            </ion-label>
+        </ion-item>
+        }
+    </ion-list>
+</ion-content>
+}
+
+@placeholder{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}
