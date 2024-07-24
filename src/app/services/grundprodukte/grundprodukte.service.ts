@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, Observable, retry } from 'rxjs';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
@@ -12,6 +13,8 @@ export class GrundprodukteService {
     private http = inject(HttpClient);
     private settings = inject(SettingsService);
     private errorHandling = inject(ErrorHandlingService);
+
+    public items = toSignal(this.readAll());
 
     public create(grundprodukt: Grundprodukt) {
         return this.http

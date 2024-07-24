@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar } from "@ionic/angular/standalone";
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from "@ionic/angular/standalone";
+import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
 
@@ -21,8 +21,13 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
         PageSpinnerComponent
     ],
 })
-export class GrundproduktePage {
+export class GrundproduktePage implements ViewDidEnter {
     private grundProdukteService = inject(GrundprodukteService);
 
-    public grundprodukte = toSignal(this.grundProdukteService.readAll());
+    public grundprodukte = signal<Grundprodukt[]>(null);
+
+    ionViewDidEnter(): void {
+        this.grundprodukte.set(null);
+        this.grundProdukteService.readAll().subscribe(items => this.grundprodukte.set(items));
+    }
 }

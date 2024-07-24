@@ -71,6 +71,11 @@ export class GrundprodukteDetailPage {
             .subscribe(p => {
                 this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
                 this.load(this.id());
+                this.reload();
             });
+    }
+
+    private reload() {
+        this.grundprodukteService.readAll();
     }
 }
