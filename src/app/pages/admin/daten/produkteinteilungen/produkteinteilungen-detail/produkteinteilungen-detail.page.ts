@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonSpinner, IonTitle, IonToggle, IonToolbar } from "@ionic/angular/standalone";
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { DruckerService } from 'src/app/services/drucker/drucker.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen/produkteinteilungen.service';
+import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
 
 @Component({
     selector: 'ffgbsy-produkteinteilungen-detail',
@@ -39,21 +39,19 @@ import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen
 })
 export class ProdukteinteilungenDetailPage {
     private produkteinteilungenService = inject(ProdukteinteilungenService);
-    private druckerService = inject(DruckerService);
+    private produktkategorienService = inject(ProduktkategorienService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
 
-    public drucker = toSignal(this.druckerService.readAll());
+    public produktkategorien = toSignal(this.produktkategorienService.readAll());
     public produkteinteilung = signal<Produkteinteilung>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ["", [Validators.required, Validators.minLength(1)]],
-        color: [""],
-        drucker_id_level_1: [null],
         sortierindex: [100, [Validators.min(0)]],
-        produktbereich: [{}],
+        produktkategorien_id: [null],
     });
 
     constructor() {
