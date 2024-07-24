@@ -9,9 +9,9 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
 
 @Component({
-    selector: 'ffgbsy-produktkategorie-detail',
-    templateUrl: './produktkategorie-detail.page.html',
-    styleUrls: ['./produktkategorie-detail.page.scss'],
+    selector: 'ffgbsy-produktkategorien-detail',
+    templateUrl: './produktkategorien-detail.page.html',
+    styleUrls: ['./produktkategorien-detail.page.scss'],
     standalone: true,
     imports: [
         IonChip,
@@ -37,7 +37,7 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
         PageSpinnerComponent
     ],
 })
-export class ProduktkategorieDetailPage {
+export class ProduktkategorienDetailPage {
     private produktkategorienService = inject(ProduktkategorienService);
     private druckerService = inject(DruckerService);
     private frontendService = inject(FrontendService);

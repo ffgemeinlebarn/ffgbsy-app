@@ -6,9 +6,9 @@ import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinn
 import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
 
 @Component({
-    selector: 'ffgbsy-produktkategorien',
-    templateUrl: './produktkategorien.page.html',
-    styleUrls: ['./produktkategorien.page.scss'],
+    selector: 'ffgbsy-produktkategorien-list',
+    templateUrl: './produktkategorien-list.page.html',
+    styleUrls: ['./produktkategorien-list.page.scss'],
     standalone: true,
     imports: [
         IonButton,
@@ -24,7 +24,7 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
         PageSpinnerComponent
     ],
 })
-export class ProduktkategorienPage implements ViewDidEnter {
+export class ProduktkategorienListPage implements ViewDidEnter {
     private produktkategorienService = inject(ProduktkategorienService);
 
     public produktkategorien = signal<Produktkategorie[]>(null);

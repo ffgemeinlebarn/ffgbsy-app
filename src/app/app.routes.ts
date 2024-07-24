@@ -32,11 +32,11 @@ export const routes: Routes = [
             },
             {
                 path: 'produktkategorien',
-                loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien/produktkategorien.page').then(m => m.ProduktkategorienPage)
+                loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien-list/produktkategorien-list.page').then(m => m.ProduktkategorienListPage)
             },
             {
                 path: 'produktkategorien/:id',
-                loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorie-detail/produktkategorie-detail.page').then(m => m.ProduktkategorieDetailPage)
+                loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien-detail/produktkategorien-detail.page').then(m => m.ProduktkategorienDetailPage)
             },
             {
                 path: 'produkte',
