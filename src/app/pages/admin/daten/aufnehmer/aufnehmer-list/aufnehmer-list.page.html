@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Aufnehmer:innen</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+@if (aufnehmerFullList()) {
+<ion-content [fullscreen]="true">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Aufnehmer:innen</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <h2 class="ion-padding">Aktiv</h2>
+    <ion-list lines="full">
+        @for (aufnehmer of aufnehmerActive(); track aufnehmer.id) {
+        <ion-item [routerLink]="[aufnehmer.id]" [button]="true">
+            <ion-label>
+                <h3>{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</h3>
+            </ion-label>
+        </ion-item>
+        }
+    </ion-list>
+
+    <h2 class="ion-padding">Inaktiv</h2>
+    <ion-list lines="full">
+        @for (aufnehmer of aufnehmerInactive(); track aufnehmer.id) {
+        <ion-item [routerLink]="[aufnehmer.id]" [button]="true">
+            <ion-label>
+                <h3>{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</h3>
+            </ion-label>
+        </ion-item>
+        }
+    </ion-list>
+</ion-content>
+}
+@else{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}

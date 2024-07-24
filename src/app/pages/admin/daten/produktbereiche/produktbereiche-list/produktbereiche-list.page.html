@@ -5,11 +5,11 @@
     </ion-toolbar>
 </ion-header>
 
-@defer (when produktbereiche()) {
+@if (produktbereiche()) {
 <ion-content>
     <ion-list lines="full">
         @for (produktbereich of produktbereiche(); track produktbereich.id) {
-        <ion-item [routerLink]="[produktbereich.id]">
+        <ion-item [routerLink]="[produktbereich.id]" [button]="true">
             <ion-label>
                 <h3>{{ produktbereich.name }}</h3>
                 <p>{{ produktbereich.drucker?.name }}</p>
@@ -19,7 +19,6 @@
     </ion-list>
 </ion-content>
 }
-
-@placeholder{
+@else{
 <ffgbsy-page-spinner></ffgbsy-page-spinner>
 }

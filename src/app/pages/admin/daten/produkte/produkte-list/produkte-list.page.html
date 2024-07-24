@@ -3,21 +3,43 @@
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Produkte</ion-title>
     </ion-toolbar>
+    @if (produkte()) {
     <ion-toolbar>
-        <ion-searchbar [animated]="true" [debounce]="300" (ionInput)="handleSearchInput($event)"></ion-searchbar>
+        <ion-searchbar [animated]="true" [formControl]="search" [debounce]="300" (ionInput)="handleSearchInput($event)"></ion-searchbar>
     </ion-toolbar>
+    }
 </ion-header>
 
+@if(produkte()) {
 <ion-content>
     <ion-list lines="full">
         @for (produkt of produkteFiltred(); track produkt.id) {
-        <ion-item [routerLink]="[produkt.id]">
+        <ion-item [routerLink]="[produkt.id]" [button]="true">
             <ion-label>
                 <h3>{{ produkt.name }}</h3>
                 <p>{{ produkt.produkteinteilung.name }} ({{ produkt.produkteinteilung.produktkategorie.name }})</p>
             </ion-label>
+            <ion-chip color="primary" class="non-clickable">
+                <ion-icon name="arrow-forward-outline"></ion-icon>
+                <ion-label>
+                    @if (produkt.drucker_id_level_2)
+                    {
+                    {{ produkt.drucker?.name }}
+                    }@else if (produkt.produkteinteilung?.produktkategorie?.drucker_id_level_1)
+                    {
+                    {{ produkt.produkteinteilung?.produktkategorie?.drucker?.name }}
+                    }@else
+                    {
+                    {{ produkt.produkteinteilung?.produktkategorie?.produktbereich?.drucker?.name }}
+                    }
+                </ion-label>
+            </ion-chip>
             <ion-chip>{{ produkt.preis | euroPreis }}</ion-chip>
         </ion-item>
         }
     </ion-list>
 </ion-content>
+}
+@else{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}
