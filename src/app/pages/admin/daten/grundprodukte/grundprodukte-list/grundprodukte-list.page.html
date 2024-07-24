@@ -9,7 +9,7 @@
 <ion-content>
     <ion-list lines="full">
         @for (grundprodukt of grundprodukte(); track grundprodukt.id) {
-        <ion-item [routerLink]="[grundprodukt.id]">
+        <ion-item [routerLink]="[grundprodukt.id]" [button]="true">
             <ion-label>
                 <h3>{{ grundprodukt.name }}</h3>
             </ion-label>

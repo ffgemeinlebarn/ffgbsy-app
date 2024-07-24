@@ -1,17 +1,24 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
+import { IonContent, IonHeader, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar } from "@ionic/angular/standalone";
 import { Produkt } from 'src/app/classes/produkt.class';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { ProdukteService } from 'src/app/services/produkte/produkte.service';
+
 @Component({
     selector: 'ffgbsy-produkte-list',
     templateUrl: './produkte-list.page.html',
     styleUrls: ['./produkte-list.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
+        IonList,
+        IonContent,
+        IonSearchbar,
+        IonTitle,
+        IonToolbar,
+        IonHeader,
+        IonMenuButton,
         RouterLink,
         EuroPreisPipe
     ],

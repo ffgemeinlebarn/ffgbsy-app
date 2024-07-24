@@ -9,7 +9,7 @@
 <ion-content>
     <ion-list lines="full">
         @for (produktkategorie of produktkategorien(); track produktkategorie.id) {
-        <ion-item [routerLink]="[produktkategorie.id]">
+        <ion-item [routerLink]="[produktkategorie.id]" [button]="true">
             <ion-label>
                 <h3>{{ produktkategorie.name }}</h3>
                 <p>{{ produktkategorie.produktbereich?.name }}</p>
