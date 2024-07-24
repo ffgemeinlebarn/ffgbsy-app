@@ -50,10 +50,11 @@ jobs:
           path: ./dist/
 
       - name: 📂 Upload PWA
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_DEPLOY_HOST }}
           username: ${{ secrets.FTP_DEPLOY_USERNAME }}
           password: ${{ secrets.FTP_DEPLOY_PASSWORD }}
           local-dir: ./dist/
           dangerous-clean-slate: true
+          log-level: verbose
