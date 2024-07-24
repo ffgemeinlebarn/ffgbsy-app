@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Produktbereiche</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+@defer (when produktbereiche()) {
+<ion-content>
+    <ion-list lines="full">
+        @for (produktbereich of produktbereiche(); track produktbereich.id) {
+        <ion-item [routerLink]="[produktbereich.id]">
+            <ion-label>
+                <h3>{{ produktbereich.name }}</h3>
+                <p>{{ produktbereich.drucker?.name }}</p>
+            </ion-label>
+        </ion-item>
+        }
+    </ion-list>
+</ion-content>
+}
+
+@placeholder{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}
