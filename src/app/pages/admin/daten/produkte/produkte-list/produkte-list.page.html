@@ -3,11 +3,14 @@
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Produkte</ion-title>
     </ion-toolbar>
+    @if (produkte()) {
     <ion-toolbar>
-        <ion-searchbar [animated]="true" [debounce]="300" (ionInput)="handleSearchInput($event)"></ion-searchbar>
+        <ion-searchbar [animated]="true" [formControl]="search" [debounce]="300" (ionInput)="handleSearchInput($event)"></ion-searchbar>
     </ion-toolbar>
+    }
 </ion-header>
 
+@if(produkte()) {
 <ion-content>
     <ion-list lines="full">
         @for (produkt of produkteFiltred(); track produkt.id) {
@@ -36,3 +39,7 @@
         }
     </ion-list>
 </ion-content>
+}
+@else{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}

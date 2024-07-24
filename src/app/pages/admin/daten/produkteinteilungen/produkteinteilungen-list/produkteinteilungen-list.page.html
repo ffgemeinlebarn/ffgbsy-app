@@ -5,7 +5,7 @@
     </ion-toolbar>
 </ion-header>
 
-@defer (when produkteinteilungen()) {
+@if (produkteinteilungen()) {
 <ion-content>
     <ion-list lines="full">
         @for (produkteinteilung of produkteinteilungen(); track produkteinteilung.id) {
@@ -19,7 +19,6 @@
     </ion-list>
 </ion-content>
 }
-
-@placeholder{
+@else{
 <ffgbsy-page-spinner></ffgbsy-page-spinner>
 }

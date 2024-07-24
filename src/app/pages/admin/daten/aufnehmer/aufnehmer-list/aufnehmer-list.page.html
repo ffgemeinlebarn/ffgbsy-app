@@ -5,7 +5,7 @@
     </ion-toolbar>
 </ion-header>
 
-@defer (when aufnehmerFullList()) {
+@if (aufnehmerFullList()) {
 <ion-content [fullscreen]="true">
     <ion-header collapse="condense">
         <ion-toolbar>
@@ -36,7 +36,6 @@
     </ion-list>
 </ion-content>
 }
-
-@placeholder{
+@else{
 <ffgbsy-page-spinner></ffgbsy-page-spinner>
 }

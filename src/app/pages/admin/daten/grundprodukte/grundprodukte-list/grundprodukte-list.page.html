@@ -5,7 +5,7 @@
     </ion-toolbar>
 </ion-header>
 
-@defer (when grundprodukte()) {
+@if (grundprodukte()) {
 <ion-content>
     <ion-list lines="full">
         @for (grundprodukt of grundprodukte(); track grundprodukt.id) {
@@ -42,7 +42,6 @@
     </ion-list>
 </ion-content>
 }
-
-@placeholder{
+@else{
 <ffgbsy-page-spinner></ffgbsy-page-spinner>
 }
