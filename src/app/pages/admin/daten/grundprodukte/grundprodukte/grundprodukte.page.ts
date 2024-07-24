@@ -10,7 +10,10 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
     templateUrl: './grundprodukte.page.html',
     styleUrls: ['./grundprodukte.page.scss'],
     standalone: true,
-    imports: [IonButton, IonButtons, IonIcon,
+    imports: [
+        IonButton,
+        IonButtons,
+        IonIcon,
         IonContent,
         IonToolbar,
         IonTitle,
