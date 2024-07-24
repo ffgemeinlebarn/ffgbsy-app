@@ -31,6 +31,14 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
             },
             {
+                path: 'produkteinteilungen',
+                loadComponent: () => import('./pages/admin/daten/produkteinteilungen/produkteinteilungen-list/produkteinteilungen-list.page').then(m => m.ProdukteinteilungenListPage)
+            },
+            {
+                path: 'produkteinteilungen/:id',
+                loadComponent: () => import('./pages/admin/daten/produkteinteilungen/produkteinteilungen-detail/produkteinteilungen-detail.page').then(m => m.ProdukteinteilungenDetailPage)
+            },
+            {
                 path: 'produktkategorien',
                 loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien-list/produktkategorien-list.page').then(m => m.ProduktkategorienListPage)
             },
