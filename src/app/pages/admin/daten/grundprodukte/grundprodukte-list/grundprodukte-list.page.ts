@@ -6,9 +6,9 @@ import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinn
 import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
 
 @Component({
-    selector: 'ffgbsy-grundprodukte',
-    templateUrl: './grundprodukte.page.html',
-    styleUrls: ['./grundprodukte.page.scss'],
+    selector: 'ffgbsy-grundprodukte-list',
+    templateUrl: './grundprodukte-list.page.html',
+    styleUrls: ['./grundprodukte-list.page.scss'],
     standalone: true,
     imports: [
         IonButton,
@@ -24,7 +24,7 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
         PageSpinnerComponent
     ],
 })
-export class GrundproduktePage implements ViewDidEnter {
+export class GrundprodukteListPage implements ViewDidEnter {
     private grundProdukteService = inject(GrundprodukteService);
 
     public grundprodukte = signal<Grundprodukt[]>(null);

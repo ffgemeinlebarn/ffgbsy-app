@@ -1,6 +1,11 @@
 :host {
     --ffgbsy-menu-item-padding-start: 24px;
 
+    &>ion-list {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
     h2.ion-padding {
         padding-left: var(--ffgbsy-menu-item-padding-start);
         padding-bottom: 10px;

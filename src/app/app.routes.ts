@@ -24,7 +24,19 @@ export const routes: Routes = [
             },
             {
                 path: 'grundprodukte',
-                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte/grundprodukte.page').then(m => m.GrundproduktePage)
+                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-list/grundprodukte-list.page').then(m => m.GrundprodukteListPage)
+            },
+            {
+                path: 'grundprodukte/:id',
+                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
+            },
+            {
+                path: 'produktkategorien',
+                loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien-list/produktkategorien-list.page').then(m => m.ProduktkategorienListPage)
+            },
+            {
+                path: 'produktkategorien/:id',
+                loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien-detail/produktkategorien-detail.page').then(m => m.ProduktkategorienDetailPage)
             },
             {
                 path: 'produkte',
@@ -33,10 +45,6 @@ export const routes: Routes = [
             {
                 path: 'produkte/:id',
                 loadComponent: () => import('./pages/admin/daten/produkte/produkte-detail/produkte-detail.page').then(m => m.ProdukteDetailPage)
-            },
-            {
-                path: 'grundprodukte/:id',
-                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
             }
         ]
     },
