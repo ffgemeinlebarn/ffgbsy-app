@@ -1,9 +1,11 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { Produktbereich } from 'src/app/classes/produktbereich.class';
 
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSpinner, IonTitle, IonToggle, IonToolbar } from "@ionic/angular/standalone";
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonSpinner, IonTitle, IonToggle, IonToolbar } from "@ionic/angular/standalone";
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
+import { DruckerService } from 'src/app/services/drucker/drucker.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { ProduktbereicheService } from 'src/app/services/produktbereiche/produktbereiche.service';
 
@@ -28,6 +30,8 @@ import { ProduktbereicheService } from 'src/app/services/produktbereiche/produkt
         IonHeader,
         IonToggle,
         IonInput,
+        IonSelect,
+        IonSelectOption,
         FormsModule,
         ReactiveFormsModule,
         PageSpinnerComponent
@@ -35,17 +39,18 @@ import { ProduktbereicheService } from 'src/app/services/produktbereiche/produkt
 })
 export class ProduktbereicheDetailPage {
     private produktbereicheService = inject(ProduktbereicheService);
+    private druckerService = inject(DruckerService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
 
+    public drucker = toSignal(this.druckerService.readAll());
     public produktbereich = signal<Produktbereich>(null);
     public form: FormGroup = this.formBuilder.group({
         name: ["", [Validators.required, Validators.minLength(1)]],
-        unlimitiert: [true, [Validators.required]],
-        bestand: [null, [Validators.min(0)]],
-        einheit: ["", []],
+        color: [""],
+        drucker_id_level_0: [null],
     });
 
     constructor() {

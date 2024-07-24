@@ -19,8 +19,17 @@
                 <ion-input formControlName="name"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Einheit</ion-label>
-                <ion-input formControlName="einheit"></ion-input>
+                <ion-label position="stacked">Farbe</ion-label>
+                <ion-input formControlName="color"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Drucker</ion-label>
+                <ion-select formControlName="drucker_id_level_0">
+                    <ion-select-option [value]="null">Kein Drucker definiert</ion-select-option>
+                    @for (drucker of drucker(); track drucker.id) {
+                    <ion-select-option [value]="drucker.id">{{ drucker.name }}</ion-select-option>
+                    }
+                </ion-select>
             </ion-item>
         </ion-list>
     </form>
