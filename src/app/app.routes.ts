@@ -23,6 +23,14 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/admin/angebot-uebersicht/angebot-uebersicht.page').then(m => m.AngebotUebersichtPage)
             },
             {
+                path: 'produktbereiche',
+                loadComponent: () => import('./pages/admin/daten/produktbereiche/produktbereiche-list/produktbereiche-list.page').then(m => m.ProduktbereicheListPage)
+            },
+            {
+                path: 'produktbereiche/:id',
+                loadComponent: () => import('./pages/admin/daten/produktbereiche/produktbereiche-detail/produktbereiche-detail.page').then(m => m.ProduktbereicheDetailPage)
+            },
+            {
                 path: 'grundprodukte',
                 loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-list/grundprodukte-list.page').then(m => m.GrundprodukteListPage)
             },
