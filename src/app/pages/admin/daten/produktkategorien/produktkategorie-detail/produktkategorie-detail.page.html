@@ -1,0 +1,63 @@
+@defer (when produktkategorie()) {
+<ion-header>
+    <ion-toolbar>
+        <ion-back-button slot="start" defaultHref="/admin/produktkategorien"></ion-back-button>
+        <ion-title>{{ produktkategorie()?.name }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="save()">
+                <ion-icon name="save" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <ion-list lines="full">
+            <ion-item>
+                <ion-label position="stacked">Name</ion-label>
+                <ion-input formControlName="name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Farbe</ion-label>
+                <ion-input formControlName="color"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Sortierindex</ion-label>
+                <ion-input formControlName="sortierindex"></ion-input>
+            </ion-item>
+        </ion-list>
+        <h2 class="ion-padding">
+            Drucker
+        </h2>
+        <ion-list lines="full">
+            <ion-item>
+                <ion-label position="stacked">Ebene Produktkategorie</ion-label>
+                <ion-select formControlName="drucker_id_level_1">
+                    <ion-select-option [value]="null">Kein Drucker definiert</ion-select-option>
+                    @for (drucker of drucker(); track drucker.id) {
+                    <ion-select-option [value]="drucker.id">{{ drucker.name }}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-item>
+            <ion-item-divider>Vererbung</ion-item-divider>
+            <ion-item>
+                <ion-label>
+                    @if(produktkategorie()?.produktbereich.drucker_id_level_0)
+                    {
+                    <h3>{{ produktkategorie()?.produktbereich.drucker?.name }}</h3>
+                    }
+                    @else {
+                    <h3>Kein Drucker auf dieser Ebene definiert</h3>
+                    }
+                    <p>Produktbereich</p>
+                </ion-label>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>
+}
+
+@placeholder{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}

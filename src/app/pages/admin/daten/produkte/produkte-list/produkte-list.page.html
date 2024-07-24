@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
+    <ion-list lines="full">
         @for (produkt of produkteFiltred(); track produkt.id) {
         <ion-item [routerLink]="[produkt.id]">
             <ion-label>

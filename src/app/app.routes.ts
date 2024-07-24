@@ -27,16 +27,24 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte/grundprodukte.page').then(m => m.GrundproduktePage)
             },
             {
+                path: 'grundprodukte/:id',
+                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
+            },
+            {
+                path: 'produktkategorien',
+                loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien/produktkategorien.page').then(m => m.ProduktkategorienPage)
+            },
+            {
+                path: 'produktkategorien/:id',
+                loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorie-detail/produktkategorie-detail.page').then(m => m.ProduktkategorieDetailPage)
+            },
+            {
                 path: 'produkte',
                 loadComponent: () => import('./pages/admin/daten/produkte/produkte-list/produkte-list.page').then(m => m.ProdukteListPage)
             },
             {
                 path: 'produkte/:id',
                 loadComponent: () => import('./pages/admin/daten/produkte/produkte-detail/produkte-detail.page').then(m => m.ProdukteDetailPage)
-            },
-            {
-                path: 'grundprodukte/:id',
-                loadComponent: () => import('./pages/admin/daten/grundprodukte/grundprodukte-detail/grundprodukte-detail.page').then(m => m.GrundprodukteDetailPage)
             }
         ]
     },

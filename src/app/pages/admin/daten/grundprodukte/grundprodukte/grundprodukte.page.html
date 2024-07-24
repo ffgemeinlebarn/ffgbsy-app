@@ -7,7 +7,7 @@
 
 @defer (when grundprodukte()) {
 <ion-content>
-    <ion-list>
+    <ion-list lines="full">
         @for (grundprodukt of grundprodukte(); track grundprodukt.id) {
         <ion-item [routerLink]="[grundprodukt.id]">
             <ion-label>

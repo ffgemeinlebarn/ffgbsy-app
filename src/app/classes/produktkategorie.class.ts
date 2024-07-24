@@ -7,8 +7,8 @@ export class Produktkategorie {
     name: string;
     produkteinteilungen: Array<Produkteinteilung>;
     color: string;
-    drucker_id_level_1: any;
-    drucker?: Drucker
+    drucker_id_level_1: number | null;
     sortierindex: number;
+    drucker?: Drucker
     produktbereich?: Produktbereich;
 }
