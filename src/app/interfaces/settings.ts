@@ -1,4 +1,3 @@
-import { environment } from 'src/environments/environment';
 
 // App
 export interface AppSettings {
@@ -25,6 +24,8 @@ export interface StorageSettings {
 export interface LocalSettings {
     notificationPoll: boolean;
     deviceName: string;
+    deviceIsPrivate: boolean;
+    deviceAufnehmerId?: number;
     adminPin: string;
     apiBaseUrl: string;
 }
