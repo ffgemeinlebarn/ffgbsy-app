@@ -4,6 +4,7 @@
         padding: 1em;
         border-radius: 0.7em;
         width: 100%;
+        position: relative;
 
         .start-icon {
             font-size: 1.75em;
@@ -26,6 +27,33 @@
         &--success {
             background-color: var(--ion-color-primary--shade-2);
             color: #fff;
+        }
+
+        .usuccessful-flag {
+            position: absolute;
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 50%;
+            box-sizing: border-box;
+            right: -0.75em;
+            top: -0.75em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &.warn {
+                background-color: var(--ion-color-warning);
+                color: #000;
+            }
+
+            &.danger {
+                background-color: var(--ion-color-danger);
+                color: #fff;
+            }
+
+            ion-icon {
+                font-size: 1em;
+            }
         }
     }
 }

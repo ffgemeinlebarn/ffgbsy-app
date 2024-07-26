@@ -1,4 +1,9 @@
 <div class="tile ion-activatable ripple-parent" [ngClass]="tileClass()">
+    @if(unsuccesfulFlag() && !success()){
+    <div class="usuccessful-flag" [ngClass]="unsuccesfulFlag()">
+        <ion-icon name="alert"></ion-icon>
+    </div>
+    }
     <ion-grid>
         <ion-row class="ion-align-items-center">
             <ion-col size="auto">

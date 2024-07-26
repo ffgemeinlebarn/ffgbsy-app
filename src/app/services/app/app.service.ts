@@ -60,7 +60,7 @@ export class AppService {
 
     public selectAufnehmer(aufnehmer: Aufnehmer) {
         this.aufnehmer.set(aufnehmer);
-        this.settings.saveLocal({ ...this.settings.local(), deviceAufnehmerId: aufnehmer.id }, true);
+        this.settings.saveLocal({ ...this.settings.local(), deviceAufnehmerId: this.settings.local().deviceIsPrivate ? aufnehmer.id : null }, true);
     }
 
     public createBestellung() {

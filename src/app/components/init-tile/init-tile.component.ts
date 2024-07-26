@@ -21,6 +21,7 @@ export class InitTileComponent {
     title = input.required<string>();
     subtitle = input<string>();
     success = input<boolean>(false);
+    unsuccesfulFlag = input<null | 'warn' | 'error'>(null);
 
     tileClass = computed(() => this.success() ? 'tile--success' : '');
 }
