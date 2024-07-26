@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
+import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.type';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
@@ -10,13 +11,22 @@ import { SettingsService } from '../settings/settings.service';
     providedIn: 'root'
 })
 export class BestellungenService {
-    http = inject(HttpClient);
-    settings = inject(SettingsService);
-    errorHandling = inject(ErrorHandlingService);
+    private http = inject(HttpClient);
+    private settings = inject(SettingsService);
+    private errorHandling = inject(ErrorHandlingService);
 
     public create(bestellungen: Bestellung) {
         return this.http
             .post<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellungen)
+            .pipe(
+                retry(1),
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+            );
+    }
+
+    public createStornoBestellposition(bestellposition: Bestellposition, anzahl: number): Observable<Bestellposition> {
+        return this.http
+            .post(`${this.settings.apiBaseUrl()}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl })
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))

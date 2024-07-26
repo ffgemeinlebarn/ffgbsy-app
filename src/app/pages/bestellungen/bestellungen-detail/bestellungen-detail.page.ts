@@ -87,7 +87,7 @@ export class BestellungenDetailPage implements OnInit {
                     handler: (res) => {
                         let anzahl = parseInt(res.anzahl);
 
-                        this.api.createStornoBestellposition(bestellposition, anzahl).subscribe((stornoposition) => {
+                        this.bestellungenService.createStornoBestellposition(bestellposition, anzahl).subscribe((stornoposition) => {
                             this.api.createStornoBon(stornoposition).subscribe((bon) => this.api.druckBon(bon).subscribe((druck) => {
 
                                 if (druck.success) {

@@ -165,16 +165,16 @@ export class ApiService {
             );
     }
 
-    public createStornoBestellposition(bestellposition: Bestellposition, anzahl: number): Observable<Bestellposition> {
-        this.frontend.showLoadingSpinner('Erstelle Storno Bestellposition');
-        return this.http
-            .post(`${this.url}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl }, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
+    // public createStornoBestellposition(bestellposition: Bestellposition, anzahl: number): Observable<Bestellposition> {
+    //     this.frontend.showLoadingSpinner('Erstelle Storno Bestellposition');
+    //     return this.http
+    //         .post(`${this.url}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl }, { headers: this.headers })
+    //         .pipe(
+    //             retry(1),
+    //             tap(() => this.frontend.hideLoadingSpinner()),
+    //             catchError((error) => this.errorHandler(error))
+    //         );
+    // }
 
     public getStatisticsTimeline(): Observable<any> {
         this.frontend.showLoadingSpinner('Empfange Timeline Statistik');
