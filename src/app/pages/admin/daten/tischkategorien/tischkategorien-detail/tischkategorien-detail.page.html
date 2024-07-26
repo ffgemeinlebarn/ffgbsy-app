@@ -19,16 +19,8 @@
                 <ion-input formControlName="name"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Sortierindex</ion-label>
-                <ion-input formControlName="sortierindex"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Produktkategorie</ion-label>
-                <ion-select formControlName="produktkategorien_id">
-                    @for (produktkategorie of produktkategorien(); track produktkategorie.id) {
-                    <ion-select-option [value]="produktkategorie.id">{{ produktkategorie.name }}</ion-select-option>
-                    }
-                </ion-select>
+                <ion-label position="stacked">Sortierung</ion-label>
+                <ion-input inputmode="decimal" type="number" step="1" formControlName="sortierindex"></ion-input>
             </ion-item>
         </ion-list>
     </form>

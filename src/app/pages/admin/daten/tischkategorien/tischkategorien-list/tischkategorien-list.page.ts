@@ -31,6 +31,6 @@ export class TischkategorienListPage implements ViewDidEnter {
 
     ionViewDidEnter(): void {
         this.tischkategorien.set(null);
-        this.tischkategorienService.readAll().subscribe(items => this.tischkategorien.set(items));
+        this.tischkategorienService.readAllNested().subscribe(items => this.tischkategorien.set(items));
     }
 }

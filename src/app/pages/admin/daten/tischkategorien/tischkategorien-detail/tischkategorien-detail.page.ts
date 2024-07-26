@@ -50,8 +50,7 @@ export class TischkategorienDetailPage {
 
     public form: FormGroup = this.formBuilder.group({
         name: ["", [Validators.required, Validators.minLength(1)]],
-        sortierindex: [100, [Validators.min(0)]],
-        produktkategorien_id: [null],
+        sortierindex: [100, [Validators.min(0)]]
     });
 
     constructor() {
