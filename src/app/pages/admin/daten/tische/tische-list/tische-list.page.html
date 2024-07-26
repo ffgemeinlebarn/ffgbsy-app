@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Tische</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+@if (tischkategorienMitTischen()) {
+<ion-content>
+    <ion-list lines="full">
+        @for (tischkategorie of tischkategorienMitTischen(); track tischkategorie.id) {
+        <h2 class="ion-padding">
+            <span>{{ tischkategorie.name }}</span>
+            <ion-chip color="primary" [routerLink]="['/admin/tischkategorien', tischkategorie.id]">
+                <ion-icon name="create-outline"></ion-icon>
+                <ion-label>Kategorie bearbeiten</ion-label>
+            </ion-chip>
+        </h2>
+        @for (tisch of tischkategorie.tische; track tisch.id) {
+        <ion-item [routerLink]="[tisch.id]" [button]="true">
+            <ion-label>{{ tisch.reihe }}{{ tisch.nummer }}</ion-label>
+            <ion-note slot="end">{{ tisch.sortierindex }}</ion-note>
+        </ion-item>
+        }
+        }
+    </ion-list>
+</ion-content>
+}
+@else{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}

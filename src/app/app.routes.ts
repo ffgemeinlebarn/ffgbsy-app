@@ -69,6 +69,22 @@ export const routes: Routes = [
             {
                 path: 'aufnehmer/:id',
                 loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-detail/aufnehmer-detail.page').then(m => m.AufnehmerDetailPage)
+            },
+            {
+                path: 'tischkategorien',
+                loadComponent: () => import('./pages/admin/daten/tischkategorien/tischkategorien-list/tischkategorien-list.page').then(m => m.TischkategorienListPage)
+            },
+            {
+                path: 'tischkategorien/:id',
+                loadComponent: () => import('./pages/admin/daten/tischkategorien/tischkategorien-detail/tischkategorien-detail.page').then(m => m.TischkategorienDetailPage)
+            },
+            {
+                path: 'tische',
+                loadComponent: () => import('./pages/admin/daten/tische/tische-list/tische-list.page').then(m => m.TischeListPage)
+            },
+            {
+                path: 'tische/:id',
+                loadComponent: () => import('./pages/admin/daten/tische/tische-detail/tische-detail.page').then(m => m.TischeDetailPage)
             }
         ]
     },
