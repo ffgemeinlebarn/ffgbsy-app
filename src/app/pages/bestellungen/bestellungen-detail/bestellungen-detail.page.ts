@@ -5,8 +5,8 @@ import { AlertController, IonBackButton, IonButtons, IonChip, IonContent, IonHea
 import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { Bon } from 'src/app/classes/bon.model';
-import { ApiService } from 'src/app/services/api/api.service';
 import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
+import { BonsService } from 'src/app/services/bons/bons.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 
@@ -34,7 +34,7 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 export class BestellungenDetailPage implements OnInit {
 
     public activatedRoute = inject(ActivatedRoute);
-    private api = inject(ApiService);
+    private bonsService = inject(BonsService);
     private bestellungenService = inject(BestellungenService);
     private frontend = inject(FrontendService);
     private alertController = inject(AlertController);
@@ -50,7 +50,7 @@ export class BestellungenDetailPage implements OnInit {
     }
 
     printBon(bon: Bon) {
-        this.api.druckBon(bon).subscribe(bonDruck => {
+        this.bonsService.druckBon(bon).subscribe(bonDruck => {
 
             this.loadBestellung(bon.bestellungen_id);
 
@@ -88,7 +88,7 @@ export class BestellungenDetailPage implements OnInit {
                         let anzahl = parseInt(res.anzahl);
 
                         this.bestellungenService.createStornoBestellposition(bestellposition, anzahl).subscribe((stornoposition) => {
-                            this.api.createStornoBon(stornoposition).subscribe((bon) => this.api.druckBon(bon).subscribe((druck) => {
+                            this.bonsService.createStornoBon(stornoposition).subscribe((bon) => this.bonsService.druckBon(bon).subscribe((druck) => {
 
                                 if (druck.success) {
                                     this.frontend.showToast("Stornobon wurde erfolgreich gedruckt!", 2000);
@@ -108,5 +108,4 @@ export class BestellungenDetailPage implements OnInit {
 
         await alert.present();
     }
-
 }
