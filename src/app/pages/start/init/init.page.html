@@ -1,10 +1,11 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Start</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
     <div class="center-wrapper">
         <div class="centered">
 
@@ -15,11 +16,10 @@
 
             @if(readyToGo())
             {
-            <ion-button [routerLink]="['/neue-bestellung']">Starte Bestellung</ion-button>
-            }
-            @else if(!isAufnehmerSelected())
-            {
-            <ion-button (click)="selectAufnehmer()">Aufnehmer:in auswählen</ion-button>
+            <ion-button class="start" size="large" shape="round" [routerLink]="['/neue-bestellung']">
+                <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                <span>Starten</span>
+            </ion-button>
             }
             @else
             {
