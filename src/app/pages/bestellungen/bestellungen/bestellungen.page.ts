@@ -3,13 +3,12 @@ import { HttpParams } from '@angular/common/http';
 import { Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { RouterLink } from '@angular/router';
+import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AppService } from 'src/app/services/app/app.service';
 import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
-import { DataService } from 'src/app/services/data/data.service';
 import { TischeService } from 'src/app/services/tische/tische.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 
@@ -33,9 +32,6 @@ export class BestellungenPage {
     private aufnehmerService = inject(AufnehmerService);
     private tischeService = inject(TischeService);
     private appService = inject(AppService);
-    private router = inject(Router);
-    private modalCtrl = inject(ModalController);
-    private data = inject(DataService);
     private formBuilder = inject(FormBuilder);
 
     public scannerEnabled: boolean = false;

@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonTitle, IonToolbar, ModalController, NavParams } from '@ionic/angular/standalone';
-import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { Bestellposition } from '../../classes/bestellposition.model';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 
@@ -19,7 +18,6 @@ export class BestellungspositionEditModalComponent implements OnInit {
 
     private modalCtrl = inject(ModalController);
     public navParams = inject(NavParams);
-    private bestellungsHandler = inject(BestellungenHandlerService);
 
     public bestellposition: Bestellposition;
     public index: number;
