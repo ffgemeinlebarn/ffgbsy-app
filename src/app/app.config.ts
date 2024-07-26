@@ -3,7 +3,6 @@ import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouteReuseStrategy, provideRouter, withComponentInputBinding } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalone';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
@@ -15,7 +14,6 @@ export const appConfig: ApplicationConfig = {
             provide: RouteReuseStrategy,
             useClass: IonicRouteStrategy
         },
-        importProvidersFrom(IonicModule.forRoot({})),
         importProvidersFrom(IonicStorageModule.forRoot({})),
         importProvidersFrom(FormsModule),
         importProvidersFrom(CommonModule),

@@ -1,7 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalController, NavParams } from '@ionic/angular';
-import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonTitle, IonToolbar } from "@ionic/angular/standalone";
+import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonTitle, IonToolbar, ModalController, NavParams } from '@ionic/angular/standalone';
 import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
 import { Bestellposition } from '../../classes/bestellposition.model';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';

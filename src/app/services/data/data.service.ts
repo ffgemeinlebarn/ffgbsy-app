@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { catchError, delay, retry } from 'rxjs';
+import { ModalController } from '@ionic/angular/standalone';
+import { catchError, retry } from 'rxjs';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Produktbereich } from 'src/app/classes/produktbereich.class';
@@ -13,7 +13,6 @@ import { Daten } from 'src/app/interfaces/daten';
 import { DataLoadedReportModalComponent } from 'src/app/modals/data-loaded-report-modal/data-loaded-report-modal.component';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
 import { SettingsService } from '../settings/settings.service';
-import { AvailabilityCheck } from 'src/app/classes/availability-check.model';
 
 @Injectable({
     providedIn: 'root'

@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonLabel, IonList, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/services/app/app.service';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 
