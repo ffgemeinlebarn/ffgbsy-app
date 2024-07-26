@@ -1,9 +1,9 @@
 import { NgClass } from '@angular/common';
-import { Component, OnInit, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { IonCol, IonGrid, IonIcon, IonRippleEffect, IonRow } from '@ionic/angular/standalone';
 
 @Component({
-    selector: 'app-init-tile',
+    selector: 'ffgbsy-init-tile',
     templateUrl: './init-tile.component.html',
     styleUrls: ['./init-tile.component.scss'],
     standalone: true,
