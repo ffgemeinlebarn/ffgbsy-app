@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Tischkategorien</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+@if (tischkategorien()) {
+<ion-content>
+    <ion-list lines="full">
+        @for (tischkategorie of tischkategorien(); track tischkategorie.id) {
+        <ion-item [routerLink]="[tischkategorie.id]" [button]="true">
+            <ion-label>
+                <h3>{{ tischkategorie.name }}</h3>
+                <p>{{ tischkategorie.produktkategorie?.name }}</p>
+            </ion-label>
+            <ion-note slot="end">{{ tischkategorie.tische.length }} Tische</ion-note>
+        </ion-item>
+        }
+    </ion-list>
+</ion-content>
+}
+@else{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}

@@ -1,0 +1,32 @@
+@defer (when tischkategorie()) {
+<ion-header>
+    <ion-toolbar>
+        <ion-back-button slot="start" defaultHref="/admin/tischkategorien"></ion-back-button>
+        <ion-title>{{ tischkategorie()?.name }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="save()">
+                <ion-icon name="save" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <ion-list lines="full">
+            <ion-item>
+                <ion-label position="stacked">Name</ion-label>
+                <ion-input formControlName="name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Sortierung</ion-label>
+                <ion-input inputmode="decimal" type="number" step="1" formControlName="sortierindex"></ion-input>
+            </ion-item>
+        </ion-list>
+    </form>
+</ion-content>
+}
+
+@placeholder{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}

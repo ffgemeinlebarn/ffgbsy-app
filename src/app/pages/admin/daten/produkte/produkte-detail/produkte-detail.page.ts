@@ -1,10 +1,10 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { AlertController, ModalController } from '@ionic/angular/standalone';
+import { AlertController, IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { Eigenschaft } from 'src/app/classes/eigenschaft.class';
 import { Produkt } from 'src/app/classes/produkt.class';
+import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { SelectEigenschaftModalComponent } from 'src/app/modals/select-eigenschaft-modal/select-eigenschaft-modal.component';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { DruckerService } from 'src/app/services/drucker/drucker.service';
@@ -17,10 +17,27 @@ import { ProdukteService } from 'src/app/services/produkte/produkte.service';
     styleUrls: ['./produkte-detail.page.scss'],
     standalone: true,
     imports: [
-        IonicModule,
+        IonItemDivider,
+        IonChip,
+        IonItem,
+        IonLabel,
+        IonList,
+        IonContent,
+        IonIcon,
+        IonButtons,
+        IonButton,
+        IonTitle,
+        IonBackButton,
+        IonHeader,
+        IonToolbar,
+        IonSelect,
+        IonSelectOption,
+        IonToggle,
+        IonInput,
         FormsModule,
         EuroPreisPipe,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        PageSpinnerComponent
     ],
 })
 export class ProdukteDetailPage {

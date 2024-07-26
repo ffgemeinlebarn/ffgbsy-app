@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { Observable, catchError, retry } from 'rxjs';
-import { SettingsService } from '../settings/settings.service';
+import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
     providedIn: 'root'
@@ -31,9 +31,18 @@ export class TischkategorienService {
             );
     }
 
-    public read(id: number) {
+    public readAllNested(): Observable<Tischkategorie[]> {
         return this.http
-            .get<Tischkategorie>(`${this.settings.apiBaseUrl()}/tischkategorien/${id}`)
+            .get<Tischkategorie[]>(`${this.settings.apiBaseUrl()}/tischkategorien`, { params: { nested: true } })
+            .pipe(
+                retry(1),
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+            );
+    }
+
+    public read(id: number, nested = false) {
+        return this.http
+            .get<Tischkategorie>(`${this.settings.apiBaseUrl()}/tischkategorien/${id}`, { params: nested ? { nested: true } : undefined })
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
