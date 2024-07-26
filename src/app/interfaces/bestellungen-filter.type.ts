@@ -1,5 +1,5 @@
 export interface IBestellungenFilter {
-    aufnehmerId: '*' | number;
-    tischId: '*' | number;
+    aufnehmerId: null | number;
+    tischId: null | number;
     limit: number;
 }

@@ -6,6 +6,7 @@ import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { Bon } from 'src/app/classes/bon.model';
 import { ApiService } from 'src/app/services/api/api.service';
+import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 
@@ -34,6 +35,7 @@ export class BestellungenDetailPage implements OnInit {
 
     public activatedRoute = inject(ActivatedRoute);
     private api = inject(ApiService);
+    private bestellungenService = inject(BestellungenService);
     private frontend = inject(FrontendService);
     private alertController = inject(AlertController);
 
@@ -44,7 +46,7 @@ export class BestellungenDetailPage implements OnInit {
     }
 
     loadBestellung(id: number) {
-        this.api.getBestellung(id).subscribe(bestellung => this.bestellung = bestellung);
+        this.bestellungenService.read(id).subscribe(bestellung => this.bestellung = bestellung);
     }
 
     printBon(bon: Bon) {

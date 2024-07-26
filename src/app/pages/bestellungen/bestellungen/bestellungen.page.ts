@@ -1,14 +1,14 @@
 import { DatePipe } from '@angular/common';
-import { HttpParams } from '@angular/common/http';
 import { Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Bestellung } from 'src/app/classes/bestellung.model';
-import { ApiService } from 'src/app/services/api/api.service';
+import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.type';
 import { AppService } from 'src/app/services/app/app.service';
 import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
+import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
 import { TischeService } from 'src/app/services/tische/tische.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 
@@ -17,18 +17,29 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
     templateUrl: './bestellungen.page.html',
     styleUrls: ['./bestellungen.page.scss'],
     standalone: true,
-    imports: [IonRippleEffect, IonLabel, IonItem, IonIcon, IonList, IonFooter, IonContent, IonTitle, IonToolbar, IonHeader, IonMenuButton,
-        IonSelect,
-        IonSelectOption,
-        RouterLink,
-        FormsModule,
+    imports: [
         DatePipe,
         EuroPreisPipe,
-        ReactiveFormsModule
-    ],
+        FormsModule,
+        IonContent,
+        IonFooter,
+        IonHeader,
+        IonIcon,
+        IonItem,
+        IonLabel,
+        IonList,
+        IonMenuButton,
+        IonRippleEffect,
+        IonSelect,
+        IonSelectOption,
+        IonTitle,
+        IonToolbar,
+        ReactiveFormsModule,
+        RouterLink
+    ]
 })
 export class BestellungenPage {
-    private api = inject(ApiService);
+    private bestellungenService = inject(BestellungenService);
     private aufnehmerService = inject(AufnehmerService);
     private tischeService = inject(TischeService);
     private appService = inject(AppService);
@@ -38,8 +49,8 @@ export class BestellungenPage {
     public bestellungen: Array<Bestellung>;
 
     public filter = this.formBuilder.group({
-        aufnehmerId: [null],
-        tischId: [null],
+        aufnehmerId: new FormControl<null | number>(null),
+        tischId: new FormControl<null | number>(null),
         limit: [10]
     });
 
@@ -56,17 +67,8 @@ export class BestellungenPage {
     }
 
     public searchBestellungen() {
-        let params = new HttpParams();
-
-        if (this.filter.controls['aufnehmerId'].value) {
-            params = params.append("aufnehmerId", this.filter.controls['aufnehmerId'].value);
-        }
-        if (this.filter.controls['tischId'].value) {
-            params = params.append("tischId", this.filter.controls['tischId'].value);
-        }
-
-        params = params.append("limit", this.filter.controls['limit'].value);
-
-        return this.api.searchBestellungen(params).subscribe(bestellungen => this.bestellungen = bestellungen);
+        return this.bestellungenService
+            .search(this.filter.value as IBestellungenFilter)
+            .subscribe(bestellungen => this.bestellungen = bestellungen);
     }
 }

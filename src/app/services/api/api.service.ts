@@ -1,17 +1,17 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { tap, retry, catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { catchError, map, retry, tap } from 'rxjs/operators';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { Bon } from 'src/app/classes/bon.model';
-import { Daten } from 'src/app/interfaces/daten';
-import { environment } from 'src/environments/environment';
-import { FrontendService } from '../frontend/frontend.service';
 import { BonDruck } from 'src/app/classes/bonDruck';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { Produkt } from 'src/app/classes/produkt.class';
+import { Daten } from 'src/app/interfaces/daten';
+import { environment } from 'src/environments/environment';
+import { FrontendService } from '../frontend/frontend.service';
 
 @Injectable({
     providedIn: 'root'
@@ -72,16 +72,16 @@ export class ApiService {
             );
     }
 
-    public createBestellung(bestellung: Bestellung): Observable<Bestellung> {
-        this.frontend.showLoadingSpinner('Erstelle Bestellung');
-        return this.http
-            .post(`${this.url}/bestellungen`, bestellung, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
+    // public createBestellung(bestellung: Bestellung): Observable<Bestellung> {
+    //     this.frontend.showLoadingSpinner('Erstelle Bestellung');
+    //     return this.http
+    //         .post(`${this.url}/bestellungen`, bestellung, { headers: this.headers })
+    //         .pipe(
+    //             retry(1),
+    //             tap(() => this.frontend.hideLoadingSpinner()),
+    //             catchError((error) => this.errorHandler(error))
+    //         );
+    // }
 
     public updateAufnehmer(aufnehmer: Aufnehmer): Observable<Bestellung> {
         this.frontend.showLoadingSpinner('Aktualisiere Aufnehmer');
@@ -132,27 +132,27 @@ export class ApiService {
             );
     }
 
-    public searchBestellungen(params: HttpParams = new HttpParams()): Observable<Array<Bestellung>> {
-        this.frontend.showLoadingSpinner('Suche Bestellungen');
-        return this.http
-            .get(`${this.url}/bestellungen`, { headers: this.headers, params })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
+    // public searchBestellungen(params: HttpParams = new HttpParams()): Observable<Array<Bestellung>> {
+    //     this.frontend.showLoadingSpinner('Suche Bestellungen');
+    //     return this.http
+    //         .get(`${this.url}/bestellungen`, { headers: this.headers, params })
+    //         .pipe(
+    //             retry(1),
+    //             tap(() => this.frontend.hideLoadingSpinner()),
+    //             catchError((error) => this.errorHandler(error))
+    //         );
+    // }
 
-    public getBestellung(id: number): Observable<Bestellung> {
-        this.frontend.showLoadingSpinner('Empfange Bestellung');
-        return this.http
-            .get(`${this.url}/bestellungen/${id}`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
+    // public getBestellung(id: number): Observable<Bestellung> {
+    //     this.frontend.showLoadingSpinner('Empfange Bestellung');
+    //     return this.http
+    //         .get(`${this.url}/bestellungen/${id}`, { headers: this.headers })
+    //         .pipe(
+    //             retry(1),
+    //             tap(() => this.frontend.hideLoadingSpinner()),
+    //             catchError((error) => this.errorHandler(error))
+    //         );
+    // }
 
     public getSystemstatus(): Observable<any> {
         this.frontend.showLoadingSpinner('Empfange Systemstatus');

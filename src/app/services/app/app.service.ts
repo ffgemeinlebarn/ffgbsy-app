@@ -6,6 +6,7 @@ import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-m
 import { environment } from 'src/environments/environment';
 import { ApiService } from '../api/api.service';
 import { AvailabilityService } from '../availability/availability.service';
+import { BestellungenService } from '../bestellungen/bestellungen.service';
 import { DataService } from '../data/data.service';
 import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
@@ -20,6 +21,7 @@ export class AppService {
     private api = inject(ApiService);
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
+    private bestellungenService = inject(BestellungenService);
 
     // State Management
     public readyToGo = computed<boolean>(() => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility());
@@ -79,9 +81,7 @@ export class AppService {
     }
 
     public sendBestellung() {
-        this.api.createBestellung(this.bestellung()).subscribe((bestellung) => {
-        });
-        this.api.createBestellung(this.bestellung()).subscribe({
+        this.bestellungenService.create(this.bestellung()).subscribe({
             next: (bestellung) => {
 
                 this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
