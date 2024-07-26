@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { AlertController, ModalController } from '@ionic/angular/standalone';
 import { Eigenschaft } from 'src/app/classes/eigenschaft.class';
 import { Produkt } from 'src/app/classes/produkt.class';
+import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { SelectEigenschaftModalComponent } from 'src/app/modals/select-eigenschaft-modal/select-eigenschaft-modal.component';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { DruckerService } from 'src/app/services/drucker/drucker.service';
@@ -20,7 +21,8 @@ import { ProdukteService } from 'src/app/services/produkte/produkte.service';
         IonicModule,
         FormsModule,
         EuroPreisPipe,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        PageSpinnerComponent
     ],
 })
 export class ProdukteDetailPage {

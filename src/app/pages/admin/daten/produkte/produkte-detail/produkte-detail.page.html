@@ -1,3 +1,4 @@
+@defer (when produkt()) {
 <ion-header>
     <ion-toolbar>
         <ion-back-button slot="start" defaultHref="/admin/produkte"></ion-back-button>
@@ -153,3 +154,8 @@
         </ion-list>
     </form>
 </ion-content>
+}
+
+@placeholder{
+<ffgbsy-page-spinner></ffgbsy-page-spinner>
+}
