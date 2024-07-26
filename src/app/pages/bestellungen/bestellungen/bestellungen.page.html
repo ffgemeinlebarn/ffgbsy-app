@@ -33,43 +33,45 @@
 
 <ion-footer>
     <ion-toolbar>
-        <ion-list>
-            <!-- <ion-item color="light">
-                <ion-icon slot="start" name="people-outline"></ion-icon>
-                <ion-label>Aufnehmer</ion-label>
-                <ion-select interface="action-sheet" placeholder="Aufnehmer" [(ngModel)]="usedFilter.aufnehmerId">
-                    <ion-select-option value="*">Alle</ion-select-option>
-                    @for (aufnehmer of availableFilter?.aufnehmer; track aufnehmer) {
-                    <ion-select-option [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
-                    }
-                </ion-select>
-            </ion-item>
-            <ion-item color="light">
-                <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
-                <ion-label>Tisch</ion-label>
-                <ion-select interface="action-sheet" placeholder="Tische" [(ngModel)]="usedFilter.tischId">
-                    <ion-select-option value="*">Alle</ion-select-option>
-                    @for (tisch of availableFilter.tische; track tisch) {
-                    <ion-select-option [value]="tisch.id">{{ tisch.reihe }} {{ tisch.nummer }}</ion-select-option>
-                    }
-                </ion-select>
-            </ion-item>
-            <ion-item color="light">
-                <ion-icon slot="start" name="timer-outline"></ion-icon>
-                <ion-label>Letzte Bestellungen</ion-label>
-                <ion-select interface="action-sheet" placeholder="Letzte Bestellungen" [(ngModel)]="usedFilter.limit">
-                    @for (limit of availableFilter.limits; track limit) {
-                    <ion-select-option [value]="limit">{{ limit }}</ion-select-option>
-                    }
-                </ion-select>
-            </ion-item>
-            <ion-item class="search-button ion-text-center ion-activatable ripple-parent" (click)="searchBestellungen()" lines="none" color="primary">
-                <ion-label>
-                    <ion-icon name="search-outline"></ion-icon>
-                    Suchen
-                </ion-label>
-                <ion-ripple-effect></ion-ripple-effect>
-            </ion-item> -->
-        </ion-list>
+        <form [formGroup]="filter" (ngSubmit)="searchBestellungen()">
+            <ion-list>
+                <ion-item color="light">
+                    <ion-icon slot="start" name="people-outline"></ion-icon>
+                    <ion-label>Aufnehmer</ion-label>
+                    <ion-select interface="action-sheet" formControlName="aufnehmerId">
+                        <ion-select-option [value]="null">Alle</ion-select-option>
+                        @for (aufnehmer of availableFilter.aufnehmer(); track aufnehmer.id) {
+                        <ion-select-option [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
+                        }
+                    </ion-select>
+                </ion-item>
+                <ion-item color="light">
+                    <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
+                    <ion-label>Tisch</ion-label>
+                    <ion-select interface="action-sheet" formControlName="tischId">
+                        <ion-select-option [value]="null">Alle</ion-select-option>
+                        @for (tisch of availableFilter.tische(); track tisch.id) {
+                        <ion-select-option [value]="tisch.id">{{ tisch.reihe }} {{ tisch.nummer }}</ion-select-option>
+                        }
+                    </ion-select>
+                </ion-item>
+                <ion-item color="light">
+                    <ion-icon slot="start" name="timer-outline"></ion-icon>
+                    <ion-label>Letzte Bestellungen</ion-label>
+                    <ion-select interface="action-sheet" placeholder="Letzte Bestellungen" formControlName="limit">>
+                        @for (limit of availableFilter.limits; track limit) {
+                        <ion-select-option [value]="limit">{{ limit }}</ion-select-option>
+                        }
+                    </ion-select>
+                </ion-item>
+                <ion-item class="search-button ion-text-center ion-activatable ripple-parent" (click)="searchBestellungen()" lines="none" color="primary">
+                    <ion-label>
+                        <ion-icon name="search-outline"></ion-icon>
+                        Suchen
+                    </ion-label>
+                    <ion-ripple-effect></ion-ripple-effect>
+                </ion-item>
+            </ion-list>
+        </form>
     </ion-toolbar>
 </ion-footer>
