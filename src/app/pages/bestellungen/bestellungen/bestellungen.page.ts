@@ -1,23 +1,23 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { Bestellung } from 'src/app/classes/bestellung.model';
-import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
-import { ApiService } from 'src/app/services/api/api.service';
-import { Router, RouterLink } from '@angular/router';
-import { ModalController, IonicModule } from '@ionic/angular';
-import { DataService } from 'src/app/services/data/data.service';
-import { HttpParams } from '@angular/common/http';
-import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
-import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { IonContent, IonFooter, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar } from "@ionic/angular/standalone";
 import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
+import { Bestellung } from 'src/app/classes/bestellung.model';
+import { ApiService } from 'src/app/services/api/api.service';
+import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
+import { DataService } from 'src/app/services/data/data.service';
+import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
     templateUrl: './bestellungen.page.html',
     styleUrls: ['./bestellungen.page.scss'],
     standalone: true,
-    imports: [
-        IonicModule,
+    imports: [IonIcon, IonList, IonFooter, IonContent, IonTitle, IonToolbar, IonHeader, IonMenuButton,
         RouterLink,
         FormsModule,
         DatePipe,

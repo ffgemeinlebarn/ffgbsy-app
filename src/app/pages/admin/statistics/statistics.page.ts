@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from "@ionic/angular/standalone";
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -11,8 +11,7 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
     templateUrl: './statistics.page.html',
     styleUrls: ['./statistics.page.scss'],
     standalone: true,
-    imports: [
-        IonicModule,
+    imports: [IonContent, IonButton, IonIcon, IonButtons, IonTitle, IonToolbar, IonHeader, IonMenuButton,
         DatePipe,
         EuroPreisPipe,
         BaseChartDirective

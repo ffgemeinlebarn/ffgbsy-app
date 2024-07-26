@@ -1,18 +1,17 @@
-import { Component, OnInit, Input, inject } from '@angular/core';
-import { ModalController, NavParams, IonicModule } from '@ionic/angular';
-import { Bestellposition } from '../../classes/bestellposition.model';
-import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
-import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { ModalController, NavParams } from '@ionic/angular';
+import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonTitle, IonToolbar } from "@ionic/angular/standalone";
+import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
+import { Bestellposition } from '../../classes/bestellposition.model';
+import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-bestellungsposition-edit-modal',
     templateUrl: './bestellungsposition-edit-modal.component.html',
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
     standalone: true,
-    imports: [
-        IonicModule,
+    imports: [IonFooter, IonItem, IonLabel, IonList, IonListHeader, IonIcon, IonButton, IonGrid, IonRow, IonContent, IonTitle, IonToolbar, IonCol, IonHeader,
         FormsModule,
         EuroPreisPipe
     ],

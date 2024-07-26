@@ -1,14 +1,14 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Bestellung } from 'src/app/classes/bestellung.model';
+import { AlertController } from '@ionic/angular';
+import { IonBackButton, IonButtons, IonChip, IonContent, IonHeader, IonItem, IonItemDivider, IonLabel, IonList, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Bestellposition } from 'src/app/classes/bestellposition.model';
-import { ApiService } from 'src/app/services/api/api.service';
-import { AlertController, IonicModule } from '@ionic/angular';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
+import { Bestellung } from 'src/app/classes/bestellung.model';
 import { Bon } from 'src/app/classes/bon.model';
+import { ApiService } from 'src/app/services/api/api.service';
+import { FrontendService } from 'src/app/services/frontend/frontend.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
-import { DatePipe } from '@angular/common';
-import { IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonItem, IonItemDivider, IonLabel, IonList, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
