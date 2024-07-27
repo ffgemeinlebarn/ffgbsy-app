@@ -4,8 +4,9 @@ import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
 import { environment } from 'src/environments/environment';
-import { ApiService } from '../api/api.service';
 import { AvailabilityService } from '../availability/availability.service';
+import { BestellungenService } from '../bestellungen/bestellungen.service';
+import { BonsService } from '../bons/bons.service';
 import { DataService } from '../data/data.service';
 import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
@@ -17,9 +18,10 @@ export class AppService {
     private settings = inject(SettingsService);
     private frontend = inject(FrontendService);
     private data = inject(DataService);
-    private api = inject(ApiService);
+    private bonsService = inject(BonsService);
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
+    private bestellungenService = inject(BestellungenService);
 
     // State Management
     public readyToGo = computed<boolean>(() => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility());
@@ -58,7 +60,7 @@ export class AppService {
 
     public selectAufnehmer(aufnehmer: Aufnehmer) {
         this.aufnehmer.set(aufnehmer);
-        this.settings.saveLocal({ ...this.settings.local(), deviceAufnehmerId: aufnehmer.id }, true);
+        this.settings.saveLocal({ ...this.settings.local(), deviceAufnehmerId: this.settings.local().deviceIsPrivate ? aufnehmer.id : null }, true);
     }
 
     public createBestellung() {
@@ -79,15 +81,13 @@ export class AppService {
     }
 
     public sendBestellung() {
-        this.api.createBestellung(this.bestellung()).subscribe((bestellung) => {
-        });
-        this.api.createBestellung(this.bestellung()).subscribe({
+        this.bestellungenService.create(this.bestellung()).subscribe({
             next: (bestellung) => {
 
                 this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
                 this.bestellung.set(null);
 
-                this.api.druckBons(bestellung.bestellbons).subscribe({
+                this.bonsService.druckBons(bestellung.bestellbons).subscribe({
                     next: (bons) => {
                         if (bons.filter(b => !b.success).length == 0) {
                             this.frontend.showToast("Alle Bons wurden erfolgreich gedruckt!", 2000);

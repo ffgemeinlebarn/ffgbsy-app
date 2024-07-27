@@ -1,9 +1,9 @@
 import { NgClass } from '@angular/common';
-import { Component, OnInit, computed, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { IonCol, IonGrid, IonIcon, IonRippleEffect, IonRow } from '@ionic/angular/standalone';
 
 @Component({
-    selector: 'app-init-tile',
+    selector: 'ffgbsy-init-tile',
     templateUrl: './init-tile.component.html',
     styleUrls: ['./init-tile.component.scss'],
     standalone: true,
@@ -21,6 +21,7 @@ export class InitTileComponent {
     title = input.required<string>();
     subtitle = input<string>();
     success = input<boolean>(false);
+    unsuccesfulFlag = input<null | 'warn' | 'error'>(null);
 
     tileClass = computed(() => this.success() ? 'tile--success' : '');
 }

@@ -1,14 +1,15 @@
 import { DatePipe } from '@angular/common';
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { IonContent, IonFooter, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
+import { Component, effect, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Bestellung } from 'src/app/classes/bestellung.model';
-import { ApiService } from 'src/app/services/api/api.service';
-import { BestellungenHandlerService } from 'src/app/services/bestellungen/bestellungen-handler.service';
-import { DataService } from 'src/app/services/data/data.service';
+import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.type';
+import { AppService } from 'src/app/services/app/app.service';
+import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
+import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
+import { TischeService } from 'src/app/services/tische/tische.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 
 @Component({
@@ -16,55 +17,58 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
     templateUrl: './bestellungen.page.html',
     styleUrls: ['./bestellungen.page.scss'],
     standalone: true,
-    imports: [IonIcon, IonList, IonFooter, IonContent, IonTitle, IonToolbar, IonHeader, IonMenuButton,
-        RouterLink,
-        FormsModule,
+    imports: [
         DatePipe,
-        EuroPreisPipe
-    ],
+        EuroPreisPipe,
+        FormsModule,
+        IonContent,
+        IonFooter,
+        IonHeader,
+        IonIcon,
+        IonItem,
+        IonLabel,
+        IonList,
+        IonMenuButton,
+        IonRippleEffect,
+        IonSelect,
+        IonSelectOption,
+        IonTitle,
+        IonToolbar,
+        ReactiveFormsModule,
+        RouterLink
+    ]
 })
-export class BestellungenPage implements OnInit {
-
-    private api = inject(ApiService);
-    private bestellungsHandler = inject(BestellungenHandlerService);
-    private router = inject(Router);
-    private modalCtrl = inject(ModalController);
-    private data = inject(DataService);
+export class BestellungenPage {
+    private bestellungenService = inject(BestellungenService);
+    private aufnehmerService = inject(AufnehmerService);
+    private tischeService = inject(TischeService);
+    private appService = inject(AppService);
+    private formBuilder = inject(FormBuilder);
 
     public scannerEnabled: boolean = false;
     public bestellungen: Array<Bestellung>;
-    public usedFilter: any = {
-        aufnehmerId: '*',
-        tischId: '*',
-        limit: 10
+
+    public filter = this.formBuilder.group({
+        aufnehmerId: new FormControl<null | number>(null),
+        tischId: new FormControl<null | number>(null),
+        limit: [10]
+    });
+
+    public availableFilter = {
+        aufnehmer: toSignal(this.aufnehmerService.readAll()),
+        tische: toSignal(this.tischeService.readAll()),
+        limits: [5, 10, 25, 50, 100, 200, 500, 1000]
     };
 
-    public availableFilter: any = {
-        aufnehmer: signal<Aufnehmer[]>([]),
-        tische: [],
-        limits: [5, 10, 25, 50, 100]
-    };
-
-    ngOnInit() {
-        this.availableFilter.aufnehmer = this.data.aufnehmer;
-        this.availableFilter.tische = this.data.tische;
-        this.usedFilter.aufnehmerId = /* this.bestellungsHandler.aufnehmer?.id ?? */ '*';
-        this.usedFilter.tischId = '*';
+    constructor() {
+        effect(() => {
+            this.filter.controls['aufnehmerId'].setValue(this.appService.aufnehmer()?.id ?? null);
+        });
     }
 
     public searchBestellungen() {
-        let params = new HttpParams();
-
-        if (this.usedFilter.aufnehmerId != '*') {
-            params = params.append("aufnehmerId", this.usedFilter.aufnehmerId);
-        }
-
-        if (this.usedFilter.tischId != '*') {
-            params = params.append("tischId", this.usedFilter.tischId);
-        }
-
-        params = params.append("limit", this.usedFilter.limit);
-
-        return this.api.searchBestellungen(params).subscribe(bestellungen => this.bestellungen = bestellungen);
+        return this.bestellungenService
+            .search(this.filter.value as IBestellungenFilter)
+            .subscribe(bestellungen => this.bestellungen = bestellungen);
     }
 }

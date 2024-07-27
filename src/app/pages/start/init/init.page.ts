@@ -1,6 +1,6 @@
 import { Component, Signal, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonContent, IonHeader, IonMenuButton, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { InitTileComponent } from 'src/app/components/init-tile/init-tile.component';
 import { AppService } from 'src/app/services/app/app.service';
 import { AvailabilityService } from 'src/app/services/availability/availability.service';
@@ -11,14 +11,15 @@ import { version } from 'src/environments/version';
     templateUrl: './init.page.html',
     styleUrls: ['./init.page.scss'],
     standalone: true,
-    imports: [
+    imports: [IonTitle,
         IonButton,
         IonHeader,
         IonToolbar,
         IonMenuButton,
         IonContent,
         RouterLink,
-        InitTileComponent
+        InitTileComponent,
+        IonTitle
     ],
 })
 export class InitPage {

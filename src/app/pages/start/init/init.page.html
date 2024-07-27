@@ -1,10 +1,11 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Start</ion-title>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
     <div class="center-wrapper">
         <div class="centered">
 
@@ -15,11 +16,17 @@
 
             @if(readyToGo())
             {
-            <ion-button [routerLink]="['/neue-bestellung']">Starte Bestellung</ion-button>
+            <ion-button class="start" size="large" shape="round" [routerLink]="['/neue-bestellung']">
+                <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                <span>Starten</span>
+            </ion-button>
             }
             @else if(!isAufnehmerSelected())
             {
-            <ion-button (click)="selectAufnehmer()">Aufnehmer:in auswählen</ion-button>
+            <ion-button class="start" size="large" shape="round" (click)="selectAufnehmer()">
+                <ion-icon slot="start" name="person-outline"></ion-icon>
+                <span>Aufnehmer:in auswählen</span>
+            </ion-button>
             }
             @else
             {
@@ -27,11 +34,11 @@
             }
 
             <div class="tiles">
-                <app-init-tile title="Aufnehmer" [success]="isAufnehmerSelected()" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></app-init-tile>
-                <app-init-tile title="Gerät" [success]="isDeviceNameSet()" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></app-init-tile>
-                <app-init-tile title="Lookup Daten" [success]="isLookupDataAvailable()" routerLink="/systemstatus" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></app-init-tile>
-                <app-init-tile title="API" [success]="isApiAvailable()" routerLink="/systemstatus" [subtitle]="apiAvailabilityStatusForSubtitle()" iconName="cloud-outline"></app-init-tile>
-                <app-init-tile title="Drucker" [success]="areDruckerAvailable()" routerLink="/systemstatus" [subtitle]="druckerAvailabilityStatusForSubtitle()" iconName="print-outline"></app-init-tile>
+                <ffgbsy-init-tile title="Aufnehmer" [success]="isAufnehmerSelected()" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="Gerät" [success]="isDeviceNameSet()" unsuccesfulFlag="danger" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="Lookup Daten" [success]="isLookupDataAvailable()" unsuccesfulFlag="danger" routerLink="/systemstatus" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="API" [success]="isApiAvailable()" unsuccesfulFlag="danger" routerLink="/systemstatus" [subtitle]="apiAvailabilityStatusForSubtitle()" iconName="cloud-outline"></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="Drucker" [success]="areDruckerAvailable()" unsuccesfulFlag="warn" routerLink="/systemstatus" [subtitle]="druckerAvailabilityStatusForSubtitle()" iconName="print-outline"></ffgbsy-init-tile>
             </div>
         </div>
     </div>

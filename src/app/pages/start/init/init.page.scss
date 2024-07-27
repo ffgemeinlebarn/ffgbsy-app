@@ -1,63 +1,60 @@
-ion-header:after {
-    background-image: none;
-}
+:host {
 
-.logo {
-    max-width: 100px;
-    width: 100%;
-}
+    ion-content {
+        .logo {
+            max-width: 100px;
+            width: 100%;
+        }
 
-.tagline {
-    text-align: center;
-    font-size: 1.25em;
-    font-weight: bold;
-    color: #777;
-    margin-top: 2em;
-}
+        .tagline {
+            text-align: center;
+            font-size: 1.25em;
+            font-weight: bold;
+            color: #777;
+            margin-top: 2em;
+        }
 
-.version {
-    color: #aaa;
-    font-size: 1em;
-    margin-top: 0.4em;
-    margin-bottom: 2em;
-}
+        .version {
+            color: #aaa;
+            font-size: 1em;
+            margin-top: 0.4em;
+            margin-bottom: 2em;
+        }
 
+        .centered {
+            width: 100%;
+            max-height: 100%;
+            padding: 3em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: auto;
 
-.button-systemstatus-abrufen {
-    position: fixed;
-    right: 20px;
-    --ion-color-primary: #ccc;
-    font-size: 0.8em;
-}
+            ion-button.start {
+                text-transform: none;
+                --padding-start: 1.5em;
+                --padding-end: 1.5em;
+                margin-top: 1.5em;
+                margin-bottom: 2em;
+            }
 
-.button-systemstatus-abrufen {
-    bottom: 16px;
-}
+            .tiles {
+                display: grid;
+                grid-row: auto;
+                grid-template-columns: 1fr;
+                gap: 1.5em;
+                margin-top: 1.5em;
 
-.centered {
-    width: 100%;
-    max-height: 100%;
-    padding: 3em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: auto;
-}
+                ffgbsy-init-tile {
+                    box-sizing: border-box;
+                }
+            }
 
-.tiles {
-    display: grid;
-    grid-row: auto;
-    grid-template-columns: 1fr;
-    gap: 1.5em;
-    margin-top: 1.5em;
-
-    app-init-tile {
-        box-sizing: border-box;
-    }
-}
-
-@media screen and (min-width: 768px) {
-    .tiles {
-        grid-template-columns: 1fr 1fr;
+            @media screen and (min-width: 768px) {
+                .tiles {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
+        }
     }
 }
