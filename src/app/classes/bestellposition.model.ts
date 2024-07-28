@@ -1,3 +1,4 @@
+import { IEigenschaft } from "./i-eigenschaft.interface";
 import { Produkt } from "./produkt.class";
 
 export class Bestellposition {
@@ -12,7 +13,7 @@ export class Bestellposition {
         }
     };
     calc_correction: any = 0.00;
-    eigenschaften: Array<any>;
+    eigenschaften: IEigenschaft[];
     bestellungen_id: number;
     drucker_id: number;
 

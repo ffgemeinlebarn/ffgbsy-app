@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonTitle, IonToolbar, ModalController, NavParams } from '@ionic/angular/standalone';
+import { IonButton, IonCheckbox, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonTextarea, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { Bestellposition } from '../../classes/bestellposition.model';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 
@@ -9,34 +9,71 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
     templateUrl: './bestellungsposition-edit-modal.component.html',
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
     standalone: true,
-    imports: [IonFooter, IonItem, IonLabel, IonList, IonListHeader, IonIcon, IonButton, IonGrid, IonRow, IonContent, IonTitle, IonToolbar, IonCol, IonHeader,
+    imports: [
+        IonTextarea,
+        IonFooter,
+        IonItem,
+        IonLabel,
+        IonList,
+        IonListHeader,
+        IonIcon,
+        IonButton,
+        IonGrid,
+        IonRow,
+        IonContent,
+        IonTitle,
+        IonToolbar,
+        IonCol,
+        IonHeader,
         FormsModule,
-        EuroPreisPipe
+        EuroPreisPipe,
+        IonInput,
+        IonCheckbox
     ],
 })
-export class BestellungspositionEditModalComponent implements OnInit {
+export class BestellungspositionEditModalComponent {
+    private modalController = inject(ModalController);
+    @Input() public bestellposition: Bestellposition;
 
-    private modalCtrl = inject(ModalController);
-    public navParams = inject(NavParams);
+    public save() {
+        this.bestellposition.display.eigenschaften.mit = [];
+        this.bestellposition.display.eigenschaften.ohne = [];
+        this.bestellposition.calc_correction = 0;
 
-    public bestellposition: Bestellposition;
-    public index: number;
+        const activatedEigenschaften = this.bestellposition.eigenschaften.filter(e => (!e.in_produkt_enthalten && e.aktiv) || (e.in_produkt_enthalten && !e.aktiv));
 
-    ngOnInit() {
-        this.bestellposition = this.navParams.get('bestellposition');
-        this.index = this.navParams.get('index');
+        for (const e of activatedEigenschaften) {
+
+            let name = e.name;
+
+            if (!e.in_produkt_enthalten) {
+                if (e.preis > 0) {
+                    name = name + " (" + this.bestellposition.anzahl + "x = +" + this.displayEuroNumber(this.bestellposition.anzahl * e.preis) + ")";
+                }
+
+                this.bestellposition.display.eigenschaften.mit.push(name);
+                this.bestellposition.calc_correction += (this.bestellposition.anzahl * e.preis);
+            } else {
+                if (e.preis > 0) {
+                    name = name + " (" + this.bestellposition.anzahl + "x = -" + this.displayEuroNumber(this.bestellposition.anzahl * e.preis) + ")";
+                }
+
+                this.bestellposition.display.eigenschaften.mit.push(name);
+                this.bestellposition.calc_correction -= (this.bestellposition.anzahl * e.preis);
+            }
+        }
+        this.modalController.dismiss(this.bestellposition);
     }
 
-    closeModal() {
-        this.modalCtrl.dismiss(this.bestellposition);
-    }
-
-    changeAnzahl(change: number) {
+    public changeAnzahl(change: number) {
         this.bestellposition.anzahl += change;
     }
 
-    removeBestellposition() {
-        // this.bestellungsHandler.neubestellung.bestellung.bestellpositionen.splice(this.index, 1);
-        this.modalCtrl.dismiss(this.bestellposition);
+    public delete() {
+        this.modalController.dismiss(null);
+    }
+
+    private displayEuroNumber(value: any) {
+        return "€ " + String(parseFloat(value).toFixed(2)).replace(".", ",");
     }
 }

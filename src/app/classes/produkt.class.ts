@@ -1,6 +1,6 @@
 import { Drucker } from "./drucker.class";
-import { Eigenschaft } from "./eigenschaft.class";
 import { Grundprodukt } from "./grundprodukt.class";
+import { IEigenschaft } from "./i-eigenschaft.interface";
 import { Produkteinteilung } from "./produkteinteilung.class";
 
 export class Produkt {
@@ -19,5 +19,5 @@ export class Produkt {
     celebration_last: number;
     produkteinteilung: Produkteinteilung;
     grundprodukt: Grundprodukt | null;
-    eigenschaften: Array<Eigenschaft>;
+    eigenschaften: Array<IEigenschaft>;
 }
