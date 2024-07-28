@@ -1,4 +1,4 @@
-import { Eigenschaft } from "./i-eigenschaft.interface";
+import { Eigenschaft } from "./eigenschaft.interface";
 import { Produkt } from "./produkt.class";
 
 export class Bestellposition {
