@@ -2,7 +2,7 @@ import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertController, IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar, ModalController } from '@ionic/angular/standalone';
-import { IEigenschaft } from 'src/app/classes/i-eigenschaft.interface';
+import { Eigenschaft } from 'src/app/classes/i-eigenschaft.interface';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { SelectEigenschaftModalComponent } from 'src/app/modals/select-eigenschaft-modal/select-eigenschaft-modal.component';
@@ -73,12 +73,12 @@ export class ProdukteDetailPage {
         });
     }
 
-    public removeEigenschaft(eigenschaft: IEigenschaft) {
+    public removeEigenschaft(eigenschaft: Eigenschaft) {
         this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter(e => e.id !== eigenschaft.id));
         this.produkt.set({ ...this.produkt(), eigenschaften: this.form.controls.eigenschaften.value });
     }
 
-    public toggleEigenschaftEnthalten(eigenschaft: IEigenschaft) {
+    public toggleEigenschaftEnthalten(eigenschaft: Eigenschaft) {
         eigenschaft.in_produkt_enthalten = !eigenschaft.in_produkt_enthalten;
     }
 
@@ -90,7 +90,7 @@ export class ProdukteDetailPage {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: IEigenschaft = await (await modal.onWillDismiss()).data;
+        const eigenschaft: Eigenschaft = await (await modal.onWillDismiss()).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({
