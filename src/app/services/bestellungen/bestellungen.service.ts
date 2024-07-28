@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
 import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
-import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.type';
+import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.interface';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
 import { SettingsService } from '../settings/settings.service';
 

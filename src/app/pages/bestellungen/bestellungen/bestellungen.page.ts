@@ -5,7 +5,7 @@ import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@ang
 import { RouterLink } from '@angular/router';
 import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { Bestellung } from 'src/app/classes/bestellung.model';
-import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.type';
+import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.interface';
 import { AppService } from 'src/app/services/app/app.service';
 import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
 import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
