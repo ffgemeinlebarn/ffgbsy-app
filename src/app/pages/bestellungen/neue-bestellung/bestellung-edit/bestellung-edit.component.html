@@ -32,7 +32,7 @@
         </div>
         <div class="content-right">
             <ion-list>
-                @for(produkteinteilung of filtredProdukteinteilungenToDisplay(); track produkteinteilung)
+                @for(produkteinteilung of filtredProdukteinteilungenToDisplay(); track produkteinteilung.id)
                 {
                 <ion-item-divider>{{ produkteinteilung.name }}</ion-item-divider>
                 @for (produkt of produkteinteilung.produkte; track produkt) {

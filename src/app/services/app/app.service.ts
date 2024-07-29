@@ -1,7 +1,9 @@
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
+import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
+import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
 import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
 import { environment } from 'src/environments/environment';
 import { AvailabilityService } from '../availability/availability.service';
@@ -51,6 +53,31 @@ export class AppService {
             initialBreakpoint: 1
         });
         modal.present();
+    }
+
+    public async editBestellposition(bestellposition: Bestellposition) {
+
+        const modal = await this.modalController.create({
+            component: BestellungspositionEditModalComponent,
+            componentProps: {
+                bestellposition: bestellposition
+            },
+            cssClass: 'classic-modal',
+            showBackdrop: true,
+            backdropDismiss: false,
+            animated: true
+        });
+
+        modal.onDidDismiss().then((data: { data: null | Bestellposition }) => {
+            if (data.data == null) {
+                this.bestellung.update((bestellung) => {
+                    bestellung.bestellpositionen = bestellung.bestellpositionen.filter(b => b != bestellposition);
+                    return bestellung;
+                })
+            };
+        });
+
+        return modal.present();
     }
 
     public clearAufnehmer() {

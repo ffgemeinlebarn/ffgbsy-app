@@ -1,5 +1,5 @@
 import { Drucker } from "./drucker.class";
-import { Eigenschaft } from "./eigenschaft.class";
+import { Eigenschaft } from "./eigenschaft.interface";
 import { Grundprodukt } from "./grundprodukt.class";
 import { Produkteinteilung } from "./produkteinteilung.class";
 

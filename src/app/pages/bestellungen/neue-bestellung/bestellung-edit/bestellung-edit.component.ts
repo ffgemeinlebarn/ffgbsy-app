@@ -6,7 +6,6 @@ import { Produkt } from 'src/app/classes/produkt.class';
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { BestellungKontrolleModalComponent } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle-modal.component';
-import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { AppService } from 'src/app/services/app/app.service';
 import { DataService } from 'src/app/services/data/data.service';
@@ -87,55 +86,8 @@ export class BestellungEditComponent {
         }
     }
 
-    displayEuroNumber(value: any) {
-        return "€ " + String(parseFloat(value).toFixed(2)).replace(".", ",");
-    }
-
-    async editBestellungsposition(bestellposition: Bestellposition, nonReverseIndex: number) {
-
-        let reverseIndex = this.bestellung().bestellpositionen.length - 1 - nonReverseIndex;
-
-        const modal = await this.modalController.create({
-            component: BestellungspositionEditModalComponent,
-            componentProps: {
-                bestellposition: bestellposition,
-                index: reverseIndex
-            },
-            cssClass: 'classic-modal',
-            showBackdrop: true,
-            backdropDismiss: false,
-            animated: true
-        });
-
-        modal.onDidDismiss()
-            .then((data) => {
-                bestellposition.display.eigenschaften.mit = [];
-                bestellposition.display.eigenschaften.ohne = [];
-
-                bestellposition.calc_correction = 0.00;
-
-                for (let e of data.data.eigenschaften) {
-                    if (e.in_produkt_enthalten == 0 && e.aktiv == 1) {
-                        if (parseFloat(e.preis) != 0) {
-
-                            bestellposition.display.eigenschaften.mit.push(e.name + " (" + bestellposition.anzahl + "x = +" + this.displayEuroNumber(bestellposition.anzahl * e.preis) + ")");
-                        } else {
-                            bestellposition.display.eigenschaften.mit.push(e.name);
-                        }
-                        bestellposition.calc_correction += (bestellposition.anzahl * parseFloat(e.preis));
-
-                    } else if (e.in_produkt_enthalten == 1 && e.aktiv == 0) {
-                        if (parseFloat(e.preis) != 0) {
-                            bestellposition.display.eigenschaften.ohne.push(e.name + " (" + bestellposition.anzahl + "x = -" + this.displayEuroNumber(bestellposition.anzahl * e.preis) + ")");
-                        } else {
-                            bestellposition.display.eigenschaften.ohne.push(e.name);
-                        }
-                        bestellposition.calc_correction -= (bestellposition.anzahl * parseFloat(e.preis));
-                    }
-                }
-            });
-
-        return modal.present();
+    public editBestellungsposition(bestellposition: Bestellposition) {
+        this.app.editBestellposition(bestellposition);
     }
 
     async kontrolliereBestellung() {

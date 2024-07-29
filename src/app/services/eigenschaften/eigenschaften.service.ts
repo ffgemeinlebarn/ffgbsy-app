@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, retry, tap } from 'rxjs';
-import { SettingsService } from '../settings/settings.service';
+import { Observable, catchError, retry } from 'rxjs';
+import { Eigenschaft } from 'src/app/classes/eigenschaft.interface';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
-import { Eigenschaft } from 'src/app/classes/eigenschaft.class';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
     providedIn: 'root'

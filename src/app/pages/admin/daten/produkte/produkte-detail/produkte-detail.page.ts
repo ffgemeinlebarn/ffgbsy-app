@@ -2,7 +2,7 @@ import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertController, IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar, ModalController } from '@ionic/angular/standalone';
-import { Eigenschaft } from 'src/app/classes/eigenschaft.class';
+import { Eigenschaft } from 'src/app/classes/eigenschaft.interface';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { SelectEigenschaftModalComponent } from 'src/app/modals/select-eigenschaft-modal/select-eigenschaft-modal.component';
