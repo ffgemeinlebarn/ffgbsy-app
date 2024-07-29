@@ -5,8 +5,8 @@
     </ion-toolbar>
 </ion-header>
 
-@if (tischkategorienMitTischen()) {
 <ion-content>
+    @defer (when tischkategorienMitTischen()) {
     <ion-list lines="full">
         @for (tischkategorie of tischkategorienMitTischen(); track tischkategorie.id) {
         <h2 class="ion-padding">
@@ -24,8 +24,8 @@
         }
         }
     </ion-list>
+    }
+    @placeholder(minimum 300ms){
+    <ffgbsy-page-spinner></ffgbsy-page-spinner>
+    }
 </ion-content>
-}
-@else{
-<ffgbsy-page-spinner></ffgbsy-page-spinner>
-}

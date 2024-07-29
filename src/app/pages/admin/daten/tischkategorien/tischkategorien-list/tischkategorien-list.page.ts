@@ -30,7 +30,6 @@ export class TischkategorienListPage implements ViewDidEnter {
     public tischkategorien = signal<Tischkategorie[]>(null);
 
     ionViewDidEnter(): void {
-        this.tischkategorien.set(null);
         this.tischkategorienService.readAllNested().subscribe(items => this.tischkategorien.set(items));
     }
 }

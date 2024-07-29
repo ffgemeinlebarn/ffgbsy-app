@@ -4,9 +4,8 @@
         <ion-title>Tischkategorien</ion-title>
     </ion-toolbar>
 </ion-header>
-
-@if (tischkategorien()) {
 <ion-content>
+    @defer (when tischkategorien()) {
     <ion-list lines="full">
         @for (tischkategorie of tischkategorien(); track tischkategorie.id) {
         <ion-item [routerLink]="[tischkategorie.id]" [button]="true">
@@ -18,8 +17,8 @@
         </ion-item>
         }
     </ion-list>
+    }
+    @placeholder(minimum 300ms){
+    <ffgbsy-page-spinner></ffgbsy-page-spinner>
+    }
 </ion-content>
-}
-@else{
-<ffgbsy-page-spinner></ffgbsy-page-spinner>
-}

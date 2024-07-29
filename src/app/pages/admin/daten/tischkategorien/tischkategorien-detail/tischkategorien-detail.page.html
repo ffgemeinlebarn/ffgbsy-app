@@ -1,17 +1,19 @@
-@defer (when tischkategorie()) {
 <ion-header>
     <ion-toolbar>
         <ion-back-button slot="start" defaultHref="/admin/tischkategorien"></ion-back-button>
+        @defer (when tischkategorie()) {
         <ion-title>{{ tischkategorie()?.name }}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="save()">
                 <ion-icon name="save" slot="icon-only"></ion-icon>
             </ion-button>
         </ion-buttons>
+        }
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    @defer (when tischkategorie()) {
     <form [formGroup]="form" (ngSubmit)="save()">
         <ion-list lines="full">
             <ion-item>
@@ -24,9 +26,8 @@
             </ion-item>
         </ion-list>
     </form>
+    }
+    @placeholder(minimum 300ms){
+    <ffgbsy-page-spinner></ffgbsy-page-spinner>
+    }
 </ion-content>
-}
-
-@placeholder{
-<ffgbsy-page-spinner></ffgbsy-page-spinner>
-}
