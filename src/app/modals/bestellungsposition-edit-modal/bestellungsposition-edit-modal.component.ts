@@ -58,7 +58,7 @@ export class BestellungspositionEditModalComponent {
                     name = name + " (" + this.bestellposition.anzahl + "x = -" + this.displayEuroNumber(this.bestellposition.anzahl * e.preis) + ")";
                 }
 
-                this.bestellposition.display.eigenschaften.mit.push(name);
+                this.bestellposition.display.eigenschaften.ohne.push(name);
                 this.bestellposition.calc_correction -= (this.bestellposition.anzahl * e.preis);
             }
         }
