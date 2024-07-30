@@ -80,9 +80,9 @@ export class AppService {
         return modal.present();
     }
 
-    public clearAufnehmer() {
+    public async clearAufnehmer() {
+        await this.settings.saveLocal({ ...this.settings.local(), deviceAufnehmerId: null }, true);
         this.aufnehmer.set(null);
-        this.settings.saveLocal({ ...this.settings.local(), deviceAufnehmerId: undefined }, true);
     }
 
     public selectAufnehmer(aufnehmer: Aufnehmer) {
