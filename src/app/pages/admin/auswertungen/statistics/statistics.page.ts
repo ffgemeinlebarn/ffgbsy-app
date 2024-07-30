@@ -3,15 +3,23 @@ import { Component, OnInit, inject } from '@angular/core';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from "@ionic/angular/standalone";
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { ApiService } from 'src/app/services/api/api.service';
-import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-statistics',
     templateUrl: './statistics.page.html',
     styleUrls: ['./statistics.page.scss'],
     standalone: true,
-    imports: [IonContent, IonButton, IonIcon, IonButtons, IonTitle, IonToolbar, IonHeader, IonMenuButton,
+    imports: [
+        IonContent,
+        IonButton,
+        IonIcon,
+        IonButtons,
+        IonTitle,
+        IonToolbar,
+        IonHeader,
+        IonMenuButton,
         DatePipe,
         EuroPreisPipe,
         BaseChartDirective
