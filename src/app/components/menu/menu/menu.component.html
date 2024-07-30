@@ -18,21 +18,27 @@
     @if(isAdmin())
     {
     <h2 class="ion-padding">Auswertungen</h2>
-    <ffgbsy-menu-item icon="stats-chart-outline" link="/admin/statistics">Statistiken</ffgbsy-menu-item>
-    <ffgbsy-menu-item icon="speedometer-outline" link="/admin/auslastung" [disabled]="true">Auslastung</ffgbsy-menu-item>
-    <ffgbsy-menu-item icon="document-text-outline" link="/admin/uebersicht-angebot">Produkte & Eigenschaften</ffgbsy-menu-item>
+    <ffgbsy-menu-item icon="analytics-outline" link="/admin/auswertungen/timeline">Zeitleiste</ffgbsy-menu-item>
+    <ffgbsy-menu-item icon="stats-chart-outline" link="/admin/auswertungen/keys">Kennzahlen</ffgbsy-menu-item>
+    <ffgbsy-menu-item icon="beer-outline" link="/admin/auswertungen/product-sales">Produktverkauf</ffgbsy-menu-item>
+    <ffgbsy-menu-item icon="logo-euro" link="/admin/auswertungen/sales-volumne">Umsatz</ffgbsy-menu-item>
+    <ffgbsy-menu-item icon="eye-outline" link="/admin/auswertungen/uebersicht-angebot">Produkte & Eigenschaften</ffgbsy-menu-item>
+
+    <h2 class="ion-padding">Fehlerbehebung</h2>
+    <ffgbsy-menu-item icon="document-text-outline" link="/admin/fehlerbehebungen/failed-bons">Bon Drucke</ffgbsy-menu-item>
+    <ffgbsy-menu-item icon="print-outline" link="/admin/fehlerbehebungen/drucker">Drucker Einstellungen</ffgbsy-menu-item>
 
     <h2 class="ion-padding">Produktverwaltung</h2>
-    <ffgbsy-menu-item link="/admin/grundprodukte">Grundprodukte</ffgbsy-menu-item>
-    <ffgbsy-menu-item link="/admin/produktbereiche">Produktbereiche</ffgbsy-menu-item>
-    <ffgbsy-menu-item link="/admin/produktkategorien">Produktkategorien</ffgbsy-menu-item>
-    <ffgbsy-menu-item link="/admin/produkteinteilungen">Produkteinteilungen</ffgbsy-menu-item>
-    <ffgbsy-menu-item link="/admin/produkte">Produkte</ffgbsy-menu-item>
+    <ffgbsy-menu-item link="/admin/daten/grundprodukte">Grundprodukte</ffgbsy-menu-item>
+    <ffgbsy-menu-item link="/admin/daten/produktbereiche">Produktbereiche</ffgbsy-menu-item>
+    <ffgbsy-menu-item link="/admin/daten/produktkategorien">Produktkategorien</ffgbsy-menu-item>
+    <ffgbsy-menu-item link="/admin/daten/produkteinteilungen">Produkteinteilungen</ffgbsy-menu-item>
+    <ffgbsy-menu-item link="/admin/daten/produkte">Produkte</ffgbsy-menu-item>
 
     <h2 class="ion-padding">Basisdaten</h2>
-    <ffgbsy-menu-item link="/admin/aufnehmer">Aufnehmer:innen</ffgbsy-menu-item>
-    <ffgbsy-menu-item link="/admin/tischkategorien">Tischkategorien</ffgbsy-menu-item>
-    <ffgbsy-menu-item link="/admin/tische">Tische</ffgbsy-menu-item>
+    <ffgbsy-menu-item link="/admin/daten/aufnehmer">Aufnehmer:innen</ffgbsy-menu-item>
+    <ffgbsy-menu-item link="/admin/daten/tischkategorien">Tischkategorien</ffgbsy-menu-item>
+    <ffgbsy-menu-item link="/admin/daten/tische">Tische</ffgbsy-menu-item>
     }
 </ion-list>
 

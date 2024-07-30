@@ -18,8 +18,20 @@ export const routes: Routes = [
                 path: 'auswertungen',
                 children: [
                     {
-                        path: 'statistics',
-                        loadComponent: () => import('./pages/admin/auswertungen/statistics/statistics.page').then(m => m.StatisticsPage)
+                        path: 'timeline',
+                        loadComponent: () => import('./pages/admin/auswertungen/timeline/timeline.page').then(m => m.TimelinePage)
+                    },
+                    {
+                        path: 'keys',
+                        loadComponent: () => import('./pages/admin/auswertungen/keys/keys.page').then(m => m.KeysPage)
+                    },
+                    {
+                        path: 'product-sales',
+                        loadComponent: () => import('./pages/admin/auswertungen/product-sales/product-sales.page').then(m => m.ProductSalesPage)
+                    },
+                    {
+                        path: 'sales-volumne',
+                        loadComponent: () => import('./pages/admin/auswertungen/sales-volumne/sales-volumne.page').then(m => m.SalesVolumnePage)
                     },
                     {
                         path: 'uebersicht-angebot',
@@ -97,22 +109,19 @@ export const routes: Routes = [
                 ]
             },
             {
-                path: 'fehlerbehebung',
+                path: 'fehlerbehebungen',
                 children: [
-                    // {
-                    //     path: 'faild-bons'
-                    // }
+                    {
+                        path: 'failed-bons',
+                        loadComponent: () => import('./pages/admin/fehlerbehebungen/failed-bons/failed-bons.page').then(m => m.FailedBonsPage)
+                    },
+                    {
+                        path: 'drucker',
+                        loadComponent: () => import('./pages/admin/fehlerbehebungen/drucker/drucker-list/drucker-list.page').then(m => m.DruckerListPage)
+                    }
                 ]
             },
 
         ]
-    },
-    {
-        path: 'aufnehmer-list',
-        loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-list/aufnehmer-list.page').then(m => m.AufnehmerListPage)
-    },
-    {
-        path: 'aufnehmer-detail',
-        loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-detail/aufnehmer-detail.page').then(m => m.AufnehmerDetailPage)
     }
 ];

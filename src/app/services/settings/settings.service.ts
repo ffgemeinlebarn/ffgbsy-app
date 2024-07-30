@@ -49,7 +49,7 @@ export class SettingsService {
     public async saveLocal(settings: LocalSettings, hideToast = false) {
         // this.logger.debug('[Settings Service] Save Local');
         await this.ionicStorage.set(this.localSettingsKey, settings);
-        this.loadLocal();
+        await this.loadLocal();
 
         if (!hideToast) {
             this.frontend.showToast("Die lokalen Einstellungen wurden gespeichert!");
