@@ -1,13 +1,34 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>timeline</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Zeitleiste</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="loadData()">
+                <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">timeline</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Zeitleiste</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    @if (readyToShow()) {
+
+    <div class="chart-container">
+        <h2>Anzahl Bestellungen</h2>
+        <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineBestellungen" [options]="chartOptions" [legend]="true"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Bestellfrequenz (mHz)</h2>
+        <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineFrequenz" [options]="chartOptions" [legend]="true"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Umsatz (€)</h2>
+        <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineUmsatz" [options]="chartOptions" [legend]="true"></canvas>
+    </div>
+    }
 </ion-content>

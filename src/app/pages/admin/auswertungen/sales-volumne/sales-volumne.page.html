@@ -1,13 +1,90 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>sales-volumne</ion-title>
-  </ion-toolbar>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Umsatz</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="loadData()">
+                <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">sales-volumne</ion-title>
-    </ion-toolbar>
-  </ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+    <ion-header collapse="condense">
+        <ion-toolbar>
+            <ion-title size="large">Umsatz</ion-title>
+        </ion-toolbar>
+    </ion-header>
+
+    <h3>Umsatz pro Tag</h3>
+    <div class="chart-container chart-container--pie">
+        @defer (when pieChartReadyToShow()) {
+        <canvas baseChart width="300" height="300" type="pie" [datasets]="chartUmsatzProTag.datasets" [labels]="chartUmsatzProTag.labels" [options]="chartOptions" [legend]="true">
+        </canvas>
+        }
+    </div>
+    <h3>Umsatz per Produktbereich</h3>
+    <div class="table-produktbereiche">
+        <table>
+            <thead>
+                <tr>
+                    <th class="headline"></th>
+                    @for (item of tableProduktbereiche?.data; track item) {
+                    <th scope="col">{{ item.datum | date: 'dd.MM.yyyy' }}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (header of tableProduktbereiche?.header; track header; let i = $index) {
+                <tr>
+                    <th scope="row">{{ tableProduktbereiche.header[i].name }}</th>
+                    @for (item of tableProduktbereiche?.data; track item; let j = $index) {
+                    <td>{{ tableProduktbereiche?.data[j].data[i].summe | euroPreis: { symbol: true, zerotext: false } }}</td>
+                    }
+                </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">Summe</th>
+                    @for (item of tableProduktbereiche?.data; track item) {
+                    <td>{{ item.summe | euroPreis: { symbol: true, zerotext: false } }}</td>
+                    }
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <h3>Umsatz per Produktkategorie</h3>
+    <div class="table-produktkategorien">
+        <table>
+            <thead>
+                <tr>
+                    <th class="headline"></th>
+                    @for (item of tableProduktkategorien?.data; track item) {
+                    <th scope="col">{{ item.datum | date: 'dd.MM.yyyy' }}</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (header of tableProduktkategorien?.header; track header; let i = $index) {
+                <tr>
+                    <th scope="row">{{ tableProduktkategorien.header[i].name }}</th>
+                    @for (item of tableProduktkategorien?.data; track item; let j = $index) {
+                    <td>{{ tableProduktkategorien?.data[j].data[i].summe | euroPreis: { symbol: true, zerotext: false } }}</td>
+                    }
+                </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">Summe</th>
+                    @for (item of tableProduktkategorien?.data; track item) {
+                    <td>{{ item.summe | euroPreis: { symbol: true, zerotext: false } }}</td>
+                    }
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 </ion-content>

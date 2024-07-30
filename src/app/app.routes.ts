@@ -35,7 +35,7 @@ export const routes: Routes = [
                     },
                     {
                         path: 'uebersicht-angebot',
-                        loadComponent: () => import('./pages/admin/auswertungen/angebot-uebersicht/angebot-uebersicht.page').then(m => m.AngebotUebersichtPage)
+                        loadComponent: () => import('./pages/admin/angebot-uebersicht/angebot-uebersicht.page').then(m => m.AngebotUebersichtPage)
                     }
                 ]
             },
