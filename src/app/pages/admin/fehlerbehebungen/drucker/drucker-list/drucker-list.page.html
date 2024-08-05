@@ -1,13 +1,24 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>drucker-list</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-header>
     <ion-toolbar>
-      <ion-title size="large">drucker-list</ion-title>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Drucker</ion-title>
     </ion-toolbar>
-  </ion-header>
+</ion-header>
+<ion-content>
+    @defer (when drucker()) {
+    <ion-list lines="full">
+        @for (drucker of drucker(); track drucker.id) {
+        <ion-item [routerLink]="[drucker.id]" [button]="true">
+            <ion-label>
+                <h3>{{ drucker.name }}</h3>
+                <p>{{ drucker.ip }}</p>
+            </ion-label>
+            <ion-note slot="end">Port {{ drucker.port }}</ion-note>
+        </ion-item>
+        }
+    </ion-list>
+    }
+    @placeholder(minimum 300ms){
+    <ffgbsy-page-spinner></ffgbsy-page-spinner>
+    }
 </ion-content>

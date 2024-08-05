@@ -1,13 +1,37 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>drucker-detail</ion-title>
-  </ion-toolbar>
+<ion-header>
+    <ion-toolbar>
+        <ion-back-button slot="start" defaultHref="/admin/fehlerbehebungen/drucker"></ion-back-button>
+        @defer (when drucker()) {
+        <ion-title>{{ drucker()?.name }}</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="save()">
+                <ion-icon name="save" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        }
+    </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">drucker-detail</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+    @defer (when drucker()) {
+    <form [formGroup]="form" (ngSubmit)="save()">
+        <ion-list lines="full">
+            <ion-item>
+                <ion-label position="stacked">Name</ion-label>
+                <ion-input formControlName="name"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">IP-Adresse</ion-label>
+                <ion-input formControlName="ip"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Port</ion-label>
+                <ion-input inputmode="decimal" type="number" step="1" formControlName="port"></ion-input>
+            </ion-item>
+        </ion-list>
+    </form>
+    }
+    @placeholder(minimum 300ms){
+    <ffgbsy-page-spinner></ffgbsy-page-spinner>
+    }
 </ion-content>

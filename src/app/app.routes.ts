@@ -118,6 +118,10 @@ export const routes: Routes = [
                     {
                         path: 'drucker',
                         loadComponent: () => import('./pages/admin/fehlerbehebungen/drucker/drucker-list/drucker-list.page').then(m => m.DruckerListPage)
+                    },
+                    {
+                        path: 'drucker/:id',
+                        loadComponent: () => import('./pages/admin/fehlerbehebungen/drucker/drucker-detail/drucker-detail.page').then(m => m.DruckerDetailPage)
                     }
                 ]
             },
