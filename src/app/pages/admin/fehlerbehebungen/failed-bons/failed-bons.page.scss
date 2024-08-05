@@ -1,0 +1,44 @@
+:host {
+    ion-item {
+
+        ion-checkbox {
+            flex: 0;
+            margin-right: 1em;
+        }
+
+        ion-label {
+
+            .chips {
+                display: flex;
+                flex-direction: row;
+                gap: 8px;
+                margin-top: 8px;
+                flex-wrap: wrap;
+
+                ion-chip {
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    ion-footer ion-list {
+        padding-top: 0px;
+        padding-bottom: 0px;
+
+        ion-item {
+            --padding-top: 0.35em;
+            --padding-bottom: 0.35em;
+        }
+
+        .search-button {
+            --padding-top: 1em;
+            --padding-bottom: 1em;
+            --padding-start: 2em;
+            --padding-end: 1em;
+
+            font-size: 1.35em;
+            font-weight: bold;
+        }
+    }
+}

@@ -1,5 +1,5 @@
 export const environment = {
     production: false,
-    api: 'https://api.lan.ffgbsy.ff-gemeinlebarn.at',
+    api: 'http://localhost',
     localAdminPin: '17108'
 };
