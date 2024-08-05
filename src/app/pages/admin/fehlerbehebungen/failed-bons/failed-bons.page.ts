@@ -1,11 +1,11 @@
-import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { CommonModule, TitleCasePipe } from '@angular/common';
+import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IonAccordion, IonAccordionGroup, IonButton, IonButtons, IonCheckbox, IonChip, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonMenuButton, IonNote, IonRippleEffect, IonSelect, IonSelectOption, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
+import { CheckboxCustomEvent, IonAccordion, IonAccordionGroup, IonBadge, IonButton, IonButtons, IonCheckbox, IonChip, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonMenuButton, IonNote, IonRippleEffect, IonSelect, IonSelectOption, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { Bon } from 'src/app/classes/bon.model';
-import { AppService } from 'src/app/services/app/app.service';
-import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
+import { IBonsFilter } from 'src/app/interfaces/bons-filter.interface';
+import { BonsService } from 'src/app/services/bons/bons.service';
 import { DruckerService } from 'src/app/services/drucker/drucker.service';
 import { TischeService } from 'src/app/services/tische/tische.service';
 
@@ -14,36 +14,58 @@ import { TischeService } from 'src/app/services/tische/tische.service';
     templateUrl: './failed-bons.page.html',
     styleUrls: ['./failed-bons.page.scss'],
     standalone: true,
-    imports: [IonItemDivider, IonAccordionGroup, IonAccordion, IonItemOption, IonItemOptions, IonItemSliding, IonButtons, IonMenuButton, IonToggle, IonButton, IonSelect, IonSelectOption, IonRippleEffect, IonFooter, IonCheckbox, IonIcon, IonTabButton, IonTabBar, IonTabs, IonNote, IonChip, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
+    imports: [TitleCasePipe, IonBadge, IonItemDivider, IonAccordionGroup, IonAccordion, IonItemOption, IonItemOptions, IonItemSliding, IonButtons, IonMenuButton, IonToggle, IonButton, IonSelect, IonSelectOption, IonRippleEffect, IonFooter, IonCheckbox, IonIcon, IonTabButton, IonTabBar, IonTabs, IonNote, IonChip, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class FailedBonsPage {
-
-    // Seite anzeigen mit Bons, die nicht gedruckt wurden: übersichtlich
-    // hallo Jakob,
-    private bestellungenService = inject(BestellungenService);
+    private bonsService = inject(BonsService);
     private druckerService = inject(DruckerService);
     private tischeService = inject(TischeService);
-    private appService = inject(AppService);
     private formBuilder = inject(FormBuilder);
 
-    public scannerEnabled: boolean = false;
-    public bons: Bon[];
+    public bons = signal<Bon[]>([]);
+
+    public numberOfBonsSelected = computed(() => this.bons().filter(b => b.selected).length);
+    public anyBonsSelected = computed(() => this.numberOfBonsSelected() > 0);
+    public allBonsSelectedAreMissingSuccess = computed(() => this.bons().filter(b => b.selected && b.successes == 0).length == this.numberOfBonsSelected());
 
     public filter = this.formBuilder.group({
         druckerId: new FormControl<null | number>(null),
         tischId: new FormControl<null | number>(null),
-        failed: new FormControl<null | number>(null),
-        succeeded: new FormControl<null | number>(null),
+        missingSuccessfulDruck: new FormControl<boolean>(true),
+        multipleDrucke: new FormControl<boolean>(false),
+        type: new FormControl<null | 'bestellung' | 'storno'>(null),
         limit: [100]
     });
 
     public availableFilter = {
         drucker: toSignal(this.druckerService.readAll()),
         tische: toSignal(this.tischeService.readAll()),
+        types: ['bestellung', 'storno'],
         limits: [5, 10, 25, 50, 100, 200, 500, 1000]
     };
 
+    public toggleAllOnOff() {
+        const allSelected = this.bons().filter(b => b.selected).length == this.bons().length;
+        this.bons.update(bons => {
+            bons.forEach(bon => bon.selected = !allSelected);
+            return [...bons];
+        });
+    }
+
+    public onCheckboxToggle(event: Event) {
+        event.stopPropagation();
+    }
+
+    public onChange(changeEvent: CheckboxCustomEvent, bon: Bon) {
+        this.bons.update(bons => {
+            bons.find(b => b == bon).selected = changeEvent.detail.checked;
+            return [...bons];
+        });
+    }
+
     public searchBons() {
-        console.log("Searching Bons ...");
+        return this.bonsService
+            .search(this.filter.value as IBonsFilter)
+            .subscribe(bons => this.bons.set(bons));
     }
 }
