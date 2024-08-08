@@ -58,7 +58,7 @@
         <ion-item-divider color="light">
             <ion-label>Bestellpositionen</ion-label>
         </ion-item-divider>
-        @for (bestellposition of bestellung?.bestellpositionen; track bestellposition; let i = $index) {
+        @for (bestellposition of bestellung?.bestellpositionen; track bestellposition.id; let i = $index) {
         <ion-item-sliding>
             <ion-item>
                 <ion-grid>
@@ -96,7 +96,7 @@
                 </ion-note>
             </ion-item>
             <ion-item-options side="end">
-                <ion-item-option (click)="askStornoAnzahl(bestellposition)" color="danger" [hidden]="(bestellposition?.anzahl - bestellposition?.anzahl_storno) <= 0">
+                <ion-item-option (click)="askStornoAnzahl(bestellposition)" color="danger">
                     <ion-label>Stornieren</ion-label>
                     <ion-icon name="remove-circle" slot="end"></ion-icon>
                 </ion-item-option>
@@ -107,7 +107,7 @@
         <ion-item-divider color="light">
             <ion-label>Stornopositionen</ion-label>
         </ion-item-divider>
-        @for (bestellposition of bestellung?.stornopositionen; track bestellposition; let i = $index) {
+        @for (bestellposition of bestellung?.stornopositionen; track bestellposition.id; let i = $index) {
         <ion-item>
             <ion-grid>
                 <ion-row>
@@ -151,10 +151,11 @@
             </ion-label>
         </ion-item>
 
+        @if(bestellung?.bestellbons.length){
         <ion-item-divider color="light">
             <ion-label>Bestellbons</ion-label>
         </ion-item-divider>
-        @for (bestellbon of bestellung?.bestellbons; track bestellbon) {
+        @for (bestellbon of bestellung?.bestellbons; track bestellbon.id) {
         <ion-item>
             <ion-label>
                 {{ bestellbon.drucker.name }}
@@ -166,7 +167,7 @@
                 <ion-icon name="print" slot="icon-only"></ion-icon>
             </ion-button>
         </ion-item>
-        @for (bestellbonDruck of bestellbon.drucke; track bestellbonDruck) {
+        @for (bestellbonDruck of bestellbon.drucke; track bestellbonDruck.id) {
         <ion-item>
             <ion-icon [hidden]="!bestellbonDruck.success" name="checkmark-circle" slot="start" color="success"></ion-icon>
             <ion-icon [hidden]="bestellbonDruck.success" name="alert-circle" slot="start" color="danger"></ion-icon>
@@ -180,11 +181,13 @@
         </ion-item>
         }
         }
+        }
 
+        @if(bestellung?.stornobons.length){
         <ion-item-divider color="light">
             <ion-label>Stornobons</ion-label>
         </ion-item-divider>
-        @for (stornobon of bestellung?.stornobons; track stornobon) {
+        @for (stornobon of bestellung?.stornobons; track stornobon.id) {
         <ion-item>
             <ion-label>
                 {{ stornobon.drucker.name }}
@@ -196,7 +199,7 @@
                 <ion-icon name="print" slot="icon-only"></ion-icon>
             </ion-button>
         </ion-item>
-        @for (stornobonDruck of stornobon.drucke; track stornobonDruck) {
+        @for (stornobonDruck of stornobon.drucke; track stornobonDruck.id) {
         <ion-item>
             <ion-icon [hidden]="!stornobonDruck.success" name="checkmark-circle" slot="start" color="success"></ion-icon>
             <ion-icon [hidden]="stornobonDruck.success" name="alert-circle" slot="start" color="danger"></ion-icon>
@@ -208,6 +211,7 @@
                 <p>Laufnummer: {{ stornobonDruck.laufnummer }}</p>
             </ion-label>
         </ion-item>
+        }
         }
         }
     </ion-list>
