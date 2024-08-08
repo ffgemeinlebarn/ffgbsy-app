@@ -32,7 +32,6 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
     ],
 })
 export class BestellungenDetailPage implements OnInit {
-
     public activatedRoute = inject(ActivatedRoute);
     private bonsService = inject(BonsService);
     private bestellungenService = inject(BestellungenService);
@@ -49,8 +48,8 @@ export class BestellungenDetailPage implements OnInit {
         this.bestellungenService.read(id).subscribe(bestellung => this.bestellung = bestellung);
     }
 
-    printBon(bon: Bon) {
-        this.bonsService.druckBon(bon).subscribe(bonDruck => {
+    public printBon(bon: Bon) {
+        this.bonsService.druckBonById(bon.id).subscribe(bonDruck => {
 
             this.loadBestellung(bon.bestellungen_id);
 
@@ -85,10 +84,8 @@ export class BestellungenDetailPage implements OnInit {
                 }, {
                     text: 'Anzahl stornieren',
                     handler: (res) => {
-                        let anzahl = parseInt(res.anzahl);
-
-                        this.bestellungenService.createStornoBestellposition(bestellposition, anzahl).subscribe((stornoposition) => {
-                            this.bonsService.createStornoBon(stornoposition).subscribe((bon) => this.bonsService.druckBon(bon).subscribe((druck) => {
+                        this.bestellungenService.createStornoBestellposition(bestellposition, parseInt(res.anzahl)).subscribe((stornoposition) => {
+                            this.bonsService.createStornoBon(stornoposition).subscribe((bon) => this.bonsService.druckBonById(bon.id).subscribe((druck) => {
 
                                 if (druck.success) {
                                     this.frontend.showToast("Stornobon wurde erfolgreich gedruckt!", 2000);

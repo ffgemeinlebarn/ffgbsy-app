@@ -114,7 +114,7 @@ export class AppService {
                 this.frontend.showToast("Bestellung erfolgreich angelegt!", 2000);
                 this.bestellung.set(null);
 
-                this.bonsService.druckBons(bestellung.bestellbons).subscribe({
+                this.bonsService.druckBonsOfBestellungById(bestellung.id).subscribe({
                     next: (bons) => {
                         if (bons.filter(b => !b.success).length == 0) {
                             this.frontend.showToast("Alle Bons wurden erfolgreich gedruckt!", 2000);
