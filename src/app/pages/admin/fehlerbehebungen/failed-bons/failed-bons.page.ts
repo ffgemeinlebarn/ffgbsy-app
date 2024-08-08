@@ -8,6 +8,7 @@ import { IBonsFilter } from 'src/app/interfaces/bons-filter.interface';
 import { BonsService } from 'src/app/services/bons/bons.service';
 import { DruckerService } from 'src/app/services/drucker/drucker.service';
 import { TischeService } from 'src/app/services/tische/tische.service';
+import {FrontendService} from '../../../../services/frontend/frontend.service';
 
 @Component({
     selector: 'ffgbsy-failed-bons',
@@ -21,6 +22,7 @@ export class FailedBonsPage {
     private druckerService = inject(DruckerService);
     private tischeService = inject(TischeService);
     private formBuilder = inject(FormBuilder);
+    private frontendService = inject(FrontendService);
 
     public bons = signal<Bon[]>([]);
 
@@ -71,8 +73,15 @@ export class FailedBonsPage {
 
     public printSelectedBons() {
         const selectedBons = this.bons().filter(b => b.selected).map(bon => bon.id);
-        console.log('Test, ', selectedBons);
         this.bonsService.druckBonsByIds(selectedBons)
-            .subscribe(bonDrucke => console.log(bonDrucke));
+            .subscribe(bonDrucke => {
+                this.searchBons();
+                const successfulBons = bonDrucke.filter(bon => bon.success).length;
+                if(successfulBons === bonDrucke.length) {
+                    this.frontendService.showToast('Alle Bons erfolgreich gedruckt!');
+                } else {
+                    this.frontendService.showToast(`Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`);
+                }
+            });
     }
 }
