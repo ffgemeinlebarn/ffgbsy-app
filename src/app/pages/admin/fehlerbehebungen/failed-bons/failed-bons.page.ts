@@ -68,4 +68,11 @@ export class FailedBonsPage {
             .search(this.filter.value as IBonsFilter)
             .subscribe(bons => this.bons.set(bons));
     }
+
+    public printSelectedBons() {
+        const selectedBons = this.bons().filter(b => b.selected).map(bon => bon.id);
+        console.log('Test, ', selectedBons);
+        this.bonsService.druckBonsByIds(selectedBons)
+            .subscribe(bonDrucke => console.log(bonDrucke));
+    }
 }

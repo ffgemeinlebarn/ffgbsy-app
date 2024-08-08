@@ -58,7 +58,15 @@ export class BonsService {
     public druckBons(bons: BonDruck[]): Observable<BonDruck[]> {
         return this.http
             .post(`${this.settings.apiBaseUrl()}/bons/druck`, bons)
+            .pipe(
+                retry(1),
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+            );
+    }
 
+    public druckBonsByIds(bonIds: number[]): Observable<BonDruck[]> {
+        return this.http
+            .post(`${this.settings.apiBaseUrl()}/print/bons`, bonIds)
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
@@ -68,7 +76,6 @@ export class BonsService {
     public druckBon(bon: Bon): Observable<BonDruck> {
         return this.http
             .post(`${this.settings.apiBaseUrl()}/bons/${bon.id}/druck`, bon)
-
             .pipe(
                 retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
