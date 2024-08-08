@@ -32,7 +32,7 @@
         </ion-card-subtitle>
         @if(anyBonsSelected()){
         <ion-card-content>
-            <ion-button color="light">
+            <ion-button color="light" (click)="printSelectedBons()">
                 <ion-icon name="print-outline" slot="start"></ion-icon>
                 Auswahl drucken
             </ion-button>
