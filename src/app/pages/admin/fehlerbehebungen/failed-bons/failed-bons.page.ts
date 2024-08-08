@@ -72,6 +72,7 @@ export class FailedBonsPage {
     }
 
     public printSelectedBons() {
+        this.frontendService.showLoadingSpinner();
         const selectedBons = this.bons().filter(b => b.selected).map(bon => bon.id);
         this.bonsService.druckBonsByIds(selectedBons)
             .subscribe(bonDrucke => {
@@ -82,6 +83,7 @@ export class FailedBonsPage {
                 } else {
                     this.frontendService.showToast(`Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`);
                 }
+                this.frontendService.hideLoadingSpinner();
             });
     }
 }
