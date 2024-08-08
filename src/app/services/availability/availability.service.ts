@@ -40,7 +40,7 @@ export class AvailabilityService {
     public lookupDataGrossAvailibilityDatetime = computed<string>(() => this.lookupDataGrossAvailibility() ? formatDate(new Date(), 'dd.MM.YYYY HH:mm:ss', 'en-US') : null);
 
     public druckerAvailabilities = toSignal(this.drucker.readAll().pipe(map((d) => d.map(d => new AvailabilityCheck<Drucker>(d)))), { initialValue: [] });
-    public druckerGrossAvailability = computed(() => this.druckerAvailabilities().filter(d => !d.isSuccessful).length > 0);
+    public druckerGrossAvailability = computed(() => this.druckerAvailabilities().filter(d => !d.isSuccessful).length == 0);
 
     public apiAvailability = signal(new AvailabilityCheck<string>("API"));
 
