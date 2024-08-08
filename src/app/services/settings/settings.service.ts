@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { LocalSettings } from 'src/app/interfaces/settings';
 
 import { Storage } from '@ionic/storage';
@@ -23,7 +23,7 @@ export class SettingsService {
         apiBaseUrl: environment.api
     };
 
-    public apiBaseUrl = signal<string>(environment.api);
+    public apiBaseUrl = computed(() => this.local().apiBaseUrl ?? environment.api);
     public local = signal<LocalSettings>(this.initialLocalSettings);
 
     constructor() {

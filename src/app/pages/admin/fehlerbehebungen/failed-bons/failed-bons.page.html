@@ -1,13 +1,222 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>failed-bons</ion-title>
-  </ion-toolbar>
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Bons</ion-title>
+        <ion-buttons slot="end">
+            <ion-button (click)="toggleAllOnOff()">
+                <ion-icon name="checkbox-outline" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">failed-bons</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+    @if(bons().length > 0){
+    <ion-card [color]="anyBonsSelected() ? allBonsSelectedAreMissingSuccess() ? 'primary' : 'warning' : 'light'">
+        <ion-card-subtitle>
+            <ion-card-header>
+                <ion-card-title>
+                    @if(anyBonsSelected()){
+                    @if(allBonsSelectedAreMissingSuccess()){
+                    Alle gewählten Bons wurden noch nie erfolgreich gedruckt!
+                    }
+                    @else {
+                    Gewählte Bons wurden zumindest teilweise schon einmal gedruckt!
+                    }
+                    }
+                    @else{
+                    Nichts ausgewählt
+                    }
+                </ion-card-title>
+            </ion-card-header>
+        </ion-card-subtitle>
+        @if(anyBonsSelected()){
+        <ion-card-content>
+            <ion-button color="light">
+                <ion-icon name="print-outline" slot="start"></ion-icon>
+                Auswahl drucken
+            </ion-button>
+        </ion-card-content>
+        }
+    </ion-card>
+    <!-- <div class="message ion-padding">
+        <div class="content">
+            @if(anyBonsSelected()){
+            @if(allBonsSelectedAreMissingSuccess()){
+            <h3>Alle gewählten Bons wurden noch nie erfolgreich gedruckt!</h3>
+            }
+            @else {
+            <h3>Gewählte Bons wurden zumindest teilweise schon einmal gedruckt!</h3>
+            }
+            }
+            @else{
+            <h3>Nichts ausgewählt</h3>
+            }
+        </div>
+
+        <ion-button>
+            <ion-icon name="print-outline" slot="start"></ion-icon>
+            Auswahl drucken
+        </ion-button>
+    </div> -->
+    }
+
+    <ion-list lines="full">
+        <ion-accordion-group>
+            @for(bon of bons(); track bon.id){
+            <ion-accordion [value]="bon.id">
+                <ion-item slot="header">
+                    <ion-checkbox slot="start" [(ngModel)]="bon.selected" (ionChange)="onChange($event, bon)" (click)="onCheckboxToggle($event)"></ion-checkbox>
+                    @if(bon.successes > 0){
+                    <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
+                    } @else{
+                    <ion-icon slot="start" name="alert-circle" color="warning"></ion-icon>
+                    }
+                    <ion-badge slot="start" [color]="bon.type == 'storno' ? 'warning' : 'primary'">{{ bon.type | titlecase }}</ion-badge>
+                    <ion-label>
+                        Bon Nr. {{ bon.id }}
+                    </ion-label>
+                    <ion-chip color="primary" [disabled]="!bon.tries">
+                        <ion-icon name="print"></ion-icon>
+                        <ion-label>{{ bon.tries }}</ion-label>
+                    </ion-chip>
+                    <ion-chip color="success" [disabled]="!bon.successes">
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                        <ion-label>{{ bon.successes }}</ion-label>
+                    </ion-chip>
+                    <ion-chip color="danger" [disabled]="!bon.fails">
+                        <ion-icon name="alert-circle"></ion-icon>
+                        <span>{{ bon.fails }}</span>
+                    </ion-chip>
+                </ion-item>
+                <div slot="content">
+                    <ion-item-divider>Bestellung</ion-item-divider>
+                    <ion-item>
+                        <ion-icon slot="start" name="key-outline"></ion-icon>
+                        <ion-label>
+                            <h3>{{ bon.bestellung.id }}</h3>
+                            <p>Identifikationsnummer der Bestellung</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon slot="start" name="calendar-clear-outline"></ion-icon>
+                        <ion-label>
+                            <h3>{{ bon.bestellung.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bon.bestellung.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</h3>
+                            <p>Abschluss</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon slot="start" name="print-outline"></ion-icon>
+                        <ion-label>
+                            <h3>{{ bon.drucker.name }}</h3>
+                            <p>Drucker</p>
+                        </ion-label>
+                        <ion-chip color="primary">
+                            <ion-icon name="globe"></ion-icon>
+                            <span>{{ bon.drucker.ip }}</span>
+                        </ion-chip>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon slot="start" name="person-circle-outline"></ion-icon>
+                        <ion-label>
+                            <h3>{{ bon.bestellung.aufnehmer.vorname }} {{ bon.bestellung.aufnehmer.nachname }}</h3>
+                            <p>Aufnehmer</p>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item-divider>Drucke</ion-item-divider>
+                    @for(druck of bon.drucke; track druck.id){
+                    <ion-item>
+                        <ion-icon slot="start" [name]="druck.success ? 'checkmark-circle' : 'alert-circle'" [color]="druck.success ? 'success' : 'danger'"></ion-icon>
+                        <ion-label>
+                            <h3>{{ druck.success ? 'Erfolgreich' : (druck.message ?? 'null') }}</h3>
+                            <p>{{ druck.timestamp | date: 'dd.MM.yyyy' }} um {{ druck.timestamp | date: 'HH:mm:ss' }} Uhr</p>
+                        </ion-label>
+                        <ion-chip color="primary">
+                            <ion-icon name="key"></ion-icon>
+                            <ion-label>{{ druck.id }}</ion-label>
+                        </ion-chip>
+                        <ion-chip color="primary">
+                            <ion-icon name="ticket"></ion-icon>
+                            <ion-label>{{ druck.laufnummer }} / {{ druck.datum | date: 'dd.MM.yyyy' }}</ion-label>
+                        </ion-chip>
+                    </ion-item>
+                    }
+                </div>
+            </ion-accordion>
+            }
+        </ion-accordion-group>
+    </ion-list>
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <form [formGroup]="filter" (ngSubmit)="searchBons()">
+            <ion-list lines="full">
+                <ion-accordion-group>
+                    <ion-accordion value="filter">
+                        <ion-item slot="header">
+                            Filter
+                        </ion-item>
+                        <div slot="content">
+                            <ion-item color="light">
+                                <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
+                                <ion-label>Erfolgreicher Druck ausständig</ion-label>
+                                <ion-toggle formControlName="missingSuccessfulDruck"></ion-toggle>
+                            </ion-item>
+                            <ion-item color="light">
+                                <ion-icon slot="start" name="layers-outline"></ion-icon>
+                                <ion-label>Mehrere Druckversuche</ion-label>
+                                <ion-toggle formControlName="multipleDrucke"></ion-toggle>
+                            </ion-item>
+                            <ion-item color="light">
+                                <ion-icon slot="start" name="document-text-outline"></ion-icon>
+                                <ion-label>Type</ion-label>
+                                <ion-select interface="action-sheet" formControlName="type">
+                                    <ion-select-option [value]="null">Alle</ion-select-option>
+                                    <ion-select-option value="bestellung">Bestellung</ion-select-option>
+                                    <ion-select-option value="storno">Stornierung</ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                            <ion-item color="light">
+                                <ion-icon slot="start" name="print-outline"></ion-icon>
+                                <ion-label>Drucker</ion-label>
+                                <ion-select interface="action-sheet" formControlName="druckerId">
+                                    <ion-select-option [value]="null">Alle</ion-select-option>
+                                    @for (drucker of availableFilter.drucker(); track drucker.id) {
+                                    <ion-select-option [value]="drucker.id">{{ drucker.name }}</ion-select-option>
+                                    }
+                                </ion-select>
+                            </ion-item>
+                            <ion-item color="light">
+                                <ion-icon slot="start" name="navigate-circle-outline"></ion-icon>
+                                <ion-label>Tisch</ion-label>
+                                <ion-select interface="action-sheet" formControlName="tischId">
+                                    <ion-select-option [value]="null">Alle</ion-select-option>
+                                    @for (tisch of availableFilter.tische(); track tisch.id) {
+                                    <ion-select-option [value]="tisch.id">{{ tisch.reihe }} {{ tisch.nummer }}</ion-select-option>
+                                    }
+                                </ion-select>
+                            </ion-item>
+                        </div>
+                        <ion-item color="light">
+                            <ion-icon slot="start" name="timer-outline"></ion-icon>
+                            <ion-label>Limit</ion-label>
+                            <ion-select interface="action-sheet" formControlName="limit">>
+                                @for (limit of availableFilter.limits; track limit) {
+                                <ion-select-option [value]="limit">{{ limit }}</ion-select-option>
+                                }
+                            </ion-select>
+                        </ion-item>
+                    </ion-accordion>
+                </ion-accordion-group>
+                <ion-item class="search-button ion-text-center ion-activatable ripple-parent" (click)="searchBons()" lines="none" color="primary">
+                    <ion-label>
+                        <ion-icon name="search-outline"></ion-icon>
+                        Suchen
+                    </ion-label>
+                    <ion-ripple-effect></ion-ripple-effect>
+                </ion-item>
+            </ion-list>
+        </form>
+    </ion-toolbar>
+</ion-footer>

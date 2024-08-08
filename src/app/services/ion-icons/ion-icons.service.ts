@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { addCircleOutline, addOutline, albumsOutline, alert, alertCircle, alertCircleOutline, analyticsOutline, arrowBack, arrowForward, arrowForwardOutline, arrowUndo, beerOutline, bookmarkOutline, bugOutline, checkmarkCircle, checkmarkCircleOutline, chevronForward, closeCircle, closeOutline, cloudOutline, createOutline, cubeOutline, documentTextOutline, eyeOutline, fileTrayOutline, gitPullRequest, homeOutline, layersOutline, logoEuro, logOutOutline, navigateCircleOutline, notificationsOutline, peopleOutline, personOutline, phonePortraitOutline, pintOutline, print, printOutline, pulseOutline, radioButtonOff, radioButtonOn, refreshOutline, removeCircle, restaurantOutline, returnDownForwardOutline, rocketOutline, save, searchOutline, send, sendOutline, settingsOutline, shieldCheckmarkOutline, speedometerOutline, star, statsChartOutline, storefrontOutline, tabletLandscapeOutline, timerOutline, trash } from 'ionicons/icons';
+import { addCircleOutline, addOutline, albumsOutline, alert, alertCircle, alertCircleOutline, analyticsOutline, arrowBack, arrowForward, arrowForwardOutline, arrowUndo, beerOutline, bookmarkOutline, bugOutline, calendarClearOutline, checkboxOutline, checkmarkCircle, checkmarkCircleOutline, chevronForward, closeCircle, closeOutline, cloudOutline, createOutline, cubeOutline, documentTextOutline, eyeOutline, fileTrayOutline, gitPullRequest, globe, homeOutline, key, keyOutline, layersOutline, listOutline, logoEuro, logOutOutline, navigateCircleOutline, notificationsOutline, peopleOutline, personCircle, personCircleOutline, personOutline, phonePortraitOutline, pintOutline, print, printOutline, pulseOutline, radioButtonOff, radioButtonOn, refreshOutline, removeCircle, restaurantOutline, returnDownForwardOutline, rocketOutline, save, searchOutline, send, sendOutline, settingsOutline, shieldCheckmarkOutline, speedometerOutline, star, statsChartOutline, storefrontOutline, tabletLandscapeOutline, ticket, ticketOutline, time, timerOutline, trash } from 'ionicons/icons';
 
 @Injectable({
     providedIn: 'root'
@@ -22,9 +22,11 @@ export class IonIconsService {
         beerOutline,
         bookmarkOutline,
         bugOutline,
+        checkboxOutline,
         checkmarkCircle,
         checkmarkCircleOutline,
         chevronForward,
+        calendarClearOutline,
         closeCircle,
         closeOutline,
         cloudOutline,
@@ -34,13 +36,19 @@ export class IonIconsService {
         eyeOutline,
         fileTrayOutline,
         gitPullRequest,
+        globe,
         homeOutline,
+        key,
+        keyOutline,
         layersOutline,
+        listOutline,
         logoEuro,
         logOutOutline,
         navigateCircleOutline,
         notificationsOutline,
         peopleOutline,
+        personCircle,
+        personCircleOutline,
         personOutline,
         phonePortraitOutline,
         pintOutline,
@@ -65,6 +73,9 @@ export class IonIconsService {
         statsChartOutline,
         storefrontOutline,
         tabletLandscapeOutline,
+        ticket,
+        ticketOutline,
+        time,
         timerOutline,
         trash
     });
