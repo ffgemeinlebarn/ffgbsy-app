@@ -74,16 +74,14 @@ export class ProdukteDetailPage {
     });
 
     constructor() {
-        effect(() => this.load(this.id()));
+        effect(() => this.produkteService.read(this.id()).subscribe((produkt) => this.setEntity(produkt)));
         this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
     }
 
-    private load(id: number) {
-        this.produkteService.read(id).subscribe((produkt) => {
-            this.produkt.set(produkt);
-            this.showGrundproduktMultiplikator.set(produkt.grundprodukte_id != null);
-            this.form.patchValue(produkt);
-        });
+    private setEntity(produkt: Produkt) {
+        this.produkt.set(produkt);
+        this.showGrundproduktMultiplikator.set(produkt.grundprodukte_id != null);
+        this.form.patchValue(produkt);
     }
 
     public removeEigenschaft(eigenschaft: Eigenschaft) {
@@ -137,7 +135,7 @@ export class ProdukteDetailPage {
             .update({ ...this.produkt(), ...this.form.value })
             .subscribe(p => {
                 this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                this.produkteService.readAll().subscribe(_ => this.load(this.id()));
+                this.setEntity(p);
             });
     }
 }
