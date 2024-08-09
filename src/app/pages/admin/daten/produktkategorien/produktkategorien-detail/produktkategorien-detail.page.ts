@@ -6,6 +6,7 @@ import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { DruckerService } from 'src/app/services/drucker/drucker.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
+import { ProduktbereicheService } from 'src/app/services/produktbereiche/produktbereiche.service';
 import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
 
 @Component({
@@ -39,6 +40,7 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
 })
 export class ProduktkategorienDetailPage {
     private produktkategorienService = inject(ProduktkategorienService);
+    private produktbereicheService = inject(ProduktbereicheService);
     private druckerService = inject(DruckerService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
@@ -46,6 +48,7 @@ export class ProduktkategorienDetailPage {
     public id = input.required<number>();
 
     public drucker = toSignal(this.druckerService.readAll());
+    public produktbereiche = toSignal(this.produktbereicheService.readAll());
     public produktkategorie = signal<Produktkategorie>(null);
 
     public form: FormGroup = this.formBuilder.group({
@@ -53,33 +56,26 @@ export class ProduktkategorienDetailPage {
         color: [""],
         drucker_id_level_1: [null],
         sortierindex: [100, [Validators.min(0)]],
-        produktbereich: [{}],
+        produktbereiche_id: [null, [Validators.nullValidator]]
     });
 
     constructor() {
-        effect(() => this.load(this.id()));
+        effect(() => this.produktkategorienService.read(this.id()).subscribe((produktkategorie: Produktkategorie) => this.setEntity(produktkategorie)));
     }
 
-    private load(id: number) {
-        this.produktkategorienService.read(id).subscribe((produktkategorie: Produktkategorie) => {
-            this.produktkategorie.set(produktkategorie);
-            this.form.patchValue(produktkategorie);
-        });
+    private setEntity(produktkategorie: Produktkategorie) {
+        this.produktkategorie.set(produktkategorie);
+        this.form.patchValue(produktkategorie);
     }
 
     public save() {
         const updated = { ...this.produktkategorie(), ...this.form.value };
-        console.debug("ProduktkategorienDetailPage", "save(), Updated Product:", updated);
+        console.debug("ProduktkategorienDetailPage", "save(), Updated Produktkategorie:", updated);
         this.produktkategorienService
             .update(updated)
-            .subscribe(p => {
-                this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                this.load(this.id());
-                this.reload();
+            .subscribe(produktkategorie => {
+                this.frontendService.showToast(`${produktkategorie.name} wurde erfolgreich gespeichert!`);
+                this.setEntity(produktkategorie);
             });
-    }
-
-    private reload() {
-        this.produktkategorienService.readAll();
     }
 }

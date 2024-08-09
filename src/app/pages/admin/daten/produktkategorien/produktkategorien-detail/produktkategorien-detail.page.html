@@ -26,6 +26,14 @@
                 <ion-label position="stacked">Sortierindex</ion-label>
                 <ion-input formControlName="sortierindex"></ion-input>
             </ion-item>
+            <ion-item>
+                <ion-label position="stacked">Produktbereich</ion-label>
+                <ion-select formControlName="produktbereiche_id">
+                    @for (produktbereich of produktbereiche(); track produktbereich.id) {
+                    <ion-select-option [value]="produktbereich.id">{{ produktbereich.name }}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-item>
         </ion-list>
         <h2 class="ion-padding">
             Drucker
