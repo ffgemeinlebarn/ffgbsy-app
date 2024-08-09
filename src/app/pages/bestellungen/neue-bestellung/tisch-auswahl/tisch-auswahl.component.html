@@ -16,7 +16,7 @@
 
 <ion-footer>
     <div class="kachelwand">
-        @for(tischkategorie of tischkategorien(); track tischkategorie.id)
+        @for(tischkategorie of filtredTischkategorienToDisplay(); track tischkategorie.id)
         {
         <div class="kachel tischkategorie-kachel">
             <div class="kachel__inner">

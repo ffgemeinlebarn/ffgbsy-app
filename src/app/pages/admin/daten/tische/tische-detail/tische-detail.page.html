@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-back-button slot="start" defaultHref="/admin/tische"></ion-back-button>
+        <ion-back-button slot="start" defaultHref="/admin/daten/tische"></ion-back-button>
         @defer (when tisch()) {
         <ion-title>{{ tisch()?.reihe }}{{ tisch()?.nummer }}</ion-title>
         <ion-buttons slot="end">
@@ -36,6 +36,9 @@
                     <ion-select-option [value]="tischkategorie.id">{{ tischkategorie.name }}</ion-select-option>
                     }
                 </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-toggle formControlName="aktiv">Aktiv</ion-toggle>
             </ion-item>
         </ion-list>
     </form>

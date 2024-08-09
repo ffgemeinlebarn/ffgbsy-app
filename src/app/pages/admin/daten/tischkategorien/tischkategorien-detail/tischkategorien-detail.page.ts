@@ -50,18 +50,17 @@ export class TischkategorienDetailPage {
 
     public form: FormGroup = this.formBuilder.group({
         name: ["", [Validators.required, Validators.minLength(1)]],
+        aktiv: [true],
         sortierindex: [100, [Validators.min(0)]]
     });
 
     constructor() {
-        effect(() => this.load(this.id()));
+        effect(() => this.tischkategorienService.read(this.id()).subscribe((tischkategorie: Tischkategorie) => this.setEntity(tischkategorie)));
     }
 
-    private load(id: number) {
-        this.tischkategorienService.read(id).subscribe((tischkategorie: Tischkategorie) => {
-            this.tischkategorie.set(tischkategorie);
-            this.form.patchValue(tischkategorie);
-        });
+    private setEntity(tischkategorie: Tischkategorie) {
+        this.tischkategorie.set(tischkategorie);
+        this.form.patchValue(tischkategorie);
     }
 
     public save() {
@@ -69,14 +68,9 @@ export class TischkategorienDetailPage {
         console.debug("TischkategorienDetailPage", "save(), Updated Product:", updated);
         this.tischkategorienService
             .update(updated)
-            .subscribe(p => {
-                this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                this.load(this.id());
-                this.reload();
+            .subscribe(tischkategorie => {
+                this.frontendService.showToast(`${tischkategorie.name} wurde erfolgreich gespeichert!`);
+                this.setEntity(tischkategorie);
             });
-    }
-
-    private reload() {
-        this.tischkategorienService.readAll();
     }
 }

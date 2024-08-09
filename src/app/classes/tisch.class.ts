@@ -3,5 +3,6 @@ export class Tisch {
     reihe: any;
     nummer: number;
     tischkategorien_id: number;
+    aktiv: boolean;
     sortierIndex: number;
 }

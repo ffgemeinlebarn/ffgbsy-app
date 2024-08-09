@@ -1,7 +1,7 @@
 @defer (when produkteinteilung()) {
 <ion-header>
     <ion-toolbar>
-        <ion-back-button slot="start" defaultHref="/admin/produkteinteilungen"></ion-back-button>
+        <ion-back-button slot="start" defaultHref="/admin/daten/produkteinteilungen"></ion-back-button>
         <ion-title>{{ produkteinteilung()?.name }}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="save()">

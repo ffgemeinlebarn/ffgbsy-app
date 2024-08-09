@@ -1,7 +1,7 @@
 @defer (when produktbereich()) {
 <ion-header>
     <ion-toolbar>
-        <ion-back-button slot="start" defaultHref="/admin/produktbereiche"></ion-back-button>
+        <ion-back-button slot="start" defaultHref="/admin/daten/produktbereiche"></ion-back-button>
         <ion-title>{{ produktbereich()?.name }}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="save()">
