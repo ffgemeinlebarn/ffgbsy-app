@@ -1,6 +1,6 @@
 <ion-header>
     <ion-toolbar>
-        <ion-back-button slot="start" defaultHref="/admin/tischkategorien"></ion-back-button>
+        <ion-back-button slot="start" defaultHref="/admin/daten/tischkategorien"></ion-back-button>
         @defer (when tischkategorie()) {
         <ion-title>{{ tischkategorie()?.name }}</ion-title>
         <ion-buttons slot="end">
@@ -23,6 +23,9 @@
             <ion-item>
                 <ion-label position="stacked">Sortierung</ion-label>
                 <ion-input inputmode="decimal" type="number" step="1" formControlName="sortierindex"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-toggle formControlName="aktiv">Aktiv</ion-toggle>
             </ion-item>
         </ion-list>
     </form>

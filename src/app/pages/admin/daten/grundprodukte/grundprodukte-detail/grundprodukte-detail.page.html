@@ -1,7 +1,7 @@
 @defer (when grundprodukt()) {
 <ion-header>
     <ion-toolbar>
-        <ion-back-button slot="start" defaultHref="/admin/grundprodukte"></ion-back-button>
+        <ion-back-button slot="start" defaultHref="/admin/daten/grundprodukte"></ion-back-button>
         <ion-title>{{ grundprodukt()?.name }}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="save()">

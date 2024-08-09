@@ -11,7 +11,7 @@
         @for (tischkategorie of tischkategorienMitTischen(); track tischkategorie.id) {
         <h2 class="ion-padding">
             <span>{{ tischkategorie.name }}</span>
-            <ion-chip color="primary" [routerLink]="['/admin/tischkategorien', tischkategorie.id]">
+            <ion-chip color="primary" [routerLink]="['/admin/daten/tischkategorien', tischkategorie.id]">
                 <ion-icon name="create-outline"></ion-icon>
                 <ion-label>Kategorie bearbeiten</ion-label>
             </ion-chip>
@@ -20,6 +20,7 @@
         <ion-item [routerLink]="[tisch.id]" [button]="true">
             <ion-label>{{ tisch.reihe }}{{ tisch.nummer }}</ion-label>
             <ion-note slot="end">{{ tisch.sortierindex }}</ion-note>
+            <ion-chip slot="end" [color]="tisch.aktiv ? 'success' : 'warning'">{{ tisch.aktiv ? 'aktiv' : 'inaktiv' }}</ion-chip>
         </ion-item>
         }
         }

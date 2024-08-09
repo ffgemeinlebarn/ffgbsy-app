@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, effect, inject, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, output, signal } from '@angular/core';
 import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
@@ -17,6 +17,7 @@ export class TischAuswahlComponent {
     public onTischSelected = output<Tisch>();
 
     public tischkategorien = this.data.tischkategorien;
+    public filtredTischkategorienToDisplay = computed(() => this.tischkategorien()?.filter(tischkategorie => tischkategorie.aktiv) ?? []);
     public selectedTischkategorie = signal<Tischkategorie>(null);
     public filtredTischeToDisplay = signal<Tisch[]>([]);
 
@@ -26,7 +27,7 @@ export class TischAuswahlComponent {
                 this.selectTischkategorie(this.tischkategorien()[0]);
             }
 
-            this.filtredTischeToDisplay.set(this.data.tische().filter(tisch => tisch.tischkategorien_id == this.selectedTischkategorie()?.id) ?? []);
+            this.filtredTischeToDisplay.set(this.data.tische().filter(tisch => tisch.tischkategorien_id == this.selectedTischkategorie()?.id && tisch.aktiv) ?? []);
         }, { allowSignalWrites: true });
     }
 
