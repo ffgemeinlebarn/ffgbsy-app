@@ -9,7 +9,9 @@ import { SelectEigenschaftModalComponent } from 'src/app/modals/select-eigenscha
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { DruckerService } from 'src/app/services/drucker/drucker.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
+import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
 import { ProdukteService } from 'src/app/services/produkte/produkte.service';
+import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen/produkteinteilungen.service';
 
 @Component({
     selector: 'ffgbsy-produkte-detail',
@@ -43,6 +45,8 @@ import { ProdukteService } from 'src/app/services/produkte/produkte.service';
 export class ProdukteDetailPage {
     private frontendService = inject(FrontendService);
     private produkteService = inject(ProdukteService);
+    private produkteinteilungenService = inject(ProdukteinteilungenService);
+    private grundprodukteService = inject(GrundprodukteService);
     private druckerService = inject(DruckerService);
     private formBuilder = inject(FormBuilder);
     private modalController = inject(ModalController);
@@ -51,6 +55,10 @@ export class ProdukteDetailPage {
     public id = input.required<number>();
     public produkt = signal<Produkt>(null);
     public drucker = toSignal(this.druckerService.readAll());
+    public produkteinteilungen = toSignal(this.produkteinteilungenService.readAll());
+    public grundprodukte = toSignal(this.grundprodukteService.readAll());
+    public showGrundproduktMultiplikator = signal(true);
+
     public form: FormGroup = this.formBuilder.group({
         name: ["", [Validators.required, Validators.minLength(1)]],
         formal_name: ["", [Validators.required, Validators.minLength(1)]],
@@ -59,16 +67,21 @@ export class ProdukteDetailPage {
         celebration_active: [false, [Validators.required]],
         celebration_last: [0, [Validators.required]],
         drucker_id_level_2: [null],
+        produkteinteilungen_id: [null, [Validators.nullValidator]],
+        grundprodukte_id: [null],
+        grundprodukte_multiplikator: [null],
         eigenschaften: [[]],
     });
 
     constructor() {
         effect(() => this.load(this.id()));
+        this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
     }
 
     private load(id: number) {
         this.produkteService.read(id).subscribe((produkt) => {
             this.produkt.set(produkt);
+            this.showGrundproduktMultiplikator.set(produkt.grundprodukte_id != null);
             this.form.patchValue(produkt);
         });
     }

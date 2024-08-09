@@ -28,6 +28,14 @@
                 <ion-input inputmode="decimal" type="number" step=".1" formControlName="preis"></ion-input>
             </ion-item>
             <ion-item>
+                <ion-label position="stacked">Produkteinteilung</ion-label>
+                <ion-select formControlName="produkteinteilungen_id">
+                    @for (produkteinteilung of produkteinteilungen(); track produkteinteilung.id) {
+                    <ion-select-option [value]="produkteinteilung.id">{{ produkteinteilung.name }}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-item>
+            <ion-item>
                 <ion-toggle formControlName="aktiv">Aktiv</ion-toggle>
             </ion-item>
             <ion-item>
@@ -39,6 +47,26 @@
                     <p>Letztes Jubiläum</p>
                 </ion-label>
             </ion-item>
+        </ion-list>
+        <h2 class="ion-padding">
+            Grundprodukt
+        </h2>
+        <ion-list lines="full">
+            <ion-item>
+                <ion-label position="stacked">Grundprodukt</ion-label>
+                <ion-select formControlName="grundprodukte_id">
+                    <ion-select-option [value]="null">Kein verknüpftes Grundprodukt</ion-select-option>
+                    @for (grundprodukt of grundprodukte(); track grundprodukt.id) {
+                    <ion-select-option [value]="grundprodukt.id">{{ grundprodukt.name }}</ion-select-option>
+                    }
+                </ion-select>
+            </ion-item>
+            @if(showGrundproduktMultiplikator()){
+            <ion-item>
+                <ion-label position="stacked">Grundprodukt Multiplikator</ion-label>
+                <ion-input inputmode="decimal" type="number" step="1" min="1" formControlName="grundprodukte_multiplikator"></ion-input>
+            </ion-item>
+            }
         </ion-list>
         <h2 class="ion-padding">
             Drucker
