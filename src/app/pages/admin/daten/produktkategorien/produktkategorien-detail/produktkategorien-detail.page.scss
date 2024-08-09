@@ -1,0 +1,12 @@
+:host {
+    h2 {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        ion-chip,
+        ion-button {
+            margin-left: 1em;
+        }
+    }
+}
