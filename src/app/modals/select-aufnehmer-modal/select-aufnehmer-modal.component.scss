@@ -1,0 +1,14 @@
+:host {
+    .aufnehmer-auswahl-footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2em;
+
+        ion-button {
+            --padding-top: 1em;
+            --padding-bottom: 1em;
+        }
+    }
+}

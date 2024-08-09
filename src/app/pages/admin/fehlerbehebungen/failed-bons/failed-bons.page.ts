@@ -2,13 +2,13 @@ import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CheckboxCustomEvent, IonAccordion, IonAccordionGroup, IonBadge, IonButton, IonButtons, IonCheckbox, IonChip, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonMenuButton, IonNote, IonRippleEffect, IonSelect, IonSelectOption, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
+import { CheckboxCustomEvent, IonAccordion, IonAccordionGroup, IonBadge, IonButton, IonButtons, IonCheckbox, IonChip, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonMenuButton, IonNote, IonRippleEffect, IonSelect, IonSelectOption, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToggle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { Bon } from 'src/app/classes/bon.model';
 import { IBonsFilter } from 'src/app/interfaces/bons-filter.interface';
 import { BonsService } from 'src/app/services/bons/bons.service';
 import { DruckerService } from 'src/app/services/drucker/drucker.service';
 import { TischeService } from 'src/app/services/tische/tische.service';
-import {FrontendService} from '../../../../services/frontend/frontend.service';
+import { FrontendService } from '../../../../services/frontend/frontend.service';
 
 @Component({
     selector: 'ffgbsy-failed-bons',
@@ -17,7 +17,7 @@ import {FrontendService} from '../../../../services/frontend/frontend.service';
     standalone: true,
     imports: [TitleCasePipe, IonBadge, IonItemDivider, IonAccordionGroup, IonAccordion, IonItemOption, IonItemOptions, IonItemSliding, IonButtons, IonMenuButton, IonToggle, IonButton, IonSelect, IonSelectOption, IonRippleEffect, IonFooter, IonCheckbox, IonIcon, IonTabButton, IonTabBar, IonTabs, IonNote, IonChip, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
 })
-export class FailedBonsPage {
+export class FailedBonsPage implements ViewDidEnter {
     private bonsService = inject(BonsService);
     private druckerService = inject(DruckerService);
     private tischeService = inject(TischeService);
@@ -78,12 +78,16 @@ export class FailedBonsPage {
             .subscribe(bonDrucke => {
                 this.searchBons();
                 const successfulBons = bonDrucke.filter(bon => bon.success).length;
-                if(successfulBons === bonDrucke.length) {
+                if (successfulBons === bonDrucke.length) {
                     this.frontendService.showToast('Alle Bons erfolgreich gedruckt!');
                 } else {
                     this.frontendService.showToast(`Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`);
                 }
                 this.frontendService.hideLoadingSpinner();
             });
+    }
+
+    ionViewDidEnter(): void {
+        this.searchBons();
     }
 }

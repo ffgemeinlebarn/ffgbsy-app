@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { Component, inject } from '@angular/core';
+import { IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonRippleEffect, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
 import { AppService } from 'src/app/services/app/app.service';
 import { DataService } from 'src/app/services/data/data.service';
@@ -9,7 +9,7 @@ import { DataService } from 'src/app/services/data/data.service';
     templateUrl: './select-aufnehmer-modal.component.html',
     styleUrls: ['./select-aufnehmer-modal.component.scss'],
     standalone: true,
-    imports: [
+    imports: [IonRippleEffect,
         IonHeader,
         IonTitle,
         IonToolbar,
@@ -20,7 +20,8 @@ import { DataService } from 'src/app/services/data/data.service';
         IonItem,
         IonLabel,
         IonIcon,
-        IonFooter
+        IonFooter,
+        IonRippleEffect
     ]
 })
 export class SelectAufnehmerModalComponent {
