@@ -1,4 +1,5 @@
 import { Drucker } from "./drucker.class";
+import { Eigenschaft } from "./eigenschaft.interface";
 import { Produktbereich } from "./produktbereich.class";
 import { Produkteinteilung } from "./produkteinteilung.class";
 
@@ -11,4 +12,5 @@ export class Produktkategorie {
     sortierindex: number;
     drucker?: Drucker
     produktbereich?: Produktbereich;
+    eigenschaften: Array<Eigenschaft>;
 }

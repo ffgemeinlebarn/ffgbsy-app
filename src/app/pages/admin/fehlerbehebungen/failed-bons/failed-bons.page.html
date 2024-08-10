@@ -39,33 +39,13 @@
         </ion-card-content>
         }
     </ion-card>
-    <!-- <div class="message ion-padding">
-        <div class="content">
-            @if(anyBonsSelected()){
-            @if(allBonsSelectedAreMissingSuccess()){
-            <h3>Alle gewählten Bons wurden noch nie erfolgreich gedruckt!</h3>
-            }
-            @else {
-            <h3>Gewählte Bons wurden zumindest teilweise schon einmal gedruckt!</h3>
-            }
-            }
-            @else{
-            <h3>Nichts ausgewählt</h3>
-            }
-        </div>
-
-        <ion-button>
-            <ion-icon name="print-outline" slot="start"></ion-icon>
-            Auswahl drucken
-        </ion-button>
-    </div> -->
     }
 
     <ion-list lines="full">
         <ion-accordion-group>
             @for(bon of bons(); track bon.id){
             <ion-accordion [value]="bon.id">
-                <ion-item slot="header">
+                <ion-item slot="header" [color]="bon.successes > 0 ? '' : 'light'">
                     <ion-checkbox slot="start" [(ngModel)]="bon.selected" (ionChange)="onChange($event, bon)" (click)="onCheckboxToggle($event)"></ion-checkbox>
                     @if(bon.successes > 0){
                     <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
@@ -76,9 +56,9 @@
                     <ion-label>
                         Bon Nr. {{ bon.id }}
                     </ion-label>
-                    <ion-chip color="primary" [disabled]="!bon.tries">
+                    <ion-chip color="primary">
                         <ion-icon name="print"></ion-icon>
-                        <ion-label>{{ bon.tries }}</ion-label>
+                        <span>{{ bon.drucker.name }}</span>
                     </ion-chip>
                     <ion-chip color="success" [disabled]="!bon.successes">
                         <ion-icon name="checkmark-circle"></ion-icon>
@@ -124,6 +104,21 @@
                         </ion-label>
                     </ion-item>
                     <ion-item-divider>Drucke</ion-item-divider>
+                    <ion-item>
+                        <ion-chip color="primary">
+                            <ion-icon name="print"></ion-icon>
+                            <span>{{ bon.tries }} Versuche</span>
+                        </ion-chip>
+                        <ion-icon name="arrow-forward" style="margin: 0px 4px"></ion-icon>
+                        <ion-chip color="success">
+                            <ion-icon name="checkmark-circle"></ion-icon>
+                            <ion-label>{{ bon.successes }} Erfolgreich</ion-label>
+                        </ion-chip>
+                        <ion-chip color="danger">
+                            <ion-icon name="alert-circle"></ion-icon>
+                            <span>{{ bon.fails }} Fehlgeschlagen</span>
+                        </ion-chip>
+                    </ion-item>
                     @for(druck of bon.drucke; track druck.id){
                     <ion-item>
                         <ion-icon slot="start" [name]="druck.success ? 'checkmark-circle' : 'alert-circle'" [color]="druck.success ? 'success' : 'danger'"></ion-icon>

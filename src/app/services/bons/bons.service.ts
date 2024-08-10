@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, catchError, retry } from 'rxjs';
+import { Observable, catchError, retry, tap } from 'rxjs';
 import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bon } from 'src/app/classes/bon.model';
 import { BonDruck } from 'src/app/classes/bonDruck';
 import { IBonsFilter } from 'src/app/interfaces/bons-filter.interface';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class BonsService {
     private http = inject(HttpClient);
     private settings = inject(SettingsService);
     private errorHandling = inject(ErrorHandlingService);
+    private frontendService = inject(FrontendService);
 
     public createStornoBon(bestellposition: Bestellposition): Observable<Bon> {
         return this.http
@@ -56,10 +58,12 @@ export class BonsService {
     }
 
     public druckBonsOfBestellungById(id: number): Observable<BonDruck[]> {
+        this.frontendService.showLoadingSpinner("Drucke Bons für Bestellung");
         return this.http
             .post(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null)
             .pipe(
                 retry(1),
+                tap(() => this.frontendService.hideLoadingSpinner()),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
     }
