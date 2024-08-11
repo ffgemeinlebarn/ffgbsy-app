@@ -1,20 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonCard, IonCardHeader, IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
+import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
 
 @Component({
-  selector: 'ffgbsy-keys',
-  templateUrl: './keys.page.html',
-  styleUrls: ['./keys.page.scss'],
-  standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+    selector: 'ffgbsy-keys',
+    templateUrl: './keys.page.html',
+    styleUrls: ['./keys.page.scss'],
+    standalone: true,
+    imports: [IonCardHeader, IonButton, IonButtons, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, JsonPipe, EuroPreisPipe, CommonModule, FormsModule]
 })
-export class KeysPage implements OnInit {
+export class KeysPage implements ViewDidEnter {
+    private statistikenService = inject(StatistikenService);
 
-  constructor() { }
+    public kennzahlen = signal<any>(null);
 
-  ngOnInit() {
-  }
-
+    ionViewDidEnter(): void {
+        this.statistikenService.readKennzahlen().subscribe((keys) => this.kennzahlen.set(keys));
+    }
 }

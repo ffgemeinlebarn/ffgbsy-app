@@ -6,6 +6,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { ApiService } from 'src/app/services/api/api.service';
 import { ColorGeneratorService } from 'src/app/services/color-generator/color-generator.service';
+import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
 
 @Component({
     selector: 'ffgbsy-timeline',
@@ -28,6 +29,7 @@ import { ColorGeneratorService } from 'src/app/services/color-generator/color-ge
 })
 export class TimelinePage implements ViewDidEnter {
     private apiService = inject(ApiService);
+    private statistikenService = inject(StatistikenService);
     private colorGenerator = inject(ColorGeneratorService);
 
     public chartTimelineBestellungen: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
@@ -38,7 +40,7 @@ export class TimelinePage implements ViewDidEnter {
     public readyToShow = signal(false);
 
     public loadData() {
-        this.apiService.getStatisticsTimeline().subscribe(timeline => timeline.forEach((day, i) => {
+        this.statistikenService.readTimeline().subscribe(timeline => timeline.forEach((day, i) => {
 
             const filtred = day.quaters.filter(x => x.hour > 8);
             const labels = filtred.map(x => x.label);
