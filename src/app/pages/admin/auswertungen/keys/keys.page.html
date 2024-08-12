@@ -5,48 +5,11 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    @for(keys of kennzahlen()?.taeglich; track keys.datum){
-    <div class="day ion-padding">
-        <h2>{{ keys.label }}</h2>
-        <div class="cards">
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title>{{ keys.bestellungen }}</ion-card-title>
-                    <ion-card-subtitle>Bestellungen</ion-card-subtitle>
-                </ion-card-header>
-            </ion-card>
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title>{{ keys.summe | euroPreis }}</ion-card-title>
-                    <ion-card-subtitle>Umsatz</ion-card-subtitle>
-                </ion-card-header>
-            </ion-card>
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title>{{ keys.bestellte_produkte }}</ion-card-title>
-                    <ion-card-subtitle>Bestellte Produkte</ion-card-subtitle>
-                </ion-card-header>
-            </ion-card>
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title>{{ keys.bestellte_produkte }}</ion-card-title>
-                    <ion-card-subtitle>Bestellte Getränke</ion-card-subtitle>
-                </ion-card-header>
-            </ion-card>
-            <ion-card>
-                <ion-card-header>
-                    <ion-card-title>{{ keys.bestellte_produkte }}</ion-card-title>
-                    <ion-card-subtitle>Bestellte Hauptspeisen</ion-card-subtitle>
-                    <ion-card-content>
-                        <p>
-                            <ion-icon name="add-circle"></ion-icon> 10,2 %
-                        </p>
-                    </ion-card-content>
-                </ion-card-header>
-            </ion-card>
-        </div>
-    </div>
+<ion-content class="ion-padding">
+    <ffgbsy-keys-item label="Gesamt" [keys]="kennzahlen()?.gesamt"></ffgbsy-keys-item>
+
+    @for(tag of kennzahlen()?.taeglich; track tag.datum){
+    <ffgbsy-keys-item [label]="tag.label" [keys]="tag"></ffgbsy-keys-item>
     }
 
 </ion-content>

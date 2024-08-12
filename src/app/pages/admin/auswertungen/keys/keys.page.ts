@@ -1,8 +1,6 @@
-import { CommonModule, JsonPipe } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { IonButton, IonButtons, IonCard, IonCardHeader, IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
+import { IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { KeysItemComponent } from 'src/app/components/keys-item/keys-item.component';
 import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
 
 @Component({
@@ -10,7 +8,7 @@ import { StatistikenService } from 'src/app/services/statistiken/statistiken.ser
     templateUrl: './keys.page.html',
     styleUrls: ['./keys.page.scss'],
     standalone: true,
-    imports: [IonCardHeader, IonButton, IonButtons, IonCard, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, JsonPipe, EuroPreisPipe, CommonModule, FormsModule]
+    imports: [IonContent, IonTitle, IonToolbar, IonHeader, IonMenuButton, KeysItemComponent]
 })
 export class KeysPage implements ViewDidEnter {
     private statistikenService = inject(StatistikenService);

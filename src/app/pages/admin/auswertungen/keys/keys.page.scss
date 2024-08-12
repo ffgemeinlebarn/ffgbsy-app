@@ -1,14 +1,6 @@
 :host {
-    .day {
-        h2 {}
-
-        .cards {
-            display: grid;
-            gap: 1em;
-
-            ion-card {
-                margin: 0;
-            }
-        }
+    ffgbsy-keys-item {
+        display: block;
+        margin-bottom: 2em;
     }
 }

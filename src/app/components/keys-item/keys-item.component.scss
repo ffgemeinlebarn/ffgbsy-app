@@ -1,0 +1,16 @@
+:host {
+
+    h3 {
+        margin-bottom: 1em;
+    }
+
+    .cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1em;
+
+        ion-card {
+            margin: 0;
+        }
+    }
+}
