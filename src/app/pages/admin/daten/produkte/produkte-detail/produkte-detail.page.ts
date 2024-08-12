@@ -71,6 +71,7 @@ export class ProdukteDetailPage {
         grundprodukte_id: [null],
         grundprodukte_multiplikator: [null],
         eigenschaften: [[]],
+        hauptspeise: [false],
     });
 
     constructor() {
