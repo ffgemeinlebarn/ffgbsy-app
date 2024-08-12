@@ -244,3 +244,35 @@ ion-chip.non-clickable {
     justify-content: center;
     align-items: center;
 }
+
+
+
+.stat-table {
+    padding-top: 1em;
+    padding-bottom: 2em;
+    overflow-x: auto;
+
+    table {
+        width: 100%;
+        background-color: #f4f4f4;
+
+        tr {
+
+            td,
+            th {
+                border: 4px #fff solid;
+                padding: 1em;
+                text-align: left;
+
+                &.headline {
+                    max-width: 300px;
+                    width: 50%;
+                }
+            }
+
+            td {
+                text-align: right;
+            }
+        }
+    }
+}
