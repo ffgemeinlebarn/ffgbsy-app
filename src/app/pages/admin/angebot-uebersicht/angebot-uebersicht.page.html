@@ -32,6 +32,9 @@
                     </td>
                     <td class="produkt">
                         <p class="name">{{ produkt.name }}</p>
+                        @if(produkt.hauptspeise){
+                        <p class="hauptspeise">Hauptspeise</p>
+                        }
                     </td>
                     <td class="preis">
                         {{ produkt.preis | euroPreis }}
