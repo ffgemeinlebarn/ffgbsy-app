@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { addIcons } from 'ionicons';
-import { addCircleOutline, addOutline, albumsOutline, alert, alertCircle, alertCircleOutline, analyticsOutline, arrowBack, arrowForward, arrowForwardOutline, arrowUndo, beerOutline, bookmarkOutline, bugOutline, calendarClearOutline, checkboxOutline, checkmarkCircle, checkmarkCircleOutline, chevronForward, closeCircle, closeOutline, cloudOutline, createOutline, cubeOutline, documentTextOutline, eyeOutline, fileTrayOutline, gitPullRequest, globe, homeOutline, key, keyOutline, layersOutline, listOutline, logoEuro, logOutOutline, navigateCircleOutline, notificationsOutline, peopleOutline, personCircle, personCircleOutline, personOutline, phonePortraitOutline, pintOutline, print, printOutline, pulseOutline, radioButtonOff, radioButtonOn, refreshOutline, removeCircle, restaurantOutline, returnDownForwardOutline, rocketOutline, save, searchOutline, send, sendOutline, settingsOutline, shieldCheckmarkOutline, speedometerOutline, star, statsChartOutline, storefrontOutline, tabletLandscapeOutline, ticket, ticketOutline, time, timerOutline, trash } from 'ionicons/icons';
+import { addCircle, addCircleOutline, addOutline, albumsOutline, alert, alertCircle, alertCircleOutline, analyticsOutline, arrowBack, arrowForward, arrowForwardOutline, arrowUndo, beerOutline, bookmarkOutline, bugOutline, calendarClearOutline, checkboxOutline, checkmarkCircle, checkmarkCircleOutline, chevronForward, closeCircle, closeOutline, cloudOutline, createOutline, cubeOutline, documentTextOutline, eyeOutline, fileTrayOutline, gitPullRequest, globe, homeOutline, key, keyOutline, layersOutline, listOutline, logoEuro, logOutOutline, navigateCircleOutline, notificationsOutline, peopleOutline, personCircle, personCircleOutline, personOutline, phonePortraitOutline, pintOutline, print, printOutline, pulseOutline, radioButtonOff, radioButtonOn, refreshOutline, removeCircle, restaurantOutline, returnDownForwardOutline, rocketOutline, save, searchOutline, send, sendOutline, settingsOutline, shieldCheckmarkOutline, speedometerOutline, star, statsChartOutline, storefrontOutline, tabletLandscapeOutline, ticket, ticketOutline, time, timerOutline, trash } from 'ionicons/icons';
 
 @Injectable({
     providedIn: 'root'
@@ -8,6 +8,7 @@ import { addCircleOutline, addOutline, albumsOutline, alert, alertCircle, alertC
 export class IonIconsService {
 
     public useDefinedIcons = () => addIcons({
+        addCircle,
         addCircleOutline,
         addOutline,
         albumsOutline,

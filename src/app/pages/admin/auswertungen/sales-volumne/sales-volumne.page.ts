@@ -6,6 +6,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { ApiService } from 'src/app/services/api/api.service';
+import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
 
 @Component({
     selector: 'ffgbsy-sales-volumne',
@@ -16,6 +17,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 })
 export class SalesVolumnePage implements ViewWillEnter {
     private apiService = inject(ApiService);
+    private statistikenService = inject(StatistikenService);
 
     public pieChartReadyToShow = signal(false);
 
@@ -25,7 +27,7 @@ export class SalesVolumnePage implements ViewWillEnter {
     public tableProduktkategorien = null;
 
     public loadData() {
-        this.apiService.getStatisticsKennzahlen().subscribe(kennzahlen => {
+        this.statistikenService.readKennzahlen().subscribe(kennzahlen => {
             this.chartUmsatzProTag.labels = kennzahlen.taeglich.map(x => x.label);
             this.chartUmsatzProTag.datasets = [{
                 data: kennzahlen.taeglich.map(x => x.summe)
@@ -34,11 +36,11 @@ export class SalesVolumnePage implements ViewWillEnter {
             this.pieChartReadyToShow.set(true);
         });
 
-        this.apiService.getStatisticsProduktbereiche().subscribe(stats => {
+        this.statistikenService.readProduktbereiche().subscribe(stats => {
             this.tableProduktbereiche = stats;
         });
 
-        this.apiService.getStatisticsProduktkategorien().subscribe(stats => {
+        this.statistikenService.readProduktkategorien().subscribe(stats => {
             this.tableProduktkategorien = stats;
         });
     }

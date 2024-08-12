@@ -75,49 +75,4 @@ export class ApiService {
                 catchError((error) => this.errorHandler(error))
             );
     }
-
-    public getStatisticsTimeline(): Observable<any> {
-        this.frontend.showLoadingSpinner('Empfange Timeline Statistik');
-        return this.http
-            .get(`${this.url}/statistiken/timeline`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-
-    }
-
-    public getStatisticsKennzahlen(): Observable<any> {
-        this.frontend.showLoadingSpinner('Empfange Kennzahlen Statistik');
-        return this.http
-            .get(`${this.url}/statistiken/kennzahlen`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
-
-    public getStatisticsProduktbereiche(): Observable<any> {
-        this.frontend.showLoadingSpinner('Empfange Produktbereiche Statistik');
-        return this.http
-            .get(`${this.url}/statistiken/produktbereiche`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
-
-    public getStatisticsProduktkategorien(): Observable<any> {
-        this.frontend.showLoadingSpinner('Empfange Produktkategorien Statistik');
-        return this.http
-            .get(`${this.url}/statistiken/produktkategorien`, { headers: this.headers })
-            .pipe(
-                retry(1),
-                tap(() => this.frontend.hideLoadingSpinner()),
-                catchError((error) => this.errorHandler(error))
-            );
-    }
 }

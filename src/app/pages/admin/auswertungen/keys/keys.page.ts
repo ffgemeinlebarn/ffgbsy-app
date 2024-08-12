@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { Component, inject, signal } from '@angular/core';
+import { IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { KeysItemComponent } from 'src/app/components/keys-item/keys-item.component';
+import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
 
 @Component({
-  selector: 'ffgbsy-keys',
-  templateUrl: './keys.page.html',
-  styleUrls: ['./keys.page.scss'],
-  standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+    selector: 'ffgbsy-keys',
+    templateUrl: './keys.page.html',
+    styleUrls: ['./keys.page.scss'],
+    standalone: true,
+    imports: [IonContent, IonTitle, IonToolbar, IonHeader, IonMenuButton, KeysItemComponent]
 })
-export class KeysPage implements OnInit {
+export class KeysPage implements ViewDidEnter {
+    private statistikenService = inject(StatistikenService);
 
-  constructor() { }
+    public kennzahlen = signal<any>(null);
 
-  ngOnInit() {
-  }
-
+    ionViewDidEnter(): void {
+        this.statistikenService.readKennzahlen().subscribe((keys) => this.kennzahlen.set(keys));
+    }
 }
