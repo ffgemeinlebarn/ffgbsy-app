@@ -1,6 +1,7 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, model, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertController, IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { Eigenschaft } from 'src/app/classes/eigenschaft.interface';
 import { Produkt } from 'src/app/classes/produkt.class';
@@ -51,8 +52,9 @@ export class ProdukteDetailPage {
     private formBuilder = inject(FormBuilder);
     private modalController = inject(ModalController);
     private alertController = inject(AlertController);
+    private router = inject(Router);
 
-    public id = input.required<number>();
+    public id = model.required<number | null>();
     public produkt = signal<Produkt>(null);
     public drucker = toSignal(this.druckerService.readAll());
     public produkteinteilungen = toSignal(this.produkteinteilungenService.readAll());
@@ -63,11 +65,12 @@ export class ProdukteDetailPage {
         name: ["", [Validators.required, Validators.minLength(1)]],
         formal_name: ["", [Validators.required, Validators.minLength(1)]],
         preis: [0, [Validators.required, Validators.min(0)]],
+        sortierindex: [100, [Validators.min(0)]],
         aktiv: [false, [Validators.required]],
         celebration_active: [false, [Validators.required]],
         celebration_last: [0, [Validators.required]],
         drucker_id_level_2: [null],
-        produkteinteilungen_id: [null, [Validators.nullValidator]],
+        produkteinteilungen_id: [1, [Validators.nullValidator]],
         grundprodukte_id: [null],
         grundprodukte_multiplikator: [null],
         eigenschaften: [[]],
@@ -75,7 +78,13 @@ export class ProdukteDetailPage {
     });
 
     constructor() {
-        effect(() => this.produkteService.read(this.id()).subscribe((produkt) => this.setEntity(produkt)));
+        effect(() => {
+            if (isNaN(this.id())) {
+                this.setEntity(new Produkt());
+            } else {
+                this.produkteService.read(this.id()).subscribe((produkt) => this.setEntity(produkt));
+            }
+        }, { allowSignalWrites: true });
         this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
     }
 
@@ -132,11 +141,24 @@ export class ProdukteDetailPage {
     }
 
     public save() {
-        this.produkteService
-            .update({ ...this.produkt(), ...this.form.value })
-            .subscribe(p => {
-                this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                this.setEntity(p);
-            });
+
+        const product = { ...this.produkt(), ...this.form.value };
+
+        if (product.id) {
+            this.produkteService
+                .update(product)
+                .subscribe(p => {
+                    this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
+                    this.setEntity(p);
+                });
+        } else {
+            this.produkteService
+                .create(product)
+                .subscribe(p => {
+                    this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
+                    this.id.set(p.id);
+                    this.setEntity(p);
+                });
+        }
     }
 }

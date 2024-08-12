@@ -7,7 +7,13 @@
 
 <ion-content>
 
-    <h2 class="ion-padding">Lookup Daten</h2>
+    <h2 class="ion-padding">
+        <span>Lookup Daten</span>
+        <ion-chip (click)="syncData()" color="primary">
+            <ion-icon name="refresh-outline"></ion-icon>
+            <ion-label>Manuelle Synchronisierung durchführen</ion-label>
+        </ion-chip>
+    </h2>
     <ion-list lines="full">
         <ion-item>
             <ion-label>

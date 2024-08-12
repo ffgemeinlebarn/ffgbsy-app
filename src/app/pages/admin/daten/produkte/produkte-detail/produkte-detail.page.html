@@ -39,6 +39,10 @@
                 <ion-toggle formControlName="hauptspeise">Hauptspeise</ion-toggle>
             </ion-item>
             <ion-item>
+                <ion-label position="stacked">Sortierung</ion-label>
+                <ion-input inputmode="decimal" type="number" step="1" formControlName="sortierindex"></ion-input>
+            </ion-item>
+            <ion-item>
                 <ion-toggle formControlName="aktiv">Aktiv</ion-toggle>
             </ion-item>
             <ion-item>
@@ -79,12 +83,12 @@
                     @if (produkt()?.drucker_id_level_2)
                     {
                     {{ produkt()?.drucker?.name }}
-                    }@else if (produkt()?.produkteinteilung.produktkategorie.drucker_id_level_1)
+                    }@else if (produkt()?.produkteinteilung?.produktkategorie?.drucker_id_level_1)
                     {
-                    {{ produkt()?.produkteinteilung.produktkategorie.drucker?.name }}
+                    {{ produkt()?.produkteinteilung?.produktkategorie?.drucker?.name }}
                     }@else
                     {
-                    {{ produkt()?.produkteinteilung.produktkategorie.produktbereich.drucker?.name }}
+                    {{ produkt()?.produkteinteilung?.produktkategorie?.produktbereich?.drucker?.name }}
                     }
                 </ion-label>
             </ion-chip>
@@ -102,9 +106,9 @@
             <ion-item-divider>Vererbungen</ion-item-divider>
             <ion-item>
                 <ion-label>
-                    @if(produkt()?.produkteinteilung.produktkategorie.drucker_id_level_1)
+                    @if(produkt()?.produkteinteilung?.produktkategorie?.drucker_id_level_1)
                     {
-                    <h3>{{ produkt()?.produkteinteilung.produktkategorie.drucker?.name }}</h3>
+                    <h3>{{ produkt()?.produkteinteilung?.produktkategorie?.drucker?.name }}</h3>
                     }
                     @else {
                     <h3>Kein Drucker auf dieser Ebene definiert</h3>
@@ -114,9 +118,9 @@
             </ion-item>
             <ion-item>
                 <ion-label>
-                    @if(produkt()?.produkteinteilung.produktkategorie.produktbereich.drucker_id_level_0)
+                    @if(produkt()?.produkteinteilung?.produktkategorie?.produktbereich?.drucker_id_level_0)
                     {
-                    <h3>{{ produkt()?.produkteinteilung.produktkategorie.produktbereich.drucker?.name }}</h3>
+                    <h3>{{ produkt()?.produkteinteilung?.produktkategorie?.produktbereich?.drucker?.name }}</h3>
                     }
                     @else {
                     <h3>Kein Drucker auf dieser Ebene definiert</h3>
@@ -162,7 +166,7 @@
             </ion-item-sliding>
             }
             <ion-item-divider>Vererbungen aus Produktkategorie</ion-item-divider>
-            @for (eigenschaft of produkt()?.produkteinteilung.produktkategorie.eigenschaften; track eigenschaft.id) {
+            @for (eigenschaft of produkt()?.produkteinteilung?.produktkategorie?.eigenschaften; track eigenschaft.id) {
             <ion-item>
                 <ion-label>
                     <h3>{{ eigenschaft.name }}</h3>

@@ -1,7 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonContent, IonHeader, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar, ViewDidEnter } from "@ionic/angular/standalone";
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar, ViewDidEnter } from "@ionic/angular/standalone";
 import { Produkt } from 'src/app/classes/produkt.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
@@ -20,6 +20,9 @@ import { ProdukteService } from 'src/app/services/produkte/produkte.service';
         IonToolbar,
         IonHeader,
         IonMenuButton,
+        IonButtons,
+        IonButton,
+        IonIcon,
         PageSpinnerComponent,
         RouterLink,
         EuroPreisPipe,

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { IonButton, IonChip, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AvailabilityService } from 'src/app/services/availability/availability.service';
+import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
     selector: 'ffgbsy-systemstatus',
@@ -25,6 +26,7 @@ import { AvailabilityService } from 'src/app/services/availability/availability.
 })
 export class SystemstatusPage {
     private availability = inject(AvailabilityService);
+    private dataService = inject(DataService);
 
     public apiAvailability = this.availability.apiAvailability;
     public druckerAvailabilities = this.availability.druckerAvailabilities;
@@ -38,11 +40,15 @@ export class SystemstatusPage {
 
     public lookupDataLastSync = this.availability.lookupDataGrossAvailibilityDatetime;
 
-    checkDrucker() {
+    public syncData() {
+        this.dataService.load();
+    }
+
+    public checkDrucker() {
         this.availability.checkDrucker();
     }
 
-    checkApi() {
+    public checkApi() {
         this.availability.checkApi();
     }
 }
