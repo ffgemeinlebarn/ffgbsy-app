@@ -20,4 +20,5 @@ export class Produkt {
     produkteinteilung: Produkteinteilung;
     grundprodukt: Grundprodukt | null;
     eigenschaften: Array<Eigenschaft>;
+    hauptspeise: boolean;
 }
