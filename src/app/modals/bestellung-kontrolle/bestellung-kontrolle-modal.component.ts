@@ -1,6 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { Component, computed, inject, signal } from '@angular/core';
+import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonTitle, IonToolbar, ModalController, ViewDidEnter } from '@ionic/angular/standalone';
+import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AppService } from 'src/app/services/app/app.service';
+import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 
 @Component({
@@ -8,25 +10,50 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
     templateUrl: './bestellung-kontrolle-modal.component.html',
     styleUrls: ['./bestellung-kontrolle-modal.component.scss'],
     standalone: true,
-    imports: [
+    imports: [IonItem, IonListHeader,
         IonHeader,
         EuroPreisPipe,
         IonContent,
         IonList,
+        IonItem,
+        IonListHeader,
         IonToolbar,
         IonHeader,
         IonTitle,
         IonFooter,
         IonButton,
         IonIcon,
-        IonLabel
+        IonLabel,
+        StatusListItemComponent
     ],
 })
-export class BestellungKontrolleModalComponent {
+export class BestellungKontrolleModalComponent implements ViewDidEnter {
     private modalCtrl = inject(ModalController);
     private app = inject(AppService);
+    private bestellungenService = inject(BestellungenService);
 
     public bestellung = this.app.bestellung;
+    public availabilityCheckSuccess = signal(null);
+    public availabilityCheckStatus = computed(() => {
+        if (this.availabilityCheckSuccess() == null) {
+            return 'busy';
+        } else if (this.availabilityCheckSuccess()) {
+            return 'success';
+        } else {
+            return 'error';
+        }
+    });
+    public availabilityCheckStatusMessage = computed(() => {
+        if (this.availabilityCheckSuccess() == null) {
+            return 'Prüfe Verfügbarkeit ...';
+        } else if (this.availabilityCheckSuccess()) {
+            return 'Alle gewünschten Produkte sind verfügbar!';
+        } else {
+            return 'Probleme bei der Verfügbarkeit von Produkten!';
+        }
+    });
+
+    public availabilityCheckItems = signal([]);
 
     closeModal() {
         this.modalCtrl.dismiss();
@@ -35,5 +62,16 @@ export class BestellungKontrolleModalComponent {
     sendBestellung() {
         this.app.sendBestellung();
         this.modalCtrl.dismiss();
+    }
+
+    ionViewDidEnter(): void {
+        this.availabilityCheckSuccess.set(null);
+        this.availabilityCheckItems.set([]);
+        this.bestellungenService
+            .checkAvailability(this.app.bestellung())
+            .subscribe((result) => {
+                this.availabilityCheckSuccess.set(result.success);
+                this.availabilityCheckItems.set(result.checks.filter(check => !check.success));
+            });
     }
 }
