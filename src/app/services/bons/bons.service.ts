@@ -62,26 +62,27 @@ export class BonsService {
         return this.http
             .post(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null)
             .pipe(
-                retry(1),
                 tap(() => this.frontendService.hideLoadingSpinner()),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
     }
 
     public druckBonsByIds(ids: number[]): Observable<BonDruck[]> {
+        this.frontendService.showLoadingSpinner("Drucke Bons");
         return this.http
             .post(`${this.settings.apiBaseUrl()}/print/bons`, ids)
             .pipe(
-                retry(1),
+                tap(() => this.frontendService.hideLoadingSpinner()),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
     }
 
     public druckBonById(id: number): Observable<BonDruck> {
+        this.frontendService.showLoadingSpinner("Drucke Bon");
         return this.http
             .post(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null)
             .pipe(
-                retry(1),
+                tap(() => this.frontendService.hideLoadingSpinner()),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
     }
