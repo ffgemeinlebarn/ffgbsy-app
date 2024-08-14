@@ -32,6 +32,7 @@
                                 "input": "src/assets",
                                 "output": "assets"
                             },
+                            "src/.htaccess",
                             "src/manifest.webmanifest"
                         ],
                         "styles": [
