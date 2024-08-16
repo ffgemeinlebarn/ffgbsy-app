@@ -1,28 +1,47 @@
-ion-modal{
-    padding: 30px;
-}
+:host {
+    ion-modal {
+        padding: 30px;
+    }
 
-ion-footer{
-    background-color: #ffffff;
-    padding: 0px;
-    flex-direction: row;
-    display: flex;
-    height: 80px;
+    ion-content {
+        h2 {
+            padding: var(--ion-padding, 16px);
+            padding-bottom: 0;
+            margin-bottom: 6px;
+        }
+    }
 
-    ion-button{
-        --border-radius: 0px;
-        --box-shadow: 0px;
-        margin: 0px;
-        height: 100%;
-        font-size: 1em;
-        font-weight: bold;
+    ion-footer {
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
 
-        &.button-bestellung-nochmal-bearbeiten{
-            width: 35%;
+        .availability-result {
+            padding: 0px;
         }
 
-        &.button-bestellung-senden{
-            width: 65%;
+        .buttons {
+            padding: 0px;
+            flex-direction: row;
+            display: flex;
+            height: 80px;
+
+            ion-button {
+                --border-radius: 0px;
+                --box-shadow: 0px;
+                margin: 0px;
+                height: 100%;
+                font-size: 1em;
+                font-weight: bold;
+
+                &.button-bestellung-nochmal-bearbeiten {
+                    width: 35%;
+                }
+
+                &.button-bestellung-senden {
+                    width: 65%;
+                }
+            }
         }
     }
 }

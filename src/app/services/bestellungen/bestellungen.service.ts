@@ -17,12 +17,19 @@ export class BestellungenService {
     private errorHandling = inject(ErrorHandlingService);
     private frontendService = inject(FrontendService);
 
-    public create(bestellungen: Bestellung) {
+    public checkAvailability(bestellung: Bestellung) {
+        return this.http
+            .post(`${this.settings.apiBaseUrl()}/bestellungen/availability`, bestellung)
+            .pipe(
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+            );
+    }
+
+    public create(bestellung: Bestellung) {
         this.frontendService.showLoadingSpinner("Bestellung wird angelegt");
         return this.http
-            .post<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellungen)
+            .post<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellung)
             .pipe(
-                retry(1),
                 tap(() => this.frontendService.hideLoadingSpinner()),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
@@ -33,7 +40,6 @@ export class BestellungenService {
         return this.http
             .post(`${this.settings.apiBaseUrl()}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl })
             .pipe(
-                retry(1),
                 tap(() => this.frontendService.hideLoadingSpinner()),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
@@ -43,7 +49,6 @@ export class BestellungenService {
         return this.http
             .get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`)
             .pipe(
-                retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
     }
@@ -52,7 +57,6 @@ export class BestellungenService {
         return this.http
             .get<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`)
             .pipe(
-                retry(1),
                 catchError((error) => this.errorHandling.globalApiErrorHandling(error))
             );
     }

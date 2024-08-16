@@ -128,8 +128,17 @@ export class AppService {
                 });
 
             },
-            error: (errResult) => {
-                this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', errResult.error.error.description);
+            error: (errrorResponse) => {
+
+                if (errrorResponse.status == 400 && errrorResponse.error.error.description == "AvailabilityCheck" && !errrorResponse.error.error.success) {
+
+                    const moreThanOne = errrorResponse.error.error.data.checks.length > 1;
+                    const messages = errrorResponse.error.error.data.checks.map((check, i) => moreThanOne ? `${i + 1}) ${check.message}` : check.message).join(' ');
+
+                    this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', messages);
+                } else {
+                    this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', errrorResponse.error.error.description);
+                }
             }
         });
     }

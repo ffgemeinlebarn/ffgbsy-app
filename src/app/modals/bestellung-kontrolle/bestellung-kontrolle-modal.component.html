@@ -5,9 +5,22 @@
 </ion-header>
 
 <ion-content>
-    <ion-list>
+    @if(availabilityCheckSuccess() == false){
+    <h2>Probleme bei Verfügbarkeit</h2>
+    <ion-list lines="full">
+        @for(check of availabilityCheckItems(); track check){
+        <ffgbsy-status-list-item [status]="check.success ? 'success' : 'error'">
+            <h3>{{ check.produkt_name }}</h3>
+            <p>{{ check.grundprodukt.bestand }} {{ check.grundprodukt.einheit }} {{ check.grundprodukt.name }} verfügbar, {{ check.needed_anzahl }} wären benötigt</p>
+        </ffgbsy-status-list-item>
+        }
+    </ion-list>
+    }
+
+    <h2>Bestellpositionen</h2>
+    <ion-list lines="full">
         @for (bp of bestellung()?.bestellpositionen.slice().reverse(); track bp) {
-        <ion-item button (click)="editBestellungsposition(bp)">
+        <ion-item>
             <ion-label text-wrap>
                 <h3><strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}</h3>
                 <p>{{ (bp.produkt.preis * bp.anzahl) | euroPreis }}</p>
@@ -27,12 +40,19 @@
 </ion-content>
 
 <ion-footer>
-    <ion-button class="button-bestellung-nochmal-bearbeiten" color="danger" expand="block" (click)="closeModal()">
-        <ion-icon name="arrow-undo" slot="start"></ion-icon>
-        <ion-label>zurück</ion-label>
-    </ion-button>
-    <ion-button class="button-bestellung-senden" color="success" expand="block" (click)="sendBestellung()">
-        <ion-icon name="send" slot="start"></ion-icon>
-        <ion-label>Absenden</ion-label>
-    </ion-button>
+    <div class="availability-result">
+        <ffgbsy-status-list-item [status]="availabilityCheckStatus()">
+            {{ availabilityCheckStatusMessage() }}
+        </ffgbsy-status-list-item>
+    </div>
+    <div class="buttons">
+        <ion-button class="button-bestellung-nochmal-bearbeiten" color="danger" expand="block" (click)="closeModal()">
+            <ion-icon name="arrow-undo" slot="start"></ion-icon>
+            <ion-label>zurück</ion-label>
+        </ion-button>
+        <ion-button class="button-bestellung-senden" color="success" expand="block" [disabled]="!availabilityCheckSuccess()" (click)="sendBestellung()">
+            <ion-icon name="send" slot="start"></ion-icon>
+            <ion-label>Absenden</ion-label>
+        </ion-button>
+    </div>
 </ion-footer>

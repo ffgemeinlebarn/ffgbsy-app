@@ -3,7 +3,7 @@ import { Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.interface';
 import { AppService } from 'src/app/services/app/app.service';
@@ -38,7 +38,7 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
         RouterLink
     ]
 })
-export class BestellungenPage {
+export class BestellungenPage implements ViewDidEnter {
     private bestellungenService = inject(BestellungenService);
     private aufnehmerService = inject(AufnehmerService);
     private tischeService = inject(TischeService);
@@ -70,5 +70,8 @@ export class BestellungenPage {
         return this.bestellungenService
             .search(this.filter.value as IBestellungenFilter)
             .subscribe(bestellungen => this.bestellungen = bestellungen);
+    }
+    ionViewDidEnter(): void {
+        this.searchBestellungen();
     }
 }
