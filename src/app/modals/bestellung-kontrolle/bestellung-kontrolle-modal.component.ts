@@ -1,5 +1,18 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonTitle, IonToolbar, ModalController, ViewDidEnter } from '@ionic/angular/standalone';
+import {
+    IonButton,
+    IonContent,
+    IonFooter,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonTitle,
+    IonToolbar,
+    ModalController,
+    ViewDidEnter,
+} from '@ionic/angular/standalone';
 import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AppService } from 'src/app/services/app/app.service';
 import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
@@ -9,13 +22,13 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
     selector: 'ffgbsy-bestellung-kontrolle-modal',
     templateUrl: './bestellung-kontrolle-modal.component.html',
     styleUrls: ['./bestellung-kontrolle-modal.component.scss'],
-    imports: [IonItem, IonListHeader,
+    imports: [
+        IonItem,
         IonHeader,
         EuroPreisPipe,
         IonContent,
         IonList,
         IonItem,
-        IonListHeader,
         IonToolbar,
         IonHeader,
         IonTitle,
@@ -23,8 +36,8 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
         IonButton,
         IonIcon,
         IonLabel,
-        StatusListItemComponent
-    ]
+        StatusListItemComponent,
+    ],
 })
 export class BestellungKontrolleModalComponent implements ViewDidEnter {
     private modalCtrl = inject(ModalController);
@@ -70,7 +83,9 @@ export class BestellungKontrolleModalComponent implements ViewDidEnter {
             .checkAvailability(this.app.bestellung())
             .subscribe((result) => {
                 this.availabilityCheckSuccess.set(result.success);
-                this.availabilityCheckItems.set(result.checks.filter(check => !check.success));
+                this.availabilityCheckItems.set(
+                    result.checks.filter((check) => !check.success)
+                );
             });
     }
 }

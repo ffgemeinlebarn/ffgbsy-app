@@ -1,7 +1,27 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonSpinner, IonTitle, IonToggle, IonToolbar } from "@ionic/angular/standalone";
+import {
+    FormBuilder,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
+import {
+    IonBackButton,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonTitle,
+    IonToggle,
+    IonToolbar,
+} from '@ionic/angular/standalone';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
@@ -13,9 +33,6 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
     templateUrl: './tischkategorien-detail.page.html',
     styleUrls: ['./tischkategorien-detail.page.scss'],
     imports: [
-        IonChip,
-        IonSpinner,
-        IonItemDivider,
         IonLabel,
         IonList,
         IonItem,
@@ -29,12 +46,10 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
         IonHeader,
         IonToggle,
         IonInput,
-        IonSelect,
-        IonSelectOption,
         FormsModule,
         ReactiveFormsModule,
-        PageSpinnerComponent
-    ]
+        PageSpinnerComponent,
+    ],
 })
 export class TischkategorienDetailPage {
     private tischkategorienService = inject(TischkategorienService);
@@ -44,17 +59,25 @@ export class TischkategorienDetailPage {
 
     public id = input.required<number>();
 
-    public produktkategorien = toSignal(this.produktkategorienService.readAll());
+    public produktkategorien = toSignal(
+        this.produktkategorienService.readAll()
+    );
     public tischkategorie = signal<Tischkategorie>(null);
 
     public form: FormGroup = this.formBuilder.group({
-        name: ["", [Validators.required, Validators.minLength(1)]],
+        name: ['', [Validators.required, Validators.minLength(1)]],
         aktiv: [true],
-        sortierindex: [100, [Validators.min(0)]]
+        sortierindex: [100, [Validators.min(0)]],
     });
 
     constructor() {
-        effect(() => this.tischkategorienService.read(this.id()).subscribe((tischkategorie: Tischkategorie) => this.setEntity(tischkategorie)));
+        effect(() =>
+            this.tischkategorienService
+                .read(this.id())
+                .subscribe((tischkategorie: Tischkategorie) =>
+                    this.setEntity(tischkategorie)
+                )
+        );
     }
 
     private setEntity(tischkategorie: Tischkategorie) {
@@ -64,11 +87,17 @@ export class TischkategorienDetailPage {
 
     public save() {
         const updated = { ...this.tischkategorie(), ...this.form.value };
-        console.debug("TischkategorienDetailPage", "save(), Updated Product:", updated);
+        console.debug(
+            'TischkategorienDetailPage',
+            'save(), Updated Product:',
+            updated
+        );
         this.tischkategorienService
             .update(updated)
-            .subscribe(tischkategorie => {
-                this.frontendService.showToast(`${tischkategorie.name} wurde erfolgreich gespeichert!`);
+            .subscribe((tischkategorie) => {
+                this.frontendService.showToast(
+                    `${tischkategorie.name} wurde erfolgreich gespeichert!`
+                );
                 this.setEntity(tischkategorie);
             });
     }

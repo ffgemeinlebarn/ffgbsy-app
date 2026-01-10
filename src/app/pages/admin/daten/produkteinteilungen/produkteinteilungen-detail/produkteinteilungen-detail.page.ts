@@ -1,7 +1,28 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonSpinner, IonTitle, IonToggle, IonToolbar } from "@ionic/angular/standalone";
+import {
+    FormBuilder,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
+import {
+    IonBackButton,
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToolbar,
+} from '@ionic/angular/standalone';
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
@@ -13,9 +34,6 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
     templateUrl: './produkteinteilungen-detail.page.html',
     styleUrls: ['./produkteinteilungen-detail.page.scss'],
     imports: [
-        IonChip,
-        IonSpinner,
-        IonItemDivider,
         IonLabel,
         IonList,
         IonItem,
@@ -27,14 +45,13 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
         IonBackButton,
         IonToolbar,
         IonHeader,
-        IonToggle,
         IonInput,
         IonSelect,
         IonSelectOption,
         FormsModule,
         ReactiveFormsModule,
-        PageSpinnerComponent
-    ]
+        PageSpinnerComponent,
+    ],
 })
 export class ProdukteinteilungenDetailPage {
     private produkteinteilungenService = inject(ProdukteinteilungenService);
@@ -44,11 +61,13 @@ export class ProdukteinteilungenDetailPage {
 
     public id = input.required<number>();
 
-    public produktkategorien = toSignal(this.produktkategorienService.readAll());
+    public produktkategorien = toSignal(
+        this.produktkategorienService.readAll()
+    );
     public produkteinteilung = signal<Produkteinteilung>(null);
 
     public form: FormGroup = this.formBuilder.group({
-        name: ["", [Validators.required, Validators.minLength(1)]],
+        name: ['', [Validators.required, Validators.minLength(1)]],
         sortierindex: [100, [Validators.min(0)]],
         produktkategorien_id: [null],
     });
@@ -58,22 +77,28 @@ export class ProdukteinteilungenDetailPage {
     }
 
     private load(id: number) {
-        this.produkteinteilungenService.read(id).subscribe((produkteinteilung: Produkteinteilung) => {
-            this.produkteinteilung.set(produkteinteilung);
-            this.form.patchValue(produkteinteilung);
-        });
+        this.produkteinteilungenService
+            .read(id)
+            .subscribe((produkteinteilung: Produkteinteilung) => {
+                this.produkteinteilung.set(produkteinteilung);
+                this.form.patchValue(produkteinteilung);
+            });
     }
 
     public save() {
         const updated = { ...this.produkteinteilung(), ...this.form.value };
-        console.debug("ProdukteinteilungenDetailPage", "save(), Updated Product:", updated);
-        this.produkteinteilungenService
-            .update(updated)
-            .subscribe(p => {
-                this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                this.load(this.id());
-                this.reload();
-            });
+        console.debug(
+            'ProdukteinteilungenDetailPage',
+            'save(), Updated Product:',
+            updated
+        );
+        this.produkteinteilungenService.update(updated).subscribe((p) => {
+            this.frontendService.showToast(
+                `${p.name} wurde erfolgreich gespeichert!`
+            );
+            this.load(this.id());
+            this.reload();
+        });
     }
 
     private reload() {

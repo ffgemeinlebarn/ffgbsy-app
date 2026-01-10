@@ -1,6 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from "@ionic/angular/standalone";
+import {
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonList,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+    ViewDidEnter,
+} from '@ionic/angular/standalone';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { TischkategorienService } from 'src/app/services/tischkategorien/tischkategorien.service';
@@ -10,8 +19,6 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
     templateUrl: './tische-list.page.html',
     styleUrls: ['./tische-list.page.scss'],
     imports: [
-        IonButton,
-        IonButtons,
         IonIcon,
         IonContent,
         IonToolbar,
@@ -20,8 +27,8 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
         IonHeader,
         RouterLink,
         IonMenuButton,
-        PageSpinnerComponent
-    ]
+        PageSpinnerComponent,
+    ],
 })
 export class TischeListPage implements ViewDidEnter {
     private tischkategorienService = inject(TischkategorienService);
@@ -30,6 +37,8 @@ export class TischeListPage implements ViewDidEnter {
 
     ionViewDidEnter(): void {
         this.tischkategorienMitTischen.set(null);
-        this.tischkategorienService.readAllNested().subscribe(items => this.tischkategorienMitTischen.set(items));
+        this.tischkategorienService
+            .readAllNested()
+            .subscribe((items) => this.tischkategorienMitTischen.set(items));
     }
 }

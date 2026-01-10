@@ -1,8 +1,35 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonSelect, IonSelectOption, IonSpinner, IonTitle, IonToggle, IonToolbar, ModalController } from "@ionic/angular/standalone";
+import {
+    IonBackButton,
+    IonButton,
+    IonButtons,
+    IonChip,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonItemDivider,
+    IonItemOption,
+    IonItemOptions,
+    IonItemSliding,
+    IonLabel,
+    IonList,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToolbar,
+    ModalController,
+} from '@ionic/angular/standalone';
 import { Eigenschaft } from 'src/app/classes/eigenschaft.interface';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
@@ -19,7 +46,6 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
     styleUrls: ['./produktkategorien-detail.page.scss'],
     imports: [
         IonChip,
-        IonSpinner,
         IonItemDivider,
         IonItemOptions,
         IonItemSliding,
@@ -35,15 +61,14 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
         IonBackButton,
         IonToolbar,
         IonHeader,
-        IonToggle,
         IonInput,
         IonSelect,
         IonSelectOption,
         FormsModule,
         ReactiveFormsModule,
         PageSpinnerComponent,
-        EuroPreisPipe
-    ]
+        EuroPreisPipe,
+    ],
 })
 export class ProduktkategorienDetailPage {
     private produktkategorienService = inject(ProduktkategorienService);
@@ -61,16 +86,22 @@ export class ProduktkategorienDetailPage {
     public produktkategorie = signal<Produktkategorie>(null);
 
     public form: FormGroup = this.formBuilder.group({
-        name: ["", [Validators.required, Validators.minLength(1)]],
-        color: [""],
+        name: ['', [Validators.required, Validators.minLength(1)]],
+        color: [''],
         drucker_id_level_1: [null],
         sortierindex: [100, [Validators.min(0)]],
         produktbereiche_id: [null, [Validators.nullValidator]],
-        eigenschaften: [[]]
+        eigenschaften: [[]],
     });
 
     constructor() {
-        effect(() => this.produktkategorienService.read(this.id()).subscribe((produktkategorie: Produktkategorie) => this.setEntity(produktkategorie)));
+        effect(() =>
+            this.produktkategorienService
+                .read(this.id())
+                .subscribe((produktkategorie: Produktkategorie) =>
+                    this.setEntity(produktkategorie)
+                )
+        );
     }
 
     private setEntity(produktkategorie: Produktkategorie) {
@@ -79,8 +110,15 @@ export class ProduktkategorienDetailPage {
     }
 
     public removeEigenschaft(eigenschaft: Eigenschaft) {
-        this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter(e => e.id !== eigenschaft.id));
-        this.produktkategorie.set({ ...this.produktkategorie(), eigenschaften: this.form.controls.eigenschaften.value });
+        this.form.controls.eigenschaften.setValue(
+            this.form.controls.eigenschaften.value.filter(
+                (e) => e.id !== eigenschaft.id
+            )
+        );
+        this.produktkategorie.set({
+            ...this.produktkategorie(),
+            eigenschaften: this.form.controls.eigenschaften.value,
+        });
     }
 
     public toggleEigenschaftEnthalten(eigenschaft: Eigenschaft) {
@@ -95,27 +133,36 @@ export class ProduktkategorienDetailPage {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: Eigenschaft = await (await modal.onWillDismiss()).data;
+        const eigenschaft: Eigenschaft = await (
+            await modal.onWillDismiss()
+        ).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({
                 backdropDismiss: false,
                 header: eigenschaft.name,
-                message: "Ist die Eigenschaft im Produkt enthalten?",
+                message: 'Ist die Eigenschaft im Produkt enthalten?',
                 buttons: [
                     {
                         text: 'Nein',
-                        handler: () => alert.dismiss(false)
-                    }, {
+                        handler: () => alert.dismiss(false),
+                    },
+                    {
                         text: 'Ja',
-                        handler: () => alert.dismiss(true)
-                    }
-                ]
+                        handler: () => alert.dismiss(true),
+                    },
+                ],
             });
             await alert.present();
-            eigenschaft.in_produkt_enthalten = await (await alert.onWillDismiss()).data;
+            eigenschaft.in_produkt_enthalten = await (
+                await alert.onWillDismiss()
+            ).data;
 
-            if (!this.produktkategorie().eigenschaften.find(e => e.id === eigenschaft.id)) {
+            if (
+                !this.produktkategorie().eigenschaften.find(
+                    (e) => e.id === eigenschaft.id
+                )
+            ) {
                 this.produktkategorie.update((produktkategorie) => {
                     produktkategorie.eigenschaften.push(eigenschaft);
                     return produktkategorie;
@@ -126,11 +173,17 @@ export class ProduktkategorienDetailPage {
 
     public save() {
         const updated = { ...this.produktkategorie(), ...this.form.value };
-        console.debug("ProduktkategorienDetailPage", "save(), Updated Produktkategorie:", updated);
+        console.debug(
+            'ProduktkategorienDetailPage',
+            'save(), Updated Produktkategorie:',
+            updated
+        );
         this.produktkategorienService
             .update(updated)
-            .subscribe(produktkategorie => {
-                this.frontendService.showToast(`${produktkategorie.name} wurde erfolgreich gespeichert!`);
+            .subscribe((produktkategorie) => {
+                this.frontendService.showToast(
+                    `${produktkategorie.name} wurde erfolgreich gespeichert!`
+                );
                 this.setEntity(produktkategorie);
             });
     }

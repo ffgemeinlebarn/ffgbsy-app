@@ -1,6 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { IonItem, IonLabel, IonList, ModalController } from '@ionic/angular/standalone';
+import {
+    IonItem,
+    IonLabel,
+    IonList,
+    ModalController,
+} from '@ionic/angular/standalone';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
 import { EigenschaftenService } from 'src/app/services/eigenschaften/eigenschaften.service';
 
@@ -8,12 +13,8 @@ import { EigenschaftenService } from 'src/app/services/eigenschaften/eigenschaft
     selector: 'app-select-eigenschaft-modal',
     templateUrl: './select-eigenschaft-modal.component.html',
     styleUrls: ['./select-eigenschaft-modal.component.scss'],
-    imports: [
-        IonList,
-        IonItem,
-        IonLabel,
-        EuroPreisPipe
-    ]
+    standalone: true,
+    imports: [IonList, IonItem, IonLabel, EuroPreisPipe],
 })
 export class SelectEigenschaftModalComponent {
     private eigenschaftenService = inject(EigenschaftenService);
