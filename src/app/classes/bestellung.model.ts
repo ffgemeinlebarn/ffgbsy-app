@@ -1,14 +1,14 @@
-import { parseZone } from "moment";
-import { Bestellstatus } from "../types/bestellstatus.type";
-import { Aufnehmer } from "./aufnehmer.model";
-import { Bestellposition } from "./bestellposition.model";
-import { Bon } from "./bon.model";
-import { Tisch } from "./tisch.class";
+import { parseZone } from 'moment';
+import { Bestellstatus } from '../types/bestellstatus.type';
+import { IAufnehmer } from './aufnehmer.model';
+import { Bestellposition } from './bestellposition.model';
+import { Bon } from './bon.model';
+import { Tisch } from './tisch.class';
 
 export class Bestellung {
     public id: number;
     public tisch: Tisch;
-    public aufnehmer: Aufnehmer;
+    public aufnehmer: IAufnehmer;
     public device_name: string;
     public device_ip: string | null = null;
 
@@ -24,8 +24,7 @@ export class Bestellung {
     public summe: number | null = null;
     public summe_ohne_eigenschaften: number | null = null;
 
-    constructor(tisch?: Tisch, aufnehmer?: Aufnehmer) {
-
+    constructor(tisch?: Tisch, aufnehmer?: IAufnehmer) {
         this.id = null;
 
         this.setTimestampBegonnen();
@@ -42,10 +41,10 @@ export class Bestellung {
     }
 
     calcSumme() {
-        let summe = 0.00;
+        let summe = 0.0;
 
         for (let bp of this.bestellpositionen) {
-            summe += (bp.anzahl * bp.produkt.preis) + bp.calc_correction;
+            summe += bp.anzahl * bp.produkt.preis + bp.calc_correction;
         }
 
         return summe;

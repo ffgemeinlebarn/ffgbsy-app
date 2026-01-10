@@ -12,7 +12,7 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
+import { IAufnehmer } from 'src/app/classes/aufnehmer.model';
 import { AppService } from 'src/app/services/app/app.service';
 import { DataService } from 'src/app/services/data/data.service';
 
@@ -44,7 +44,7 @@ export class SelectAufnehmerModalComponent {
         return this.modalController.dismiss(null, 'cancel');
     }
 
-    public select(aufnehmer: Aufnehmer) {
+    public select(aufnehmer: IAufnehmer) {
         this.app.selectAufnehmer(aufnehmer);
         this.close();
     }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { catchError, retry } from 'rxjs';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
+import { IAufnehmer } from 'src/app/classes/aufnehmer.model';
 import { Produkt } from 'src/app/classes/produkt.class';
 import { Produktbereich } from 'src/app/classes/produktbereich.class';
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
@@ -23,7 +23,7 @@ export class DataService {
     private settings = inject(SettingsService);
     private errorHandling = inject(ErrorHandlingService);
 
-    public aufnehmer = signal<Aufnehmer[]>([]);
+    public aufnehmer = signal<IAufnehmer[]>([]);
     public produktbereiche = signal<Produktbereich[]>([]);
     public produktkategorien = signal<Produktkategorie[]>([]);
     public produkteinteilungen = signal<Produkteinteilung[]>([]);

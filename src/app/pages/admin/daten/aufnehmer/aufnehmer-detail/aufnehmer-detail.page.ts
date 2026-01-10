@@ -22,7 +22,7 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
+import { IAufnehmer } from 'src/app/classes/aufnehmer.model';
 import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 
@@ -56,7 +56,7 @@ export class AufnehmerDetailPage {
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
-    public aufnehmer = signal<Aufnehmer>(null);
+    public aufnehmer = signal<IAufnehmer>(null);
 
     public form = this.formBuilder.group({
         vorname: ['', [Validators.required, Validators.minLength(1)]],

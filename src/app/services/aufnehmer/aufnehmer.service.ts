@@ -1,51 +1,65 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Aufnehmer } from 'src/app/classes/aufnehmer.model';
-import { Observable, catchError, retry, tap } from 'rxjs';
-import { SettingsService } from '../settings/settings.service';
+import { Observable, catchError, retry } from 'rxjs';
+import { IAufnehmer } from 'src/app/classes/aufnehmer.model';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AufnehmerService {
     http = inject(HttpClient);
     settings = inject(SettingsService);
     errorHandling = inject(ErrorHandlingService);
 
-    public create(aufnehmer: Aufnehmer) {
+    public create(aufnehmer: IAufnehmer) {
         return this.http
-            .post<Aufnehmer>(`${this.settings.apiBaseUrl()}/aufnehmer`, aufnehmer)
+            .post<IAufnehmer>(
+                `${this.settings.apiBaseUrl()}/aufnehmer`,
+                aufnehmer
+            )
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
-    public readAll(): Observable<Aufnehmer[]> {
+    public readAll(): Observable<IAufnehmer[]> {
         return this.http
-            .get<Aufnehmer[]>(`${this.settings.apiBaseUrl()}/aufnehmer`)
+            .get<IAufnehmer[]>(`${this.settings.apiBaseUrl()}/aufnehmer`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
     public read(id: number) {
         return this.http
-            .get<Aufnehmer>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`)
+            .get<IAufnehmer>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
-    public update(aufnehmer: Aufnehmer) {
+    public update(aufnehmer: IAufnehmer) {
         return this.http
-            .put<Aufnehmer>(`${this.settings.apiBaseUrl()}/aufnehmer/${aufnehmer.id}`, aufnehmer)
+            .put<IAufnehmer>(
+                `${this.settings.apiBaseUrl()}/aufnehmer/${aufnehmer.id}`,
+                aufnehmer
+            )
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -54,7 +68,9 @@ export class AufnehmerService {
             .delete<boolean>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 }
