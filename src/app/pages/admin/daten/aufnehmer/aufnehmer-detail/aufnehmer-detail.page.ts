@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
@@ -10,23 +10,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
     selector: 'ffgbsy-aufnehmer-detail',
     templateUrl: './aufnehmer-detail.page.html',
     styleUrls: ['./aufnehmer-detail.page.scss'],
-    imports: [IonBackButton, IonIcon, IonButton, IonButtons,
-        IonItem,
-        IonLabel,
-        IonItemDivider,
-        IonList,
-        IonContent,
-        IonHeader,
-        IonTitle,
-        IonToolbar,
-        IonSelect,
-        IonSelectOption,
-        IonToggle,
-        IonInput,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule
-    ]
+    imports: [IonBackButton, IonIcon, IonButton, IonButtons, IonItem, IonLabel, IonItemDivider, IonList, IonContent, IonHeader, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonToggle, IonInput, FormsModule, ReactiveFormsModule]
 })
 export class AufnehmerDetailPage {
     private aufnehmerService = inject(AufnehmerService);

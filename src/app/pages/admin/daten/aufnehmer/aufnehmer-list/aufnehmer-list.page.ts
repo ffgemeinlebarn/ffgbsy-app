@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -12,17 +12,16 @@ import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
     templateUrl: './aufnehmer-list.page.html',
     styleUrls: ['./aufnehmer-list.page.scss'],
     imports: [
-        IonList,
-        IonContent,
-        IonHeader,
-        IonTitle,
-        IonToolbar,
-        IonMenuButton,
-        PageSpinnerComponent,
-        CommonModule,
-        RouterLink,
-        FormsModule
-    ]
+    IonList,
+    IonContent,
+    IonHeader,
+    IonTitle,
+    IonToolbar,
+    IonMenuButton,
+    PageSpinnerComponent,
+    RouterLink,
+    FormsModule
+]
 })
 export class AufnehmerListPage implements ViewDidEnter {
     private aufnehmerService = inject(AufnehmerService);

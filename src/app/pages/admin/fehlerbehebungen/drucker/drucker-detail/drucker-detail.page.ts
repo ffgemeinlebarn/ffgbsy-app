@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
@@ -11,7 +11,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
     selector: 'ffgbsy-drucker-detail',
     templateUrl: './drucker-detail.page.html',
     styleUrls: ['./drucker-detail.page.scss'],
-    imports: [IonBackButton, IonButtons, IonInput, IonButton, IonIcon, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, PageSpinnerComponent, CommonModule, FormsModule, ReactiveFormsModule]
+    imports: [IonBackButton, IonButtons, IonInput, IonButton, IonIcon, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, PageSpinnerComponent, FormsModule, ReactiveFormsModule]
 })
 export class DruckerDetailPage implements ViewDidEnter {
     private druckerService = inject(DruckerService);
