@@ -22,7 +22,7 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { IAufnehmer } from 'src/app/classes/aufnehmer.model';
+import { IAufnehmer } from 'src/app/model/aufnehmer.model';
 import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
 

@@ -1,9 +1,9 @@
-import { IAufnehmer } from '../classes/aufnehmer.model';
 import { Produkt } from '../classes/produkt.class';
 import { Produktbereich } from '../classes/produktbereich.class';
 import { Produktkategorie } from '../classes/produktkategorie.class';
 import { Tisch } from '../classes/tisch.class';
 import { Tischkategorie } from '../classes/tischkategorie.class';
+import { IAufnehmer } from './aufnehmer.model';
 
 export interface IDaten {
     aufnehmer: IAufnehmer[];

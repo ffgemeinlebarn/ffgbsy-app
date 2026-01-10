@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
-import { IAufnehmer } from 'src/app/classes/aufnehmer.model';
+import { IAufnehmer } from 'src/app/model/aufnehmer.model';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
 import { SettingsService } from '../settings/settings.service';
 

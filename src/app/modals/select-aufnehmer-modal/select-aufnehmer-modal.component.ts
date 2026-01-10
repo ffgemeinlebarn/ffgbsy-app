@@ -12,7 +12,7 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { IAufnehmer } from 'src/app/classes/aufnehmer.model';
+import { IAufnehmer } from 'src/app/model/aufnehmer.model';
 import { AppService } from 'src/app/services/app/app.service';
 import { DataService } from 'src/app/services/data/data.service';
 

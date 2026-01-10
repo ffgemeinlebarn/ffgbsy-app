@@ -10,8 +10,8 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { IAufnehmer } from 'src/app/classes/aufnehmer.model';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
+import { IAufnehmer } from 'src/app/model/aufnehmer.model';
 import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
 
 @Component({
