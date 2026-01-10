@@ -23,11 +23,11 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { ProdukteinteilungenService } from 'src/app/data/produkteinteilungen.service';
 import { ProduktkategorienService } from 'src/app/data/produktkategorien.service';
+import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkteinteilungen-detail',

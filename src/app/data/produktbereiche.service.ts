@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
-import { Produktbereich } from 'src/app/classes/produktbereich.class';
+import { Produktbereich } from 'src/app/model/produktbereich.class';
 import { ErrorHandlingService } from './error-handling.service';
 import { SettingsService } from './settings.service';
 

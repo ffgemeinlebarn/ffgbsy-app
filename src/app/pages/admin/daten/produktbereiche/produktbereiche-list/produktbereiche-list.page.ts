@@ -9,9 +9,9 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { Produktbereich } from 'src/app/classes/produktbereich.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { ProduktbereicheService } from 'src/app/data/produktbereiche.service';
+import { Produktbereich } from 'src/app/model/produktbereich.class';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produktbereiche-list',

@@ -29,16 +29,16 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { Eigenschaft } from 'src/app/classes/eigenschaft.interface';
-import { Produkt } from 'src/app/classes/produkt.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { DruckerService } from 'src/app/data/drucker.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { GrundprodukteService } from 'src/app/data/grundprodukte.service';
 import { ProdukteService } from 'src/app/data/produkte.service';
 import { ProdukteinteilungenService } from 'src/app/data/produkteinteilungen.service';
-import { SelectEigenschaftModalComponent } from 'src/app/modals/select-eigenschaft-modal/select-eigenschaft-modal.component';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
+import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
+import { Eigenschaft } from 'src/app/model/eigenschaft.interface';
+import { Produkt } from 'src/app/model/produkt.class';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkte-detail',

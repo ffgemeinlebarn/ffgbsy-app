@@ -1,5 +1,5 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
-import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
+import { Grundprodukt } from 'src/app/model/grundprodukt.class';
 
 import {
     FormBuilder,
@@ -23,9 +23,9 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { GrundprodukteService } from 'src/app/data/grundprodukte.service';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-grundprodukte-detail',

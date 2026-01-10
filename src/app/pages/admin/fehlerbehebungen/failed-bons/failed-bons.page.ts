@@ -33,10 +33,10 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { Bon } from 'src/app/classes/bon.model';
 import { BonsService } from 'src/app/data/bons.service';
 import { DruckerService } from 'src/app/data/drucker.service';
 import { TischeService } from 'src/app/data/tische.service';
+import { Bon } from 'src/app/model/bon.model';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';
 import { FrontendService } from '../../../../data/frontend.service';
 

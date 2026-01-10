@@ -11,14 +11,14 @@ import {
     IonList,
     ModalController,
 } from '@ionic/angular/standalone';
-import { Bestellposition } from 'src/app/classes/bestellposition.model';
-import { Produkt } from 'src/app/classes/produkt.class';
-import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
-import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { AppService } from 'src/app/data/app.service';
 import { DataService } from 'src/app/data/data.service';
-import { BestellungKontrolleModalComponent } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle-modal.component';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
+import { BestellungKontrolleModalComponent } from 'src/app/feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
+import { Bestellposition } from 'src/app/model/bestellposition.model';
+import { Produkt } from 'src/app/model/produkt.class';
+import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
+import { Produktkategorie } from 'src/app/model/produktkategorie.class';
 
 @Component({
     selector: 'app-bestellung-edit',

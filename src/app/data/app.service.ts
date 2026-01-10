@@ -1,10 +1,10 @@
 import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
-import { Bestellposition } from 'src/app/classes/bestellposition.model';
-import { Bestellung } from 'src/app/classes/bestellung.model';
-import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
-import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
+import { BestellungspositionEditModalComponent } from 'src/app/feature/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
+import { SelectAufnehmerModalComponent } from 'src/app/feature/select-aufnehmer-modal/select-aufnehmer-modal.component';
 import { IAufnehmer } from 'src/app/model/aufnehmer.model';
+import { Bestellposition } from 'src/app/model/bestellposition.model';
+import { Bestellung } from 'src/app/model/bestellung.model';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../data/data.service';
 import { AvailabilityService } from './availability.service';

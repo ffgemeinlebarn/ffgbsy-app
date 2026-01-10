@@ -10,9 +10,9 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { AufnehmerService } from 'src/app/data/aufnehmer.service';
 import { IAufnehmer } from 'src/app/model/aufnehmer.model';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-list',

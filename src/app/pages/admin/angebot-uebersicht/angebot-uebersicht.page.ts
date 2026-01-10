@@ -20,7 +20,7 @@ import { map } from 'rxjs';
 import { DruckerService } from 'src/app/data/drucker.service';
 import { EigenschaftenService } from 'src/app/data/eigenschaften.service';
 import { ProdukteService } from 'src/app/data/produkte.service';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-angebot-uebersicht',

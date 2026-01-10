@@ -24,13 +24,13 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { Bestellung } from 'src/app/classes/bestellung.model';
 import { AppService } from 'src/app/data/app.service';
 import { AufnehmerService } from 'src/app/data/aufnehmer.service';
 import { BestellungenService } from 'src/app/data/bestellungen.service';
 import { TischeService } from 'src/app/data/tische.service';
+import { Bestellung } from 'src/app/model/bestellung.model';
 import { IBestellungenFilter } from 'src/app/model/bestellungen-filter.interface';
-import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
+import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-bestellungen',

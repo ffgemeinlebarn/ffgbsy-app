@@ -1,6 +1,6 @@
 import { parseZone } from 'moment';
 import { IAufnehmer } from '../model/aufnehmer.model';
-import { Bestellstatus } from '../types/bestellstatus.type';
+import { Bestellstatus } from '../model/bestellstatus.type';
 import { Bestellposition } from './bestellposition.model';
 import { Bon } from './bon.model';
 import { Tisch } from './tisch.class';

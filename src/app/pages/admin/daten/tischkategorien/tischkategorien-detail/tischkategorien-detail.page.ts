@@ -22,11 +22,11 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { ProduktkategorienService } from 'src/app/data/produktkategorien.service';
 import { TischkategorienService } from 'src/app/data/tischkategorien.service';
+import { Tischkategorie } from 'src/app/model/tischkategorie.class';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-tischkategorien-detail',

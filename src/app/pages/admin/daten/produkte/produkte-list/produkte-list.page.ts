@@ -14,10 +14,10 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { Produkt } from 'src/app/classes/produkt.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { ProdukteService } from 'src/app/data/produkte.service';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
+import { Produkt } from 'src/app/model/produkt.class';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkte-list',

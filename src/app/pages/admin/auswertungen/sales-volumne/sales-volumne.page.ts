@@ -16,7 +16,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ApiService } from 'src/app/data/api.service';
 import { StatistikenService } from 'src/app/data/statistiken.service';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-sales-volumne',

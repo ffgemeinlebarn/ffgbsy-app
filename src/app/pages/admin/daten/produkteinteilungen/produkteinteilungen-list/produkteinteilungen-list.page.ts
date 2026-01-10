@@ -9,9 +9,9 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { ProdukteinteilungenService } from 'src/app/data/produkteinteilungen.service';
+import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkteinteilungen-list',

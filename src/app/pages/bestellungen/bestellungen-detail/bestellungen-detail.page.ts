@@ -15,13 +15,13 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { Bestellposition } from 'src/app/classes/bestellposition.model';
-import { Bestellung } from 'src/app/classes/bestellung.model';
-import { Bon } from 'src/app/classes/bon.model';
 import { BestellungenService } from 'src/app/data/bestellungen.service';
 import { BonsService } from 'src/app/data/bons.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
+import { Bestellposition } from 'src/app/model/bestellposition.model';
+import { Bestellung } from 'src/app/model/bestellung.model';
+import { Bon } from 'src/app/model/bon.model';
+import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',

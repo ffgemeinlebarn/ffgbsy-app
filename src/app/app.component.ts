@@ -7,10 +7,10 @@ import {
     IonRouterOutlet,
     IonSplitPane,
 } from '@ionic/angular/standalone';
-import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
-import { MenuComponent } from './components/menu/menu/menu.component';
 import { AppService } from './data/app.service';
 import { IonIconsService } from './data/ion-icons.service';
+import { FrontendLoadingComponent } from './feature/frontend-loading/frontend-loading.component';
+import { MenuComponent } from './feature/menu/menu.component';
 
 @Component({
     selector: 'ffgbsy-root',

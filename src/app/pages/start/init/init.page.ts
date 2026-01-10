@@ -8,9 +8,9 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { InitTileComponent } from 'src/app/components/init-tile/init-tile.component';
 import { AppService } from 'src/app/data/app.service';
 import { AvailabilityService } from 'src/app/data/availability.service';
+import { InitTileComponent } from 'src/app/ui/init-tile/init-tile.component';
 import { version } from 'src/environments/version';
 
 @Component({

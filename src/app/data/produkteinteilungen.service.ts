@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { catchError, Observable, retry } from 'rxjs';
-import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
+import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
 import { ErrorHandlingService } from './error-handling.service';
 import { SettingsService } from './settings.service';
 

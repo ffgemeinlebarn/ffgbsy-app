@@ -6,7 +6,7 @@ import {
     IonMenuToggle,
 } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/data/app.service';
-import { MenuItemComponent } from '../menu-item/menu-item.component';
+import { MenuItemComponent } from '../../ui/menu-item/menu-item.component';
 
 @Component({
     selector: 'ffgbsy-menu',

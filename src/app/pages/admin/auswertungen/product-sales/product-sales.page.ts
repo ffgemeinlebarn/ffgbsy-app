@@ -10,7 +10,7 @@ import {
     ViewDidEnter,
 } from '@ionic/angular/standalone';
 import { StatistikenService } from 'src/app/data/statistiken.service';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-product-sales',

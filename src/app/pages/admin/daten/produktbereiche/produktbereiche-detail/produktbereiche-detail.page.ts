@@ -1,5 +1,5 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
-import { Produktbereich } from 'src/app/classes/produktbereich.class';
+import { Produktbereich } from 'src/app/model/produktbereich.class';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -25,10 +25,10 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { DruckerService } from 'src/app/data/drucker.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { ProduktbereicheService } from 'src/app/data/produktbereiche.service';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produktbereiche-detail',

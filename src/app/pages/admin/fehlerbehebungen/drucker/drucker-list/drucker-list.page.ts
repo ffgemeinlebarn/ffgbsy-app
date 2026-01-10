@@ -10,9 +10,9 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { Drucker } from 'src/app/classes/drucker.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { DruckerService } from 'src/app/data/drucker.service';
+import { Drucker } from 'src/app/model/drucker.class';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-drucker-list',

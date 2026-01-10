@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry, tap } from 'rxjs';
-import { Bestellposition } from 'src/app/classes/bestellposition.model';
-import { Bon } from 'src/app/classes/bon.model';
-import { BonDruck } from 'src/app/classes/bonDruck';
+import { Bestellposition } from 'src/app/model/bestellposition.model';
+import { Bon } from 'src/app/model/bon.model';
+import { BonDruck } from 'src/app/model/bonDruck';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';
 import { ErrorHandlingService } from './error-handling.service';
 import { FrontendService } from './frontend.service';

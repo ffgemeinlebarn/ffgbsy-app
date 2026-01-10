@@ -11,9 +11,9 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AvailabilityService } from 'src/app/data/availability.service';
 import { DataService } from 'src/app/data/data.service';
+import { StatusListItemComponent } from 'src/app/ui/status-list-item/status-list-item.component';
 
 @Component({
     selector: 'ffgbsy-systemstatus',

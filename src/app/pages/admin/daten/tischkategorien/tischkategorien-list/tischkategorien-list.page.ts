@@ -9,9 +9,9 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { TischkategorienService } from 'src/app/data/tischkategorien.service';
+import { Tischkategorie } from 'src/app/model/tischkategorie.class';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-tischkategorien-list',

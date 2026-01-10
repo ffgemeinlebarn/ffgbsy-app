@@ -13,10 +13,10 @@ import {
     ModalController,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AppService } from 'src/app/data/app.service';
 import { BestellungenService } from 'src/app/data/bestellungen.service';
-import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
+import { StatusListItemComponent } from 'src/app/ui/status-list-item/status-list-item.component';
+import { EuroPreisPipe } from '../../misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-bestellung-kontrolle-modal',

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
-import { Eigenschaft } from 'src/app/classes/eigenschaft.interface';
+import { Eigenschaft } from 'src/app/model/eigenschaft.interface';
 import { ErrorHandlingService } from './error-handling.service';
 import { SettingsService } from './settings.service';
 

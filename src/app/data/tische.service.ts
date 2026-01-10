@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
-import { Tisch } from 'src/app/classes/tisch.class';
+import { Tisch } from 'src/app/model/tisch.class';
 import { ErrorHandlingService } from './error-handling.service';
 import { SettingsService } from './settings.service';
 

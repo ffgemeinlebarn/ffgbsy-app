@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, Observable, retry } from 'rxjs';
-import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
+import { Grundprodukt } from 'src/app/model/grundprodukt.class';
 import { ErrorHandlingService } from './error-handling.service';
 import { SettingsService } from './settings.service';
 

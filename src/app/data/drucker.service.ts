@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry } from 'rxjs';
-import { Drucker } from 'src/app/classes/drucker.class';
+import { Drucker } from 'src/app/model/drucker.class';
 import { ErrorHandlingService } from './error-handling.service';
 import { SettingsService } from './settings.service';
 

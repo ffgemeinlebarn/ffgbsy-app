@@ -19,8 +19,8 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { Bestellposition } from '../../classes/bestellposition.model';
-import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
+import { EuroPreisPipe } from '../../misc/euro-preis.pipe';
+import { Bestellposition } from '../../model/bestellposition.model';
 
 @Component({
     selector: 'ffgbsy-bestellungsposition-edit-modal',

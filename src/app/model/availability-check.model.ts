@@ -1,4 +1,4 @@
-import { CheckStatus } from "../types/check-status.type";
+import { CheckStatus } from './check-status.type';
 
 export class AvailabilityCheck<T> {
     entity: T;

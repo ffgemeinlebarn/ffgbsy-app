@@ -7,8 +7,8 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { KeysItemComponent } from 'src/app/components/keys-item/keys-item.component';
 import { StatistikenService } from 'src/app/data/statistiken.service';
+import { KeysItemComponent } from 'src/app/ui/keys-item/keys-item.component';
 
 @Component({
     selector: 'ffgbsy-keys',

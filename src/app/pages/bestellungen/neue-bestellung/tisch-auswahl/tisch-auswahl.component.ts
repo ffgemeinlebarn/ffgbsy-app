@@ -8,9 +8,9 @@ import {
     signal,
 } from '@angular/core';
 import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
-import { Tisch } from 'src/app/classes/tisch.class';
-import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { DataService } from 'src/app/data/data.service';
+import { Tisch } from 'src/app/model/tisch.class';
+import { Tischkategorie } from 'src/app/model/tischkategorie.class';
 
 @Component({
     selector: 'app-tisch-auswahl',
