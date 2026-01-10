@@ -4,9 +4,9 @@ import { Observable, catchError, retry, tap } from 'rxjs';
 import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
 import { IBestellungenFilter } from 'src/app/model/bestellungen-filter.interface';
-import { ErrorHandlingService } from '../error-handling/error-handling.service';
-import { FrontendService } from '../frontend/frontend.service';
-import { SettingsService } from '../settings/settings.service';
+import { ErrorHandlingService } from './error-handling.service';
+import { FrontendService } from './frontend.service';
+import { SettingsService } from './settings.service';
 
 @Injectable({
     providedIn: 'root',

@@ -14,8 +14,8 @@ import {
     ViewDidEnter,
 } from '@ionic/angular/standalone';
 import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
-import { AppService } from 'src/app/services/app/app.service';
-import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
+import { AppService } from 'src/app/data/app.service';
+import { BestellungenService } from 'src/app/data/bestellungen.service';
 import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
 
 @Component({

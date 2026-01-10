@@ -34,11 +34,11 @@ import {
     ViewDidEnter,
 } from '@ionic/angular/standalone';
 import { Bon } from 'src/app/classes/bon.model';
+import { BonsService } from 'src/app/data/bons.service';
+import { DruckerService } from 'src/app/data/drucker.service';
+import { TischeService } from 'src/app/data/tische.service';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';
-import { BonsService } from 'src/app/services/bons/bons.service';
-import { DruckerService } from 'src/app/services/drucker/drucker.service';
-import { TischeService } from 'src/app/services/tische/tische.service';
-import { FrontendService } from '../../../../services/frontend/frontend.service';
+import { FrontendService } from '../../../../data/frontend.service';
 
 @Component({
     selector: 'ffgbsy-failed-bons',

@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Produkt } from 'src/app/classes/produkt.class';
 import { Observable, catchError, retry } from 'rxjs';
-import { SettingsService } from '../settings/settings.service';
-import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { Produkt } from 'src/app/classes/produkt.class';
+import { ErrorHandlingService } from './error-handling.service';
+import { SettingsService } from './settings.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ProdukteService {
     http = inject(HttpClient);
@@ -18,7 +18,9 @@ export class ProdukteService {
             .post<Produkt>(`${this.settings.apiBaseUrl()}/produkte`, produkte)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -27,7 +29,9 @@ export class ProdukteService {
             .get<Produkt[]>(`${this.settings.apiBaseUrl()}/produkte`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -36,16 +40,23 @@ export class ProdukteService {
             .get<Produkt>(`${this.settings.apiBaseUrl()}/produkte/${id}`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
     public update(produkte: Produkt) {
         return this.http
-            .put<Produkt>(`${this.settings.apiBaseUrl()}/produkte/${produkte.id}`, produkte)
+            .put<Produkt>(
+                `${this.settings.apiBaseUrl()}/produkte/${produkte.id}`,
+                produkte
+            )
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -54,7 +65,9 @@ export class ProdukteService {
             .delete<boolean>(`${this.settings.apiBaseUrl()}/produkte/${id}`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 }

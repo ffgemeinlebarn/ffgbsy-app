@@ -11,7 +11,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { TischkategorienService } from 'src/app/services/tischkategorien/tischkategorien.service';
+import { TischkategorienService } from 'src/app/data/tischkategorien.service';
 
 @Component({
     selector: 'ffgbsy-tischkategorien-list',

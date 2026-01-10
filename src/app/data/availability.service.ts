@@ -8,8 +8,8 @@ import { Drucker } from 'src/app/classes/drucker.class';
 import { AvailabilityModalComponent } from 'src/app/modals/availability-modal/availability-modal.component';
 import { AvailabilityCheck } from 'src/app/model/availability-check.model';
 import { DataService } from '../data/data.service';
-import { DruckerService } from '../drucker/drucker.service';
-import { SettingsService } from '../settings/settings.service';
+import { DruckerService } from './drucker.service';
+import { SettingsService } from './settings.service';
 
 @Injectable({
     providedIn: 'root',

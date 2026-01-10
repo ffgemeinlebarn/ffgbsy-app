@@ -11,7 +11,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen/produkteinteilungen.service';
+import { ProdukteinteilungenService } from 'src/app/data/produkteinteilungen.service';
 
 @Component({
     selector: 'ffgbsy-produkteinteilungen-list',

@@ -12,8 +12,8 @@ import {
 } from '@ionic/angular/standalone';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { ColorGeneratorService } from 'src/app/services/color-generator/color-generator.service';
-import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
+import { ColorGeneratorService } from 'src/app/data/color-generator.service';
+import { StatistikenService } from 'src/app/data/statistiken.service';
 
 @Component({
     selector: 'ffgbsy-timeline',

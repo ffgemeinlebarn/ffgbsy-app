@@ -9,8 +9,8 @@ import {
     IonToolbar,
 } from '@ionic/angular/standalone';
 import { Tisch } from 'src/app/classes/tisch.class';
-import { AppService } from 'src/app/services/app/app.service';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
+import { AppService } from 'src/app/data/app.service';
+import { FrontendService } from 'src/app/data/frontend.service';
 import { AufnehmerAuswahlComponent } from './aufnehmer-auswahl/aufnehmer-auswahl.component';
 import { BestellungEditComponent } from './bestellung-edit/bestellung-edit.component';
 import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';

@@ -1,9 +1,30 @@
 import { Component, effect, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/services/app/app.service';
-import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
+import {
+    FormBuilder,
+    FormsModule,
+    ReactiveFormsModule,
+    Validators,
+} from '@angular/forms';
+import {
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonItemDivider,
+    IonLabel,
+    IonList,
+    IonMenuButton,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToolbar,
+} from '@ionic/angular/standalone';
+import { AppService } from 'src/app/data/app.service';
+import { AufnehmerService } from 'src/app/data/aufnehmer.service';
+import { FrontendService } from 'src/app/data/frontend.service';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-edit',
@@ -26,11 +47,10 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
         IonItem,
         IonSelect,
         IonSelectOption,
-        ReactiveFormsModule
-    ]
+        ReactiveFormsModule,
+    ],
 })
 export class AufnehmerEditPage {
-
     private appService = inject(AppService);
     private aufnehmerService = inject(AufnehmerService);
     private frontendService = inject(FrontendService);
@@ -43,15 +63,17 @@ export class AufnehmerEditPage {
     }
 
     public form = this.formBuilder.group({
-        vorname: ["", [Validators.required, Validators.minLength(1)]],
-        nachname: ["", [Validators.required, Validators.minLength(1)]],
+        vorname: ['', [Validators.required, Validators.minLength(1)]],
+        nachname: ['', [Validators.required, Validators.minLength(1)]],
         zoom_level: [1, [Validators.required]],
     });
 
     public save() {
         const updatedAufnehmer = { ...this.aufnehmer(), ...this.form.value };
-        this.aufnehmerService.update(updatedAufnehmer).subscribe(a => {
-            this.frontendService.showToast(`${a.vorname} ${a.nachname} wurde gespeichert.`);
+        this.aufnehmerService.update(updatedAufnehmer).subscribe((a) => {
+            this.frontendService.showToast(
+                `${a.vorname} ${a.nachname} wurde gespeichert.`
+            );
             this.aufnehmer.set(a);
         });
     }

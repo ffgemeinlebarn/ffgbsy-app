@@ -6,12 +6,12 @@ import { BestellungspositionEditModalComponent } from 'src/app/modals/bestellung
 import { SelectAufnehmerModalComponent } from 'src/app/modals/select-aufnehmer-modal/select-aufnehmer-modal.component';
 import { IAufnehmer } from 'src/app/model/aufnehmer.model';
 import { environment } from 'src/environments/environment';
-import { AvailabilityService } from '../availability/availability.service';
-import { BestellungenService } from '../bestellungen/bestellungen.service';
-import { BonsService } from '../bons/bons.service';
 import { DataService } from '../data/data.service';
-import { FrontendService } from '../frontend/frontend.service';
-import { SettingsService } from '../settings/settings.service';
+import { AvailabilityService } from './availability.service';
+import { BestellungenService } from './bestellungen.service';
+import { BonsService } from './bons.service';
+import { FrontendService } from './frontend.service';
+import { SettingsService } from './settings.service';
 
 @Injectable({
     providedIn: 'root',

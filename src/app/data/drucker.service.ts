@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
+import { Observable, catchError, retry } from 'rxjs';
 import { Drucker } from 'src/app/classes/drucker.class';
-import { Observable, catchError, retry, tap } from 'rxjs';
-import { SettingsService } from '../settings/settings.service';
-import { ErrorHandlingService } from '../error-handling/error-handling.service';
+import { ErrorHandlingService } from './error-handling.service';
+import { SettingsService } from './settings.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class DruckerService {
     http = inject(HttpClient);
@@ -18,7 +18,9 @@ export class DruckerService {
             .post<Drucker>(`${this.settings.apiBaseUrl()}/drucker`, drucker)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -27,7 +29,9 @@ export class DruckerService {
             .get<Drucker[]>(`${this.settings.apiBaseUrl()}/drucker`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -36,16 +40,23 @@ export class DruckerService {
             .get<Drucker>(`${this.settings.apiBaseUrl()}/drucker/${id}`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
     public update(drucker: Drucker) {
         return this.http
-            .put<Drucker>(`${this.settings.apiBaseUrl()}/drucker/${drucker.id}`, drucker)
+            .put<Drucker>(
+                `${this.settings.apiBaseUrl()}/drucker/${drucker.id}`,
+                drucker
+            )
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -54,7 +65,9 @@ export class DruckerService {
             .delete<boolean>(`${this.settings.apiBaseUrl()}/drucker/${id}`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 }

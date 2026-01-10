@@ -24,9 +24,9 @@ import {
 } from '@ionic/angular/standalone';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
-import { TischkategorienService } from 'src/app/services/tischkategorien/tischkategorien.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { ProduktkategorienService } from 'src/app/data/produktkategorien.service';
+import { TischkategorienService } from 'src/app/data/tischkategorien.service';
 
 @Component({
     selector: 'ffgbsy-tischkategorien-detail',

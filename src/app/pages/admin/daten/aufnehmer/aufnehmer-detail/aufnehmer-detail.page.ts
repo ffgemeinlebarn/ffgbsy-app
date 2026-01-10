@@ -22,9 +22,9 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
+import { AufnehmerService } from 'src/app/data/aufnehmer.service';
+import { FrontendService } from 'src/app/data/frontend.service';
 import { IAufnehmer } from 'src/app/model/aufnehmer.model';
-import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-detail',

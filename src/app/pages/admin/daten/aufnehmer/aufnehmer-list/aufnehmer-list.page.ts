@@ -11,8 +11,8 @@ import {
     ViewDidEnter,
 } from '@ionic/angular/standalone';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
+import { AufnehmerService } from 'src/app/data/aufnehmer.service';
 import { IAufnehmer } from 'src/app/model/aufnehmer.model';
-import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-list',

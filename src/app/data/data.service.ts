@@ -11,8 +11,8 @@ import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
 import { DataLoadedReportModalComponent } from 'src/app/modals/data-loaded-report-modal/data-loaded-report-modal.component';
 import { IAufnehmer } from 'src/app/model/aufnehmer.model';
 import { IDaten } from 'src/app/model/daten.interface';
-import { ErrorHandlingService } from '../error-handling/error-handling.service';
-import { SettingsService } from '../settings/settings.service';
+import { ErrorHandlingService } from './error-handling.service';
+import { SettingsService } from './settings.service';
 
 @Injectable({
     providedIn: 'root',

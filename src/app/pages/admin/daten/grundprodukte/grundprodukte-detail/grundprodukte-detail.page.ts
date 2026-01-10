@@ -24,8 +24,8 @@ import {
     IonToolbar,
 } from '@ionic/angular/standalone';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { GrundprodukteService } from 'src/app/data/grundprodukte.service';
 
 @Component({
     selector: 'ffgbsy-grundprodukte-detail',

@@ -26,9 +26,9 @@ import {
 } from '@ionic/angular/standalone';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { TischeService } from 'src/app/services/tische/tische.service';
-import { TischkategorienService } from 'src/app/services/tischkategorien/tischkategorien.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { TischeService } from 'src/app/data/tische.service';
+import { TischkategorienService } from 'src/app/data/tischkategorien.service';
 
 @Component({
     selector: 'ffgbsy-tische-detail',

@@ -12,7 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
+import { GrundprodukteService } from 'src/app/data/grundprodukte.service';
 
 @Component({
     selector: 'ffgbsy-grundprodukte-list',

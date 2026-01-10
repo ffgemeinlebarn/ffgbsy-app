@@ -11,7 +11,7 @@ import {
     ModalController,
 } from '@ionic/angular/standalone';
 import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
-import { AvailabilityService } from 'src/app/services/availability/availability.service';
+import { AvailabilityService } from 'src/app/data/availability.service';
 
 @Component({
     selector: 'app-availability-modal',

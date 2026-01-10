@@ -3,7 +3,7 @@ import { LocalSettings } from 'src/app/model/settings';
 
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
-import { FrontendService } from '../frontend/frontend.service';
+import { FrontendService } from './frontend.service';
 
 @Injectable({
     providedIn: 'root',

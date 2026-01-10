@@ -12,9 +12,9 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
+import { AppService } from 'src/app/data/app.service';
+import { DataService } from 'src/app/data/data.service';
 import { IAufnehmer } from 'src/app/model/aufnehmer.model';
-import { AppService } from 'src/app/services/app/app.service';
-import { DataService } from 'src/app/services/data/data.service';
 
 @Component({
     selector: 'app-select-aufnehmer-modal',

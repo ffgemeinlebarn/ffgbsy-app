@@ -8,7 +8,7 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { AvailabilityService } from 'src/app/services/availability/availability.service';
+import { AvailabilityService } from 'src/app/data/availability.service';
 
 @Component({
     selector: 'app-data-loaded-report-modal',

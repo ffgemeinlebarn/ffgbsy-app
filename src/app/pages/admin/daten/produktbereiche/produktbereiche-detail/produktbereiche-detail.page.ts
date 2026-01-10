@@ -26,9 +26,9 @@ import {
     IonToolbar,
 } from '@ionic/angular/standalone';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { DruckerService } from 'src/app/services/drucker/drucker.service';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { ProduktbereicheService } from 'src/app/services/produktbereiche/produktbereiche.service';
+import { DruckerService } from 'src/app/data/drucker.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { ProduktbereicheService } from 'src/app/data/produktbereiche.service';
 
 @Component({
     selector: 'ffgbsy-produktbereiche-detail',

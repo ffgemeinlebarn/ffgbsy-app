@@ -17,10 +17,10 @@ import {
     IonToolbar,
 } from '@ionic/angular/standalone';
 import { map } from 'rxjs';
+import { DruckerService } from 'src/app/data/drucker.service';
+import { EigenschaftenService } from 'src/app/data/eigenschaften.service';
+import { ProdukteService } from 'src/app/data/produkte.service';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
-import { DruckerService } from 'src/app/services/drucker/drucker.service';
-import { EigenschaftenService } from 'src/app/services/eigenschaften/eigenschaften.service';
-import { ProdukteService } from 'src/app/services/produkte/produkte.service';
 
 @Component({
     selector: 'ffgbsy-angebot-uebersicht',

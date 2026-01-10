@@ -25,9 +25,9 @@ import {
 } from '@ionic/angular/standalone';
 import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen/produkteinteilungen.service';
-import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { ProdukteinteilungenService } from 'src/app/data/produkteinteilungen.service';
+import { ProduktkategorienService } from 'src/app/data/produktkategorien.service';
 
 @Component({
     selector: 'ffgbsy-produkteinteilungen-detail',

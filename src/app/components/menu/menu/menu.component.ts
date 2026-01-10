@@ -5,7 +5,7 @@ import {
     IonList,
     IonMenuToggle,
 } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/services/app/app.service';
+import { AppService } from 'src/app/data/app.service';
 import { MenuItemComponent } from '../menu-item/menu-item.component';
 
 @Component({

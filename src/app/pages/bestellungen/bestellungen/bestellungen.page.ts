@@ -25,11 +25,11 @@ import {
     ViewDidEnter,
 } from '@ionic/angular/standalone';
 import { Bestellung } from 'src/app/classes/bestellung.model';
+import { AppService } from 'src/app/data/app.service';
+import { AufnehmerService } from 'src/app/data/aufnehmer.service';
+import { BestellungenService } from 'src/app/data/bestellungen.service';
+import { TischeService } from 'src/app/data/tische.service';
 import { IBestellungenFilter } from 'src/app/model/bestellungen-filter.interface';
-import { AppService } from 'src/app/services/app/app.service';
-import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
-import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
-import { TischeService } from 'src/app/services/tische/tische.service';
 import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
 
 @Component({

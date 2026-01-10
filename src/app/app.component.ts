@@ -9,8 +9,8 @@ import {
 } from '@ionic/angular/standalone';
 import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
 import { MenuComponent } from './components/menu/menu/menu.component';
-import { AppService } from './services/app/app.service';
-import { IonIconsService } from './services/ion-icons/ion-icons.service';
+import { AppService } from './data/app.service';
+import { IonIconsService } from './data/ion-icons.service';
 
 @Component({
     selector: 'ffgbsy-root',

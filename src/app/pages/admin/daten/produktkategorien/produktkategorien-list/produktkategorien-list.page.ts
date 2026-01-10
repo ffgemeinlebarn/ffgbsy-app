@@ -11,7 +11,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
+import { ProduktkategorienService } from 'src/app/data/produktkategorien.service';
 
 @Component({
     selector: 'ffgbsy-produktkategorien-list',

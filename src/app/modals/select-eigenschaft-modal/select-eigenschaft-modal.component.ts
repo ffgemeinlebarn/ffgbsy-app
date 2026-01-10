@@ -6,8 +6,8 @@ import {
     IonList,
     ModalController,
 } from '@ionic/angular/standalone';
+import { EigenschaftenService } from 'src/app/data/eigenschaften.service';
 import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
-import { EigenschaftenService } from 'src/app/services/eigenschaften/eigenschaften.service';
 
 @Component({
     selector: 'app-select-eigenschaft-modal',

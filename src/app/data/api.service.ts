@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { catchError, map, retry, tap } from 'rxjs/operators';
 import { IDaten } from 'src/app/model/daten.interface';
 import { environment } from 'src/environments/environment';
-import { FrontendService } from '../frontend/frontend.service';
+import { FrontendService } from './frontend.service';
 
 @Injectable({
     providedIn: 'root',
