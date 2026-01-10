@@ -14,7 +14,6 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
     selector: 'ffgbsy-bestellungen-detail',
     templateUrl: './bestellungen-detail.page.html',
     styleUrls: ['./bestellungen-detail.page.scss'],
-    standalone: true,
     imports: [
         IonHeader,
         IonToolbar,
@@ -29,7 +28,7 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
         IonChip,
         DatePipe,
         EuroPreisPipe
-    ],
+    ]
 })
 export class BestellungenDetailPage implements OnInit {
     public activatedRoute = inject(ActivatedRoute);

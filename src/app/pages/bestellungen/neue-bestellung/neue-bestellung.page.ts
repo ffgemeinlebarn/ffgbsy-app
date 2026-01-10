@@ -1,6 +1,13 @@
-import { NgClass } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { IonButton, IonButtons, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+    IonButton,
+    IonButtons,
+    IonHeader,
+    IonIcon,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+} from '@ionic/angular/standalone';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { AppService } from 'src/app/services/app/app.service';
 import { FrontendService } from 'src/app/services/frontend/frontend.service';
@@ -12,7 +19,6 @@ import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
     selector: 'ffgbsy-neue-bestellung',
     templateUrl: './neue-bestellung.page.html',
     styleUrls: ['./neue-bestellung.page.scss'],
-    standalone: true,
     imports: [
         IonIcon,
         IonHeader,
@@ -21,14 +27,12 @@ import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
         IonButtons,
         IonButton,
         IonMenuButton,
-        NgClass,
         AufnehmerAuswahlComponent,
         TischAuswahlComponent,
-        BestellungEditComponent
+        BestellungEditComponent,
     ],
 })
 export class NeueBestellungPage {
-
     private app = inject(AppService);
     private frontend = inject(FrontendService);
 
@@ -36,8 +40,8 @@ export class NeueBestellungPage {
     public aufnehmer = this.app.aufnehmer;
 
     /*******************************************************************************
-    *** Tischauswahl
-    *******************************************************************************/
+     *** Tischauswahl
+     *******************************************************************************/
 
     selectTisch(tisch: Tisch) {
         this.bestellung.update((bestellung) => {
@@ -53,13 +57,15 @@ export class NeueBestellungPage {
     }
 
     /*******************************************************************************
-    *** Sonstiges
-    *******************************************************************************/
+     *** Sonstiges
+     *******************************************************************************/
 
     async askForCancelBestellung() {
-        await this.frontend.showJaNeinAlert(
-            'Abbruch der Bestellung',
-            'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.'
-        ).then(_ => this.app.cancelBestellung());
+        await this.frontend
+            .showJaNeinAlert(
+                'Abbruch der Bestellung',
+                'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.'
+            )
+            .then((_) => this.app.cancelBestellung());
     }
 }

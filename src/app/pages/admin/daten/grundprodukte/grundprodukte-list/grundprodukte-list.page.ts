@@ -1,6 +1,15 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from "@ionic/angular/standalone";
+import {
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonList,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+    ViewDidEnter,
+} from '@ionic/angular/standalone';
 import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
@@ -9,10 +18,7 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
     selector: 'ffgbsy-grundprodukte-list',
     templateUrl: './grundprodukte-list.page.html',
     styleUrls: ['./grundprodukte-list.page.scss'],
-    standalone: true,
     imports: [
-        IonButton,
-        IonButtons,
         IonIcon,
         IonContent,
         IonToolbar,
@@ -21,7 +27,7 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
         IonHeader,
         RouterLink,
         IonMenuButton,
-        PageSpinnerComponent
+        PageSpinnerComponent,
     ],
 })
 export class GrundprodukteListPage implements ViewDidEnter {
@@ -31,6 +37,8 @@ export class GrundprodukteListPage implements ViewDidEnter {
 
     ionViewDidEnter(): void {
         this.grundprodukte.set(null);
-        this.grundProdukteService.readAll().subscribe(items => this.grundprodukte.set(items));
+        this.grundProdukteService
+            .readAll()
+            .subscribe((items) => this.grundprodukte.set(items));
     }
 }

@@ -6,8 +6,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
     selector: 'ffgbsy-frontend-loading',
     templateUrl: './frontend-loading.component.html',
     styleUrls: ['./frontend-loading.component.scss'],
-    standalone: true,
-    imports: [IonSpinner, IonBackdrop,],
+    imports: [IonSpinner, IonBackdrop,]
 })
 export class FrontendLoadingComponent {
     frontend = inject(FrontendService);

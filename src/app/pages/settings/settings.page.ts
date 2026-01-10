@@ -9,7 +9,6 @@ import { environment } from 'src/environments/environment';
     selector: 'ffgbsy-settings',
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
-    standalone: true,
     imports: [
         IonList,
         IonHeader,
@@ -27,7 +26,7 @@ import { environment } from 'src/environments/environment';
         IonInput,
         FormsModule,
         ReactiveFormsModule
-    ],
+    ]
 })
 export class SettingsPage {
     private settings = inject(SettingsService);

@@ -1,5 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { IonButton, IonChip, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import {
+    IonChip,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+} from '@ionic/angular/standalone';
 import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AvailabilityService } from 'src/app/services/availability/availability.service';
 import { DataService } from 'src/app/services/data/data.service';
@@ -8,7 +19,6 @@ import { DataService } from 'src/app/services/data/data.service';
     selector: 'ffgbsy-systemstatus',
     templateUrl: './systemstatus.page.html',
     styleUrls: ['./systemstatus.page.scss'],
-    standalone: true,
     imports: [
         IonLabel,
         IonItem,
@@ -18,10 +28,9 @@ import { DataService } from 'src/app/services/data/data.service';
         IonTitle,
         IonContent,
         IonList,
-        IonButton,
         StatusListItemComponent,
         IonChip,
-        IonIcon
+        IonIcon,
     ],
 })
 export class SystemstatusPage {
@@ -30,15 +39,22 @@ export class SystemstatusPage {
 
     public apiAvailability = this.availability.apiAvailability;
     public druckerAvailabilities = this.availability.druckerAvailabilities;
-    public aufnehmerDataAvailability = this.availability.aufnehmerDataAvailability;
-    public produktbereicheDataAvailability = this.availability.produktbereicheDataAvailability;
-    public produktkategorienDataAvailability = this.availability.produktkategorienDataAvailability;
-    public produkteinteilungenDataAvailability = this.availability.produkteinteilungenDataAvailability;
-    public produkteDataAvailability = this.availability.produkteDataAvailability;
-    public tischkategorienDataAvailability = this.availability.tischkategorienDataAvailability;
+    public aufnehmerDataAvailability =
+        this.availability.aufnehmerDataAvailability;
+    public produktbereicheDataAvailability =
+        this.availability.produktbereicheDataAvailability;
+    public produktkategorienDataAvailability =
+        this.availability.produktkategorienDataAvailability;
+    public produkteinteilungenDataAvailability =
+        this.availability.produkteinteilungenDataAvailability;
+    public produkteDataAvailability =
+        this.availability.produkteDataAvailability;
+    public tischkategorienDataAvailability =
+        this.availability.tischkategorienDataAvailability;
     public tischeDataAvailability = this.availability.tischeDataAvailability;
 
-    public lookupDataLastSync = this.availability.lookupDataGrossAvailibilityDatetime;
+    public lookupDataLastSync =
+        this.availability.lookupDataGrossAvailibilityDatetime;
 
     public syncData() {
         this.dataService.load();

@@ -11,7 +11,6 @@ import { ProdukteService } from 'src/app/services/produkte/produkte.service';
     selector: 'ffgbsy-produkte-list',
     templateUrl: './produkte-list.page.html',
     styleUrls: ['./produkte-list.page.scss'],
-    standalone: true,
     imports: [
         IonList,
         IonContent,
@@ -28,7 +27,7 @@ import { ProdukteService } from 'src/app/services/produkte/produkte.service';
         EuroPreisPipe,
         FormsModule,
         ReactiveFormsModule
-    ],
+    ]
 })
 export class ProdukteListPage implements ViewDidEnter {
     private produkteService = inject(ProdukteService);

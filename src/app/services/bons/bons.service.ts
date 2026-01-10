@@ -10,7 +10,7 @@ import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class BonsService {
     private http = inject(HttpClient);
@@ -21,14 +21,16 @@ export class BonsService {
     public createStornoBon(bestellposition: Bestellposition): Observable<Bon> {
         return this.http
             .post(`${this.settings.apiBaseUrl()}/bons`, {
-                type: "storno",
+                type: 'storno',
                 bestellungen_id: bestellposition.bestellungen_id,
                 drucker_id: bestellposition.drucker_id,
-                bestellpositionen: [bestellposition]
-            },)
+                bestellpositionen: [bestellposition],
+            })
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -36,54 +38,68 @@ export class BonsService {
         let params = new HttpParams();
 
         if (filter.druckerId) {
-            params = params.append("druckerId", filter.druckerId);
+            params = params.append('druckerId', filter.druckerId);
         }
         if (filter.tischId) {
-            params = params.append("tischId", filter.tischId);
+            params = params.append('tischId', filter.tischId);
         }
         if (filter.type) {
-            params = params.append("type", filter.type);
+            params = params.append('type', filter.type);
         }
 
-        params = params.append("missingSuccessfulDruck", filter.missingSuccessfulDruck);
-        params = params.append("multipleDrucke", filter.multipleDrucke);
-        params = params.append("limit", filter.limit);
+        params = params.append(
+            'missingSuccessfulDruck',
+            filter.missingSuccessfulDruck
+        );
+        params = params.append('multipleDrucke', filter.multipleDrucke);
+        params = params.append('limit', filter.limit);
 
         return this.http
             .get<Bon[]>(`${this.settings.apiBaseUrl()}/bons`, { params })
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
     public druckBonsOfBestellungById(id: number): Observable<BonDruck[]> {
-        this.frontendService.showLoadingSpinner("Drucke Bons für Bestellung");
+        this.frontendService.showLoadingSpinner('Drucke Bons für Bestellung');
         return this.http
-            .post(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null)
+            .post(
+                `${this.settings.apiBaseUrl()}/print/bestellungen/${id}`,
+                null
+            )
             .pipe(
                 tap(() => this.frontendService.hideLoadingSpinner()),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
     public druckBonsByIds(ids: number[]): Observable<BonDruck[]> {
-        this.frontendService.showLoadingSpinner("Drucke Bons");
+        this.frontendService.showLoadingSpinner('Drucke Bons');
         return this.http
             .post(`${this.settings.apiBaseUrl()}/print/bons`, ids)
             .pipe(
                 tap(() => this.frontendService.hideLoadingSpinner()),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
     public druckBonById(id: number): Observable<BonDruck> {
-        this.frontendService.showLoadingSpinner("Drucke Bon");
+        this.frontendService.showLoadingSpinner('Drucke Bon');
         return this.http
             .post(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null)
             .pipe(
                 tap(() => this.frontendService.hideLoadingSpinner()),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 }

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -11,8 +11,7 @@ import { DruckerService } from 'src/app/services/drucker/drucker.service';
     selector: 'ffgbsy-drucker-list',
     templateUrl: './drucker-list.page.html',
     styleUrls: ['./drucker-list.page.scss'],
-    standalone: true,
-    imports: [IonList, IonContent, IonHeader, RouterLink, IonTitle, IonToolbar, IonMenuButton, PageSpinnerComponent, CommonModule, FormsModule]
+    imports: [IonList, IonContent, IonHeader, RouterLink, IonTitle, IonToolbar, IonMenuButton, PageSpinnerComponent, FormsModule]
 })
 export class DruckerListPage implements ViewDidEnter {
     private druckerService = inject(DruckerService);

@@ -18,7 +18,6 @@ import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen
     selector: 'ffgbsy-produkte-detail',
     templateUrl: './produkte-detail.page.html',
     styleUrls: ['./produkte-detail.page.scss'],
-    standalone: true,
     imports: [
         IonItemDivider,
         IonChip,
@@ -41,7 +40,7 @@ import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen
         EuroPreisPipe,
         ReactiveFormsModule,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class ProdukteDetailPage {
     private frontendService = inject(FrontendService);

@@ -9,7 +9,6 @@ import { StatistikenService } from 'src/app/services/statistiken/statistiken.ser
     selector: 'ffgbsy-product-sales',
     templateUrl: './product-sales.page.html',
     styleUrls: ['./product-sales.page.scss'],
-    standalone: true,
     imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, EuroPreisPipe, CommonModule, FormsModule]
 })
 export class ProductSalesPage implements ViewDidEnter {

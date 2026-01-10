@@ -6,7 +6,6 @@ import { IonCol, IonGrid, IonIcon, IonRippleEffect, IonRow } from '@ionic/angula
     selector: 'ffgbsy-init-tile',
     templateUrl: './init-tile.component.html',
     styleUrls: ['./init-tile.component.scss'],
-    standalone: true,
     imports: [
         IonGrid,
         IonRow,

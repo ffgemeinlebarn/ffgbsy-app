@@ -14,7 +14,6 @@ import { DataService } from 'src/app/services/data/data.service';
     selector: 'app-bestellung-edit',
     templateUrl: './bestellung-edit.component.html',
     styleUrls: ['./bestellung-edit.component.scss'],
-    standalone: true,
     imports: [IonItemDivider, IonItem, IonIcon, IonContent, IonFooter, IonButton, IonList, IonItem, IonLabel, IonItemDivider, NgClass, EuroPreisPipe]
 })
 export class BestellungEditComponent {

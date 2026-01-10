@@ -1,8 +1,38 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CheckboxCustomEvent, IonAccordion, IonAccordionGroup, IonBadge, IonButton, IonButtons, IonCheckbox, IonChip, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonMenuButton, IonNote, IonRippleEffect, IonSelect, IonSelectOption, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToggle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import {
+    FormBuilder,
+    FormControl,
+    FormsModule,
+    ReactiveFormsModule,
+} from '@angular/forms';
+import {
+    CheckboxCustomEvent,
+    IonAccordion,
+    IonAccordionGroup,
+    IonBadge,
+    IonButton,
+    IonButtons,
+    IonCheckbox,
+    IonChip,
+    IonContent,
+    IonFooter,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonItemDivider,
+    IonLabel,
+    IonList,
+    IonMenuButton,
+    IonRippleEffect,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToggle,
+    IonToolbar,
+    ViewDidEnter,
+} from '@ionic/angular/standalone';
 import { Bon } from 'src/app/classes/bon.model';
 import { IBonsFilter } from 'src/app/interfaces/bons-filter.interface';
 import { BonsService } from 'src/app/services/bons/bons.service';
@@ -14,8 +44,34 @@ import { FrontendService } from '../../../../services/frontend/frontend.service'
     selector: 'ffgbsy-failed-bons',
     templateUrl: './failed-bons.page.html',
     styleUrls: ['./failed-bons.page.scss'],
-    standalone: true,
-    imports: [TitleCasePipe, IonBadge, IonItemDivider, IonAccordionGroup, IonAccordion, IonItemOption, IonItemOptions, IonItemSliding, IonButtons, IonMenuButton, IonToggle, IonButton, IonSelect, IonSelectOption, IonRippleEffect, IonFooter, IonCheckbox, IonIcon, IonTabButton, IonTabBar, IonTabs, IonNote, IonChip, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
+    imports: [
+        TitleCasePipe,
+        IonBadge,
+        IonItemDivider,
+        IonAccordionGroup,
+        IonAccordion,
+        IonButtons,
+        IonMenuButton,
+        IonToggle,
+        IonButton,
+        IonSelect,
+        IonSelectOption,
+        IonRippleEffect,
+        IonFooter,
+        IonCheckbox,
+        IonIcon,
+        IonChip,
+        IonLabel,
+        IonItem,
+        IonList,
+        IonContent,
+        IonHeader,
+        IonTitle,
+        IonToolbar,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+    ],
 })
 export class FailedBonsPage implements ViewDidEnter {
     private bonsService = inject(BonsService);
@@ -26,9 +82,15 @@ export class FailedBonsPage implements ViewDidEnter {
 
     public bons = signal<Bon[]>([]);
 
-    public numberOfBonsSelected = computed(() => this.bons().filter(b => b.selected).length);
+    public numberOfBonsSelected = computed(
+        () => this.bons().filter((b) => b.selected).length
+    );
     public anyBonsSelected = computed(() => this.numberOfBonsSelected() > 0);
-    public allBonsSelectedAreMissingSuccess = computed(() => this.bons().filter(b => b.selected && b.successes == 0).length == this.numberOfBonsSelected());
+    public allBonsSelectedAreMissingSuccess = computed(
+        () =>
+            this.bons().filter((b) => b.selected && b.successes == 0).length ==
+            this.numberOfBonsSelected()
+    );
 
     public filter = this.formBuilder.group({
         druckerId: new FormControl<null | number>(null),
@@ -36,20 +98,21 @@ export class FailedBonsPage implements ViewDidEnter {
         missingSuccessfulDruck: new FormControl<boolean>(true),
         multipleDrucke: new FormControl<boolean>(false),
         type: new FormControl<null | 'bestellung' | 'storno'>(null),
-        limit: [100]
+        limit: [100],
     });
 
     public availableFilter = {
         drucker: toSignal(this.druckerService.readAll()),
         tische: toSignal(this.tischeService.readAll()),
         types: ['bestellung', 'storno'],
-        limits: [5, 10, 25, 50, 100, 200, 500, 1000]
+        limits: [5, 10, 25, 50, 100, 200, 500, 1000],
     };
 
     public toggleAllOnOff() {
-        const allSelected = this.bons().filter(b => b.selected).length == this.bons().length;
-        this.bons.update(bons => {
-            bons.forEach(bon => bon.selected = !allSelected);
+        const allSelected =
+            this.bons().filter((b) => b.selected).length == this.bons().length;
+        this.bons.update((bons) => {
+            bons.forEach((bon) => (bon.selected = !allSelected));
             return [...bons];
         });
     }
@@ -59,8 +122,8 @@ export class FailedBonsPage implements ViewDidEnter {
     }
 
     public onChange(changeEvent: CheckboxCustomEvent, bon: Bon) {
-        this.bons.update(bons => {
-            bons.find(b => b == bon).selected = changeEvent.detail.checked;
+        this.bons.update((bons) => {
+            bons.find((b) => b == bon).selected = changeEvent.detail.checked;
             return [...bons];
         });
     }
@@ -68,23 +131,30 @@ export class FailedBonsPage implements ViewDidEnter {
     public searchBons() {
         return this.bonsService
             .search(this.filter.value as IBonsFilter)
-            .subscribe(bons => this.bons.set(bons));
+            .subscribe((bons) => this.bons.set(bons));
     }
 
     public printSelectedBons() {
         this.frontendService.showLoadingSpinner();
-        const selectedBons = this.bons().filter(b => b.selected).map(bon => bon.id);
-        this.bonsService.druckBonsByIds(selectedBons)
-            .subscribe(bonDrucke => {
-                this.searchBons();
-                const successfulBons = bonDrucke.filter(bon => bon.success).length;
-                if (successfulBons === bonDrucke.length) {
-                    this.frontendService.showToast('Alle Bons erfolgreich gedruckt!');
-                } else {
-                    this.frontendService.showToast(`Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`);
-                }
-                this.frontendService.hideLoadingSpinner();
-            });
+        const selectedBons = this.bons()
+            .filter((b) => b.selected)
+            .map((bon) => bon.id);
+        this.bonsService.druckBonsByIds(selectedBons).subscribe((bonDrucke) => {
+            this.searchBons();
+            const successfulBons = bonDrucke.filter(
+                (bon) => bon.success
+            ).length;
+            if (successfulBons === bonDrucke.length) {
+                this.frontendService.showToast(
+                    'Alle Bons erfolgreich gedruckt!'
+                );
+            } else {
+                this.frontendService.showToast(
+                    `Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`
+                );
+            }
+            this.frontendService.hideLoadingSpinner();
+        });
     }
 
     ionViewDidEnter(): void {

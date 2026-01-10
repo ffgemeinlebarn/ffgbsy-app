@@ -1,6 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from "@ionic/angular/standalone";
+import {
+    IonContent,
+    IonHeader,
+    IonList,
+    IonMenuButton,
+    IonTitle,
+    IonToolbar,
+    ViewDidEnter,
+} from '@ionic/angular/standalone';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
 import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
@@ -9,11 +17,7 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
     selector: 'ffgbsy-produktkategorien-list',
     templateUrl: './produktkategorien-list.page.html',
     styleUrls: ['./produktkategorien-list.page.scss'],
-    standalone: true,
     imports: [
-        IonButton,
-        IonButtons,
-        IonIcon,
         IonContent,
         IonToolbar,
         IonTitle,
@@ -21,7 +25,7 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
         IonHeader,
         RouterLink,
         IonMenuButton,
-        PageSpinnerComponent
+        PageSpinnerComponent,
     ],
 })
 export class ProduktkategorienListPage implements ViewDidEnter {
@@ -31,6 +35,8 @@ export class ProduktkategorienListPage implements ViewDidEnter {
 
     ionViewDidEnter(): void {
         this.produktkategorien.set(null);
-        this.produktkategorienService.readAll().subscribe(items => this.produktkategorien.set(items));
+        this.produktkategorienService
+            .readAll()
+            .subscribe((items) => this.produktkategorien.set(items));
     }
 }

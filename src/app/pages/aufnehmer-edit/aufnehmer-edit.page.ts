@@ -9,7 +9,6 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
     selector: 'ffgbsy-aufnehmer-edit',
     templateUrl: './aufnehmer-edit.page.html',
     styleUrls: ['./aufnehmer-edit.page.scss'],
-    standalone: true,
     imports: [
         IonInput,
         FormsModule,
@@ -28,7 +27,7 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
         IonSelect,
         IonSelectOption,
         ReactiveFormsModule
-    ],
+    ]
 })
 export class AufnehmerEditPage {
 

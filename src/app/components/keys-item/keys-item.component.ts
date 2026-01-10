@@ -6,7 +6,6 @@ import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
     selector: 'ffgbsy-keys-item',
     templateUrl: './keys-item.component.html',
     styleUrls: ['./keys-item.component.scss'],
-    standalone: true,
     imports: [IonCardSubtitle, IonCardTitle, IonCard, IonCardHeader, EuroPreisPipe]
 })
 export class KeysItemComponent {

@@ -1,5 +1,15 @@
 import { Component, inject } from '@angular/core';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import {
+    IonButton,
+    IonButtons,
+    IonContent,
+    IonHeader,
+    IonItemDivider,
+    IonList,
+    IonTitle,
+    IonToolbar,
+    ModalController,
+} from '@ionic/angular/standalone';
 import { StatusListItemComponent } from 'src/app/components/status-list-item/status-list-item.component';
 import { AvailabilityService } from 'src/app/services/availability/availability.service';
 
@@ -7,7 +17,6 @@ import { AvailabilityService } from 'src/app/services/availability/availability.
     selector: 'app-availability-modal',
     templateUrl: './availability-modal.component.html',
     styleUrls: ['./availability-modal.component.scss'],
-    standalone: true,
     imports: [
         IonHeader,
         IonTitle,
@@ -16,15 +25,11 @@ import { AvailabilityService } from 'src/app/services/availability/availability.
         IonButtons,
         IonContent,
         IonList,
-        IonItem,
         IonItemDivider,
-        IonLabel,
-        IonIcon,
-        StatusListItemComponent
-    ]
+        StatusListItemComponent,
+    ],
 })
 export class AvailabilityModalComponent {
-
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
 
