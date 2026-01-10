@@ -2,12 +2,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map, retry, tap } from 'rxjs/operators';
-import { Daten } from 'src/app/interfaces/daten';
+import { IDaten } from 'src/app/model/daten.interface';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class ApiService {
     private http = inject(HttpClient);
@@ -24,17 +24,25 @@ export class ApiService {
         this.url = environment.api;
     }
 
-    public errorHandler(error: Error | any, silent: boolean = false): Observable<any> {
-
+    public errorHandler(
+        error: Error | any,
+        silent: boolean = false
+    ): Observable<any> {
         if (!silent) {
             this.frontend.hideLoadingSpinner();
 
             if (error.status == 0) {
-                this.frontend.showOkAlert("Es konnte keine Verbindung hergestellt werden!", error.message);
+                this.frontend.showOkAlert(
+                    'Es konnte keine Verbindung hergestellt werden!',
+                    error.message
+                );
             }
 
             if (error.status == 500) {
-                this.frontend.showOkAlert("Unbekannter Kommunikationsfehler aufgetreten!", error.message);
+                this.frontend.showOkAlert(
+                    'Unbekannter Kommunikationsfehler aufgetreten!',
+                    error.message
+                );
             }
         }
 
@@ -49,12 +57,12 @@ export class ApiService {
             .pipe(
                 retry(1),
                 tap(() => this.frontend.hideLoadingSpinner()),
-                map((data: Daten) => data.version),
+                map((data: IDaten) => data.version),
                 catchError((error) => this.errorHandler(error))
             );
     }
 
-    public getDaten(): Observable<Daten> {
+    public getDaten(): Observable<IDaten> {
         this.frontend.showLoadingSpinner('Lade neueste Daten');
         return this.http
             .get(`${this.url}/daten/latest`, { headers: this.headers })

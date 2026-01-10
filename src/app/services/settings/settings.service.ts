@@ -1,12 +1,12 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { LocalSettings } from 'src/app/interfaces/settings';
+import { LocalSettings } from 'src/app/model/settings';
 
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend/frontend.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class SettingsService {
     public ionicStorage = inject(Storage);
@@ -20,10 +20,12 @@ export class SettingsService {
         deviceIsPrivate: false,
         deviceAufnehmerId: undefined,
         adminPin: '',
-        apiBaseUrl: environment.api
+        apiBaseUrl: environment.api,
     };
 
-    public apiBaseUrl = computed(() => this.local().apiBaseUrl ?? environment.api);
+    public apiBaseUrl = computed(
+        () => this.local().apiBaseUrl ?? environment.api
+    );
     public local = signal<LocalSettings>(this.initialLocalSettings);
 
     constructor() {
@@ -32,12 +34,13 @@ export class SettingsService {
     }
 
     public async loadLocal() {
-
         // this.logger.debug('[Settings Service] Load Local');
         // this.logger.debug('[Settings Service] Local Object:', this.locale);
         // this.logger.debug('[Settings Service] Service is Ready!');
 
-        const localSettings = await this.ionicStorage.get(this.localSettingsKey);
+        const localSettings = await this.ionicStorage.get(
+            this.localSettingsKey
+        );
 
         if (localSettings == null) {
             await this.saveLocal(this.local());
@@ -52,8 +55,9 @@ export class SettingsService {
         await this.loadLocal();
 
         if (!hideToast) {
-            this.frontend.showToast("Die lokalen Einstellungen wurden gespeichert!");
+            this.frontend.showToast(
+                'Die lokalen Einstellungen wurden gespeichert!'
+            );
         }
     }
-
 }

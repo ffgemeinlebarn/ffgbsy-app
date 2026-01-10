@@ -34,7 +34,7 @@ import {
     ViewDidEnter,
 } from '@ionic/angular/standalone';
 import { Bon } from 'src/app/classes/bon.model';
-import { IBonsFilter } from 'src/app/interfaces/bons-filter.interface';
+import { IBonsFilter } from 'src/app/model/bons-filter.interface';
 import { BonsService } from 'src/app/services/bons/bons.service';
 import { DruckerService } from 'src/app/services/drucker/drucker.service';
 import { TischeService } from 'src/app/services/tische/tische.service';

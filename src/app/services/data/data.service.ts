@@ -9,13 +9,13 @@ import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
 import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
 import { Tisch } from 'src/app/classes/tisch.class';
 import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
-import { Daten } from 'src/app/interfaces/daten';
 import { DataLoadedReportModalComponent } from 'src/app/modals/data-loaded-report-modal/data-loaded-report-modal.component';
+import { IDaten } from 'src/app/model/daten.interface';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
 import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class DataService {
     private modalController = inject(ModalController);
@@ -31,7 +31,16 @@ export class DataService {
     public tischkategorien = signal<Tischkategorie[]>([]);
     public tische = signal<Tisch[]>([]);
 
-    public lookupDataSetted = computed(() => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische());
+    public lookupDataSetted = computed(
+        () =>
+            this.aufnehmer() &&
+            this.produktbereiche() &&
+            this.produktkategorien() &&
+            this.produkteinteilungen() &&
+            this.produkte() &&
+            this.tischkategorien() &&
+            this.tische()
+    );
 
     constructor() {
         this.load();
@@ -39,11 +48,14 @@ export class DataService {
 
     public load() {
         this.http
-            .get<Daten>(`${this.settings.apiBaseUrl()}/daten/latest`)
+            .get<IDaten>(`${this.settings.apiBaseUrl()}/daten/latest`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
-            ).subscribe((data) => {
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
+            )
+            .subscribe((data) => {
                 this.aufnehmer.set(data.aufnehmer);
                 this.produktbereiche.set(data.produktbereiche);
                 this.produktkategorien.set(data.produktkategorien);
@@ -59,7 +71,7 @@ export class DataService {
             component: DataLoadedReportModalComponent,
             canDismiss: true,
             breakpoints: [0.1, 0.5, 1],
-            initialBreakpoint: 1
+            initialBreakpoint: 1,
         });
         modal.present();
     }

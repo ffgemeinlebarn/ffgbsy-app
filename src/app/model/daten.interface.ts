@@ -1,13 +1,11 @@
 import { Aufnehmer } from '../classes/aufnehmer.model';
-import { Produkt } from "../classes/produkt.class";
-import { Produktkategorie } from '../classes/produktkategorie.class';
-import { Tischkategorie } from '../classes/tischkategorie.class';
-import { Tisch } from '../classes/tisch.class';
+import { Produkt } from '../classes/produkt.class';
 import { Produktbereich } from '../classes/produktbereich.class';
-import { WritableSignal } from '@angular/core';
+import { Produktkategorie } from '../classes/produktkategorie.class';
+import { Tisch } from '../classes/tisch.class';
+import { Tischkategorie } from '../classes/tischkategorie.class';
 
-export interface Daten {
-
+export interface IDaten {
     aufnehmer: Aufnehmer[];
     produktbereiche: Array<Produktbereich>;
     produktkategorien: Array<Produktkategorie>;

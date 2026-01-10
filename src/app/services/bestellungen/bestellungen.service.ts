@@ -3,13 +3,13 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry, tap } from 'rxjs';
 import { Bestellposition } from 'src/app/classes/bestellposition.model';
 import { Bestellung } from 'src/app/classes/bestellung.model';
-import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.interface';
+import { IBestellungenFilter } from 'src/app/model/bestellungen-filter.interface';
 import { ErrorHandlingService } from '../error-handling/error-handling.service';
 import { FrontendService } from '../frontend/frontend.service';
 import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class BestellungenService {
     private http = inject(HttpClient);
@@ -19,29 +19,49 @@ export class BestellungenService {
 
     public checkAvailability(bestellung: Bestellung) {
         return this.http
-            .post(`${this.settings.apiBaseUrl()}/bestellungen/availability`, bestellung)
+            .post(
+                `${this.settings.apiBaseUrl()}/bestellungen/availability`,
+                bestellung
+            )
             .pipe(
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
     public create(bestellung: Bestellung) {
-        this.frontendService.showLoadingSpinner("Bestellung wird angelegt");
+        this.frontendService.showLoadingSpinner('Bestellung wird angelegt');
         return this.http
-            .post<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellung)
+            .post<Bestellung>(
+                `${this.settings.apiBaseUrl()}/bestellungen`,
+                bestellung
+            )
             .pipe(
                 tap(() => this.frontendService.hideLoadingSpinner()),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
-    public createStornoBestellposition(bestellposition: Bestellposition, anzahl: number): Observable<Bestellposition> {
+    public createStornoBestellposition(
+        bestellposition: Bestellposition,
+        anzahl: number
+    ): Observable<Bestellposition> {
         this.frontendService.showLoadingSpinner();
         return this.http
-            .post(`${this.settings.apiBaseUrl()}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl })
+            .post(
+                `${this.settings.apiBaseUrl()}/bestellungen/${
+                    bestellposition.bestellungen_id
+                }/bestellpositionen/${bestellposition.id}`,
+                { anzahl }
+            )
             .pipe(
                 tap(() => this.frontendService.hideLoadingSpinner()),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -49,7 +69,9 @@ export class BestellungenService {
         return this.http
             .get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`)
             .pipe(
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -57,7 +79,9 @@ export class BestellungenService {
         return this.http
             .get<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`)
             .pipe(
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -65,28 +89,37 @@ export class BestellungenService {
         let params = new HttpParams();
 
         if (filter.aufnehmerId) {
-            params = params.append("aufnehmerId", filter.aufnehmerId);
+            params = params.append('aufnehmerId', filter.aufnehmerId);
         }
         if (filter.tischId) {
-            params = params.append("tischId", filter.tischId);
+            params = params.append('tischId', filter.tischId);
         }
 
-        params = params.append("limit", filter.limit);
+        params = params.append('limit', filter.limit);
 
         return this.http
-            .get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`, { params })
+            .get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`, {
+                params,
+            })
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
     public update(bestellungen: Bestellung) {
         return this.http
-            .put<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${bestellungen.id}`, bestellungen)
+            .put<Bestellung>(
+                `${this.settings.apiBaseUrl()}/bestellungen/${bestellungen.id}`,
+                bestellungen
+            )
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 
@@ -95,7 +128,9 @@ export class BestellungenService {
             .delete<boolean>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`)
             .pipe(
                 retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error))
+                catchError((error) =>
+                    this.errorHandling.globalApiErrorHandling(error)
+                )
             );
     }
 }
