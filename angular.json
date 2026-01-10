@@ -21,9 +21,6 @@
                         "outputPath": "www",
                         "index": "src/index.html",
                         "browser": "src/main.ts",
-                        "polyfills": [
-                            "src/polyfills.ts"
-                        ],
                         "tsConfig": "tsconfig.app.json",
                         "inlineStyleLanguage": "scss",
                         "assets": [
@@ -101,7 +98,6 @@
                     "builder": "@angular/build:karma",
                     "options": {
                         "main": "src/test.ts",
-                        "polyfills": "src/polyfills.ts",
                         "tsConfig": "tsconfig.spec.json",
                         "karmaConfig": "karma.conf.js",
                         "inlineStyleLanguage": "scss",
@@ -166,25 +162,25 @@
             "setParserOptionsProject": true
         },
         "@schematics/angular:directive": {
-          "type": "directive"
+            "type": "directive"
         },
         "@schematics/angular:service": {
-          "type": "service"
+            "type": "service"
         },
         "@schematics/angular:guard": {
-          "typeSeparator": "."
+            "typeSeparator": "."
         },
         "@schematics/angular:interceptor": {
-          "typeSeparator": "."
+            "typeSeparator": "."
         },
         "@schematics/angular:module": {
-          "typeSeparator": "."
+            "typeSeparator": "."
         },
         "@schematics/angular:pipe": {
-          "typeSeparator": "."
+            "typeSeparator": "."
         },
         "@schematics/angular:resolver": {
-          "typeSeparator": "."
+            "typeSeparator": "."
         }
     }
 }
