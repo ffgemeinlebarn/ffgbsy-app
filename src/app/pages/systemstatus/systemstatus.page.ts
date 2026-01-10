@@ -8,7 +8,6 @@ import { DataService } from 'src/app/services/data/data.service';
     selector: 'ffgbsy-systemstatus',
     templateUrl: './systemstatus.page.html',
     styleUrls: ['./systemstatus.page.scss'],
-    standalone: true,
     imports: [
         IonLabel,
         IonItem,
@@ -22,7 +21,7 @@ import { DataService } from 'src/app/services/data/data.service';
         StatusListItemComponent,
         IonChip,
         IonIcon
-    ],
+    ]
 })
 export class SystemstatusPage {
     private availability = inject(AvailabilityService);

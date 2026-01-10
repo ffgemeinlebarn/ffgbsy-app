@@ -17,7 +17,6 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
     selector: 'ffgbsy-produktkategorien-detail',
     templateUrl: './produktkategorien-detail.page.html',
     styleUrls: ['./produktkategorien-detail.page.scss'],
-    standalone: true,
     imports: [
         IonChip,
         IonSpinner,
@@ -44,7 +43,7 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
         ReactiveFormsModule,
         PageSpinnerComponent,
         EuroPreisPipe
-    ],
+    ]
 })
 export class ProduktkategorienDetailPage {
     private produktkategorienService = inject(ProduktkategorienService);

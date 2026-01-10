@@ -11,7 +11,6 @@ import { IonIconsService } from './services/ion-icons/ion-icons.service';
     selector: 'ffgbsy-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
-    standalone: true,
     imports: [
         FrontendLoadingComponent,
         RouterLink,

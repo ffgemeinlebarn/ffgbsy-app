@@ -9,7 +9,6 @@ import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen
     selector: 'ffgbsy-produkteinteilungen-list',
     templateUrl: './produkteinteilungen-list.page.html',
     styleUrls: ['./produkteinteilungen-list.page.scss'],
-    standalone: true,
     imports: [
         IonButton,
         IonButtons,
@@ -22,7 +21,7 @@ import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen
         RouterLink,
         IonMenuButton,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class ProdukteinteilungenListPage implements ViewDidEnter {
     private produkteinteilungenService = inject(ProdukteinteilungenService);

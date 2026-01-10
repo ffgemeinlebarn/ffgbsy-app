@@ -8,7 +8,6 @@ import { DataService } from 'src/app/services/data/data.service';
     selector: 'app-select-aufnehmer-modal',
     templateUrl: './select-aufnehmer-modal.component.html',
     styleUrls: ['./select-aufnehmer-modal.component.scss'],
-    standalone: true,
     imports: [IonRippleEffect,
         IonHeader,
         IonTitle,

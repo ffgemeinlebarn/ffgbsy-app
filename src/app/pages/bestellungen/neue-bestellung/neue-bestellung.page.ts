@@ -12,7 +12,6 @@ import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
     selector: 'ffgbsy-neue-bestellung',
     templateUrl: './neue-bestellung.page.html',
     styleUrls: ['./neue-bestellung.page.scss'],
-    standalone: true,
     imports: [
         IonIcon,
         IonHeader,
@@ -25,7 +24,7 @@ import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
         AufnehmerAuswahlComponent,
         TischAuswahlComponent,
         BestellungEditComponent
-    ],
+    ]
 })
 export class NeueBestellungPage {
 

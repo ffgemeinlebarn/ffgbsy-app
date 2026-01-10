@@ -9,7 +9,6 @@ import { DataService } from 'src/app/services/data/data.service';
     selector: 'app-tisch-auswahl',
     templateUrl: './tisch-auswahl.component.html',
     styleUrls: ['./tisch-auswahl.component.scss'],
-    standalone: true,
     imports: [IonContent, IonFooter, IonButton, NgClass]
 })
 export class TischAuswahlComponent {

@@ -12,7 +12,6 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
     selector: 'ffgbsy-produkteinteilungen-detail',
     templateUrl: './produkteinteilungen-detail.page.html',
     styleUrls: ['./produkteinteilungen-detail.page.scss'],
-    standalone: true,
     imports: [
         IonChip,
         IonSpinner,
@@ -35,7 +34,7 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
         FormsModule,
         ReactiveFormsModule,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class ProdukteinteilungenDetailPage {
     private produkteinteilungenService = inject(ProdukteinteilungenService);

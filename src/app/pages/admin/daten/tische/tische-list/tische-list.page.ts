@@ -9,7 +9,6 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
     selector: 'ffgbsy-tische-list',
     templateUrl: './tische-list.page.html',
     styleUrls: ['./tische-list.page.scss'],
-    standalone: true,
     imports: [
         IonButton,
         IonButtons,
@@ -22,7 +21,7 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
         RouterLink,
         IonMenuButton,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class TischeListPage implements ViewDidEnter {
     private tischkategorienService = inject(TischkategorienService);

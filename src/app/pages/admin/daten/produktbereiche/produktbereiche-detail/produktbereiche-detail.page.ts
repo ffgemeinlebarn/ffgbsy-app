@@ -13,7 +13,6 @@ import { ProduktbereicheService } from 'src/app/services/produktbereiche/produkt
     selector: 'ffgbsy-produktbereiche-detail',
     templateUrl: './produktbereiche-detail.page.html',
     styleUrls: ['./produktbereiche-detail.page.scss'],
-    standalone: true,
     imports: [
         IonSpinner,
         IonItemDivider,
@@ -35,7 +34,7 @@ import { ProduktbereicheService } from 'src/app/services/produktbereiche/produkt
         FormsModule,
         ReactiveFormsModule,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class ProduktbereicheDetailPage {
     private produktbereicheService = inject(ProduktbereicheService);

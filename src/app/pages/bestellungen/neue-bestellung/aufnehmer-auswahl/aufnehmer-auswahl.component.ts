@@ -7,7 +7,6 @@ import { AppService } from 'src/app/services/app/app.service';
     selector: 'app-aufnehmer-auswahl',
     templateUrl: './aufnehmer-auswahl.component.html',
     styleUrls: ['./aufnehmer-auswahl.component.scss'],
-    standalone: true,
     imports: [IonFooter, IonButton, IonContent]
 })
 export class AufnehmerAuswahlComponent {

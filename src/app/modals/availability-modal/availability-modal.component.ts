@@ -7,7 +7,6 @@ import { AvailabilityService } from 'src/app/services/availability/availability.
     selector: 'app-availability-modal',
     templateUrl: './availability-modal.component.html',
     styleUrls: ['./availability-modal.component.scss'],
-    standalone: true,
     imports: [
         IonHeader,
         IonTitle,

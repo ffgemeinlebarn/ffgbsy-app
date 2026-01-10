@@ -5,7 +5,6 @@ import { IonSpinner } from "@ionic/angular/standalone";
     selector: 'ffgbsy-page-spinner',
     templateUrl: './page-spinner.component.html',
     styleUrls: ['./page-spinner.component.scss'],
-    standalone: true,
     imports: [IonSpinner]
 })
 export class PageSpinnerComponent {

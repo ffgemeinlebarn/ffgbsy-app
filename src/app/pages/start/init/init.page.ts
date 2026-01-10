@@ -10,7 +10,6 @@ import { version } from 'src/environments/version';
     selector: 'ffgbsy-init',
     templateUrl: './init.page.html',
     styleUrls: ['./init.page.scss'],
-    standalone: true,
     imports: [IonTitle,
         IonButton,
         IonHeader,
@@ -20,7 +19,7 @@ import { version } from 'src/environments/version';
         RouterLink,
         InitTileComponent,
         IonTitle
-    ],
+    ]
 })
 export class InitPage {
     private app = inject(AppService);

@@ -8,7 +8,6 @@ import { DataService } from 'src/app/services/data/data.service';
     selector: 'app-data-loaded-report-modal',
     templateUrl: './data-loaded-report-modal.component.html',
     styleUrls: ['./data-loaded-report-modal.component.scss'],
-    standalone: true,
     imports: [
         IonHeader,
         IonTitle,

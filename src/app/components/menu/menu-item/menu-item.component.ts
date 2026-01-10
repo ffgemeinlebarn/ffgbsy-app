@@ -6,7 +6,6 @@ import { IonIcon, IonItem, IonLabel, IonMenuToggle } from '@ionic/angular/standa
     selector: 'ffgbsy-menu-item',
     templateUrl: './menu-item.component.html',
     styleUrls: ['./menu-item.component.scss'],
-    standalone: true,
     imports: [
         IonIcon,
         IonMenuToggle,

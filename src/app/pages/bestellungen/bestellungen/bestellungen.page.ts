@@ -16,7 +16,6 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
     selector: 'ffgbsy-bestellungen',
     templateUrl: './bestellungen.page.html',
     styleUrls: ['./bestellungen.page.scss'],
-    standalone: true,
     imports: [
         DatePipe,
         EuroPreisPipe,

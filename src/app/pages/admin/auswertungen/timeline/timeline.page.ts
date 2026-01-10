@@ -12,7 +12,6 @@ import { StatistikenService } from 'src/app/services/statistiken/statistiken.ser
     selector: 'ffgbsy-timeline',
     templateUrl: './timeline.page.html',
     styleUrls: ['./timeline.page.scss'],
-    standalone: true,
     imports: [
         IonContent,
         IonButton,

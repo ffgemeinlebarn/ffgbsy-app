@@ -13,12 +13,11 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
     selector: 'ffgbsy-tische-detail',
     templateUrl: './tische-detail.page.html',
     styleUrls: ['./tische-detail.page.scss'],
-    standalone: true,
     imports: [IonItemDivider, IonChip, IonLabel, IonItem, IonList, IonIcon, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonContent, IonButton,
         IonInput, IonSelect, IonSelectOption, FormsModule,
         EuroPreisPipe, PageSpinnerComponent,
         ReactiveFormsModule, IonToggle
-    ],
+    ]
 })
 export class TischeDetailPage {
     private frontendService = inject(FrontendService);

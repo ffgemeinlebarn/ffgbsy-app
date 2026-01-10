@@ -11,7 +11,6 @@ import { ProdukteService } from 'src/app/services/produkte/produkte.service';
     selector: 'ffgbsy-angebot-uebersicht',
     templateUrl: './angebot-uebersicht.page.html',
     styleUrls: ['./angebot-uebersicht.page.scss'],
-    standalone: true,
     imports: [EuroPreisPipe, IonChip, IonLabel, IonItem, IonList, IonButtons, IonIcon, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton]
 })
 export class AngebotUebersichtPage {

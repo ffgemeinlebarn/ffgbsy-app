@@ -12,7 +12,6 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
     selector: 'ffgbsy-tischkategorien-detail',
     templateUrl: './tischkategorien-detail.page.html',
     styleUrls: ['./tischkategorien-detail.page.scss'],
-    standalone: true,
     imports: [
         IonChip,
         IonSpinner,
@@ -35,7 +34,7 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
         FormsModule,
         ReactiveFormsModule,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class TischkategorienDetailPage {
     private tischkategorienService = inject(TischkategorienService);

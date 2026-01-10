@@ -9,7 +9,6 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
     selector: 'ffgbsy-bestellung-kontrolle-modal',
     templateUrl: './bestellung-kontrolle-modal.component.html',
     styleUrls: ['./bestellung-kontrolle-modal.component.scss'],
-    standalone: true,
     imports: [IonItem, IonListHeader,
         IonHeader,
         EuroPreisPipe,
@@ -25,7 +24,7 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
         IonIcon,
         IonLabel,
         StatusListItemComponent
-    ],
+    ]
 })
 export class BestellungKontrolleModalComponent implements ViewDidEnter {
     private modalCtrl = inject(ModalController);

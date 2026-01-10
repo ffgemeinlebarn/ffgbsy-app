@@ -8,7 +8,6 @@ import { EigenschaftenService } from 'src/app/services/eigenschaften/eigenschaft
     selector: 'app-select-eigenschaft-modal',
     templateUrl: './select-eigenschaft-modal.component.html',
     styleUrls: ['./select-eigenschaft-modal.component.scss'],
-    standalone: true,
     imports: [
         IonList,
         IonItem,

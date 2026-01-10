@@ -11,7 +11,6 @@ import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
     selector: 'ffgbsy-aufnehmer-list',
     templateUrl: './aufnehmer-list.page.html',
     styleUrls: ['./aufnehmer-list.page.scss'],
-    standalone: true,
     imports: [
         IonList,
         IonContent,

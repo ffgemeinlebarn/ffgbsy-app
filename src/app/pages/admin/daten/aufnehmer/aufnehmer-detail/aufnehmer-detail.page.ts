@@ -10,7 +10,6 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
     selector: 'ffgbsy-aufnehmer-detail',
     templateUrl: './aufnehmer-detail.page.html',
     styleUrls: ['./aufnehmer-detail.page.scss'],
-    standalone: true,
     imports: [IonBackButton, IonIcon, IonButton, IonButtons,
         IonItem,
         IonLabel,

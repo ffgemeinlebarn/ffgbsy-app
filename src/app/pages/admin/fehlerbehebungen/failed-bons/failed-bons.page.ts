@@ -14,7 +14,6 @@ import { FrontendService } from '../../../../services/frontend/frontend.service'
     selector: 'ffgbsy-failed-bons',
     templateUrl: './failed-bons.page.html',
     styleUrls: ['./failed-bons.page.scss'],
-    standalone: true,
     imports: [TitleCasePipe, IonBadge, IonItemDivider, IonAccordionGroup, IonAccordion, IonItemOption, IonItemOptions, IonItemSliding, IonButtons, IonMenuButton, IonToggle, IonButton, IonSelect, IonSelectOption, IonRippleEffect, IonFooter, IonCheckbox, IonIcon, IonTabButton, IonTabBar, IonTabs, IonNote, IonChip, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class FailedBonsPage implements ViewDidEnter {

@@ -6,7 +6,6 @@ import { CheckStatus } from 'src/app/types/check-status.type';
     selector: 'ffgbsy-status-list-item',
     templateUrl: './status-list-item.component.html',
     styleUrls: ['./status-list-item.component.scss'],
-    standalone: true,
     imports: [
         IonItem,
         IonLabel,

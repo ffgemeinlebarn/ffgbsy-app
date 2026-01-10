@@ -9,7 +9,6 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
     selector: 'ffgbsy-grundprodukte-list',
     templateUrl: './grundprodukte-list.page.html',
     styleUrls: ['./grundprodukte-list.page.scss'],
-    standalone: true,
     imports: [
         IonButton,
         IonButtons,
@@ -22,7 +21,7 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
         RouterLink,
         IonMenuButton,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class GrundprodukteListPage implements ViewDidEnter {
     private grundProdukteService = inject(GrundprodukteService);

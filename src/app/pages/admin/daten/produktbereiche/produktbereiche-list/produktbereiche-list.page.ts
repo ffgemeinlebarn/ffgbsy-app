@@ -9,7 +9,6 @@ import { ProduktbereicheService } from 'src/app/services/produktbereiche/produkt
     selector: 'ffgbsy-produktbereiche-list',
     templateUrl: './produktbereiche-list.page.html',
     styleUrls: ['./produktbereiche-list.page.scss'],
-    standalone: true,
     imports: [
         IonButton,
         IonButtons,
@@ -22,7 +21,7 @@ import { ProduktbereicheService } from 'src/app/services/produktbereiche/produkt
         RouterLink,
         IonMenuButton,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class ProduktbereicheListPage implements ViewDidEnter {
     private produktbereicheService = inject(ProduktbereicheService);

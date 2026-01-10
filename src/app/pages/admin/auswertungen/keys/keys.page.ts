@@ -7,7 +7,6 @@ import { StatistikenService } from 'src/app/services/statistiken/statistiken.ser
     selector: 'ffgbsy-keys',
     templateUrl: './keys.page.html',
     styleUrls: ['./keys.page.scss'],
-    standalone: true,
     imports: [IonContent, IonTitle, IonToolbar, IonHeader, IonMenuButton, KeysItemComponent]
 })
 export class KeysPage implements ViewDidEnter {

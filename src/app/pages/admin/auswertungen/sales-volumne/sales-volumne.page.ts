@@ -12,7 +12,6 @@ import { StatistikenService } from 'src/app/services/statistiken/statistiken.ser
     selector: 'ffgbsy-sales-volumne',
     templateUrl: './sales-volumne.page.html',
     styleUrls: ['./sales-volumne.page.scss'],
-    standalone: true,
     imports: [IonIcon, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, CommonModule, FormsModule, EuroPreisPipe, BaseChartDirective]
 })
 export class SalesVolumnePage implements ViewWillEnter {

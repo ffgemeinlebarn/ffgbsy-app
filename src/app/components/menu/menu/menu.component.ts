@@ -7,7 +7,6 @@ import { MenuItemComponent } from '../menu-item/menu-item.component';
     selector: 'ffgbsy-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
-    standalone: true,
     imports: [
         IonIcon,
         IonItemDivider,

@@ -11,7 +11,6 @@ import { FrontendService } from 'src/app/services/frontend/frontend.service';
     selector: 'ffgbsy-drucker-detail',
     templateUrl: './drucker-detail.page.html',
     styleUrls: ['./drucker-detail.page.scss'],
-    standalone: true,
     imports: [IonBackButton, IonButtons, IonInput, IonButton, IonIcon, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, PageSpinnerComponent, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class DruckerDetailPage implements ViewDidEnter {

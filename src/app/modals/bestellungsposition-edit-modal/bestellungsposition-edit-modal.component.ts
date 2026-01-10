@@ -8,7 +8,6 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
     selector: 'ffgbsy-bestellungsposition-edit-modal',
     templateUrl: './bestellungsposition-edit-modal.component.html',
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
-    standalone: true,
     imports: [
         IonTextarea,
         IonFooter,
@@ -29,7 +28,7 @@ import { EuroPreisPipe } from '../../pipes/euro-preis/euro-preis.pipe';
         EuroPreisPipe,
         IonInput,
         IonCheckbox
-    ],
+    ]
 })
 export class BestellungspositionEditModalComponent {
     private modalController = inject(ModalController);

@@ -11,7 +11,6 @@ import { DruckerService } from 'src/app/services/drucker/drucker.service';
     selector: 'ffgbsy-drucker-list',
     templateUrl: './drucker-list.page.html',
     styleUrls: ['./drucker-list.page.scss'],
-    standalone: true,
     imports: [IonList, IonContent, IonHeader, RouterLink, IonTitle, IonToolbar, IonMenuButton, PageSpinnerComponent, CommonModule, FormsModule]
 })
 export class DruckerListPage implements ViewDidEnter {

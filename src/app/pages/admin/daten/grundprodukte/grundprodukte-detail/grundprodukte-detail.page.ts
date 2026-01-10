@@ -11,7 +11,6 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
     selector: 'ffgbsy-grundprodukte-detail',
     templateUrl: './grundprodukte-detail.page.html',
     styleUrls: ['./grundprodukte-detail.page.scss'],
-    standalone: true,
     imports: [
         IonSpinner,
         IonItemDivider,
@@ -31,7 +30,7 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
         FormsModule,
         ReactiveFormsModule,
         PageSpinnerComponent
-    ],
+    ]
 })
 export class GrundprodukteDetailPage {
     private grundprodukteService = inject(GrundprodukteService);
