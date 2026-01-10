@@ -12,7 +12,7 @@ import { DruckerService } from '../drucker/drucker.service';
 import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AvailabilityService {
     private http = inject(HttpClient);
@@ -21,28 +21,59 @@ export class AvailabilityService {
     private data = inject(DataService);
     private modalController = inject(ModalController);
 
-    public all = computed(() =>
-        this.aufnehmerDataAvailability().isSuccessful() &&
-        this.druckerAvailabilities().filter(a => a.status != 'success').length == 0
+    public all = computed(
+        () =>
+            this.aufnehmerDataAvailability().isSuccessful() &&
+            this.druckerAvailabilities().filter((a) => a.status != 'success')
+                .length == 0
     );
 
     public aufnehmerDataAvailability = signal(new AvailabilityCheck<number>(0));
-    public produktbereicheDataAvailability = signal(new AvailabilityCheck<number>(0));
-    public produktkategorienDataAvailability = signal(new AvailabilityCheck<number>(0));
-    public produkteinteilungenDataAvailability = signal(new AvailabilityCheck<number>(0));
+    public produktbereicheDataAvailability = signal(
+        new AvailabilityCheck<number>(0)
+    );
+    public produktkategorienDataAvailability = signal(
+        new AvailabilityCheck<number>(0)
+    );
+    public produkteinteilungenDataAvailability = signal(
+        new AvailabilityCheck<number>(0)
+    );
     public produkteDataAvailability = signal(new AvailabilityCheck<number>(0));
-    public tischkategorienDataAvailability = signal(new AvailabilityCheck<number>(0));
+    public tischkategorienDataAvailability = signal(
+        new AvailabilityCheck<number>(0)
+    );
     public tischeDataAvailability = signal(new AvailabilityCheck<number>(0));
     public lookupDataGrossAvailibility = computed(() => {
         this.data.lookupDataSetted();
-        return this.aufnehmerDataAvailability().isSuccessful() && this.produktbereicheDataAvailability().isSuccessful() && this.produktkategorienDataAvailability().isSuccessful() && this.produkteinteilungenDataAvailability().isSuccessful() && this.produkteDataAvailability().isSuccessful() && this.tischkategorienDataAvailability().isSuccessful() && this.tischeDataAvailability().isSuccessful()
+        return (
+            this.aufnehmerDataAvailability().isSuccessful() &&
+            this.produktbereicheDataAvailability().isSuccessful() &&
+            this.produktkategorienDataAvailability().isSuccessful() &&
+            this.produkteinteilungenDataAvailability().isSuccessful() &&
+            this.produkteDataAvailability().isSuccessful() &&
+            this.tischkategorienDataAvailability().isSuccessful() &&
+            this.tischeDataAvailability().isSuccessful()
+        );
     });
-    public lookupDataGrossAvailibilityDatetime = computed<string>(() => this.lookupDataGrossAvailibility() ? formatDate(new Date(), 'dd.MM.YYYY HH:mm:ss', 'en-US') : null);
+    public lookupDataGrossAvailibilityDatetime = computed<string>(() =>
+        this.lookupDataGrossAvailibility()
+            ? formatDate(new Date(), 'dd.MM.yyyy HH:mm:ss', 'en-US')
+            : null
+    );
 
-    public druckerAvailabilities = toSignal(this.drucker.readAll().pipe(map((d) => d.map(d => new AvailabilityCheck<Drucker>(d)))), { initialValue: [] });
-    public druckerGrossAvailability = computed(() => this.druckerAvailabilities().filter(d => !d.isSuccessful).length == 0);
+    public druckerAvailabilities = toSignal(
+        this.drucker
+            .readAll()
+            .pipe(map((d) => d.map((d) => new AvailabilityCheck<Drucker>(d)))),
+        { initialValue: [] }
+    );
+    public druckerGrossAvailability = computed(
+        () =>
+            this.druckerAvailabilities().filter((d) => !d.isSuccessful)
+                .length == 0
+    );
 
-    public apiAvailability = signal(new AvailabilityCheck<string>("API"));
+    public apiAvailability = signal(new AvailabilityCheck<string>('API'));
 
     constructor() {
         effect(() => this.checkData());
@@ -51,36 +82,59 @@ export class AvailabilityService {
     }
 
     public checkData() {
-        console.debug("AvailabilityService", "checkData()");
-        this.setDataEnity(this.aufnehmerDataAvailability(), this.data.aufnehmer());
-        this.setDataEnity(this.produktbereicheDataAvailability(), this.data.produktbereiche());
-        this.setDataEnity(this.produktkategorienDataAvailability(), this.data.produktkategorien());
-        this.setDataEnity(this.produkteinteilungenDataAvailability(), this.data.produkteinteilungen());
-        this.setDataEnity(this.produkteDataAvailability(), this.data.produkte());
-        this.setDataEnity(this.tischkategorienDataAvailability(), this.data.tischkategorien());
+        console.debug('AvailabilityService', 'checkData()');
+        this.setDataEnity(
+            this.aufnehmerDataAvailability(),
+            this.data.aufnehmer()
+        );
+        this.setDataEnity(
+            this.produktbereicheDataAvailability(),
+            this.data.produktbereiche()
+        );
+        this.setDataEnity(
+            this.produktkategorienDataAvailability(),
+            this.data.produktkategorien()
+        );
+        this.setDataEnity(
+            this.produkteinteilungenDataAvailability(),
+            this.data.produkteinteilungen()
+        );
+        this.setDataEnity(
+            this.produkteDataAvailability(),
+            this.data.produkte()
+        );
+        this.setDataEnity(
+            this.tischkategorienDataAvailability(),
+            this.data.tischkategorien()
+        );
         this.setDataEnity(this.tischeDataAvailability(), this.data.tische());
     }
 
     private setDataEnity(check: AvailabilityCheck<number>, array: any[]) {
         check.entity = array.length;
-        check.status = check.entity > 0 ? "success" : "error";
+        check.status = check.entity > 0 ? 'success' : 'error';
     }
 
     public checkDrucker() {
-        console.debug("AvailabilityService", "checkDrucker()");
-        this.druckerAvailabilities().forEach(d => d.status = 'busy');
-        this.druckerAvailabilities().forEach(d =>
-            this.getStatusOfDrucker(d.entity.id).subscribe(r => d.status = r.result ? 'success' : 'error')
+        console.debug('AvailabilityService', 'checkDrucker()');
+        this.druckerAvailabilities().forEach((d) => (d.status = 'busy'));
+        this.druckerAvailabilities().forEach((d) =>
+            this.getStatusOfDrucker(d.entity.id).subscribe(
+                (r) => (d.status = r.result ? 'success' : 'error')
+            )
         );
     }
 
     public checkApi() {
-        console.debug("AvailabilityService", "checkApi()");
+        console.debug('AvailabilityService', 'checkApi()');
         this.apiAvailability().status = 'busy';
         forkJoin({
             api: this.getApiStatus(),
-            minDuration: timer(1000)
-        }).subscribe(({ api }) => this.apiAvailability().status = api ? 'success' : 'error');
+            minDuration: timer(1000),
+        }).subscribe(
+            ({ api }) =>
+                (this.apiAvailability().status = api ? 'success' : 'error')
+        );
     }
 
     public async showDetailsModal() {
@@ -88,40 +142,40 @@ export class AvailabilityService {
             component: AvailabilityModalComponent,
             canDismiss: true,
             breakpoints: [0.1, 0.5, 1],
-            initialBreakpoint: 1
+            initialBreakpoint: 1,
         });
         modal.present();
     }
 
     public getApiStatus(): Observable<boolean> {
-        console.debug("AvailabilityService", "getApiStatus()");
+        console.debug('AvailabilityService', 'getApiStatus()');
         return this.http
             .get(`${this.settings.apiBaseUrl()}/status/api`, {
-                observe: 'response'
+                observe: 'response',
             })
             .pipe(
                 retry(1),
                 map((r) => {
                     return r.status == 200;
-                }),
+                })
             );
     }
 
     public getStatusOfAllDrucker() {
-        console.debug("AvailabilityService", "getStatusOfAllDrucker()");
+        console.debug('AvailabilityService', 'getStatusOfAllDrucker()');
         return this.http
-            .get<{ drucker: Drucker, result: boolean }[]>(`${this.settings.apiBaseUrl()}/status/drucker`)
-            .pipe(
-                retry(1)
-            );
+            .get<{ drucker: Drucker; result: boolean }[]>(
+                `${this.settings.apiBaseUrl()}/status/drucker`
+            )
+            .pipe(retry(1));
     }
 
     public getStatusOfDrucker(id: number) {
-        console.debug("AvailabilityService", `getStatusOfDrucker(id = ${id})`);
+        console.debug('AvailabilityService', `getStatusOfDrucker(id = ${id})`);
         return this.http
-            .get<{ drucker: Drucker, result: boolean }>(`${this.settings.apiBaseUrl()}/status/drucker/${id}`)
-            .pipe(
-                retry(1)
-            );
+            .get<{ drucker: Drucker; result: boolean }>(
+                `${this.settings.apiBaseUrl()}/status/drucker/${id}`
+            )
+            .pipe(retry(1));
     }
 }
