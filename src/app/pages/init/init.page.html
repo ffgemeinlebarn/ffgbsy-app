@@ -14,12 +14,7 @@
             <h4 class="version">Version {{ version.number }}</h4>
 
             @if (readyToGo()) {
-                <ion-button
-                    class="start"
-                    size="large"
-                    shape="round"
-                    [routerLink]="['/neue-bestellung']"
-                >
+                <ion-button class="start" size="large" shape="round" [routerLink]="['/neue-bestellung']">
                     <ion-icon slot="start" name="arrow-forward"></ion-icon>
                     <span>Starten</span>
                 </ion-button>

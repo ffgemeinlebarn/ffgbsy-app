@@ -1,10 +1,5 @@
 import { Component, effect, inject } from '@angular/core';
-import {
-    FormBuilder,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonButton,
     IonButtons,
@@ -71,9 +66,7 @@ export class AufnehmerEditPage {
     public save() {
         const updatedAufnehmer = { ...this.aufnehmer(), ...this.form.value };
         this.aufnehmerService.update(updatedAufnehmer).subscribe((a) => {
-            this.frontendService.showToast(
-                `${a.vorname} ${a.nachname} wurde gespeichert.`
-            );
+            this.frontendService.showToast(`${a.vorname} ${a.nachname} wurde gespeichert.`);
             this.aufnehmer.set(a);
         });
     }
