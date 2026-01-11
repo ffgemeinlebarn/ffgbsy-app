@@ -1,8 +1,8 @@
-import { Bestellung } from "./bestellung.model";
-import { BonDruck } from "./bonDruck";
-import { Drucker } from "./drucker.class";
+import { Bestellung } from './bestellung.model';
+import { BonDruck } from './bonDruck';
+import { Drucker } from './drucker.class';
 
-export interface Bon {
+export interface IBon {
     id: number;
     bestellungen_id: number;
     drucker_id: number;

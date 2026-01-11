@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry, tap } from 'rxjs';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
 import { Bestellung } from 'src/app/model/bestellung.model';
-import { IBestellungenFilter } from 'src/app/model/bestellungen-filter.interface';
+import { IBestellungenFilter } from 'src/app/model/i-bestellungen-filter.interface';
 import { ErrorHandlingService } from './error-handling.service';
 import { FrontendService } from './frontend.service';
 import { SettingsService } from './settings.service';
@@ -18,71 +18,31 @@ export class BestellungenService {
     private frontendService = inject(FrontendService);
 
     public checkAvailability(bestellung: Bestellung) {
-        return this.http
-            .post(
-                `${this.settings.apiBaseUrl()}/bestellungen/availability`,
-                bestellung
-            )
-            .pipe(
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
-            );
+        return this.http.post(`${this.settings.apiBaseUrl()}/bestellungen/availability`, bestellung).pipe(catchError((error) => this.errorHandling.globalApiErrorHandling(error)));
     }
 
     public create(bestellung: Bestellung) {
         this.frontendService.showLoadingSpinner('Bestellung wird angelegt');
-        return this.http
-            .post<Bestellung>(
-                `${this.settings.apiBaseUrl()}/bestellungen`,
-                bestellung
-            )
-            .pipe(
-                tap(() => this.frontendService.hideLoadingSpinner()),
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
-            );
+        return this.http.post<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellung).pipe(
+            tap(() => this.frontendService.hideLoadingSpinner()),
+            catchError((error) => this.errorHandling.globalApiErrorHandling(error)),
+        );
     }
 
-    public createStornoBestellposition(
-        bestellposition: Bestellposition,
-        anzahl: number
-    ): Observable<Bestellposition> {
+    public createStornoBestellposition(bestellposition: Bestellposition, anzahl: number): Observable<Bestellposition> {
         this.frontendService.showLoadingSpinner();
-        return this.http
-            .post(
-                `${this.settings.apiBaseUrl()}/bestellungen/${
-                    bestellposition.bestellungen_id
-                }/bestellpositionen/${bestellposition.id}`,
-                { anzahl }
-            )
-            .pipe(
-                tap(() => this.frontendService.hideLoadingSpinner()),
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
-            );
+        return this.http.post(`${this.settings.apiBaseUrl()}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl }).pipe(
+            tap(() => this.frontendService.hideLoadingSpinner()),
+            catchError((error) => this.errorHandling.globalApiErrorHandling(error)),
+        );
     }
 
     public readAll(): Observable<Bestellung[]> {
-        return this.http
-            .get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`)
-            .pipe(
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
-            );
+        return this.http.get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`).pipe(catchError((error) => this.errorHandling.globalApiErrorHandling(error)));
     }
 
     public read(id: number) {
-        return this.http
-            .get<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`)
-            .pipe(
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
-            );
+        return this.http.get<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`).pipe(catchError((error) => this.errorHandling.globalApiErrorHandling(error)));
     }
 
     public search(filter: IBestellungenFilter): Observable<Bestellung[]> {
@@ -103,34 +63,21 @@ export class BestellungenService {
             })
             .pipe(
                 retry(1),
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error)),
             );
     }
 
     public update(bestellungen: Bestellung) {
-        return this.http
-            .put<Bestellung>(
-                `${this.settings.apiBaseUrl()}/bestellungen/${bestellungen.id}`,
-                bestellungen
-            )
-            .pipe(
-                retry(1),
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
-            );
+        return this.http.put<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${bestellungen.id}`, bestellungen).pipe(
+            retry(1),
+            catchError((error) => this.errorHandling.globalApiErrorHandling(error)),
+        );
     }
 
     public delete(id: number) {
-        return this.http
-            .delete<boolean>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`)
-            .pipe(
-                retry(1),
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
-            );
+        return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`).pipe(
+            retry(1),
+            catchError((error) => this.errorHandling.globalApiErrorHandling(error)),
+        );
     }
 }

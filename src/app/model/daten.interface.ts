@@ -1,4 +1,4 @@
-import { IAufnehmer } from './aufnehmer.model';
+import { IAufnehmer } from './i-aufnehmer.model';
 import { Produkt } from './produkt.class';
 import { Produktbereich } from './produktbereich.class';
 import { Produktkategorie } from './produktkategorie.class';

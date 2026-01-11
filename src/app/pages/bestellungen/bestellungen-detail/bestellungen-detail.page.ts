@@ -20,28 +20,14 @@ import { BonsService } from 'src/app/data/bons.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
 import { Bestellung } from 'src/app/model/bestellung.model';
-import { Bon } from 'src/app/model/bon.model';
+import { IBon } from 'src/app/model/bon.model';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
     templateUrl: './bestellungen-detail.page.html',
     styleUrls: ['./bestellungen-detail.page.scss'],
-    imports: [
-        IonHeader,
-        IonToolbar,
-        IonButtons,
-        IonBackButton,
-        IonTitle,
-        IonContent,
-        IonList,
-        IonItem,
-        IonLabel,
-        IonItemDivider,
-        IonChip,
-        DatePipe,
-        EuroPreisPipe,
-    ],
+    imports: [IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonItemDivider, IonChip, DatePipe, EuroPreisPipe],
 })
 export class BestellungenDetailPage implements OnInit {
     public activatedRoute = inject(ActivatedRoute);
@@ -57,25 +43,17 @@ export class BestellungenDetailPage implements OnInit {
     }
 
     loadBestellung(id: number) {
-        this.bestellungenService
-            .read(id)
-            .subscribe((bestellung) => (this.bestellung = bestellung));
+        this.bestellungenService.read(id).subscribe((bestellung) => (this.bestellung = bestellung));
     }
 
-    public printBon(bon: Bon) {
+    public printBon(bon: IBon) {
         this.bonsService.druckBonById(bon.id).subscribe((bonDruck) => {
             this.loadBestellung(bon.bestellungen_id);
 
             if (bonDruck.success) {
-                this.frontend.showToast(
-                    'Bestellbon wurde erfolgreich gedruckt!',
-                    2000
-                );
+                this.frontend.showToast('Bestellbon wurde erfolgreich gedruckt!', 2000);
             } else {
-                this.frontend.showOkAlert(
-                    'Fehler beim Drucken',
-                    'Der Bestellbon konnte leider nicht gedruckt werden!'
-                );
+                this.frontend.showOkAlert('Fehler beim Drucken', 'Der Bestellbon konnte leider nicht gedruckt werden!');
             }
         });
     }
@@ -105,36 +83,19 @@ export class BestellungenDetailPage implements OnInit {
                 {
                     text: 'Anzahl stornieren',
                     handler: (res) => {
-                        this.bestellungenService
-                            .createStornoBestellposition(
-                                bestellposition,
-                                parseInt(res.anzahl)
-                            )
-                            .subscribe((stornoposition) => {
-                                this.bonsService
-                                    .createStornoBon(stornoposition)
-                                    .subscribe((bon) =>
-                                        this.bonsService
-                                            .druckBonById(bon.id)
-                                            .subscribe((druck) => {
-                                                if (druck.success) {
-                                                    this.frontend.showToast(
-                                                        'Stornobon wurde erfolgreich gedruckt!',
-                                                        2000
-                                                    );
-                                                } else {
-                                                    this.frontend.showOkAlert(
-                                                        'Fehler beim Drucken',
-                                                        'Es konnten der Stornobon nicht gedruckt werden!'
-                                                    );
-                                                }
+                        this.bestellungenService.createStornoBestellposition(bestellposition, parseInt(res.anzahl)).subscribe((stornoposition) => {
+                            this.bonsService.createStornoBon(stornoposition).subscribe((bon) =>
+                                this.bonsService.druckBonById(bon.id).subscribe((druck) => {
+                                    if (druck.success) {
+                                        this.frontend.showToast('Stornobon wurde erfolgreich gedruckt!', 2000);
+                                    } else {
+                                        this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten der Stornobon nicht gedruckt werden!');
+                                    }
 
-                                                this.loadBestellung(
-                                                    bestellposition.bestellungen_id
-                                                );
-                                            })
-                                    );
-                            });
+                                    this.loadBestellung(bestellposition.bestellungen_id);
+                                }),
+                            );
+                        });
 
                         return true;
                     },

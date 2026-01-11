@@ -3,8 +3,8 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { catchError, retry } from 'rxjs';
 import { DataLoadedReportModalComponent } from 'src/app/feature/data-loaded-report-modal/data-loaded-report-modal.component';
-import { IAufnehmer } from 'src/app/model/aufnehmer.model';
 import { IDaten } from 'src/app/model/daten.interface';
+import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
 import { Produkt } from 'src/app/model/produkt.class';
 import { Produktbereich } from 'src/app/model/produktbereich.class';
 import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
@@ -32,14 +32,7 @@ export class DataService {
     public tische = signal<Tisch[]>([]);
 
     public lookupDataSetted = computed(
-        () =>
-            this.aufnehmer() &&
-            this.produktbereiche() &&
-            this.produktkategorien() &&
-            this.produkteinteilungen() &&
-            this.produkte() &&
-            this.tischkategorien() &&
-            this.tische()
+        () => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische(),
     );
 
     constructor() {
@@ -51,9 +44,7 @@ export class DataService {
             .get<IDaten>(`${this.settings.apiBaseUrl()}/daten/latest`)
             .pipe(
                 retry(1),
-                catchError((error) =>
-                    this.errorHandling.globalApiErrorHandling(error)
-                )
+                catchError((error) => this.errorHandling.globalApiErrorHandling(error)),
             )
             .subscribe((data) => {
                 this.aufnehmer.set(data.aufnehmer);

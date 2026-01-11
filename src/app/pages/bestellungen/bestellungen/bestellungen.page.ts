@@ -1,12 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormControl,
-    FormsModule,
-    ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import {
     IonContent,
@@ -29,7 +24,7 @@ import { AufnehmerService } from 'src/app/data/aufnehmer.service';
 import { BestellungenService } from 'src/app/data/bestellungen.service';
 import { TischeService } from 'src/app/data/tische.service';
 import { Bestellung } from 'src/app/model/bestellung.model';
-import { IBestellungenFilter } from 'src/app/model/bestellungen-filter.interface';
+import { IBestellungenFilter } from 'src/app/model/i-bestellungen-filter.interface';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 
 @Component({
@@ -81,16 +76,12 @@ export class BestellungenPage implements ViewDidEnter {
 
     constructor() {
         effect(() => {
-            this.filter.controls['aufnehmerId'].setValue(
-                this.appService.aufnehmer()?.id ?? null
-            );
+            this.filter.controls['aufnehmerId'].setValue(this.appService.aufnehmer()?.id ?? null);
         });
     }
 
     public searchBestellungen() {
-        return this.bestellungenService
-            .search(this.filter.value as IBestellungenFilter)
-            .subscribe((bestellungen) => (this.bestellungen = bestellungen));
+        return this.bestellungenService.search(this.filter.value as IBestellungenFilter).subscribe((bestellungen) => (this.bestellungen = bestellungen));
     }
     ionViewDidEnter(): void {
         this.searchBestellungen();

@@ -1,8 +1,8 @@
 import { parseZone } from 'moment';
-import { IAufnehmer } from '../model/aufnehmer.model';
 import { Bestellstatus } from '../model/bestellstatus.type';
 import { Bestellposition } from './bestellposition.model';
-import { Bon } from './bon.model';
+import { IBon } from './bon.model';
+import { IAufnehmer } from './i-aufnehmer.model';
 import { Tisch } from './tisch.class';
 
 export class Bestellung {
@@ -18,8 +18,8 @@ export class Bestellung {
     public timestamp_beendet: any = null;
     public bestellpositionen: Bestellposition[] = [];
     public stornopositionen: Bestellposition[] = [];
-    public bestellbons: Bon[] = [];
-    public stornobons: Bon[] = [];
+    public bestellbons: IBon[] = [];
+    public stornobons: IBon[] = [];
 
     public summe: number | null = null;
     public summe_ohne_eigenschaften: number | null = null;

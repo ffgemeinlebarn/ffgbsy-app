@@ -1,10 +1,5 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
-import {
-    FormBuilder,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
     IonButton,
@@ -24,7 +19,7 @@ import {
 } from '@ionic/angular/standalone';
 import { AufnehmerService } from 'src/app/data/aufnehmer.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { IAufnehmer } from 'src/app/model/aufnehmer.model';
+import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-detail',
@@ -77,13 +72,9 @@ export class AufnehmerDetailPage {
     }
 
     public save() {
-        this.aufnehmerService
-            .update({ ...this.aufnehmer(), ...this.form.value })
-            .subscribe((p) => {
-                this.frontendService.showToast(
-                    `${p.name} wurde erfolgreich gespeichert!`
-                );
-                this.load(this.id());
-            });
+        this.aufnehmerService.update({ ...this.aufnehmer(), ...this.form.value }).subscribe((p) => {
+            this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
+            this.load(this.id());
+        });
     }
 }

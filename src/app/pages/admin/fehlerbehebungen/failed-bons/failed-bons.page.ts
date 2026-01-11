@@ -1,12 +1,7 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormControl,
-    FormsModule,
-    ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     CheckboxCustomEvent,
     IonAccordion,
@@ -36,7 +31,7 @@ import {
 import { BonsService } from 'src/app/data/bons.service';
 import { DruckerService } from 'src/app/data/drucker.service';
 import { TischeService } from 'src/app/data/tische.service';
-import { Bon } from 'src/app/model/bon.model';
+import { IBon } from 'src/app/model/bon.model';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';
 import { FrontendService } from '../../../../data/frontend.service';
 
@@ -80,17 +75,11 @@ export class FailedBonsPage implements ViewDidEnter {
     private formBuilder = inject(FormBuilder);
     private frontendService = inject(FrontendService);
 
-    public bons = signal<Bon[]>([]);
+    public bons = signal<IBon[]>([]);
 
-    public numberOfBonsSelected = computed(
-        () => this.bons().filter((b) => b.selected).length
-    );
+    public numberOfBonsSelected = computed(() => this.bons().filter((b) => b.selected).length);
     public anyBonsSelected = computed(() => this.numberOfBonsSelected() > 0);
-    public allBonsSelectedAreMissingSuccess = computed(
-        () =>
-            this.bons().filter((b) => b.selected && b.successes == 0).length ==
-            this.numberOfBonsSelected()
-    );
+    public allBonsSelectedAreMissingSuccess = computed(() => this.bons().filter((b) => b.selected && b.successes == 0).length == this.numberOfBonsSelected());
 
     public filter = this.formBuilder.group({
         druckerId: new FormControl<null | number>(null),
@@ -109,8 +98,7 @@ export class FailedBonsPage implements ViewDidEnter {
     };
 
     public toggleAllOnOff() {
-        const allSelected =
-            this.bons().filter((b) => b.selected).length == this.bons().length;
+        const allSelected = this.bons().filter((b) => b.selected).length == this.bons().length;
         this.bons.update((bons) => {
             bons.forEach((bon) => (bon.selected = !allSelected));
             return [...bons];
@@ -121,7 +109,7 @@ export class FailedBonsPage implements ViewDidEnter {
         event.stopPropagation();
     }
 
-    public onChange(changeEvent: CheckboxCustomEvent, bon: Bon) {
+    public onChange(changeEvent: CheckboxCustomEvent, bon: IBon) {
         this.bons.update((bons) => {
             bons.find((b) => b == bon).selected = changeEvent.detail.checked;
             return [...bons];
@@ -129,9 +117,7 @@ export class FailedBonsPage implements ViewDidEnter {
     }
 
     public searchBons() {
-        return this.bonsService
-            .search(this.filter.value as IBonsFilter)
-            .subscribe((bons) => this.bons.set(bons));
+        return this.bonsService.search(this.filter.value as IBonsFilter).subscribe((bons) => this.bons.set(bons));
     }
 
     public printSelectedBons() {
@@ -141,17 +127,11 @@ export class FailedBonsPage implements ViewDidEnter {
             .map((bon) => bon.id);
         this.bonsService.druckBonsByIds(selectedBons).subscribe((bonDrucke) => {
             this.searchBons();
-            const successfulBons = bonDrucke.filter(
-                (bon) => bon.success
-            ).length;
+            const successfulBons = bonDrucke.filter((bon) => bon.success).length;
             if (successfulBons === bonDrucke.length) {
-                this.frontendService.showToast(
-                    'Alle Bons erfolgreich gedruckt!'
-                );
+                this.frontendService.showToast('Alle Bons erfolgreich gedruckt!');
             } else {
-                this.frontendService.showToast(
-                    `Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`
-                );
+                this.frontendService.showToast(`Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`);
             }
             this.frontendService.hideLoadingSpinner();
         });
