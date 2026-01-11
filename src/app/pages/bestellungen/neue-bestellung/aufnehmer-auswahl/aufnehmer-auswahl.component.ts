@@ -13,7 +13,7 @@ export class AufnehmerAuswahlComponent {
 
     public readonly aufnehmer = this.appService.aufnehmer;
 
-    public selectIAufnehmer() {
+    public selectAufnehmer() {
         this.appService.showSelectAufnehmerModal().subscribe();
     }
 
