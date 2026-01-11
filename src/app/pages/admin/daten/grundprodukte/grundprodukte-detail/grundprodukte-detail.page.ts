@@ -79,7 +79,7 @@ export class GrundprodukteDetailPage {
     public save() {
         const updated = { ...this.grundprodukt(), ...this.form.value };
         updated.bestand = updated.unlimitiert ? null : updated.bestand;
-        console.debug('GrundprodukteDetailPage', 'save(), Updated Product:', updated);
+        console.debug('[FFGBSY]', 'GrundprodukteDetailPage', 'save(), Updated Product:', updated);
         this.grundprodukteService.update(updated).subscribe((p) => {
             this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());

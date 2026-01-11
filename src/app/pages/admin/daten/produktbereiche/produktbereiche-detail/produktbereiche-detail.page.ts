@@ -2,13 +2,7 @@ import { Component, effect, inject, input, signal } from '@angular/core';
 import { Produktbereich } from 'src/app/model/produktbereich.class';
 
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
     IonButton,
@@ -75,26 +69,18 @@ export class ProduktbereicheDetailPage {
     }
 
     private load(id: number) {
-        this.produktbereicheService
-            .read(id)
-            .subscribe((produktbereich: Produktbereich) => {
-                this.produktbereich.set(produktbereich);
-                this.form.patchValue(produktbereich);
-            });
+        this.produktbereicheService.read(id).subscribe((produktbereich: Produktbereich) => {
+            this.produktbereich.set(produktbereich);
+            this.form.patchValue(produktbereich);
+        });
     }
 
     public save() {
         const updated = { ...this.produktbereich(), ...this.form.value };
         updated.bestand = updated.unlimitiert ? null : updated.bestand;
-        console.debug(
-            'ProduktbereicheDetailPage',
-            'save(), Updated Product:',
-            updated
-        );
+        console.debug('[FFGBSY]', 'ProduktbereicheDetailPage', 'save(), Updated Product:', updated);
         this.produktbereicheService.update(updated).subscribe((p) => {
-            this.frontendService.showToast(
-                `${p.name} wurde erfolgreich gespeichert!`
-            );
+            this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
             this.reload();
         });

@@ -1,12 +1,6 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import {
     IonBackButton,
@@ -95,13 +89,7 @@ export class ProduktkategorienDetailPage {
     });
 
     constructor() {
-        effect(() =>
-            this.produktkategorienService
-                .read(this.id())
-                .subscribe((produktkategorie: Produktkategorie) =>
-                    this.setEntity(produktkategorie)
-                )
-        );
+        effect(() => this.produktkategorienService.read(this.id()).subscribe((produktkategorie: Produktkategorie) => this.setEntity(produktkategorie)));
     }
 
     private setEntity(produktkategorie: Produktkategorie) {
@@ -110,11 +98,7 @@ export class ProduktkategorienDetailPage {
     }
 
     public removeEigenschaft(eigenschaft: Eigenschaft) {
-        this.form.controls.eigenschaften.setValue(
-            this.form.controls.eigenschaften.value.filter(
-                (e) => e.id !== eigenschaft.id
-            )
-        );
+        this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter((e) => e.id !== eigenschaft.id));
         this.produktkategorie.set({
             ...this.produktkategorie(),
             eigenschaften: this.form.controls.eigenschaften.value,
@@ -133,9 +117,7 @@ export class ProduktkategorienDetailPage {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: Eigenschaft = await (
-            await modal.onWillDismiss()
-        ).data;
+        const eigenschaft: Eigenschaft = await (await modal.onWillDismiss()).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({
@@ -154,15 +136,9 @@ export class ProduktkategorienDetailPage {
                 ],
             });
             await alert.present();
-            eigenschaft.in_produkt_enthalten = await (
-                await alert.onWillDismiss()
-            ).data;
+            eigenschaft.in_produkt_enthalten = await (await alert.onWillDismiss()).data;
 
-            if (
-                !this.produktkategorie().eigenschaften.find(
-                    (e) => e.id === eigenschaft.id
-                )
-            ) {
+            if (!this.produktkategorie().eigenschaften.find((e) => e.id === eigenschaft.id)) {
                 this.produktkategorie.update((produktkategorie) => {
                     produktkategorie.eigenschaften.push(eigenschaft);
                     return produktkategorie;
@@ -173,18 +149,10 @@ export class ProduktkategorienDetailPage {
 
     public save() {
         const updated = { ...this.produktkategorie(), ...this.form.value };
-        console.debug(
-            'ProduktkategorienDetailPage',
-            'save(), Updated Produktkategorie:',
-            updated
-        );
-        this.produktkategorienService
-            .update(updated)
-            .subscribe((produktkategorie) => {
-                this.frontendService.showToast(
-                    `${produktkategorie.name} wurde erfolgreich gespeichert!`
-                );
-                this.setEntity(produktkategorie);
-            });
+        console.debug('[FFGBSY]', 'ProduktkategorienDetailPage', 'save(), Updated Produktkategorie:', updated);
+        this.produktkategorienService.update(updated).subscribe((produktkategorie) => {
+            this.frontendService.showToast(`${produktkategorie.name} wurde erfolgreich gespeichert!`);
+            this.setEntity(produktkategorie);
+        });
     }
 }

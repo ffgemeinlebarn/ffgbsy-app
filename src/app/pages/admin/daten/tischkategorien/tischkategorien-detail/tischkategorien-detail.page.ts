@@ -1,12 +1,6 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
     IonButton,
@@ -59,9 +53,7 @@ export class TischkategorienDetailPage {
 
     public id = input.required<number>();
 
-    public produktkategorien = toSignal(
-        this.produktkategorienService.readAll()
-    );
+    public produktkategorien = toSignal(this.produktkategorienService.readAll());
     public tischkategorie = signal<Tischkategorie>(null);
 
     public form: FormGroup = this.formBuilder.group({
@@ -71,13 +63,7 @@ export class TischkategorienDetailPage {
     });
 
     constructor() {
-        effect(() =>
-            this.tischkategorienService
-                .read(this.id())
-                .subscribe((tischkategorie: Tischkategorie) =>
-                    this.setEntity(tischkategorie)
-                )
-        );
+        effect(() => this.tischkategorienService.read(this.id()).subscribe((tischkategorie: Tischkategorie) => this.setEntity(tischkategorie)));
     }
 
     private setEntity(tischkategorie: Tischkategorie) {
@@ -87,18 +73,10 @@ export class TischkategorienDetailPage {
 
     public save() {
         const updated = { ...this.tischkategorie(), ...this.form.value };
-        console.debug(
-            'TischkategorienDetailPage',
-            'save(), Updated Product:',
-            updated
-        );
-        this.tischkategorienService
-            .update(updated)
-            .subscribe((tischkategorie) => {
-                this.frontendService.showToast(
-                    `${tischkategorie.name} wurde erfolgreich gespeichert!`
-                );
-                this.setEntity(tischkategorie);
-            });
+        console.debug('[FFGBSY]', 'TischkategorienDetailPage', 'save(), Updated Product:', updated);
+        this.tischkategorienService.update(updated).subscribe((tischkategorie) => {
+            this.frontendService.showToast(`${tischkategorie.name} wurde erfolgreich gespeichert!`);
+            this.setEntity(tischkategorie);
+        });
     }
 }

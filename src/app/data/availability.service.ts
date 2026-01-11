@@ -1,7 +1,6 @@
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, WritableSignal, computed, effect, inject, signal } from '@angular/core';
-import { ModalController } from '@ionic/angular/standalone';
 import { map, retry, switchMap, tap } from 'rxjs';
 import { AvailabilityCheck } from 'src/app/model/availability-check.model';
 import { IDrucker } from 'src/app/model/i-drucker.class';
@@ -17,7 +16,6 @@ export class AvailabilityService {
     private settings = inject(SettingsService);
     private drucker = inject(DruckerService);
     private data = inject(DataService);
-    private modalController = inject(ModalController);
 
     public all = computed(() => this.aufnehmerDataAvailability().isSuccessful() && this.druckerAvailabilities().filter((a) => a.status != 'success').length == 0);
 
@@ -55,7 +53,7 @@ export class AvailabilityService {
     }
 
     public checkData() {
-        console.debug('AvailabilityService', 'checkData()');
+        console.debug('[FFGBSY]', 'AvailabilityService', 'checkData()');
 
         this.setDataEnity(this.aufnehmerDataAvailability, this.data.aufnehmer());
         this.setDataEnity(this.produktbereicheDataAvailability, this.data.produktbereiche());
@@ -76,7 +74,7 @@ export class AvailabilityService {
     }
 
     public checkDrucker() {
-        console.debug('AvailabilityService', 'checkDrucker()');
+        console.debug('[FFGBSY]', 'AvailabilityService', 'checkDrucker()');
 
         this.drucker
             .readAll()
@@ -91,7 +89,7 @@ export class AvailabilityService {
     }
 
     public checkApi() {
-        console.debug('AvailabilityService', 'checkApi()');
+        console.debug('[FFGBSY]', 'AvailabilityService', 'checkApi()');
 
         this.apiAvailability.update((check) => {
             check.status = 'busy';

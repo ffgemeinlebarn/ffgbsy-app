@@ -65,7 +65,7 @@ export class DruckerDetailPage implements ViewDidEnter {
 
     public save() {
         const updated = { ...this.drucker(), ...this.form.value };
-        console.debug('DruckerDetailPage', 'save(), Updated Drucker:', updated);
+        console.debug('[FFGBSY]', 'DruckerDetailPage', 'save(), Updated Drucker:', updated);
         this.druckerService.update(updated).subscribe((p) => {
             this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());

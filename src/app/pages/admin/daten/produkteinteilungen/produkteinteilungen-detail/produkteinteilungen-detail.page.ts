@@ -1,12 +1,6 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
     IonButton,
@@ -61,9 +55,7 @@ export class ProdukteinteilungenDetailPage {
 
     public id = input.required<number>();
 
-    public produktkategorien = toSignal(
-        this.produktkategorienService.readAll()
-    );
+    public produktkategorien = toSignal(this.produktkategorienService.readAll());
     public produkteinteilung = signal<Produkteinteilung>(null);
 
     public form: FormGroup = this.formBuilder.group({
@@ -77,25 +69,17 @@ export class ProdukteinteilungenDetailPage {
     }
 
     private load(id: number) {
-        this.produkteinteilungenService
-            .read(id)
-            .subscribe((produkteinteilung: Produkteinteilung) => {
-                this.produkteinteilung.set(produkteinteilung);
-                this.form.patchValue(produkteinteilung);
-            });
+        this.produkteinteilungenService.read(id).subscribe((produkteinteilung: Produkteinteilung) => {
+            this.produkteinteilung.set(produkteinteilung);
+            this.form.patchValue(produkteinteilung);
+        });
     }
 
     public save() {
         const updated = { ...this.produkteinteilung(), ...this.form.value };
-        console.debug(
-            'ProdukteinteilungenDetailPage',
-            'save(), Updated Product:',
-            updated
-        );
+        console.debug('[FFGBSY]', 'ProdukteinteilungenDetailPage', 'save(), Updated Product:', updated);
         this.produkteinteilungenService.update(updated).subscribe((p) => {
-            this.frontendService.showToast(
-                `${p.name} wurde erfolgreich gespeichert!`
-            );
+            this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
             this.reload();
         });
