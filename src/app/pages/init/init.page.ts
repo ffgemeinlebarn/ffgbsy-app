@@ -27,7 +27,9 @@ export class InitPage {
         this.availabilityService.apiAvailability() ? 'Schnittstelle erreichbar!' : 'Schnittstelle nicht erreichbar!',
     );
     public readonly druckerAvailabilityStatusForSubtitle = computed(() =>
-        this.availabilityService.druckerGrossAvailability() ? 'Alle Drucker erreichbar!' : 'Fehler bei den Drucker-Verbindungen',
+        this.availabilityService.druckerGrossAvailability()
+            ? 'Alle Drucker erreichbar!'
+            : `${this.availabilityService.druckerAvailabilities().filter((c) => c.isSuccessful()).length} von ${this.availabilityService.druckerAvailabilities().length} Drucker erreichbar!`,
     );
 
     public readonly isAufnehmerSelected = computed(() => (this.appService.aufnehmer() ? true : false));
