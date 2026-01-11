@@ -1,24 +1,23 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/data/app.service';
-import { IAufnehmer } from 'src/app/model/aufnehmer.model';
 
 @Component({
-    selector: 'app-aufnehmer-auswahl',
+    selector: 'ffgbsy-aufnehmer-auswahl',
     templateUrl: './aufnehmer-auswahl.component.html',
     styleUrls: ['./aufnehmer-auswahl.component.scss'],
     imports: [IonFooter, IonButton, IonContent],
 })
 export class AufnehmerAuswahlComponent {
-    private app = inject(AppService);
+    private readonly appService = inject(AppService);
 
-    public aufnehmer = input<IAufnehmer>();
+    public readonly aufnehmer = this.appService.aufnehmer;
 
     public selectIAufnehmer() {
-        this.app.showSelectAufnehmerModal().subscribe();
+        this.appService.showSelectAufnehmerModal().subscribe();
     }
 
     public starteBestellvorgang() {
-        this.app.createBestellung();
+        this.appService.createBestellung();
     }
 }

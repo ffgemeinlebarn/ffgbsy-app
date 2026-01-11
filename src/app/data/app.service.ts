@@ -27,13 +27,15 @@ export class AppService {
     private bestellungenService = inject(BestellungenService);
 
     // State Management
-    public readyToGo = computed<boolean>(() => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility());
-    public aufnehmer = signal<IAufnehmer>(null);
-    public deviceName = computed<string>(() => this.settings.local().deviceName);
-    public isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
+    public readonly readyToGo = computed<boolean>(
+        () => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility(),
+    );
+    public readonly aufnehmer = signal<IAufnehmer>(null);
+    public readonly deviceName = computed<string>(() => this.settings.local().deviceName);
+    public readonly isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
 
-    // Manage new Bestellung
-    public bestellung = signal<Bestellung>(null);
+    // Current Bestellung
+    public readonly bestellung = signal<Bestellung>(null);
 
     constructor() {
         effect(
