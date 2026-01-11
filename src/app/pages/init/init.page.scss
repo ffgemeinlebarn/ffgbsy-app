@@ -1,4 +1,9 @@
 :host {
+    ion-header {
+        box-shadow: none;
+        position: absolute;
+    }
+
     ion-content {
         .logo {
             max-width: 100px;

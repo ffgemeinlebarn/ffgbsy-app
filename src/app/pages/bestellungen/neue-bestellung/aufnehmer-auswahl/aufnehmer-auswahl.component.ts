@@ -15,7 +15,7 @@ export class AufnehmerAuswahlComponent {
     public aufnehmer = input<IAufnehmer>();
 
     public selectIAufnehmer() {
-        this.app.showSelectAufnehmerModal();
+        this.app.showSelectAufnehmerModal().subscribe();
     }
 
     public starteBestellvorgang() {

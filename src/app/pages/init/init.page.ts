@@ -1,13 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import {
-    IonButton,
-    IonContent,
-    IonHeader,
-    IonMenuButton,
-    IonTitle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonHeader, IonMenuButton, IonToolbar } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/data/app.service';
 import { AvailabilityService } from 'src/app/data/availability.service';
 import { InitTileComponent } from 'src/app/ui/init-tile/init-tile.component';
@@ -17,56 +10,34 @@ import { version } from 'src/environments/version';
     selector: 'ffgbsy-init',
     templateUrl: './init.page.html',
     styleUrls: ['./init.page.scss'],
-    imports: [
-        IonTitle,
-        IonButton,
-        IonHeader,
-        IonToolbar,
-        IonMenuButton,
-        IonContent,
-        RouterLink,
-        InitTileComponent,
-        IonTitle,
-    ],
+    imports: [IonButton, IonHeader, IonToolbar, IonMenuButton, IonContent, RouterLink, InitTileComponent],
 })
 export class InitPage {
     private readonly appService = inject(AppService);
     private readonly availabilityService = inject(AvailabilityService);
 
-    public version = version;
+    public readonly version = version;
 
-    public aufnehmerNameForSubtitle = computed(() =>
-        this.appService.aufnehmer()
-            ? `${this.appService.aufnehmer()?.vorname} ${this.appService.aufnehmer()?.nachname}`
-            : 'nicht ausgewählt',
+    public readonly aufnehmerNameForSubtitle = computed(() =>
+        this.appService.aufnehmer() ? `${this.appService.aufnehmer()?.vorname} ${this.appService.aufnehmer()?.nachname}` : 'nicht ausgewählt',
     );
-    public deviceNameForSubtitle = computed(() =>
-        this.appService.deviceName() ? this.appService.deviceName() : 'Der Gerätename fehlt!',
+    public readonly deviceNameForSubtitle = computed(() => (this.appService.deviceName() ? this.appService.deviceName() : 'Der Gerätename fehlt!'));
+    public readonly dataLastSyncedForSubtitle = this.availabilityService.lookupDataGrossAvailibilityDatetime;
+    public readonly apiAvailabilityStatusForSubtitle = computed(() =>
+        this.availabilityService.apiAvailability() ? 'Schnittstelle erreichbar!' : 'Schnittstelle nicht erreichbar!',
     );
-    public dataLastSyncedForSubtitle = this.availabilityService.lookupDataGrossAvailibilityDatetime;
-    public apiAvailabilityStatusForSubtitle = computed(() =>
-        this.availabilityService.apiAvailability()
-            ? 'Schnittstelle erreichbar!'
-            : 'Schnittstelle nicht erreichbar!',
-    );
-    public druckerAvailabilityStatusForSubtitle = computed(() =>
-        this.availabilityService.druckerGrossAvailability()
-            ? 'Alle Drucker erreichbar!'
-            : 'Fehler bei den Drucker-Verbindungen',
+    public readonly druckerAvailabilityStatusForSubtitle = computed(() =>
+        this.availabilityService.druckerGrossAvailability() ? 'Alle Drucker erreichbar!' : 'Fehler bei den Drucker-Verbindungen',
     );
 
-    public isAufnehmerSelected = computed(() => (this.appService.aufnehmer() ? true : false));
-    public isDeviceNameSet = computed(() => (this.appService.deviceName() ? true : false));
-    public isLookupDataAvailable = this.availabilityService.lookupDataGrossAvailibility;
-    public isApiAvailable = this.availabilityService.apiAvailability;
-    public areDruckerAvailable = this.availabilityService.druckerGrossAvailability;
-    public readyToGo = this.appService.readyToGo;
+    public readonly isAufnehmerSelected = computed(() => (this.appService.aufnehmer() ? true : false));
+    public readonly isDeviceNameSet = computed(() => (this.appService.deviceName() ? true : false));
+    public readonly isLookupDataAvailable = this.availabilityService.lookupDataGrossAvailibility;
+    public readonly isApiAvailable = this.availabilityService.apiAvailability;
+    public readonly areDruckerAvailable = this.availabilityService.druckerGrossAvailability;
+    public readonly readyToGo = this.appService.readyToGo;
 
     public selectAufnehmer() {
-        this.appService.showSelectAufnehmerModal();
-    }
-
-    public dataShowAvailabilityDetails() {
-        this.availabilityService.showDetailsModal();
+        this.appService.showSelectAufnehmerModal().subscribe();
     }
 }
