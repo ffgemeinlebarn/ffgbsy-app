@@ -19,9 +19,9 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
+import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
+import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
 import { AppService } from 'src/app/data/app.service';
-import { AufnehmerService } from 'src/app/data/aufnehmer.service';
-import { BestellungenService } from 'src/app/data/bestellungen.service';
 import { TischeService } from 'src/app/data/tische.service';
 import { Bestellung } from 'src/app/model/bestellung.model';
 import { IBestellungenFilter } from 'src/app/model/i-bestellungen-filter.interface';
@@ -53,8 +53,8 @@ import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
     ],
 })
 export class BestellungenPage implements ViewDidEnter {
-    private bestellungenService = inject(BestellungenService);
-    private aufnehmerService = inject(AufnehmerService);
+    private readonly bestellungenApiService = inject(BestellungenApiService);
+    private readonly aufnehmerApiService = inject(AufnehmerApiService);
     private tischeService = inject(TischeService);
     private appService = inject(AppService);
     private formBuilder = inject(FormBuilder);
@@ -69,7 +69,7 @@ export class BestellungenPage implements ViewDidEnter {
     });
 
     public availableFilter = {
-        aufnehmer: toSignal(this.aufnehmerService.readAll()),
+        aufnehmer: toSignal(this.aufnehmerApiService.readAll()),
         tische: toSignal(this.tischeService.readAll()),
         limits: [5, 10, 25, 50, 100, 200, 500, 1000],
     };
@@ -81,7 +81,7 @@ export class BestellungenPage implements ViewDidEnter {
     }
 
     public searchBestellungen() {
-        return this.bestellungenService.search(this.filter.value as IBestellungenFilter).subscribe((bestellungen) => (this.bestellungen = bestellungen));
+        return this.bestellungenApiService.search(this.filter.value as IBestellungenFilter).subscribe((bestellungen) => (this.bestellungen = bestellungen));
     }
     ionViewDidEnter(): void {
         this.searchBestellungen();

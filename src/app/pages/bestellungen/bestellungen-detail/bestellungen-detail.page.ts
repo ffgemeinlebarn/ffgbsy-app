@@ -15,8 +15,8 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { BestellungenService } from 'src/app/data/bestellungen.service';
-import { BonsService } from 'src/app/data/bons.service';
+import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
+import { BonsService } from 'src/app/data/api/bons-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
 import { Bestellung } from 'src/app/model/bestellung.model';
@@ -32,7 +32,7 @@ import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 export class BestellungenDetailPage implements OnInit {
     public activatedRoute = inject(ActivatedRoute);
     private bonsService = inject(BonsService);
-    private bestellungenService = inject(BestellungenService);
+    private readonly bestellungenApiService = inject(BestellungenApiService);
     private frontend = inject(FrontendService);
     private alertController = inject(AlertController);
 
@@ -43,7 +43,7 @@ export class BestellungenDetailPage implements OnInit {
     }
 
     loadBestellung(id: number) {
-        this.bestellungenService.read(id).subscribe((bestellung) => (this.bestellung = bestellung));
+        this.bestellungenApiService.read(id).subscribe((bestellung) => (this.bestellung = bestellung));
     }
 
     public printBon(bon: IBon) {
@@ -83,7 +83,7 @@ export class BestellungenDetailPage implements OnInit {
                 {
                     text: 'Anzahl stornieren',
                     handler: (res) => {
-                        this.bestellungenService.createStornoBestellposition(bestellposition, parseInt(res.anzahl)).subscribe((stornoposition) => {
+                        this.bestellungenApiService.createStornoBestellposition(bestellposition, parseInt(res.anzahl)).subscribe((stornoposition) => {
                             this.bonsService.createStornoBon(stornoposition).subscribe((bon) =>
                                 this.bonsService.druckBonById(bon.id).subscribe((druck) => {
                                     if (druck.success) {

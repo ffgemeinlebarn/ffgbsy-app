@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
-import { catchError, retry } from 'rxjs';
+import { retry } from 'rxjs';
 import { DataLoadedReportModalComponent } from 'src/app/feature/data-loaded-report-modal/data-loaded-report-modal.component';
 import { IDaten } from 'src/app/model/daten.interface';
 import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
@@ -11,7 +11,6 @@ import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
 import { Produktkategorie } from 'src/app/model/produktkategorie.class';
 import { Tisch } from 'src/app/model/tisch.class';
 import { Tischkategorie } from 'src/app/model/tischkategorie.class';
-import { ErrorHandlingService } from './error-handling.service';
 import { SettingsService } from './settings.service';
 
 @Injectable({
@@ -21,7 +20,6 @@ export class DataService {
     private modalController = inject(ModalController);
     private http = inject(HttpClient);
     private settings = inject(SettingsService);
-    private errorHandling = inject(ErrorHandlingService);
 
     public aufnehmer = signal<IAufnehmer[]>([]);
     public produktbereiche = signal<Produktbereich[]>([]);
@@ -42,10 +40,7 @@ export class DataService {
     public load() {
         this.http
             .get<IDaten>(`${this.settings.apiBaseUrl()}/daten/latest`)
-            .pipe(
-                retry(1),
-                catchError((error) => this.errorHandling.globalApiErrorHandling(error)),
-            )
+            .pipe(retry(1))
             .subscribe((data) => {
                 this.aufnehmer.set(data.aufnehmer);
                 this.produktbereiche.set(data.produktbereiche);

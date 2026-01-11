@@ -17,7 +17,7 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { AufnehmerService } from 'src/app/data/aufnehmer.service';
+import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
 
@@ -46,7 +46,7 @@ import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
     ],
 })
 export class AufnehmerDetailPage {
-    private aufnehmerService = inject(AufnehmerService);
+    private readonly aufnehmerApiService = inject(AufnehmerApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
@@ -65,15 +65,15 @@ export class AufnehmerDetailPage {
     }
 
     public load(id: number) {
-        this.aufnehmerService.read(id).subscribe((aufnehmer) => {
+        this.aufnehmerApiService.read(id).subscribe((aufnehmer) => {
             this.aufnehmer.set(aufnehmer);
             this.form.patchValue(aufnehmer);
         });
     }
 
     public save() {
-        this.aufnehmerService.update({ ...this.aufnehmer(), ...this.form.value }).subscribe((p) => {
-            this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
+        this.aufnehmerApiService.update({ ...this.aufnehmer(), ...this.form.value }).subscribe((a) => {
+            this.frontendService.showToast(`${a.vorname} ${a.nachname} wurde erfolgreich gespeichert!`);
             this.load(this.id());
         });
     }

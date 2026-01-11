@@ -17,8 +17,8 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
+import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
 import { AppService } from 'src/app/data/app.service';
-import { AufnehmerService } from 'src/app/data/aufnehmer.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 
 @Component({
@@ -47,7 +47,7 @@ import { FrontendService } from 'src/app/data/frontend.service';
 })
 export class AufnehmerEditPage {
     private appService = inject(AppService);
-    private aufnehmerService = inject(AufnehmerService);
+    private readonly aufnehmerApiService = inject(AufnehmerApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
@@ -65,7 +65,7 @@ export class AufnehmerEditPage {
 
     public save() {
         const updatedAufnehmer = { ...this.aufnehmer(), ...this.form.value };
-        this.aufnehmerService.update(updatedAufnehmer).subscribe((a) => {
+        this.aufnehmerApiService.update(updatedAufnehmer).subscribe((a) => {
             this.frontendService.showToast(`${a.vorname} ${a.nachname} wurde gespeichert.`);
             this.aufnehmer.set(a);
         });

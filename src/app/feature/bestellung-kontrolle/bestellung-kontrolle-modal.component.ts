@@ -1,20 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import {
-    IonButton,
-    IonContent,
-    IonFooter,
-    IonHeader,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonTitle,
-    IonToolbar,
-    ModalController,
-    ViewDidEnter,
-} from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar, ModalController, ViewDidEnter } from '@ionic/angular/standalone';
+import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
 import { AppService } from 'src/app/data/app.service';
-import { BestellungenService } from 'src/app/data/bestellungen.service';
 import { StatusListItemComponent } from 'src/app/ui/status-list-item/status-list-item.component';
 import { EuroPreisPipe } from '../../misc/euro-preis.pipe';
 
@@ -22,27 +9,12 @@ import { EuroPreisPipe } from '../../misc/euro-preis.pipe';
     selector: 'ffgbsy-bestellung-kontrolle-modal',
     templateUrl: './bestellung-kontrolle-modal.component.html',
     styleUrls: ['./bestellung-kontrolle-modal.component.scss'],
-    imports: [
-        IonItem,
-        IonHeader,
-        EuroPreisPipe,
-        IonContent,
-        IonList,
-        IonItem,
-        IonToolbar,
-        IonHeader,
-        IonTitle,
-        IonFooter,
-        IonButton,
-        IonIcon,
-        IonLabel,
-        StatusListItemComponent,
-    ],
+    imports: [IonItem, IonHeader, EuroPreisPipe, IonContent, IonList, IonItem, IonToolbar, IonHeader, IonTitle, IonFooter, IonButton, IonIcon, IonLabel, StatusListItemComponent],
 })
 export class BestellungKontrolleModalComponent implements ViewDidEnter {
     private modalCtrl = inject(ModalController);
     private app = inject(AppService);
-    private bestellungenService = inject(BestellungenService);
+    private readonly bestellungenApiService = inject(BestellungenApiService);
 
     public bestellung = this.app.bestellung;
     public availabilityCheckSuccess = signal(null);
@@ -79,13 +51,9 @@ export class BestellungKontrolleModalComponent implements ViewDidEnter {
     ionViewDidEnter(): void {
         this.availabilityCheckSuccess.set(null);
         this.availabilityCheckItems.set([]);
-        this.bestellungenService
-            .checkAvailability(this.app.bestellung())
-            .subscribe((result) => {
-                this.availabilityCheckSuccess.set(result.success);
-                this.availabilityCheckItems.set(
-                    result.checks.filter((check) => !check.success)
-                );
-            });
+        this.bestellungenApiService.checkAvailability(this.app.bestellung()).subscribe((result) => {
+            this.availabilityCheckSuccess.set(result.success);
+            this.availabilityCheckItems.set(result.checks.filter((check) => !check.success));
+        });
     }
 }

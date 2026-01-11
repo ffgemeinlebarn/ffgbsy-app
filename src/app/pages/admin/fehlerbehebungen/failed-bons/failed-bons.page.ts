@@ -28,7 +28,7 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { BonsService } from 'src/app/data/bons.service';
+import { BonsService } from 'src/app/data/api/bons-api.service';
 import { DruckerService } from 'src/app/data/drucker.service';
 import { TischeService } from 'src/app/data/tische.service';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';

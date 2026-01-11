@@ -8,9 +8,9 @@ import { Bestellung } from 'src/app/model/bestellung.model';
 import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../data/data.service';
+import { BestellungenApiService } from './api/bestellungen-api.service';
+import { BonsService } from './api/bons-api.service';
 import { AvailabilityService } from './availability.service';
-import { BestellungenService } from './bestellungen.service';
-import { BonsService } from './bons.service';
 import { FrontendService } from './frontend.service';
 import { SettingsService } from './settings.service';
 
@@ -24,7 +24,7 @@ export class AppService {
     private bonsService = inject(BonsService);
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
-    private bestellungenService = inject(BestellungenService);
+    private readonly bestellungenApiService = inject(BestellungenApiService);
 
     // State Management
     public readonly readyToGo = computed<boolean>(
@@ -120,7 +120,7 @@ export class AppService {
     }
 
     public sendBestellung() {
-        this.bestellungenService.create(this.bestellung()).subscribe({
+        this.bestellungenApiService.create(this.bestellung()).subscribe({
             next: (bestellung) => {
                 this.frontend.showToast('Bestellung erfolgreich angelegt!', 2000);
                 this.bestellung.set(null);

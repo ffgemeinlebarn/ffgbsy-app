@@ -1,20 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonMenuButton,
-    IonTitle,
-    IonToolbar,
-    ViewWillEnter,
-} from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar, ViewWillEnter } from '@ionic/angular/standalone';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { ApiService } from 'src/app/data/api.service';
 import { StatistikenService } from 'src/app/data/statistiken.service';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
@@ -22,23 +11,9 @@ import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
     selector: 'ffgbsy-sales-volumne',
     templateUrl: './sales-volumne.page.html',
     styleUrls: ['./sales-volumne.page.scss'],
-    imports: [
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonContent,
-        IonHeader,
-        IonTitle,
-        IonToolbar,
-        IonMenuButton,
-        CommonModule,
-        FormsModule,
-        EuroPreisPipe,
-        BaseChartDirective,
-    ],
+    imports: [IonIcon, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, CommonModule, FormsModule, EuroPreisPipe, BaseChartDirective],
 })
 export class SalesVolumnePage implements ViewWillEnter {
-    private apiService = inject(ApiService);
     private statistikenService = inject(StatistikenService);
 
     public pieChartReadyToShow = signal(false);
@@ -53,9 +28,7 @@ export class SalesVolumnePage implements ViewWillEnter {
 
     public loadData() {
         this.statistikenService.readKennzahlen().subscribe((kennzahlen) => {
-            this.chartUmsatzProTag.labels = kennzahlen.taeglich.map(
-                (x) => x.label
-            );
+            this.chartUmsatzProTag.labels = kennzahlen.taeglich.map((x) => x.label);
             this.chartUmsatzProTag.datasets = [
                 {
                     data: kennzahlen.taeglich.map((x) => x.summe),
