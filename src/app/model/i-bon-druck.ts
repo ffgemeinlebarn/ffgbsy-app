@@ -1,4 +1,4 @@
-import { Drucker } from './drucker.class';
+import { IDrucker } from './i-drucker.class';
 
 export interface IBonDruck {
     id: number;
@@ -8,5 +8,5 @@ export interface IBonDruck {
     timestamp: Date | string | null;
     success: boolean;
     message: string | null;
-    drucker: Drucker;
+    drucker: IDrucker;
 }

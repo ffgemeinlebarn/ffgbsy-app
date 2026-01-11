@@ -1,12 +1,12 @@
 import { Bestellung } from './bestellung.model';
-import { Drucker } from './drucker.class';
 import { IBonDruck } from './i-bon-druck';
+import { IDrucker } from './i-drucker.class';
 
 export interface IBon {
     id: number;
     bestellungen_id: number;
     drucker_id: number;
-    drucker: Drucker | null;
+    drucker: IDrucker | null;
     bestellung: Bestellung | null;
     drucke: IBonDruck[];
     tries: number;

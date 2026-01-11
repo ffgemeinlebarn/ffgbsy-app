@@ -1,7 +1,7 @@
-import { Drucker } from "./drucker.class";
-import { Eigenschaft } from "./eigenschaft.interface";
-import { Grundprodukt } from "./grundprodukt.class";
-import { Produkteinteilung } from "./produkteinteilung.class";
+import { Eigenschaft } from './eigenschaft.interface';
+import { Grundprodukt } from './grundprodukt.class';
+import { IDrucker } from './i-drucker.class';
+import { Produkteinteilung } from './produkteinteilung.class';
 
 export class Produkt {
     id: number;
@@ -9,7 +9,7 @@ export class Produkt {
     formal_name: string;
     preis: number;
     drucker_id_level_2: number | null;
-    drucker?: Drucker;
+    drucker?: IDrucker;
     aktiv: boolean;
     sortierindex: number;
     produkteinteilungen_id: number;

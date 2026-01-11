@@ -1,7 +1,7 @@
-import { Drucker } from "./drucker.class";
-import { Eigenschaft } from "./eigenschaft.interface";
-import { Produktbereich } from "./produktbereich.class";
-import { Produkteinteilung } from "./produkteinteilung.class";
+import { Eigenschaft } from './eigenschaft.interface';
+import { IDrucker } from './i-drucker.class';
+import { Produktbereich } from './produktbereich.class';
+import { Produkteinteilung } from './produkteinteilung.class';
 
 export class Produktkategorie {
     id: number;
@@ -10,7 +10,7 @@ export class Produktkategorie {
     color: string;
     drucker_id_level_1: number | null;
     sortierindex: number;
-    drucker?: Drucker
+    drucker?: IDrucker;
     produktbereich?: Produktbereich;
     eigenschaften: Array<Eigenschaft>;
 }

@@ -1,11 +1,5 @@
 import { Component, inject, input, signal } from '@angular/core';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
     IonButton,
@@ -23,7 +17,7 @@ import {
 } from '@ionic/angular/standalone';
 import { DruckerService } from 'src/app/data/drucker.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { Drucker } from 'src/app/model/drucker.class';
+import { IDrucker } from 'src/app/model/i-drucker.class';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -54,7 +48,7 @@ export class DruckerDetailPage implements ViewDidEnter {
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
-    public drucker = signal<Drucker>(null);
+    public drucker = signal<IDrucker>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -63,7 +57,7 @@ export class DruckerDetailPage implements ViewDidEnter {
     });
 
     private load(id: number) {
-        this.druckerService.read(id).subscribe((drucker: Drucker) => {
+        this.druckerService.read(id).subscribe((drucker: IDrucker) => {
             this.drucker.set(drucker);
             this.form.patchValue(drucker);
         });
@@ -73,9 +67,7 @@ export class DruckerDetailPage implements ViewDidEnter {
         const updated = { ...this.drucker(), ...this.form.value };
         console.debug('DruckerDetailPage', 'save(), Updated Drucker:', updated);
         this.druckerService.update(updated).subscribe((p) => {
-            this.frontendService.showToast(
-                `${p.name} wurde erfolgreich gespeichert!`
-            );
+            this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
         });
     }
