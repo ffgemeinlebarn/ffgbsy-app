@@ -1,6 +1,6 @@
 import { Bestellung } from './bestellung.model';
-import { BonDruck } from './bonDruck';
 import { Drucker } from './drucker.class';
+import { IBonDruck } from './i-bon-druck';
 
 export interface IBon {
     id: number;
@@ -8,7 +8,7 @@ export interface IBon {
     drucker_id: number;
     drucker: Drucker | null;
     bestellung: Bestellung | null;
-    drucke: BonDruck[];
+    drucke: IBonDruck[];
     tries: number;
     successes: number;
     fails: number;

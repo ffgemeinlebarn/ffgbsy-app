@@ -1,6 +1,6 @@
-import { Drucker } from "./drucker.class";
+import { Drucker } from './drucker.class';
 
-export class BonDruck {
+export interface IBonDruck {
     id: number;
     bons_id: number;
     datum: Date | string;

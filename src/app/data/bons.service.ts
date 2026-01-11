@@ -2,8 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, catchError, retry, tap } from 'rxjs';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { BonDruck } from 'src/app/model/bonDruck';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';
+import { IBonDruck } from 'src/app/model/i-bon-druck';
 import { IBon } from 'src/app/model/i-bon.model';
 import { ErrorHandlingService } from './error-handling.service';
 import { FrontendService } from './frontend.service';
@@ -55,7 +55,7 @@ export class BonsService {
         );
     }
 
-    public druckBonsOfBestellungById(id: number): Observable<BonDruck[]> {
+    public druckBonsOfBestellungById(id: number): Observable<IBonDruck[]> {
         this.frontendService.showLoadingSpinner('Drucke Bons für Bestellung');
         return this.http.post(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null).pipe(
             tap(() => this.frontendService.hideLoadingSpinner()),
@@ -63,7 +63,7 @@ export class BonsService {
         );
     }
 
-    public druckBonsByIds(ids: number[]): Observable<BonDruck[]> {
+    public druckBonsByIds(ids: number[]): Observable<IBonDruck[]> {
         this.frontendService.showLoadingSpinner('Drucke Bons');
         return this.http.post(`${this.settings.apiBaseUrl()}/print/bons`, ids).pipe(
             tap(() => this.frontendService.hideLoadingSpinner()),
@@ -71,7 +71,7 @@ export class BonsService {
         );
     }
 
-    public druckBonById(id: number): Observable<BonDruck> {
+    public druckBonById(id: number): Observable<IBonDruck> {
         this.frontendService.showLoadingSpinner('Drucke Bon');
         return this.http.post(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null).pipe(
             tap(() => this.frontendService.hideLoadingSpinner()),
