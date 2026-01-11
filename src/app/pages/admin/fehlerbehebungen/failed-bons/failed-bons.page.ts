@@ -31,8 +31,8 @@ import {
 import { BonsService } from 'src/app/data/bons.service';
 import { DruckerService } from 'src/app/data/drucker.service';
 import { TischeService } from 'src/app/data/tische.service';
-import { IBon } from 'src/app/model/bon.model';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';
+import { IBon } from 'src/app/model/i-bon.model';
 import { FrontendService } from '../../../../data/frontend.service';
 
 @Component({

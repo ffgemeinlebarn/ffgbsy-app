@@ -1,8 +1,8 @@
 import { parseZone } from 'moment';
 import { Bestellstatus } from '../model/bestellstatus.type';
 import { Bestellposition } from './bestellposition.model';
-import { IBon } from './bon.model';
 import { IAufnehmer } from './i-aufnehmer.model';
+import { IBon } from './i-bon.model';
 import { Tisch } from './tisch.class';
 
 export class Bestellung {

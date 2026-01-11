@@ -20,7 +20,7 @@ import { BonsService } from 'src/app/data/bons.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
 import { Bestellung } from 'src/app/model/bestellung.model';
-import { IBon } from 'src/app/model/bon.model';
+import { IBon } from 'src/app/model/i-bon.model';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 
 @Component({
