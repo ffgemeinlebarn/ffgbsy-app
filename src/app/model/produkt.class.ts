@@ -1,6 +1,6 @@
 import { Eigenschaft } from './eigenschaft.interface';
-import { Grundprodukt } from './grundprodukt.class';
 import { IDrucker } from './i-drucker.class';
+import { IGrundprodukt } from './i-grundprodukt.class';
 import { Produkteinteilung } from './produkteinteilung.class';
 
 export class Produkt {
@@ -18,7 +18,7 @@ export class Produkt {
     celebration_active: boolean;
     celebration_last: number;
     produkteinteilung: Produkteinteilung;
-    grundprodukt: Grundprodukt | null;
+    grundprodukt: IGrundprodukt | null;
     eigenschaften: Array<Eigenschaft>;
     hauptspeise: boolean;
 }
