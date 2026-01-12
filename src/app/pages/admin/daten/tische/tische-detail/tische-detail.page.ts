@@ -1,6 +1,7 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
 import {
     IonBackButton,
     IonButton,
@@ -18,6 +19,7 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
+import { map, mergeMap, tap } from 'rxjs';
 import { TischeApiService } from 'src/app/data/api/tische-api.service';
 import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
@@ -49,15 +51,15 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
         IonToggle,
     ],
 })
-export class TischeDetailPage {
-    private frontendService = inject(FrontendService);
-    private tischeApiService = inject(TischeApiService);
-    private tischkategorienApiService = inject(TischkategorienApiService);
-    private formBuilder = inject(FormBuilder);
+export class TischeDetailPage implements OnInit {
+    private readonly frontendService = inject(FrontendService);
+    private readonly tischeApiService = inject(TischeApiService);
+    private readonly tischkategorienApiService = inject(TischkategorienApiService);
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly activatedRoute = inject(ActivatedRoute);
 
-    public id = input.required<number>();
-    public tisch = signal<ITisch | null>(null);
-    public tischkategorien = toSignal(this.tischkategorienApiService.readAll());
+    public readonly tisch = signal<ITisch | null>(null);
+    public readonly tischkategorien = toSignal(this.tischkategorienApiService.readAll());
 
     public form: FormGroup = this.formBuilder.group({
         reihe: ['', [Validators.required, Validators.minLength(1)]],
@@ -68,12 +70,24 @@ export class TischeDetailPage {
     });
 
     constructor() {
-        effect(() => this.tischeApiService.read(this.id()).subscribe((tisch) => this.setEntity(tisch)));
+        effect(() => {
+            if (this.tisch()) {
+                this.form.patchValue(this.tisch());
+            }
+        });
     }
 
-    private setEntity(tisch: ITisch) {
-        this.tisch.set(tisch);
-        this.form.patchValue(tisch);
+    ngOnInit(): void {
+        this.activatedRoute.params
+            .pipe(
+                map((p: Params) => Number(p['id']) ?? null),
+                map((n) => (Number.isNaN(n) ? null : n)),
+                mergeMap((id) => this.tischeApiService.read(id)),
+                tap((t) => {
+                    console.debug('[FFGBSY]', 'Selected Tisch =>', t);
+                }),
+            )
+            .subscribe((t) => this.tisch.set(t));
     }
 
     public save() {
@@ -84,7 +98,7 @@ export class TischeDetailPage {
 
         this.tischeApiService.update({ ...this.tisch(), ...this.form.value }).subscribe((tisch) => {
             this.frontendService.showToast(`${tisch.reihe}${tisch.nummer} wurde erfolgreich gespeichert!`);
-            this.setEntity(tisch);
+            this.tisch.set(tisch);
         });
     }
 }

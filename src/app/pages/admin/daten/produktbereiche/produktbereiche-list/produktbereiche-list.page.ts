@@ -12,12 +12,12 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     imports: [IonContent, IonToolbar, IonTitle, IonList, IonHeader, RouterLink, IonMenuButton, PageSpinnerComponent],
 })
 export class ProduktbereicheListPage implements ViewDidEnter {
-    private produktbereicheApiService = inject(ProduktbereicheApiService);
+    private readonly produktbereicheApiService = inject(ProduktbereicheApiService);
 
-    public produktbereiche = signal<IProduktbereich[]>(null);
+    public readonly produktbereiche = signal<IProduktbereich[]>([]);
 
     ionViewDidEnter(): void {
-        this.produktbereiche.set(null);
+        this.produktbereiche.set([]);
         this.produktbereicheApiService.readAll().subscribe((items) => this.produktbereiche.set(items));
     }
 }

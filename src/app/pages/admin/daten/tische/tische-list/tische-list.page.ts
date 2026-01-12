@@ -12,9 +12,9 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     imports: [IonIcon, IonContent, IonToolbar, IonTitle, IonList, IonHeader, RouterLink, IonMenuButton, PageSpinnerComponent],
 })
 export class TischeListPage implements ViewDidEnter {
-    private tischkategorienApiService = inject(TischkategorienApiService);
+    private readonly tischkategorienApiService = inject(TischkategorienApiService);
 
-    public tischkategorienMitTischen = signal<ITischkategorie[]>([]);
+    public readonly tischkategorienMitTischen = signal<ITischkategorie[]>([]);
 
     ionViewDidEnter(): void {
         this.tischkategorienMitTischen.set([]);
