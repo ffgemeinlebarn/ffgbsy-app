@@ -1,8 +1,9 @@
 import { NgClass } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
-import { IonButton, IonContent, IonFooter, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, ModalController } from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter, IonIcon, IonItem, IonItemDivider, IonLabel, IonList } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/data/app.service';
 import { DataService } from 'src/app/data/data.service';
+import { FrontendService } from 'src/app/data/frontend.service';
 import { BestellungKontrolleModalComponent } from 'src/app/feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
@@ -11,22 +12,22 @@ import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface'
 import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
 
 @Component({
-    selector: 'app-bestellung-edit',
+    selector: 'ffgbsy-bestellung-edit',
     templateUrl: './bestellung-edit.component.html',
     styleUrls: ['./bestellung-edit.component.scss'],
     imports: [IonItemDivider, IonItem, IonIcon, IonContent, IonFooter, IonButton, IonList, IonItem, IonLabel, IonItemDivider, NgClass, EuroPreisPipe],
 })
 export class BestellungEditComponent {
-    private app = inject(AppService);
-    private data = inject(DataService);
-    private modalController = inject(ModalController);
+    private readonly app = inject(AppService);
+    private readonly data = inject(DataService);
+    private readonly frontendService = inject(FrontendService);
 
-    public bestellung = this.app.bestellung;
-    public aufnehmer = this.app.aufnehmer;
-    public produktkategorien = this.data.produktkategorien;
+    public readonly bestellung = this.app.bestellung;
+    public readonly aufnehmer = this.app.aufnehmer;
+    public readonly produktkategorien = this.data.produktkategorien;
 
-    public selectedProduktkategorie = signal<IProduktkategorie | null>(null);
-    public filtredProdukteinteilungenToDisplay = signal<IProdukteinteilung[]>([]);
+    public readonly selectedProduktkategorie = signal<IProduktkategorie | null>(null);
+    public readonly filtredProdukteinteilungenToDisplay = signal<IProdukteinteilung[]>([]);
 
     constructor() {
         effect(() => {
@@ -88,21 +89,11 @@ export class BestellungEditComponent {
         this.app.editBestellposition(bestellposition);
     }
 
-    async kontrolliereBestellung() {
-        const modal = await this.modalController.create({
-            component: BestellungKontrolleModalComponent,
-            cssClass: 'classic-modal',
-            showBackdrop: true,
-            backdropDismiss: false,
-            animated: true,
-        });
-
-        modal.onDidDismiss().then((data) => {
+    public kontrolliereBestellung() {
+        this.frontendService.showModal(BestellungKontrolleModalComponent).subscribe((data) => {
             if (data.data) {
                 this.app.createBestellung();
             }
         });
-
-        return modal.present();
     }
 }

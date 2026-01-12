@@ -21,8 +21,7 @@ export class AppComponent {
     public isAdmin = this.appService.isAdmin;
     public zoomLevel = computed(() => `zoom-level--${this.aufnehmer()?.zoom_level ?? 1}`);
 
-    public loadingCount = this.frontendService.loadingSpinnerActiveCount;
-    public loadingShow = computed(() => this.frontendService.loadingSpinnerActiveCount() > 0);
+    public loadingShow = this.frontendService.loadingSpinnerShow;
     public loadingMessage = this.frontendService.loadingSpinnerMessage;
 
     constructor() {

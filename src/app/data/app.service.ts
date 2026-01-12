@@ -60,19 +60,8 @@ export class AppService {
         ).pipe(tap((m) => m.present()));
     }
 
-    public async editBestellposition(bestellposition: Bestellposition) {
-        const modal = await this.modalController.create({
-            component: BestellungspositionEditModalComponent,
-            componentProps: {
-                bestellposition: bestellposition,
-            },
-            cssClass: 'classic-modal',
-            showBackdrop: true,
-            backdropDismiss: false,
-            animated: true,
-        });
-
-        modal.onDidDismiss().then((data: { data: null | Bestellposition }) => {
+    public editBestellposition(bestellposition: Bestellposition) {
+        this.frontend.showModal(BestellungspositionEditModalComponent, { bestellposition }).subscribe((data: { data: null | Bestellposition }) => {
             if (data.data == null) {
                 this.bestellung.update((bestellung) => {
                     bestellung.bestellpositionen = bestellung.bestellpositionen.filter((b) => b != bestellposition);
@@ -80,8 +69,6 @@ export class AppService {
                 });
             }
         });
-
-        return modal.present();
     }
 
     public async clearAufnehmer() {

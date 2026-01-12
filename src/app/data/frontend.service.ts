@@ -1,21 +1,24 @@
-import { Injectable, inject, signal } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular/standalone';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { AlertController, ModalController, ModalOptions, ToastController } from '@ionic/angular/standalone';
+import { ComponentProps, ComponentRef } from '@ionic/core';
+import { from, map, mergeMap, switchMap } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
 })
 export class FrontendService {
-    private toastController = inject(ToastController);
-    private alertController = inject(AlertController);
+    private readonly toastController = inject(ToastController);
+    private readonly alertController = inject(AlertController);
+    private readonly modalController = inject(ModalController);
 
-    public toast: any;
     public alert: any;
 
-    public loadingSpinnerActiveCount = signal(0);
-    public loadingSpinnerMessage: string = '';
+    public readonly loadingSpinnerActiveCount = signal(0);
+    public readonly loadingSpinnerMessage = signal('');
+    public readonly loadingSpinnerShow = computed(() => this.loadingSpinnerActiveCount() > 0);
 
     public showLoadingSpinner(message: string = '') {
-        this.loadingSpinnerMessage = message;
+        this.loadingSpinnerMessage.set(message);
         this.loadingSpinnerActiveCount.update((c) => c + 1);
         console.debug('[FFGBSY] Show Loading', 'Number =', this.loadingSpinnerActiveCount());
     }
@@ -27,7 +30,7 @@ export class FrontendService {
         }
     }
 
-    showOkAlert(header: string, message: string) {
+    public showOkAlert(header: string, message: string) {
         return new Promise((resolve) => {
             this.alertController
                 .create({
@@ -103,12 +106,25 @@ export class FrontendService {
         });
     }
 
-    async showToast(msg: string, duration = 2000) {
-        this.toast = await this.toastController.create({
-            message: msg,
-            duration: duration,
-        });
+    public showToast(msg: string, duration = 2000) {
+        from(this.toastController.create({ message: msg, duration: duration }))
+            .pipe(switchMap((t) => t.present()))
+            .subscribe();
+    }
 
-        this.toast.present();
+    public showModal<T extends ComponentRef = ComponentRef>(component: T, componentProps: ComponentProps<T> = undefined) {
+        return from(
+            this.modalController.create({
+                component: component,
+                componentProps: componentProps,
+                cssClass: 'classic-modal',
+                showBackdrop: true,
+                backdropDismiss: false,
+                animated: true,
+            } as ModalOptions<T>),
+        ).pipe(
+            mergeMap((modal) => from(modal.present()).pipe(map(() => modal))),
+            mergeMap((modal) => from(modal.onDidDismiss())),
+        );
     }
 }
