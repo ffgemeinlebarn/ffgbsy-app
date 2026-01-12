@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Eigenschaft } from 'src/app/model/eigenschaft.interface';
-import { SettingsService } from './settings.service';
+import { SettingsService } from '../settings.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class EigenschaftenService {
+export class EigenschaftenApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
 

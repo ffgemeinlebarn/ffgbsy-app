@@ -21,8 +21,8 @@ import {
 } from '@ionic/angular/standalone';
 import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
 import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
+import { TischeApiService } from 'src/app/data/api/tische-api.service';
 import { AppService } from 'src/app/data/app.service';
-import { TischeService } from 'src/app/data/tische.service';
 import { Bestellung } from 'src/app/model/bestellung.model';
 import { IBestellungenFilter } from 'src/app/model/i-bestellungen-filter.interface';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
@@ -55,7 +55,7 @@ import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 export class BestellungenPage implements ViewDidEnter {
     private readonly bestellungenApiService = inject(BestellungenApiService);
     private readonly aufnehmerApiService = inject(AufnehmerApiService);
-    private tischeService = inject(TischeService);
+    private tischeApiService = inject(TischeApiService);
     private appService = inject(AppService);
     private formBuilder = inject(FormBuilder);
 
@@ -70,7 +70,7 @@ export class BestellungenPage implements ViewDidEnter {
 
     public availableFilter = {
         aufnehmer: toSignal(this.aufnehmerApiService.readAll()),
-        tische: toSignal(this.tischeService.readAll()),
+        tische: toSignal(this.tischeApiService.readAll()),
         limits: [5, 10, 25, 50, 100, 200, 500, 1000],
     };
 

@@ -24,10 +24,10 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { DruckerService } from 'src/app/data/drucker.service';
+import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
+import { ProduktbereicheApiService } from 'src/app/data/api/produktbereiche-api.service';
+import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { ProduktbereicheService } from 'src/app/data/produktbereiche.service';
-import { ProduktkategorienService } from 'src/app/data/produktkategorien.service';
 import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 import { Eigenschaft } from 'src/app/model/eigenschaft.interface';
@@ -65,9 +65,9 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     ],
 })
 export class ProduktkategorienDetailPage {
-    private produktkategorienService = inject(ProduktkategorienService);
-    private produktbereicheService = inject(ProduktbereicheService);
-    private druckerService = inject(DruckerService);
+    private produktkategorienApiService = inject(ProduktkategorienApiService);
+    private produktbereicheApiService = inject(ProduktbereicheApiService);
+    private druckerApiService = inject(DruckerApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
     private modalController = inject(ModalController);
@@ -75,8 +75,8 @@ export class ProduktkategorienDetailPage {
 
     public id = input.required<number>();
 
-    public drucker = toSignal(this.druckerService.readAll());
-    public produktbereiche = toSignal(this.produktbereicheService.readAll());
+    public drucker = toSignal(this.druckerApiService.readAll());
+    public produktbereiche = toSignal(this.produktbereicheApiService.readAll());
     public produktkategorie = signal<Produktkategorie>(null);
 
     public form: FormGroup = this.formBuilder.group({
@@ -89,7 +89,7 @@ export class ProduktkategorienDetailPage {
     });
 
     constructor() {
-        effect(() => this.produktkategorienService.read(this.id()).subscribe((produktkategorie: Produktkategorie) => this.setEntity(produktkategorie)));
+        effect(() => this.produktkategorienApiService.read(this.id()).subscribe((produktkategorie: Produktkategorie) => this.setEntity(produktkategorie)));
     }
 
     private setEntity(produktkategorie: Produktkategorie) {
@@ -150,7 +150,7 @@ export class ProduktkategorienDetailPage {
     public save() {
         const updated = { ...this.produktkategorie(), ...this.form.value };
         console.debug('[FFGBSY]', 'ProduktkategorienDetailPage', 'save(), Updated Produktkategorie:', updated);
-        this.produktkategorienService.update(updated).subscribe((produktkategorie) => {
+        this.produktkategorienApiService.update(updated).subscribe((produktkategorie) => {
             this.frontendService.showToast(`${produktkategorie.name} wurde erfolgreich gespeichert!`);
             this.setEntity(produktkategorie);
         });

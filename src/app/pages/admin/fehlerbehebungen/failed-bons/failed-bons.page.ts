@@ -28,9 +28,9 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { BonsService } from 'src/app/data/api/bons-api.service';
-import { DruckerService } from 'src/app/data/drucker.service';
-import { TischeService } from 'src/app/data/tische.service';
+import { BonsApiService } from 'src/app/data/api/bons-api.service';
+import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
+import { TischeApiService } from 'src/app/data/api/tische-api.service';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';
 import { IBon } from 'src/app/model/i-bon.model';
 import { FrontendService } from '../../../../data/frontend.service';
@@ -69,9 +69,9 @@ import { FrontendService } from '../../../../data/frontend.service';
     ],
 })
 export class FailedBonsPage implements ViewDidEnter {
-    private bonsService = inject(BonsService);
-    private druckerService = inject(DruckerService);
-    private tischeService = inject(TischeService);
+    private bonsApiService = inject(BonsApiService);
+    private druckerApiService = inject(DruckerApiService);
+    private tischeApiService = inject(TischeApiService);
     private formBuilder = inject(FormBuilder);
     private frontendService = inject(FrontendService);
 
@@ -91,8 +91,8 @@ export class FailedBonsPage implements ViewDidEnter {
     });
 
     public availableFilter = {
-        drucker: toSignal(this.druckerService.readAll()),
-        tische: toSignal(this.tischeService.readAll()),
+        drucker: toSignal(this.druckerApiService.readAll()),
+        tische: toSignal(this.tischeApiService.readAll()),
         types: ['bestellung', 'storno'],
         limits: [5, 10, 25, 50, 100, 200, 500, 1000],
     };
@@ -117,7 +117,7 @@ export class FailedBonsPage implements ViewDidEnter {
     }
 
     public searchBons() {
-        return this.bonsService.search(this.filter.value as IBonsFilter).subscribe((bons) => this.bons.set(bons));
+        return this.bonsApiService.search(this.filter.value as IBonsFilter).subscribe((bons) => this.bons.set(bons));
     }
 
     public printSelectedBons() {
@@ -125,7 +125,7 @@ export class FailedBonsPage implements ViewDidEnter {
         const selectedBons = this.bons()
             .filter((b) => b.selected)
             .map((bon) => bon.id);
-        this.bonsService.druckBonsByIds(selectedBons).subscribe((bonDrucke) => {
+        this.bonsApiService.druckBonsByIds(selectedBons).subscribe((bonDrucke) => {
             this.searchBons();
             const successfulBons = bonDrucke.filter((bon) => bon.success).length;
             if (successfulBons === bonDrucke.length) {

@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Produktbereich } from 'src/app/model/produktbereich.class';
-import { SettingsService } from './settings.service';
+import { SettingsService } from '../settings.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class ProduktbereicheService {
-    http = inject(HttpClient);
-    settings = inject(SettingsService);
+export class ProduktbereicheApiService {
+    private readonly http = inject(HttpClient);
+    private readonly settings = inject(SettingsService);
 
     public create(produktbereiche: Produktbereich) {
         return this.http.post<Produktbereich>(`${this.settings.apiBaseUrl()}/produktbereiche`, produktbereiche);

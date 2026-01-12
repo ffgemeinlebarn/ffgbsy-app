@@ -10,7 +10,7 @@ import { SettingsService } from '../settings.service';
 @Injectable({
     providedIn: 'root',
 })
-export class BonsService {
+export class BonsApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
 

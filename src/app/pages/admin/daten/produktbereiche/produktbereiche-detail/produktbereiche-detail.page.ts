@@ -19,9 +19,9 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { DruckerService } from 'src/app/data/drucker.service';
+import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
+import { ProduktbereicheApiService } from 'src/app/data/api/produktbereiche-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { ProduktbereicheService } from 'src/app/data/produktbereiche.service';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -49,14 +49,14 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     ],
 })
 export class ProduktbereicheDetailPage {
-    private produktbereicheService = inject(ProduktbereicheService);
-    private druckerService = inject(DruckerService);
+    private produktbereicheApiService = inject(ProduktbereicheApiService);
+    private druckerApiService = inject(DruckerApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
 
-    public drucker = toSignal(this.druckerService.readAll());
+    public drucker = toSignal(this.druckerApiService.readAll());
     public produktbereich = signal<Produktbereich>(null);
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -69,7 +69,7 @@ export class ProduktbereicheDetailPage {
     }
 
     private load(id: number) {
-        this.produktbereicheService.read(id).subscribe((produktbereich: Produktbereich) => {
+        this.produktbereicheApiService.read(id).subscribe((produktbereich: Produktbereich) => {
             this.produktbereich.set(produktbereich);
             this.form.patchValue(produktbereich);
         });
@@ -79,7 +79,7 @@ export class ProduktbereicheDetailPage {
         const updated = { ...this.produktbereich(), ...this.form.value };
         updated.bestand = updated.unlimitiert ? null : updated.bestand;
         console.debug('[FFGBSY]', 'ProduktbereicheDetailPage', 'save(), Updated Product:', updated);
-        this.produktbereicheService.update(updated).subscribe((p) => {
+        this.produktbereicheApiService.update(updated).subscribe((p) => {
             this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
             this.reload();
@@ -87,6 +87,6 @@ export class ProduktbereicheDetailPage {
     }
 
     private reload() {
-        this.produktbereicheService.readAll();
+        this.produktbereicheApiService.readAll();
     }
 }

@@ -1,18 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { IGrundprodukt } from 'src/app/model/i-grundprodukt.class';
-import { SettingsService } from './settings.service';
+import { SettingsService } from '../settings.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class GrundprodukteService {
-    private http = inject(HttpClient);
-    private settings = inject(SettingsService);
-
-    public items = toSignal(this.readAll());
+export class GrundprodukteApiService {
+    private readonly http = inject(HttpClient);
+    private readonly settings = inject(SettingsService);
 
     public create(grundprodukt: IGrundprodukt) {
         return this.http.post<IGrundprodukt>(`${this.settings.apiBaseUrl()}/grundprodukte`, grundprodukt);

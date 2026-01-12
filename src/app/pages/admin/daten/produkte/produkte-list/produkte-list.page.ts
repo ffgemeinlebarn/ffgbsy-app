@@ -2,7 +2,7 @@ import { Component, effect, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { ProdukteService } from 'src/app/data/produkte.service';
+import { ProdukteApiService } from 'src/app/data/api/produkte-api.service';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 import { Produkt } from 'src/app/model/produkt.class';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
@@ -30,7 +30,7 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     ],
 })
 export class ProdukteListPage implements ViewDidEnter {
-    private produkteService = inject(ProdukteService);
+    private produkteApiService = inject(ProdukteApiService);
 
     public search = new FormControl('');
     public produkte = signal<Produkt[]>(null);
@@ -50,7 +50,7 @@ export class ProdukteListPage implements ViewDidEnter {
 
     ionViewDidEnter(): void {
         this.produkte.set(null);
-        this.produkteService.readAll().subscribe((produkte) => {
+        this.produkteApiService.readAll().subscribe((produkte) => {
             this.produkte.set(produkte);
             this.search.setValue('');
             this.filter('');

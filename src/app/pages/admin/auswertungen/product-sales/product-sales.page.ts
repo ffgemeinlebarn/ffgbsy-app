@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { StatistikenService } from 'src/app/data/statistiken.service';
+import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
 @Component({
@@ -12,11 +12,11 @@ import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
     imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, EuroPreisPipe, CommonModule, FormsModule],
 })
 export class ProductSalesPage implements ViewDidEnter {
-    private statistikenService = inject(StatistikenService);
+    private statistikenApiService = inject(StatistikenApiService);
 
     public tableProdukte = signal<any>(null);
 
     ionViewDidEnter(): void {
-        this.statistikenService.readProdukte().subscribe((p) => this.tableProdukte.set(p));
+        this.statistikenApiService.readProdukte().subscribe((p) => this.tableProdukte.set(p));
     }
 }

@@ -6,7 +6,7 @@ import { AvailabilityCheck } from 'src/app/model/availability-check.model';
 import { IDrucker } from 'src/app/model/i-drucker.class';
 import { DataService } from '../data/data.service';
 import { LOADING_ANIMATION } from '../misc/http-context-tokens';
-import { DruckerService } from './drucker.service';
+import { DruckerApiService } from './api/drucker-api.service';
 import { SettingsService } from './settings.service';
 
 @Injectable({
@@ -15,7 +15,7 @@ import { SettingsService } from './settings.service';
 export class AvailabilityService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
-    private readonly drucker = inject(DruckerService);
+    private readonly drucker = inject(DruckerApiService);
     private readonly data = inject(DataService);
 
     public all = computed(() => this.aufnehmerDataAvailability().isSuccessful() && this.druckerAvailabilities().filter((a) => a.status != 'success').length == 0);

@@ -15,7 +15,7 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { DruckerService } from 'src/app/data/drucker.service';
+import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { IDrucker } from 'src/app/model/i-drucker.class';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
@@ -43,7 +43,7 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     ],
 })
 export class DruckerDetailPage implements ViewDidEnter {
-    private druckerService = inject(DruckerService);
+    private druckerApiService = inject(DruckerApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
@@ -57,7 +57,7 @@ export class DruckerDetailPage implements ViewDidEnter {
     });
 
     private load(id: number) {
-        this.druckerService.read(id).subscribe((drucker: IDrucker) => {
+        this.druckerApiService.read(id).subscribe((drucker: IDrucker) => {
             this.drucker.set(drucker);
             this.form.patchValue(drucker);
         });
@@ -66,7 +66,7 @@ export class DruckerDetailPage implements ViewDidEnter {
     public save() {
         const updated = { ...this.drucker(), ...this.form.value };
         console.debug('[FFGBSY]', 'DruckerDetailPage', 'save(), Updated Drucker:', updated);
-        this.druckerService.update(updated).subscribe((p) => {
+        this.druckerApiService.update(updated).subscribe((p) => {
             this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
         });

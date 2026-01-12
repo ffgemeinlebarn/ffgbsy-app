@@ -2,8 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
 import { ColorGeneratorService } from 'src/app/data/color-generator.service';
-import { StatistikenService } from 'src/app/data/statistiken.service';
 
 @Component({
     selector: 'ffgbsy-timeline',
@@ -12,7 +12,7 @@ import { StatistikenService } from 'src/app/data/statistiken.service';
     imports: [IonContent, IonButton, IonIcon, IonButtons, IonTitle, IonToolbar, IonHeader, IonMenuButton, BaseChartDirective],
 })
 export class TimelinePage implements ViewDidEnter {
-    private statistikenService = inject(StatistikenService);
+    private statistikenApiService = inject(StatistikenApiService);
     private colorGenerator = inject(ColorGeneratorService);
 
     public chartTimelineBestellungen: ChartConfiguration<'line'>['data'] = {
@@ -32,7 +32,7 @@ export class TimelinePage implements ViewDidEnter {
     public readyToShow = signal(false);
 
     public loadData() {
-        this.statistikenService.readTimeline().subscribe((timeline) =>
+        this.statistikenApiService.readTimeline().subscribe((timeline) =>
             timeline.forEach((day, i) => {
                 const filtred = day.quaters.filter((x) => x.hour > 8);
                 const labels = filtred.map((x) => x.label);

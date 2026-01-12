@@ -18,9 +18,9 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
+import { TischeApiService } from 'src/app/data/api/tische-api.service';
+import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { TischeService } from 'src/app/data/tische.service';
-import { TischkategorienService } from 'src/app/data/tischkategorien.service';
 import { Tisch } from 'src/app/model/tisch.class';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
@@ -51,13 +51,13 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
 })
 export class TischeDetailPage {
     private frontendService = inject(FrontendService);
-    private tischeService = inject(TischeService);
-    private tischkategorienService = inject(TischkategorienService);
+    private tischeApiService = inject(TischeApiService);
+    private tischkategorienApiService = inject(TischkategorienApiService);
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
     public tisch = signal<Tisch>(null);
-    public tischkategorien = toSignal(this.tischkategorienService.readAll());
+    public tischkategorien = toSignal(this.tischkategorienApiService.readAll());
 
     public form: FormGroup = this.formBuilder.group({
         reihe: ['', [Validators.required, Validators.minLength(1)]],
@@ -68,7 +68,7 @@ export class TischeDetailPage {
     });
 
     constructor() {
-        effect(() => this.tischeService.read(this.id()).subscribe((tisch) => this.setEntity(tisch)));
+        effect(() => this.tischeApiService.read(this.id()).subscribe((tisch) => this.setEntity(tisch)));
     }
 
     private setEntity(tisch: Tisch) {
@@ -82,7 +82,7 @@ export class TischeDetailPage {
             return;
         }
 
-        this.tischeService.update({ ...this.tisch(), ...this.form.value }).subscribe((tisch) => {
+        this.tischeApiService.update({ ...this.tisch(), ...this.form.value }).subscribe((tisch) => {
             this.frontendService.showToast(`${tisch.reihe}${tisch.nummer} wurde erfolgreich gespeichert!`);
             this.setEntity(tisch);
         });

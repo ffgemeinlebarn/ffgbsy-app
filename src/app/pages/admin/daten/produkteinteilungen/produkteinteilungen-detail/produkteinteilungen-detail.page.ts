@@ -17,9 +17,9 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
+import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
+import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { ProdukteinteilungenService } from 'src/app/data/produkteinteilungen.service';
-import { ProduktkategorienService } from 'src/app/data/produktkategorien.service';
 import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
@@ -48,14 +48,14 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     ],
 })
 export class ProdukteinteilungenDetailPage {
-    private produkteinteilungenService = inject(ProdukteinteilungenService);
-    private produktkategorienService = inject(ProduktkategorienService);
+    private produkteinteilungenApiService = inject(ProdukteinteilungenApiService);
+    private produktkategorienApiService = inject(ProduktkategorienApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
 
-    public produktkategorien = toSignal(this.produktkategorienService.readAll());
+    public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
     public produkteinteilung = signal<Produkteinteilung>(null);
 
     public form: FormGroup = this.formBuilder.group({
@@ -69,7 +69,7 @@ export class ProdukteinteilungenDetailPage {
     }
 
     private load(id: number) {
-        this.produkteinteilungenService.read(id).subscribe((produkteinteilung: Produkteinteilung) => {
+        this.produkteinteilungenApiService.read(id).subscribe((produkteinteilung: Produkteinteilung) => {
             this.produkteinteilung.set(produkteinteilung);
             this.form.patchValue(produkteinteilung);
         });
@@ -78,7 +78,7 @@ export class ProdukteinteilungenDetailPage {
     public save() {
         const updated = { ...this.produkteinteilung(), ...this.form.value };
         console.debug('[FFGBSY]', 'ProdukteinteilungenDetailPage', 'save(), Updated Product:', updated);
-        this.produkteinteilungenService.update(updated).subscribe((p) => {
+        this.produkteinteilungenApiService.update(updated).subscribe((p) => {
             this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
             this.reload();
@@ -86,6 +86,6 @@ export class ProdukteinteilungenDetailPage {
     }
 
     private reload() {
-        this.produkteinteilungenService.readAll();
+        this.produkteinteilungenApiService.readAll();
     }
 }

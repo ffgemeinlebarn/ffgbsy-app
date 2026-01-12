@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar, ViewWillEnter } from '@ionic/angular/standalone';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { StatistikenService } from 'src/app/data/statistiken.service';
+import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
 @Component({
@@ -14,7 +14,7 @@ import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
     imports: [IonIcon, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, CommonModule, FormsModule, EuroPreisPipe, BaseChartDirective],
 })
 export class SalesVolumnePage implements ViewWillEnter {
-    private statistikenService = inject(StatistikenService);
+    private statistikenApiService = inject(StatistikenApiService);
 
     public pieChartReadyToShow = signal(false);
 
@@ -27,7 +27,7 @@ export class SalesVolumnePage implements ViewWillEnter {
     public tableProduktkategorien = null;
 
     public loadData() {
-        this.statistikenService.readKennzahlen().subscribe((kennzahlen) => {
+        this.statistikenApiService.readKennzahlen().subscribe((kennzahlen) => {
             this.chartUmsatzProTag.labels = kennzahlen.taeglich.map((x) => x.label);
             this.chartUmsatzProTag.datasets = [
                 {
@@ -38,11 +38,11 @@ export class SalesVolumnePage implements ViewWillEnter {
             this.pieChartReadyToShow.set(true);
         });
 
-        this.statistikenService.readProduktbereiche().subscribe((stats) => {
+        this.statistikenApiService.readProduktbereiche().subscribe((stats) => {
             this.tableProduktbereiche = stats;
         });
 
-        this.statistikenService.readProduktkategorien().subscribe((stats) => {
+        this.statistikenApiService.readProduktkategorien().subscribe((stats) => {
             this.tableProduktkategorien = stats;
         });
     }

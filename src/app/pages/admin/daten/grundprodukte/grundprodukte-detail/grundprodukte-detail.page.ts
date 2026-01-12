@@ -17,8 +17,8 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
+import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { GrundprodukteService } from 'src/app/data/grundprodukte.service';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -45,7 +45,7 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     ],
 })
 export class GrundprodukteDetailPage {
-    private grundprodukteService = inject(GrundprodukteService);
+    private grundprodukteApiService = inject(GrundprodukteApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
@@ -66,7 +66,7 @@ export class GrundprodukteDetailPage {
     }
 
     private load(id: number) {
-        this.grundprodukteService.read(id).subscribe((grundprodukt: IGrundprodukt) => {
+        this.grundprodukteApiService.read(id).subscribe((grundprodukt: IGrundprodukt) => {
             this.grundprodukt.set(grundprodukt);
             this.showBestand.set(grundprodukt.bestand != null);
             this.form.patchValue({
@@ -80,7 +80,7 @@ export class GrundprodukteDetailPage {
         const updated = { ...this.grundprodukt(), ...this.form.value };
         updated.bestand = updated.unlimitiert ? null : updated.bestand;
         console.debug('[FFGBSY]', 'GrundprodukteDetailPage', 'save(), Updated Product:', updated);
-        this.grundprodukteService.update(updated).subscribe((p) => {
+        this.grundprodukteApiService.update(updated).subscribe((p) => {
             this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
             this.reload();
@@ -88,6 +88,6 @@ export class GrundprodukteDetailPage {
     }
 
     private reload() {
-        this.grundprodukteService.readAll();
+        this.grundprodukteApiService.readAll();
     }
 }

@@ -23,11 +23,11 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { DruckerService } from 'src/app/data/drucker.service';
+import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
+import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
+import { ProdukteApiService } from 'src/app/data/api/produkte-api.service';
+import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { GrundprodukteService } from 'src/app/data/grundprodukte.service';
-import { ProdukteService } from 'src/app/data/produkte.service';
-import { ProdukteinteilungenService } from 'src/app/data/produkteinteilungen.service';
 import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 import { Eigenschaft } from 'src/app/model/eigenschaft.interface';
@@ -64,10 +64,10 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
 })
 export class ProdukteDetailPage {
     private frontendService = inject(FrontendService);
-    private produkteService = inject(ProdukteService);
-    private produkteinteilungenService = inject(ProdukteinteilungenService);
-    private grundprodukteService = inject(GrundprodukteService);
-    private druckerService = inject(DruckerService);
+    private produkteApiService = inject(ProdukteApiService);
+    private produkteinteilungenApiService = inject(ProdukteinteilungenApiService);
+    private grundprodukteApiService = inject(GrundprodukteApiService);
+    private druckerApiService = inject(DruckerApiService);
     private formBuilder = inject(FormBuilder);
     private modalController = inject(ModalController);
     private alertController = inject(AlertController);
@@ -75,9 +75,9 @@ export class ProdukteDetailPage {
 
     public id = model.required<number | null>();
     public produkt = signal<Produkt>(null);
-    public drucker = toSignal(this.druckerService.readAll());
-    public produkteinteilungen = toSignal(this.produkteinteilungenService.readAll());
-    public grundprodukte = toSignal(this.grundprodukteService.readAll());
+    public drucker = toSignal(this.druckerApiService.readAll());
+    public produkteinteilungen = toSignal(this.produkteinteilungenApiService.readAll());
+    public grundprodukte = toSignal(this.grundprodukteApiService.readAll());
     public showGrundproduktMultiplikator = signal(true);
 
     public form: FormGroup = this.formBuilder.group({
@@ -101,7 +101,7 @@ export class ProdukteDetailPage {
             if (isNaN(this.id())) {
                 this.setEntity(new Produkt());
             } else {
-                this.produkteService.read(this.id()).subscribe((produkt) => this.setEntity(produkt));
+                this.produkteApiService.read(this.id()).subscribe((produkt) => this.setEntity(produkt));
             }
         });
         this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
@@ -167,12 +167,12 @@ export class ProdukteDetailPage {
         const product = { ...this.produkt(), ...this.form.value };
 
         if (product.id) {
-            this.produkteService.update(product).subscribe((p) => {
+            this.produkteApiService.update(product).subscribe((p) => {
                 this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
                 this.setEntity(p);
             });
         } else {
-            this.produkteService.create(product).subscribe((p) => {
+            this.produkteApiService.create(product).subscribe((p) => {
                 this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
                 this.id.set(p.id);
                 this.setEntity(p);

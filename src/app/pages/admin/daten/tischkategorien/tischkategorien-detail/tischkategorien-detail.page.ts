@@ -16,9 +16,9 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
+import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
+import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { ProduktkategorienService } from 'src/app/data/produktkategorien.service';
-import { TischkategorienService } from 'src/app/data/tischkategorien.service';
 import { Tischkategorie } from 'src/app/model/tischkategorie.class';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
@@ -46,14 +46,14 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
     ],
 })
 export class TischkategorienDetailPage {
-    private tischkategorienService = inject(TischkategorienService);
-    private produktkategorienService = inject(ProduktkategorienService);
+    private tischkategorienApiService = inject(TischkategorienApiService);
+    private produktkategorienApiService = inject(ProduktkategorienApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
 
-    public produktkategorien = toSignal(this.produktkategorienService.readAll());
+    public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
     public tischkategorie = signal<Tischkategorie>(null);
 
     public form: FormGroup = this.formBuilder.group({
@@ -63,7 +63,7 @@ export class TischkategorienDetailPage {
     });
 
     constructor() {
-        effect(() => this.tischkategorienService.read(this.id()).subscribe((tischkategorie: Tischkategorie) => this.setEntity(tischkategorie)));
+        effect(() => this.tischkategorienApiService.read(this.id()).subscribe((tischkategorie: Tischkategorie) => this.setEntity(tischkategorie)));
     }
 
     private setEntity(tischkategorie: Tischkategorie) {
@@ -74,7 +74,7 @@ export class TischkategorienDetailPage {
     public save() {
         const updated = { ...this.tischkategorie(), ...this.form.value };
         console.debug('[FFGBSY]', 'TischkategorienDetailPage', 'save(), Updated Product:', updated);
-        this.tischkategorienService.update(updated).subscribe((tischkategorie) => {
+        this.tischkategorienApiService.update(updated).subscribe((tischkategorie) => {
             this.frontendService.showToast(`${tischkategorie.name} wurde erfolgreich gespeichert!`);
             this.setEntity(tischkategorie);
         });

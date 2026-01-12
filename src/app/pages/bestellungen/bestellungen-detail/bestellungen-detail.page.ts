@@ -16,7 +16,7 @@ import {
     IonToolbar,
 } from '@ionic/angular/standalone';
 import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
-import { BonsService } from 'src/app/data/api/bons-api.service';
+import { BonsApiService } from 'src/app/data/api/bons-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
 import { Bestellung } from 'src/app/model/bestellung.model';
@@ -31,7 +31,7 @@ import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 })
 export class BestellungenDetailPage implements OnInit {
     public activatedRoute = inject(ActivatedRoute);
-    private bonsService = inject(BonsService);
+    private bonsApiService = inject(BonsApiService);
     private readonly bestellungenApiService = inject(BestellungenApiService);
     private frontend = inject(FrontendService);
     private alertController = inject(AlertController);
@@ -47,7 +47,7 @@ export class BestellungenDetailPage implements OnInit {
     }
 
     public printBon(bon: IBon) {
-        this.bonsService.druckBonById(bon.id).subscribe((bonDruck) => {
+        this.bonsApiService.druckBonById(bon.id).subscribe((bonDruck) => {
             this.loadBestellung(bon.bestellungen_id);
 
             if (bonDruck.success) {
@@ -84,8 +84,8 @@ export class BestellungenDetailPage implements OnInit {
                     text: 'Anzahl stornieren',
                     handler: (res) => {
                         this.bestellungenApiService.createStornoBestellposition(bestellposition, parseInt(res.anzahl)).subscribe((stornoposition) => {
-                            this.bonsService.createStornoBon(stornoposition).subscribe((bon) =>
-                                this.bonsService.druckBonById(bon.id).subscribe((druck) => {
+                            this.bonsApiService.createStornoBon(stornoposition).subscribe((bon) =>
+                                this.bonsApiService.druckBonById(bon.id).subscribe((druck) => {
                                     if (druck.success) {
                                         this.frontend.showToast('Stornobon wurde erfolgreich gedruckt!', 2000);
                                     } else {

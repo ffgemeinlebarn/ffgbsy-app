@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Tischkategorie } from 'src/app/model/tischkategorie.class';
-import { SettingsService } from './settings.service';
+import { SettingsService } from '../settings.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class TischkategorienService {
-    http = inject(HttpClient);
-    settings = inject(SettingsService);
+export class TischkategorienApiService {
+    private readonly http = inject(HttpClient);
+    private readonly settings = inject(SettingsService);
 
     public create(tischkategorien: Tischkategorie) {
         return this.http.post<Tischkategorie>(`${this.settings.apiBaseUrl()}/tischkategorien`, tischkategorien);

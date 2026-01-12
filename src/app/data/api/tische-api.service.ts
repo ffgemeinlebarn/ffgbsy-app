@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Tisch } from 'src/app/model/tisch.class';
-import { SettingsService } from './settings.service';
+import { SettingsService } from '../settings.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class TischeService {
-    private http = inject(HttpClient);
-    private settings = inject(SettingsService);
+export class TischeApiService {
+    private readonly http = inject(HttpClient);
+    private readonly settings = inject(SettingsService);
 
     public create(tische: Tisch) {
         return this.http.post<Tisch>(`${this.settings.apiBaseUrl()}/tische`, tische);

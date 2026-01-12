@@ -9,7 +9,7 @@ import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
 import { environment } from 'src/environments/environment';
 import { DataService } from '../data/data.service';
 import { BestellungenApiService } from './api/bestellungen-api.service';
-import { BonsService } from './api/bons-api.service';
+import { BonsApiService } from './api/bons-api.service';
 import { AvailabilityService } from './availability.service';
 import { FrontendService } from './frontend.service';
 import { SettingsService } from './settings.service';
@@ -21,7 +21,7 @@ export class AppService {
     private settings = inject(SettingsService);
     private frontend = inject(FrontendService);
     private data = inject(DataService);
-    private bonsService = inject(BonsService);
+    private bonsApiService = inject(BonsApiService);
     private availability = inject(AvailabilityService);
     private modalController = inject(ModalController);
     private readonly bestellungenApiService = inject(BestellungenApiService);
@@ -123,7 +123,7 @@ export class AppService {
                 this.frontend.showToast('Bestellung erfolgreich angelegt!', 2000);
                 this.bestellung.set(null);
 
-                this.bonsService.druckBonsOfBestellungById(bestellung.id).subscribe({
+                this.bonsApiService.druckBonsOfBestellungById(bestellung.id).subscribe({
                     next: (bons) => {
                         if (bons.filter((b) => !b.success).length == 0) {
                             this.frontend.showToast('Alle Bons wurden erfolgreich gedruckt!', 2000);
