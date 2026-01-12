@@ -1,31 +1,26 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, retry, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
 import { IBonsFilter } from 'src/app/model/bons-filter.interface';
 import { IBonDruck } from 'src/app/model/i-bon-druck';
 import { IBon } from 'src/app/model/i-bon.model';
-import { FrontendService } from '../frontend.service';
 import { SettingsService } from '../settings.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class BonsService {
-    private http = inject(HttpClient);
-    private settings = inject(SettingsService);
-
-    private frontendService = inject(FrontendService);
+    private readonly http = inject(HttpClient);
+    private readonly settings = inject(SettingsService);
 
     public createStornoBon(bestellposition: Bestellposition) {
-        return this.http
-            .post<IBon>(`${this.settings.apiBaseUrl()}/bons`, {
-                type: 'storno',
-                bestellungen_id: bestellposition.bestellungen_id,
-                drucker_id: bestellposition.drucker_id,
-                bestellpositionen: [bestellposition],
-            })
-            .pipe(retry(1));
+        return this.http.post<IBon>(`${this.settings.apiBaseUrl()}/bons`, {
+            type: 'storno',
+            bestellungen_id: bestellposition.bestellungen_id,
+            drucker_id: bestellposition.drucker_id,
+            bestellpositionen: [bestellposition],
+        });
     }
 
     public search(filter: IBonsFilter) {
@@ -45,21 +40,18 @@ export class BonsService {
         params = params.append('multipleDrucke', filter.multipleDrucke);
         params = params.append('limit', filter.limit);
 
-        return this.http.get<IBon[]>(`${this.settings.apiBaseUrl()}/bons`, { params }).pipe(retry(1));
+        return this.http.get<IBon[]>(`${this.settings.apiBaseUrl()}/bons`, { params });
     }
 
     public druckBonsOfBestellungById(id: number): Observable<IBonDruck[]> {
-        // this.frontendService.showLoadingSpinner('Drucke Bons für Bestellung');
-        return this.http.post<IBonDruck[]>(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null).pipe(tap(() => this.frontendService.hideLoadingSpinner()));
+        return this.http.post<IBonDruck[]>(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null);
     }
 
     public druckBonsByIds(ids: number[]): Observable<IBonDruck[]> {
-        // this.frontendService.showLoadingSpinner('Drucke Bons');
-        return this.http.post<IBonDruck[]>(`${this.settings.apiBaseUrl()}/print/bons`, ids).pipe(tap(() => this.frontendService.hideLoadingSpinner()));
+        return this.http.post<IBonDruck[]>(`${this.settings.apiBaseUrl()}/print/bons`, ids);
     }
 
     public druckBonById(id: number): Observable<IBonDruck> {
-        // this.frontendService.showLoadingSpinner('Drucke Bon');
-        return this.http.post<IBonDruck>(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null).pipe(tap(() => this.frontendService.hideLoadingSpinner()));
+        return this.http.post<IBonDruck>(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null);
     }
 }

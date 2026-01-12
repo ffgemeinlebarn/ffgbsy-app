@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
-import { retry } from 'rxjs';
 import { DataLoadedReportModalComponent } from 'src/app/feature/data-loaded-report-modal/data-loaded-report-modal.component';
 import { IDaten } from 'src/app/model/daten.interface';
 import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
@@ -38,18 +37,15 @@ export class DataService {
     }
 
     public load() {
-        this.http
-            .get<IDaten>(`${this.settings.apiBaseUrl()}/daten/latest`)
-            .pipe(retry(1))
-            .subscribe((data) => {
-                this.aufnehmer.set(data.aufnehmer);
-                this.produktbereiche.set(data.produktbereiche);
-                this.produktkategorien.set(data.produktkategorien);
-                this.produkteinteilungen.set(data.produkteinteilungen);
-                this.produkte.set(data.produkte);
-                this.tischkategorien.set(data.tischkategorien);
-                this.tische.set(data.tische);
-            });
+        this.http.get<IDaten>(`${this.settings.apiBaseUrl()}/daten/latest`).subscribe((data) => {
+            this.aufnehmer.set(data.aufnehmer);
+            this.produktbereiche.set(data.produktbereiche);
+            this.produktkategorien.set(data.produktkategorien);
+            this.produkteinteilungen.set(data.produkteinteilungen);
+            this.produkte.set(data.produkte);
+            this.tischkategorien.set(data.tischkategorien);
+            this.tische.set(data.tische);
+        });
     }
 
     public async showLoadedReport() {

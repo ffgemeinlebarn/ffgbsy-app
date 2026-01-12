@@ -1,13 +1,14 @@
 import { HttpErrorResponse, HttpEventType, type HttpEvent, type HttpHandlerFn, type HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, tap, type Observable } from 'rxjs';
+import { catchError, retry, tap, type Observable } from 'rxjs';
 import { FrontendService } from '../data/frontend.service';
-import { LOADING_ANIMATION } from './loading-http-context-token';
+import { LOADING_ANIMATION, RETRY_COUNT } from './http-context-tokens';
 
 export const httpInterceptor = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
     const frontend = inject(FrontendService);
 
     return next(request).pipe(
+        retry(request.context.get(RETRY_COUNT)),
         tap((event) => {
             if (request.context.get(LOADING_ANIMATION)) {
                 if (event.type === HttpEventType.Sent) {
