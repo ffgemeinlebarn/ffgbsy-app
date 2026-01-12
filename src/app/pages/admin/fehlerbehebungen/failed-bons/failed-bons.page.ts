@@ -121,7 +121,7 @@ export class FailedBonsPage implements ViewDidEnter {
     }
 
     public printSelectedBons() {
-        this.frontendService.showLoadingSpinner();
+        // this.frontendService.showLoadingSpinner();
         const selectedBons = this.bons()
             .filter((b) => b.selected)
             .map((bon) => bon.id);

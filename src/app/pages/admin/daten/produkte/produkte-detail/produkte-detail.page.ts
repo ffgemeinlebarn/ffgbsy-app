@@ -1,12 +1,6 @@
 import { Component, effect, inject, model, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
     AlertController,
@@ -82,9 +76,7 @@ export class ProdukteDetailPage {
     public id = model.required<number | null>();
     public produkt = signal<Produkt>(null);
     public drucker = toSignal(this.druckerService.readAll());
-    public produkteinteilungen = toSignal(
-        this.produkteinteilungenService.readAll()
-    );
+    public produkteinteilungen = toSignal(this.produkteinteilungenService.readAll());
     public grundprodukte = toSignal(this.grundprodukteService.readAll());
     public showGrundproduktMultiplikator = signal(true);
 
@@ -105,37 +97,24 @@ export class ProdukteDetailPage {
     });
 
     constructor() {
-        effect(
-            () => {
-                if (isNaN(this.id())) {
-                    this.setEntity(new Produkt());
-                } else {
-                    this.produkteService
-                        .read(this.id())
-                        .subscribe((produkt) => this.setEntity(produkt));
-                }
-            },
-            { allowSignalWrites: true }
-        );
-        this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) =>
-            this.showGrundproduktMultiplikator.set(id != null)
-        );
+        effect(() => {
+            if (isNaN(this.id())) {
+                this.setEntity(new Produkt());
+            } else {
+                this.produkteService.read(this.id()).subscribe((produkt) => this.setEntity(produkt));
+            }
+        });
+        this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
     }
 
     private setEntity(produkt: Produkt) {
         this.produkt.set(produkt);
-        this.showGrundproduktMultiplikator.set(
-            produkt.grundprodukte_id != null
-        );
+        this.showGrundproduktMultiplikator.set(produkt.grundprodukte_id != null);
         this.form.patchValue(produkt);
     }
 
     public removeEigenschaft(eigenschaft: Eigenschaft) {
-        this.form.controls.eigenschaften.setValue(
-            this.form.controls.eigenschaften.value.filter(
-                (e) => e.id !== eigenschaft.id
-            )
-        );
+        this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter((e) => e.id !== eigenschaft.id));
         this.produkt.set({
             ...this.produkt(),
             eigenschaften: this.form.controls.eigenschaften.value,
@@ -154,9 +133,7 @@ export class ProdukteDetailPage {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: Eigenschaft = await (
-            await modal.onWillDismiss()
-        ).data;
+        const eigenschaft: Eigenschaft = await (await modal.onWillDismiss()).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({
@@ -175,15 +152,9 @@ export class ProdukteDetailPage {
                 ],
             });
             await alert.present();
-            eigenschaft.in_produkt_enthalten = await (
-                await alert.onWillDismiss()
-            ).data;
+            eigenschaft.in_produkt_enthalten = await (await alert.onWillDismiss()).data;
 
-            if (
-                !this.produkt().eigenschaften.find(
-                    (e) => e.id === eigenschaft.id
-                )
-            ) {
+            if (!this.produkt().eigenschaften.find((e) => e.id === eigenschaft.id)) {
                 this.produkt.update((produkt) => {
                     produkt.eigenschaften.push(eigenschaft);
                     return produkt;
@@ -197,16 +168,12 @@ export class ProdukteDetailPage {
 
         if (product.id) {
             this.produkteService.update(product).subscribe((p) => {
-                this.frontendService.showToast(
-                    `${p.name} wurde erfolgreich gespeichert!`
-                );
+                this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
                 this.setEntity(p);
             });
         } else {
             this.produkteService.create(product).subscribe((p) => {
-                this.frontendService.showToast(
-                    `${p.name} wurde erfolgreich gespeichert!`
-                );
+                this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
                 this.id.set(p.id);
                 this.setEntity(p);
             });

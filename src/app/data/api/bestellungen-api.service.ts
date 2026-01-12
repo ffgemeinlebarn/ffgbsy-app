@@ -21,12 +21,12 @@ export class BestellungenApiService {
     }
 
     public create(bestellung: Bestellung) {
-        this.frontendService.showLoadingSpinner('Bestellung wird angelegt');
+        // this.frontendService.showLoadingSpinner('Bestellung wird angelegt');
         return this.http.post<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellung).pipe(tap(() => this.frontendService.hideLoadingSpinner()));
     }
 
     public createStornoBestellposition(bestellposition: Bestellposition, anzahl: number) {
-        this.frontendService.showLoadingSpinner();
+        // this.frontendService.showLoadingSpinner();
         return this.http
             .post<Bestellposition>(`${this.settings.apiBaseUrl()}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl })
             .pipe(tap(() => this.frontendService.hideLoadingSpinner()));

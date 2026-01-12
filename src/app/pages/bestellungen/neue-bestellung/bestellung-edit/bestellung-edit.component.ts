@@ -1,16 +1,6 @@
 import { NgClass } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
-import {
-    IonButton,
-    IonContent,
-    IonFooter,
-    IonIcon,
-    IonItem,
-    IonItemDivider,
-    IonLabel,
-    IonList,
-    ModalController,
-} from '@ionic/angular/standalone';
+import { IonButton, IonContent, IonFooter, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, ModalController } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/data/app.service';
 import { DataService } from 'src/app/data/data.service';
 import { BestellungKontrolleModalComponent } from 'src/app/feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
@@ -24,20 +14,7 @@ import { Produktkategorie } from 'src/app/model/produktkategorie.class';
     selector: 'app-bestellung-edit',
     templateUrl: './bestellung-edit.component.html',
     styleUrls: ['./bestellung-edit.component.scss'],
-    imports: [
-        IonItemDivider,
-        IonItem,
-        IonIcon,
-        IonContent,
-        IonFooter,
-        IonButton,
-        IonList,
-        IonItem,
-        IonLabel,
-        IonItemDivider,
-        NgClass,
-        EuroPreisPipe,
-    ],
+    imports: [IonItemDivider, IonItem, IonIcon, IonContent, IonFooter, IonButton, IonList, IonItem, IonLabel, IonItemDivider, NgClass, EuroPreisPipe],
 })
 export class BestellungEditComponent {
     private app = inject(AppService);
@@ -49,29 +26,18 @@ export class BestellungEditComponent {
     public produktkategorien = this.data.produktkategorien;
 
     public selectedProduktkategorie = signal<Produktkategorie>(null);
-    public filtredProdukteinteilungenToDisplay = signal<Produkteinteilung[]>(
-        []
-    );
+    public filtredProdukteinteilungenToDisplay = signal<Produkteinteilung[]>([]);
 
     constructor() {
-        effect(
-            () => {
-                if (this.selectedProduktkategorie() == null) {
-                    this.selectProduktkategorie(this.produktkategorien()[0]);
-                }
+        effect(() => {
+            if (this.selectedProduktkategorie() == null) {
+                this.selectProduktkategorie(this.produktkategorien()[0]);
+            }
 
-                this.filtredProdukteinteilungenToDisplay.set(
-                    this.data
-                        .produktkategorien()
-                        .find(
-                            (produktkategorie) =>
-                                produktkategorie.id ==
-                                this.selectedProduktkategorie()?.id
-                        )?.produkteinteilungen ?? []
-                );
-            },
-            { allowSignalWrites: true }
-        );
+            this.filtredProdukteinteilungenToDisplay.set(
+                this.data.produktkategorien().find((produktkategorie) => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? [],
+            );
+        });
     }
 
     public changeTisch() {

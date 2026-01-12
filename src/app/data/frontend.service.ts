@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular/standalone';
 
 @Injectable({
@@ -11,22 +11,20 @@ export class FrontendService {
     public toast: any;
     public alert: any;
 
-    public loadingSpinnerActiveCount: number = 0;
+    public loadingSpinnerActiveCount = signal(0);
     public loadingSpinnerMessage: string = '';
 
     public showLoadingSpinner(message: string = '') {
         this.loadingSpinnerMessage = message;
-        this.loadingSpinnerActiveCount++;
-        // this.logger.trace('[Frontend Service] Show Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
+        this.loadingSpinnerActiveCount.update((c) => c + 1);
+        console.debug('[FFGBSY] Show Loading', 'Number =', this.loadingSpinnerActiveCount());
     }
 
     public hideLoadingSpinner(): void {
-        if (this.loadingSpinnerActiveCount > 0) {
-            this.loadingSpinnerActiveCount--;
-        } else {
-            // this.logger.warn('[Frontend Service] Wanted to hide Loading Spinner, which is already hidden');
+        console.debug('[FFGBSY] Hide Loading', 'Number =', this.loadingSpinnerActiveCount());
+        if (this.loadingSpinnerActiveCount() > 0) {
+            this.loadingSpinnerActiveCount.update((c) => c - 1);
         }
-        // this.logger.trace('[Frontend Service] Hide Loading Spinner', 'Number =', this.loadingSpinnerActiveCount);
     }
 
     showOkAlert(header: string, message: string) {

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { catchError, map, retry, tap } from 'rxjs/operators';
+import { map, retry, tap } from 'rxjs/operators';
 import { IDaten } from 'src/app/model/daten.interface';
 import { environment } from 'src/environments/environment';
 import { FrontendService } from '../frontend.service';
@@ -17,54 +17,31 @@ export class CoresApiService {
     private headers: HttpHeaders = null;
 
     constructor() {
-        this.loadEnvironment();
-    }
-
-    public loadEnvironment() {
         this.url = environment.api;
     }
 
-    public errorHandler(error: Error | any, silent: boolean = false): Observable<any> {
-        if (!silent) {
-            this.frontend.hideLoadingSpinner();
-
-            if (error.status == 0) {
-                this.frontend.showOkAlert('Es konnte keine Verbindung hergestellt werden!', error.message);
-            }
-
-            if (error.status == 500) {
-                this.frontend.showOkAlert('Unbekannter Kommunikationsfehler aufgetreten!', error.message);
-            }
-        }
-
-        throw error;
-    }
-
     public getCurrentVersion(): Observable<number> {
-        this.frontend.showLoadingSpinner('Vergleiche aktuelle Datenversion');
-        return this.http.get(`${this.url}/daten/latest`, { headers: this.headers }).pipe(
+        // this.frontend.showLoadingSpinner('Vergleiche aktuelle Datenversion');
+        return this.http.get<IDaten>(`${this.url}/daten/latest`, { headers: this.headers }).pipe(
             retry(1),
             tap(() => this.frontend.hideLoadingSpinner()),
             map((data: IDaten) => data.version),
-            catchError((error) => this.errorHandler(error)),
         );
     }
 
-    public getDaten(): Observable<IDaten> {
-        this.frontend.showLoadingSpinner('Lade neueste Daten');
-        return this.http.get(`${this.url}/daten/latest`, { headers: this.headers }).pipe(
+    public getDaten() {
+        // this.frontend.showLoadingSpinner('Lade neueste Daten');
+        return this.http.get<IDaten>(`${this.url}/daten/latest`, { headers: this.headers }).pipe(
             retry(1),
             tap(() => this.frontend.hideLoadingSpinner()),
-            catchError((error) => this.errorHandler(error)),
         );
     }
 
-    public getSystemstatus(): Observable<any> {
-        this.frontend.showLoadingSpinner('Empfange Systemstatus');
+    public getSystemstatus() {
+        // this.frontend.showLoadingSpinner('Empfange Systemstatus');
         return this.http.get(`${this.url}/status/systemstatus`, { headers: this.headers }).pipe(
             retry(1),
             tap(() => this.frontend.hideLoadingSpinner()),
-            catchError((error) => this.errorHandler(error)),
         );
     }
 }

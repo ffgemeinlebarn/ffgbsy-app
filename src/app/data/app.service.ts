@@ -38,17 +38,14 @@ export class AppService {
     public readonly bestellung = signal<Bestellung>(null);
 
     constructor() {
-        effect(
-            () => {
-                if (this.settings.local().deviceAufnehmerId && !this.aufnehmer()) {
-                    const aufnehmer = this.data.aufnehmer().find((a) => a.id == this.settings.local().deviceAufnehmerId);
-                    if (aufnehmer) {
-                        this.selectAufnehmer(aufnehmer);
-                    }
+        effect(() => {
+            if (this.settings.local().deviceAufnehmerId && !this.aufnehmer()) {
+                const aufnehmer = this.data.aufnehmer().find((a) => a.id == this.settings.local().deviceAufnehmerId);
+                if (aufnehmer) {
+                    this.selectAufnehmer(aufnehmer);
                 }
-            },
-            { allowSignalWrites: true },
-        );
+            }
+        });
     }
 
     public showSelectAufnehmerModal() {

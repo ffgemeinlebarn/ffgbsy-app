@@ -7,7 +7,7 @@ import { IonicRouteStrategy, provideIonicAngular } from '@ionic/angular/standalo
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { routes } from './app.routes';
-import { apiErrorInterceptor } from './misc/api-error-handling.interceptor';
+import { httpInterceptor } from './misc/http-interceptor';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
         importProvidersFrom(CommonModule),
         provideCharts(withDefaultRegisterables()),
         provideIonicAngular(),
-        provideHttpClient(withFetch(), withInterceptors([apiErrorInterceptor])),
+        provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
         provideRouter(routes, withComponentInputBinding()),
     ],
 };

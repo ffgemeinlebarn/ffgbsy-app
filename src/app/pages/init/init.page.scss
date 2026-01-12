@@ -2,6 +2,10 @@
     ion-header {
         box-shadow: none;
         position: absolute;
+
+        ion-toolbar {
+            --background: transparent;
+        }
     }
 
     ion-content {

@@ -1,19 +1,7 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import {
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonList,
-    IonMenuButton,
-    IonSearchbar,
-    IonTitle,
-    IonToolbar,
-    ViewDidEnter,
-} from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { ProdukteService } from 'src/app/data/produkte.service';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 import { Produkt } from 'src/app/model/produkt.class';
@@ -49,9 +37,7 @@ export class ProdukteListPage implements ViewDidEnter {
     public produkteFiltred = signal<Produkt[]>(null);
 
     constructor() {
-        effect(() => this.produkteFiltred.set(this.produkte()), {
-            allowSignalWrites: true,
-        });
+        effect(() => this.produkteFiltred.set(this.produkte()));
     }
 
     public handleSearchInput(event: any) {
@@ -59,11 +45,7 @@ export class ProdukteListPage implements ViewDidEnter {
     }
 
     private filter(query: string) {
-        this.produkteFiltred.set(
-            this.produkte().filter((produkt) =>
-                produkt.name.toLowerCase().includes(query)
-            )
-        );
+        this.produkteFiltred.set(this.produkte().filter((produkt) => produkt.name.toLowerCase().includes(query)));
     }
 
     ionViewDidEnter(): void {

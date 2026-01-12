@@ -1,12 +1,5 @@
 import { NgClass } from '@angular/common';
-import {
-    Component,
-    computed,
-    effect,
-    inject,
-    output,
-    signal,
-} from '@angular/core';
+import { Component, computed, effect, inject, output, signal } from '@angular/core';
 import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
 import { DataService } from 'src/app/data/data.service';
 import { Tisch } from 'src/app/model/tisch.class';
@@ -23,35 +16,18 @@ export class TischAuswahlComponent {
     public onTischSelected = output<Tisch>();
 
     public tischkategorien = this.data.tischkategorien;
-    public filtredTischkategorienToDisplay = computed(
-        () =>
-            this.tischkategorien()?.filter(
-                (tischkategorie) => tischkategorie.aktiv
-            ) ?? []
-    );
+    public filtredTischkategorienToDisplay = computed(() => this.tischkategorien()?.filter((tischkategorie) => tischkategorie.aktiv) ?? []);
     public selectedTischkategorie = signal<Tischkategorie>(null);
     public filtredTischeToDisplay = signal<Tisch[]>([]);
 
     constructor() {
-        effect(
-            () => {
-                if (this.selectedTischkategorie() == null) {
-                    this.selectTischkategorie(this.tischkategorien()[0]);
-                }
+        effect(() => {
+            if (this.selectedTischkategorie() == null) {
+                this.selectTischkategorie(this.tischkategorien()[0]);
+            }
 
-                this.filtredTischeToDisplay.set(
-                    this.data
-                        .tische()
-                        .filter(
-                            (tisch) =>
-                                tisch.tischkategorien_id ==
-                                    this.selectedTischkategorie()?.id &&
-                                tisch.aktiv
-                        ) ?? []
-                );
-            },
-            { allowSignalWrites: true }
-        );
+            this.filtredTischeToDisplay.set(this.data.tische().filter((tisch) => tisch.tischkategorien_id == this.selectedTischkategorie()?.id && tisch.aktiv) ?? []);
+        });
     }
 
     public selectTischkategorie(tischkategorie: Tischkategorie) {

@@ -49,17 +49,17 @@ export class BonsService {
     }
 
     public druckBonsOfBestellungById(id: number): Observable<IBonDruck[]> {
-        this.frontendService.showLoadingSpinner('Drucke Bons für Bestellung');
+        // this.frontendService.showLoadingSpinner('Drucke Bons für Bestellung');
         return this.http.post<IBonDruck[]>(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null).pipe(tap(() => this.frontendService.hideLoadingSpinner()));
     }
 
     public druckBonsByIds(ids: number[]): Observable<IBonDruck[]> {
-        this.frontendService.showLoadingSpinner('Drucke Bons');
+        // this.frontendService.showLoadingSpinner('Drucke Bons');
         return this.http.post<IBonDruck[]>(`${this.settings.apiBaseUrl()}/print/bons`, ids).pipe(tap(() => this.frontendService.hideLoadingSpinner()));
     }
 
     public druckBonById(id: number): Observable<IBonDruck> {
-        this.frontendService.showLoadingSpinner('Drucke Bon');
+        // this.frontendService.showLoadingSpinner('Drucke Bon');
         return this.http.post<IBonDruck>(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null).pipe(tap(() => this.frontendService.hideLoadingSpinner()));
     }
 }
