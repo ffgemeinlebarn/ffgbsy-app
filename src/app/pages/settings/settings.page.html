@@ -32,7 +32,7 @@
             <ion-item>
                 <ion-label position="stacked">PIN für Auswertungen und Datenverwaltung </ion-label>
                 <ion-input inputmode="numeric" placeholder="PIN-Code" type="password" formControlName="adminPin"></ion-input>
-                <ion-chip slot="end" [color]="adminFeatureIsActivated() ? 'success' : 'primary'">{{ adminFeatureIsActivated() ? "aktiv" : "inaktiv" }}</ion-chip>
+                <ion-chip class="non-clickable" slot="end" [color]="adminFeatureIsActivatedColor()">{{ adminFeatureIsActivatedText() }}</ion-chip>
             </ion-item>
             <ion-item>
                 <ion-toggle formControlName="bonDebugMenu">

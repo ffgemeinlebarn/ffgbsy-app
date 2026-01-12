@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonButton,
@@ -49,6 +49,8 @@ export class SettingsPage {
     private readonly formBuilder = inject(FormBuilder);
 
     public adminFeatureIsActivated = this.app.isAdmin;
+    public adminFeatureIsActivatedColor = computed(() => (this.adminFeatureIsActivated() ? 'success' : 'primary'));
+    public adminFeatureIsActivatedText = computed(() => (this.adminFeatureIsActivated() ? 'aktiv' : 'inaktiv'));
 
     public form = this.formBuilder.group({
         deviceName: ['', [Validators.required, Validators.minLength(1)]],
