@@ -1,15 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonItemDivider,
-    IonList,
-    IonTitle,
-    IonToolbar,
-    ModalController,
-} from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonContent, IonHeader, IonItemDivider, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { AvailabilityService } from 'src/app/data/availability.service';
 import { StatusListItemComponent } from 'src/app/ui/status-list-item/status-list-item.component';
 
@@ -17,17 +7,7 @@ import { StatusListItemComponent } from 'src/app/ui/status-list-item/status-list
     selector: 'app-availability-modal',
     templateUrl: './availability-modal.component.html',
     styleUrls: ['./availability-modal.component.scss'],
-    imports: [
-        IonHeader,
-        IonTitle,
-        IonToolbar,
-        IonButton,
-        IonButtons,
-        IonContent,
-        IonList,
-        IonItemDivider,
-        StatusListItemComponent,
-    ],
+    imports: [IonHeader, IonTitle, IonToolbar, IonButton, IonButtons, IonContent, IonList, IonItemDivider, StatusListItemComponent],
 })
 export class AvailabilityModalComponent {
     private availability = inject(AvailabilityService);

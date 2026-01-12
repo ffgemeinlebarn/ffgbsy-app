@@ -12,7 +12,7 @@
                 <tr>
                     <th class="headline" scope="col">Produkt</th>
                     @for (item of tableProdukte()?.header; track item) {
-                    <th scope="col">{{ item.datum | date: 'dd.MM.yyyy' }}</th>
+                        <th scope="col">{{ item.datum | date: "dd.MM.yyyy" }}</th>
                     }
                     <th scope="col">Anzahl</th>
                     <th scope="col">Umsatz</th>
@@ -20,14 +20,14 @@
             </thead>
             <tbody>
                 @for (item of tableProdukte()?.data; track item.id) {
-                <tr>
-                    <th scope="row">{{ item.produkt }}</th>
-                    @for (datapoint of item.data; track datapoint) {
-                    <td>{{ datapoint.anzahl }}</td>
-                    }
-                    <td>{{ item.anzahl }}</td>
-                    <td>{{ item.umsatz | euroPreis: { symbol: true, zerotext: false } }}</td>
-                </tr>
+                    <tr>
+                        <th scope="row">{{ item.produkt }}</th>
+                        @for (datapoint of item.data; track datapoint) {
+                            <td>{{ datapoint.anzahl }}</td>
+                        }
+                        <td>{{ item.anzahl }}</td>
+                        <td>{{ item.umsatz | euroPreis: { symbol: true, zerotext: false } }}</td>
+                    </tr>
                 }
             </tbody>
         </table>

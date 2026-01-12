@@ -9,7 +9,7 @@
         "start": "ng serve",
         "build": "ng build",
         "test": "ng test",
-        "lint": "ng lint",
+        "lint": "prettier . --write",
         "e2e": "ng e2e",
         "ci:build:production": "ionic build --prod"
     },

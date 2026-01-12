@@ -6,14 +6,7 @@ import { IonIcon, IonItem, IonLabel, IonMenuToggle } from '@ionic/angular/standa
     selector: 'ffgbsy-menu-item',
     templateUrl: './menu-item.component.html',
     styleUrls: ['./menu-item.component.scss'],
-    imports: [
-        IonIcon,
-        IonMenuToggle,
-        IonItem,
-        IonLabel,
-        IonIcon,
-        RouterLink
-    ]
+    imports: [IonIcon, IonMenuToggle, IonItem, IonLabel, IonIcon, RouterLink],
 })
 export class MenuItemComponent {
     public icon = input<string>(null);

@@ -1,5 +1,5 @@
-import { Produkt } from "./produkt.class";
-import { Produktkategorie } from "./produktkategorie.class";
+import { Produkt } from './produkt.class';
+import { Produktkategorie } from './produktkategorie.class';
 
 export class Produkteinteilung {
     id: number;

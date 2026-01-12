@@ -59,7 +59,6 @@ ion-chip.non-clickable {
 }
 
 :root {
-
     @media screen and (max-width: 300px) {
         --base-width-item-tile: 50%;
         --base-width-category-tile: 50%;
@@ -156,7 +155,6 @@ ion-chip.non-clickable {
 }
 
 @media only print {
-
     body {
         display: block;
         position: relative;
@@ -194,7 +192,6 @@ ion-chip.non-clickable {
         }
 
         .angebot-uebersicht-table {
-
             td.id {
                 width: 3%;
             }
@@ -221,7 +218,6 @@ ion-chip.non-clickable {
         }
 
         .eigenschaften-table {
-
             td.id {
                 width: 10%;
             }
@@ -245,8 +241,6 @@ ion-chip.non-clickable {
     align-items: center;
 }
 
-
-
 .stat-table {
     padding-top: 1em;
     padding-bottom: 2em;
@@ -257,7 +251,6 @@ ion-chip.non-clickable {
         background-color: #f4f4f4;
 
         tr {
-
             td,
             th {
                 border: 4px #fff solid;

@@ -13,12 +13,11 @@
             <p>Erreichbarkeit</p>
         </ffgbsy-status-list-item>
         <ion-item-divider>Drucker</ion-item-divider>
-        @for(item of druckerAvailabilities(); track item)
-        {
-        <ffgbsy-status-list-item [status]="item.status">
-            <h3>{{ item.entity.name }}</h3>
-            <p>{{ item.entity.ip }}</p>
-        </ffgbsy-status-list-item>
+        @for (item of druckerAvailabilities(); track item) {
+            <ffgbsy-status-list-item [status]="item.status">
+                <h3>{{ item.entity.name }}</h3>
+                <p>{{ item.entity.ip }}</p>
+            </ffgbsy-status-list-item>
         }
     </ion-list>
 </ion-content>

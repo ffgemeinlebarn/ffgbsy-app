@@ -17,18 +17,17 @@
         </ion-toolbar>
     </ion-header>
     @if (readyToShow()) {
-
-    <div class="chart-container">
-        <h2>Anzahl Bestellungen</h2>
-        <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineBestellungen" [options]="chartOptions" [legend]="true"></canvas>
-    </div>
-    <div class="chart-container">
-        <h2>Bestellfrequenz (mHz)</h2>
-        <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineFrequenz" [options]="chartOptions" [legend]="true"></canvas>
-    </div>
-    <div class="chart-container">
-        <h2>Umsatz (€)</h2>
-        <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineUmsatz" [options]="chartOptions" [legend]="true"></canvas>
-    </div>
+        <div class="chart-container">
+            <h2>Anzahl Bestellungen</h2>
+            <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineBestellungen" [options]="chartOptions" [legend]="true"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>Bestellfrequenz (mHz)</h2>
+            <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineFrequenz" [options]="chartOptions" [legend]="true"></canvas>
+        </div>
+        <div class="chart-container">
+            <h2>Umsatz (€)</h2>
+            <canvas baseChart width="600" height="300" type="line" [data]="chartTimelineUmsatz" [options]="chartOptions" [legend]="true"></canvas>
+        </div>
     }
 </ion-content>

@@ -3,7 +3,7 @@ export interface Eigenschaft {
     aktiv: boolean;
     eigenschaften_id: number;
     in_produkt_enthalten: boolean;
-    name: string
+    name: string;
     preis: number;
     produktkategorien_id: number;
 }

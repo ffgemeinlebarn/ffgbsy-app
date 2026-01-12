@@ -1,13 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-    IonButton,
-    IonButtons,
-    IonHeader,
-    IonIcon,
-    IonMenuButton,
-    IonTitle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/data/app.service';
 import { FrontendService } from 'src/app/data/frontend.service';
 import { Tisch } from 'src/app/model/tisch.class';
@@ -19,18 +11,7 @@ import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
     selector: 'ffgbsy-neue-bestellung',
     templateUrl: './neue-bestellung.page.html',
     styleUrls: ['./neue-bestellung.page.scss'],
-    imports: [
-        IonIcon,
-        IonHeader,
-        IonToolbar,
-        IonTitle,
-        IonButtons,
-        IonButton,
-        IonMenuButton,
-        AufnehmerAuswahlComponent,
-        TischAuswahlComponent,
-        BestellungEditComponent,
-    ],
+    imports: [IonIcon, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonMenuButton, AufnehmerAuswahlComponent, TischAuswahlComponent, BestellungEditComponent],
 })
 export class NeueBestellungPage {
     private app = inject(AppService);
@@ -62,10 +43,7 @@ export class NeueBestellungPage {
 
     async askForCancelBestellung() {
         await this.frontend
-            .showJaNeinAlert(
-                'Abbruch der Bestellung',
-                'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.'
-            )
+            .showJaNeinAlert('Abbruch der Bestellung', 'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.')
             .then((_) => this.app.cancelBestellung());
     }
 }

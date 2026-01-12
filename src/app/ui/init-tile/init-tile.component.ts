@@ -6,14 +6,7 @@ import { IonCol, IonGrid, IonIcon, IonRippleEffect, IonRow } from '@ionic/angula
     selector: 'ffgbsy-init-tile',
     templateUrl: './init-tile.component.html',
     styleUrls: ['./init-tile.component.scss'],
-    imports: [
-        IonGrid,
-        IonRow,
-        IonCol,
-        IonIcon,
-        IonRippleEffect,
-        NgClass
-    ]
+    imports: [IonGrid, IonRow, IonCol, IonIcon, IonRippleEffect, NgClass],
 })
 export class InitTileComponent {
     iconName = input<string>();
@@ -22,5 +15,5 @@ export class InitTileComponent {
     success = input<boolean>(false);
     unsuccesfulFlag = input<null | 'warn' | 'error'>(null);
 
-    tileClass = computed(() => this.success() ? 'tile--success' : '');
+    tileClass = computed(() => (this.success() ? 'tile--success' : ''));
 }

@@ -56,48 +56,25 @@ export class BestellungspositionEditModalComponent {
         this.bestellposition.display.eigenschaften.ohne = [];
         this.bestellposition.calc_correction = 0;
 
-        const activatedEigenschaften =
-            this.bestellposition.eigenschaften.filter(
-                (e) =>
-                    (!e.in_produkt_enthalten && e.aktiv) ||
-                    (e.in_produkt_enthalten && !e.aktiv)
-            );
+        const activatedEigenschaften = this.bestellposition.eigenschaften.filter((e) => (!e.in_produkt_enthalten && e.aktiv) || (e.in_produkt_enthalten && !e.aktiv));
 
         for (const e of activatedEigenschaften) {
             let name = e.name;
 
             if (!e.in_produkt_enthalten) {
                 if (e.preis > 0) {
-                    name =
-                        name +
-                        ' (' +
-                        this.bestellposition.anzahl +
-                        'x = +' +
-                        this.displayEuroNumber(
-                            this.bestellposition.anzahl * e.preis
-                        ) +
-                        ')';
+                    name = name + ' (' + this.bestellposition.anzahl + 'x = +' + this.displayEuroNumber(this.bestellposition.anzahl * e.preis) + ')';
                 }
 
                 this.bestellposition.display.eigenschaften.mit.push(name);
-                this.bestellposition.calc_correction +=
-                    this.bestellposition.anzahl * e.preis;
+                this.bestellposition.calc_correction += this.bestellposition.anzahl * e.preis;
             } else {
                 if (e.preis > 0) {
-                    name =
-                        name +
-                        ' (' +
-                        this.bestellposition.anzahl +
-                        'x = -' +
-                        this.displayEuroNumber(
-                            this.bestellposition.anzahl * e.preis
-                        ) +
-                        ')';
+                    name = name + ' (' + this.bestellposition.anzahl + 'x = -' + this.displayEuroNumber(this.bestellposition.anzahl * e.preis) + ')';
                 }
 
                 this.bestellposition.display.eigenschaften.ohne.push(name);
-                this.bestellposition.calc_correction -=
-                    this.bestellposition.anzahl * e.preis;
+                this.bestellposition.calc_correction -= this.bestellposition.anzahl * e.preis;
             }
         }
         this.modalController.dismiss(this.bestellposition);

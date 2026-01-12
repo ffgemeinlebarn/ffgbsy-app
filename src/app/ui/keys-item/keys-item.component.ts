@@ -1,23 +1,12 @@
 import { Component, input } from '@angular/core';
-import {
-    IonCard,
-    IonCardHeader,
-    IonCardSubtitle,
-    IonCardTitle,
-} from '@ionic/angular/standalone';
+import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/angular/standalone';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-keys-item',
     templateUrl: './keys-item.component.html',
     styleUrls: ['./keys-item.component.scss'],
-    imports: [
-        IonCardSubtitle,
-        IonCardTitle,
-        IonCard,
-        IonCardHeader,
-        EuroPreisPipe,
-    ],
+    imports: [IonCardSubtitle, IonCardTitle, IonCard, IonCardHeader, EuroPreisPipe],
 })
 export class KeysItemComponent {
     public label = input('');

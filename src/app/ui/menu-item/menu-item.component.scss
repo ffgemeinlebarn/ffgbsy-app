@@ -1,5 +1,4 @@
 :host {
-
     ion-item {
         --padding-start: var(--ffgbsy-menu-item-padding-start);
 
@@ -10,7 +9,7 @@
             justify-content: center;
         }
 
-        ion-icon[slot=start] {
+        ion-icon[slot="start"] {
             margin-inline-end: 24px;
         }
     }

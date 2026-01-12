@@ -1,12 +1,6 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
     IonButton,
@@ -70,18 +64,11 @@ export class TischeDetailPage {
         nummer: [0, [Validators.required, Validators.min(1)]],
         aktiv: [true],
         sortierindex: [100, [Validators.min(0)]],
-        tischkategorien_id: [
-            null,
-            [Validators.required, Validators.nullValidator],
-        ],
+        tischkategorien_id: [null, [Validators.required, Validators.nullValidator]],
     });
 
     constructor() {
-        effect(() =>
-            this.tischeService
-                .read(this.id())
-                .subscribe((tisch) => this.setEntity(tisch))
-        );
+        effect(() => this.tischeService.read(this.id()).subscribe((tisch) => this.setEntity(tisch)));
     }
 
     private setEntity(tisch: Tisch) {
@@ -91,19 +78,13 @@ export class TischeDetailPage {
 
     public save() {
         if (this.form.invalid) {
-            this.frontendService.showToast(
-                `Es ist ein Fehler aufgetreten! Der Tisch wurde nicht gespeichert!`
-            );
+            this.frontendService.showToast(`Es ist ein Fehler aufgetreten! Der Tisch wurde nicht gespeichert!`);
             return;
         }
 
-        this.tischeService
-            .update({ ...this.tisch(), ...this.form.value })
-            .subscribe((tisch) => {
-                this.frontendService.showToast(
-                    `${tisch.reihe}${tisch.nummer} wurde erfolgreich gespeichert!`
-                );
-                this.setEntity(tisch);
-            });
+        this.tischeService.update({ ...this.tisch(), ...this.form.value }).subscribe((tisch) => {
+            this.frontendService.showToast(`${tisch.reihe}${tisch.nummer} wurde erfolgreich gespeichert!`);
+            this.setEntity(tisch);
+        });
     }
 }

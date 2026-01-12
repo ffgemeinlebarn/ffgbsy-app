@@ -1,15 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonMenuButton,
-    IonTitle,
-    IonToolbar,
-    ViewDidEnter,
-} from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { ColorGeneratorService } from 'src/app/data/color-generator.service';
@@ -19,17 +9,7 @@ import { StatistikenService } from 'src/app/data/statistiken.service';
     selector: 'ffgbsy-timeline',
     templateUrl: './timeline.page.html',
     styleUrls: ['./timeline.page.scss'],
-    imports: [
-        IonContent,
-        IonButton,
-        IonIcon,
-        IonButtons,
-        IonTitle,
-        IonToolbar,
-        IonHeader,
-        IonMenuButton,
-        BaseChartDirective,
-    ],
+    imports: [IonContent, IonButton, IonIcon, IonButtons, IonTitle, IonToolbar, IonHeader, IonMenuButton, BaseChartDirective],
 })
 export class TimelinePage implements ViewDidEnter {
     private statistikenService = inject(StatistikenService);
@@ -90,16 +70,12 @@ export class TimelinePage implements ViewDidEnter {
                 });
 
                 this.readyToShow.set(true);
-            })
+            }),
         );
     }
 
     private formatDate(date) {
-        return [
-            date.getDate().toString().padStart(2, '0'),
-            (date.getMonth() + 1).toString().padStart(2, '0'),
-            date.getFullYear(),
-        ].join('.');
+        return [date.getDate().toString().padStart(2, '0'), (date.getMonth() + 1).toString().padStart(2, '0'), date.getFullYear()].join('.');
     }
 
     ionViewDidEnter(): void {

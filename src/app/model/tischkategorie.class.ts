@@ -1,4 +1,4 @@
-import { Tisch } from "./tisch.class";
+import { Tisch } from './tisch.class';
 
 export class Tischkategorie {
     id: number;

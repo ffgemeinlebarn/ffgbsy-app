@@ -1,11 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    IonItem,
-    IonLabel,
-    IonList,
-    ModalController,
-} from '@ionic/angular/standalone';
+import { IonItem, IonLabel, IonList, ModalController } from '@ionic/angular/standalone';
 import { EigenschaftenService } from 'src/app/data/eigenschaften.service';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
