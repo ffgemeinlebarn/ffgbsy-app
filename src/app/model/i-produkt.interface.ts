@@ -1,9 +1,9 @@
-import { Eigenschaft } from './eigenschaft.interface';
 import { IDrucker } from './i-drucker.class';
+import { IEigenschaft } from './i-eigenschaft.interface';
 import { IGrundprodukt } from './i-grundprodukt.class';
-import { Produkteinteilung } from './produkteinteilung.class';
+import { IProdukteinteilung } from './i-produkteinteilung.interface';
 
-export class Produkt {
+export interface IProdukt {
     id: number;
     name: string;
     formal_name: string;
@@ -17,8 +17,8 @@ export class Produkt {
     grundprodukte_multiplikator: number | null;
     celebration_active: boolean;
     celebration_last: number;
-    produkteinteilung: Produkteinteilung;
+    produkteinteilung: IProdukteinteilung;
     grundprodukt: IGrundprodukt | null;
-    eigenschaften: Array<Eigenschaft>;
+    eigenschaften: IEigenschaft[];
     hauptspeise: boolean;
 }

@@ -21,7 +21,7 @@ import {
 import { TischeApiService } from 'src/app/data/api/tische-api.service';
 import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { Tisch } from 'src/app/model/tisch.class';
+import { ITisch } from 'src/app/model/i-tisch.interface';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -56,7 +56,7 @@ export class TischeDetailPage {
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
-    public tisch = signal<Tisch>(null);
+    public tisch = signal<ITisch>(null);
     public tischkategorien = toSignal(this.tischkategorienApiService.readAll());
 
     public form: FormGroup = this.formBuilder.group({
@@ -71,7 +71,7 @@ export class TischeDetailPage {
         effect(() => this.tischeApiService.read(this.id()).subscribe((tisch) => this.setEntity(tisch)));
     }
 
-    private setEntity(tisch: Tisch) {
+    private setEntity(tisch: ITisch) {
         this.tisch.set(tisch);
         this.form.patchValue(tisch);
     }

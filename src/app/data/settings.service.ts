@@ -1,5 +1,5 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { LocalSettings } from 'src/app/model/settings';
+import { ILocalSettings } from 'src/app/model/i-local-settings.interface';
 
 import { Storage } from '@ionic/storage';
 import { environment } from 'src/environments/environment';
@@ -25,7 +25,7 @@ export class SettingsService {
     };
 
     public apiBaseUrl = computed(() => this.local().apiBaseUrl ?? environment.api);
-    public local = signal<LocalSettings>(this.initialLocalSettings);
+    public local = signal<ILocalSettings>(this.initialLocalSettings);
 
     constructor() {
         this.ionicStorage.create();
@@ -46,7 +46,7 @@ export class SettingsService {
         }
     }
 
-    public async saveLocal(settings: LocalSettings, hideToast = false) {
+    public async saveLocal(settings: ILocalSettings, hideToast = false) {
         // this.logger.debug('[Settings Service] Save Local');
         await this.ionicStorage.set(this.localSettingsKey, settings);
         await this.loadLocal();

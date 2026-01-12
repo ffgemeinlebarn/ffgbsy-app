@@ -6,9 +6,9 @@ import { DataService } from 'src/app/data/data.service';
 import { BestellungKontrolleModalComponent } from 'src/app/feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { Produkt } from 'src/app/model/produkt.class';
-import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
-import { Produktkategorie } from 'src/app/model/produktkategorie.class';
+import { IProdukt } from 'src/app/model/i-produkt.interface';
+import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
+import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
 
 @Component({
     selector: 'app-bestellung-edit',
@@ -25,8 +25,8 @@ export class BestellungEditComponent {
     public aufnehmer = this.app.aufnehmer;
     public produktkategorien = this.data.produktkategorien;
 
-    public selectedProduktkategorie = signal<Produktkategorie>(null);
-    public filtredProdukteinteilungenToDisplay = signal<Produkteinteilung[]>([]);
+    public selectedProduktkategorie = signal<IProduktkategorie>(null);
+    public filtredProdukteinteilungenToDisplay = signal<IProdukteinteilung[]>([]);
 
     constructor() {
         effect(() => {
@@ -51,11 +51,11 @@ export class BestellungEditComponent {
      *** Aufnahme der Bestellpositionen
      *******************************************************************************/
 
-    selectProduktkategorie(produktkategorie: Produktkategorie) {
+    selectProduktkategorie(produktkategorie: IProduktkategorie) {
         this.selectedProduktkategorie.set(produktkategorie);
     }
 
-    addBestellposition(produkt: Produkt, form: string, event: any) {
+    addBestellposition(produkt: IProdukt, form: string, event: any) {
         // Verhindert dass ein Extra-Einfügen eine doppeltes Clicken des wrapper-Elements darunter verursacht
         event.stopPropagation();
 

@@ -1,10 +1,10 @@
-import { Eigenschaft } from './eigenschaft.interface';
-import { Produkt } from './produkt.class';
+import { IEigenschaft } from './i-eigenschaft.interface';
+import { IProdukt } from './i-produkt.interface';
 
 export class Bestellposition {
     id: number = null;
     anzahl: number = 0;
-    produkt: Produkt;
+    produkt: IProdukt;
     notiz: string = '';
     display: any = {
         eigenschaften: {
@@ -13,11 +13,11 @@ export class Bestellposition {
         },
     };
     calc_correction: any = 0.0;
-    eigenschaften: Eigenschaft[];
+    eigenschaften: IEigenschaft[];
     bestellungen_id: number;
     drucker_id: number;
 
-    constructor(produkt: Produkt) {
+    constructor(produkt: IProdukt) {
         this.produkt = produkt;
         this.anzahl = 1;
         this.notiz = '';

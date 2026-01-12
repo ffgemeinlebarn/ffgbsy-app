@@ -19,7 +19,7 @@ import {
 import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
 import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { Tischkategorie } from 'src/app/model/tischkategorie.class';
+import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -54,7 +54,7 @@ export class TischkategorienDetailPage {
     public id = input.required<number>();
 
     public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
-    public tischkategorie = signal<Tischkategorie>(null);
+    public tischkategorie = signal<ITischkategorie>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -63,10 +63,10 @@ export class TischkategorienDetailPage {
     });
 
     constructor() {
-        effect(() => this.tischkategorienApiService.read(this.id()).subscribe((tischkategorie: Tischkategorie) => this.setEntity(tischkategorie)));
+        effect(() => this.tischkategorienApiService.read(this.id()).subscribe((tischkategorie: ITischkategorie) => this.setEntity(tischkategorie)));
     }
 
-    private setEntity(tischkategorie: Tischkategorie) {
+    private setEntity(tischkategorie: ITischkategorie) {
         this.tischkategorie.set(tischkategorie);
         this.form.patchValue(tischkategorie);
     }

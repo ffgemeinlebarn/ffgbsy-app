@@ -20,7 +20,7 @@ import {
 import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
 import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
+import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -56,7 +56,7 @@ export class ProdukteinteilungenDetailPage {
     public id = input.required<number>();
 
     public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
-    public produkteinteilung = signal<Produkteinteilung>(null);
+    public produkteinteilung = signal<IProdukteinteilung>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -69,7 +69,7 @@ export class ProdukteinteilungenDetailPage {
     }
 
     private load(id: number) {
-        this.produkteinteilungenApiService.read(id).subscribe((produkteinteilung: Produkteinteilung) => {
+        this.produkteinteilungenApiService.read(id).subscribe((produkteinteilung: IProdukteinteilung) => {
             this.produkteinteilung.set(produkteinteilung);
             this.form.patchValue(produkteinteilung);
         });

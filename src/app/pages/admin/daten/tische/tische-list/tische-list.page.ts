@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
-import { Tischkategorie } from 'src/app/model/tischkategorie.class';
+import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -14,7 +14,7 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
 export class TischeListPage implements ViewDidEnter {
     private tischkategorienApiService = inject(TischkategorienApiService);
 
-    public tischkategorienMitTischen = signal<Tischkategorie[]>(null);
+    public tischkategorienMitTischen = signal<ITischkategorie[]>(null);
 
     ionViewDidEnter(): void {
         this.tischkategorienMitTischen.set(null);

@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { IonButton, IonButtons, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/data/app.service';
 import { FrontendService } from 'src/app/data/frontend.service';
-import { Tisch } from 'src/app/model/tisch.class';
+import { ITisch } from 'src/app/model/i-tisch.interface';
 import { AufnehmerAuswahlComponent } from './aufnehmer-auswahl/aufnehmer-auswahl.component';
 import { BestellungEditComponent } from './bestellung-edit/bestellung-edit.component';
 import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
@@ -24,7 +24,7 @@ export class NeueBestellungPage {
      *** Tischauswahl
      *******************************************************************************/
 
-    selectTisch(tisch: Tisch) {
+    selectTisch(tisch: ITisch) {
         this.bestellung.update((bestellung) => {
             if (bestellung.tisch == null) {
                 bestellung.setTimestampBegonnen();

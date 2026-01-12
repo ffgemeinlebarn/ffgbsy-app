@@ -2,14 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { DataLoadedReportModalComponent } from 'src/app/feature/data-loaded-report-modal/data-loaded-report-modal.component';
-import { IDaten } from 'src/app/model/daten.interface';
 import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
-import { Produkt } from 'src/app/model/produkt.class';
-import { Produktbereich } from 'src/app/model/produktbereich.class';
-import { Produkteinteilung } from 'src/app/model/produkteinteilung.class';
-import { Produktkategorie } from 'src/app/model/produktkategorie.class';
-import { Tisch } from 'src/app/model/tisch.class';
-import { Tischkategorie } from 'src/app/model/tischkategorie.class';
+import { IDaten } from 'src/app/model/i-daten.interface';
+import { IProdukt } from 'src/app/model/i-produkt.interface';
+import { IProduktbereich } from 'src/app/model/i-produktbereich.interface';
+import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
+import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
+import { ITisch } from 'src/app/model/i-tisch.interface';
+import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
 import { SettingsService } from './settings.service';
 
 @Injectable({
@@ -21,12 +21,12 @@ export class DataService {
     private settings = inject(SettingsService);
 
     public aufnehmer = signal<IAufnehmer[]>([]);
-    public produktbereiche = signal<Produktbereich[]>([]);
-    public produktkategorien = signal<Produktkategorie[]>([]);
-    public produkteinteilungen = signal<Produkteinteilung[]>([]);
-    public produkte = signal<Produkt[]>([]);
-    public tischkategorien = signal<Tischkategorie[]>([]);
-    public tische = signal<Tisch[]>([]);
+    public produktbereiche = signal<IProduktbereich[]>([]);
+    public produktkategorien = signal<IProduktkategorie[]>([]);
+    public produkteinteilungen = signal<IProdukteinteilung[]>([]);
+    public produkte = signal<IProdukt[]>([]);
+    public tischkategorien = signal<ITischkategorie[]>([]);
+    public tische = signal<ITisch[]>([]);
 
     public lookupDataSetted = computed(
         () => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische(),

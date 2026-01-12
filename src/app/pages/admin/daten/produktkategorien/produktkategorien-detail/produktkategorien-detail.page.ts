@@ -30,8 +30,8 @@ import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-
 import { FrontendService } from 'src/app/data/frontend.service';
 import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-import { Eigenschaft } from 'src/app/model/eigenschaft.interface';
-import { Produktkategorie } from 'src/app/model/produktkategorie.class';
+import { IEigenschaft } from 'src/app/model/i-eigenschaft.interface';
+import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -77,7 +77,7 @@ export class ProduktkategorienDetailPage {
 
     public drucker = toSignal(this.druckerApiService.readAll());
     public produktbereiche = toSignal(this.produktbereicheApiService.readAll());
-    public produktkategorie = signal<Produktkategorie>(null);
+    public produktkategorie = signal<IProduktkategorie>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -89,15 +89,15 @@ export class ProduktkategorienDetailPage {
     });
 
     constructor() {
-        effect(() => this.produktkategorienApiService.read(this.id()).subscribe((produktkategorie: Produktkategorie) => this.setEntity(produktkategorie)));
+        effect(() => this.produktkategorienApiService.read(this.id()).subscribe((produktkategorie: IProduktkategorie) => this.setEntity(produktkategorie)));
     }
 
-    private setEntity(produktkategorie: Produktkategorie) {
+    private setEntity(produktkategorie: IProduktkategorie) {
         this.produktkategorie.set(produktkategorie);
         this.form.patchValue(produktkategorie);
     }
 
-    public removeEigenschaft(eigenschaft: Eigenschaft) {
+    public removeEigenschaft(eigenschaft: IEigenschaft) {
         this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter((e) => e.id !== eigenschaft.id));
         this.produktkategorie.set({
             ...this.produktkategorie(),
@@ -105,7 +105,7 @@ export class ProduktkategorienDetailPage {
         });
     }
 
-    public toggleEigenschaftEnthalten(eigenschaft: Eigenschaft) {
+    public toggleEigenschaftEnthalten(eigenschaft: IEigenschaft) {
         eigenschaft.in_produkt_enthalten = !eigenschaft.in_produkt_enthalten;
     }
 
@@ -117,7 +117,7 @@ export class ProduktkategorienDetailPage {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: Eigenschaft = await (await modal.onWillDismiss()).data;
+        const eigenschaft: IEigenschaft = await (await modal.onWillDismiss()).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({

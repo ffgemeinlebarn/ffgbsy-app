@@ -1,4 +1,4 @@
-export class Tisch {
+export interface ITisch {
     id: number;
     reihe: any;
     nummer: number;

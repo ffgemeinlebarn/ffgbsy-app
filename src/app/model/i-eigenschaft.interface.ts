@@ -1,4 +1,4 @@
-export interface Eigenschaft {
+export interface IEigenschaft {
     id: number;
     aktiv: boolean;
     eigenschaften_id: number;

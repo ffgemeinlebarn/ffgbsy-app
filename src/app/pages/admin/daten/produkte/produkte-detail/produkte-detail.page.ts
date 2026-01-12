@@ -1,7 +1,7 @@
-import { Component, effect, inject, model, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import {
     AlertController,
     IonBackButton,
@@ -23,6 +23,7 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
+import { map, mergeMap, of, tap } from 'rxjs';
 import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
 import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
 import { ProdukteApiService } from 'src/app/data/api/produkte-api.service';
@@ -30,8 +31,8 @@ import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilun
 import { FrontendService } from 'src/app/data/frontend.service';
 import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
 import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-import { Eigenschaft } from 'src/app/model/eigenschaft.interface';
-import { Produkt } from 'src/app/model/produkt.class';
+import { IEigenschaft } from 'src/app/model/i-eigenschaft.interface';
+import { IProdukt } from 'src/app/model/i-produkt.interface';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -62,7 +63,7 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
         PageSpinnerComponent,
     ],
 })
-export class ProdukteDetailPage {
+export class ProdukteDetailPage implements OnInit {
     private frontendService = inject(FrontendService);
     private produkteApiService = inject(ProdukteApiService);
     private produkteinteilungenApiService = inject(ProdukteinteilungenApiService);
@@ -71,14 +72,13 @@ export class ProdukteDetailPage {
     private formBuilder = inject(FormBuilder);
     private modalController = inject(ModalController);
     private alertController = inject(AlertController);
-    private router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
 
-    public id = model.required<number | null>();
-    public produkt = signal<Produkt>(null);
+    public readonly produkt = signal<IProdukt>(null);
     public drucker = toSignal(this.druckerApiService.readAll());
     public produkteinteilungen = toSignal(this.produkteinteilungenApiService.readAll());
     public grundprodukte = toSignal(this.grundprodukteApiService.readAll());
-    public showGrundproduktMultiplikator = signal(true);
+    public showGrundproduktMultiplikator = computed(() => this.produkt()?.grundprodukte_id != null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -98,22 +98,33 @@ export class ProdukteDetailPage {
 
     constructor() {
         effect(() => {
-            if (isNaN(this.id())) {
-                this.setEntity(new Produkt());
-            } else {
-                this.produkteApiService.read(this.id()).subscribe((produkt) => this.setEntity(produkt));
+            if (this.produkt()) {
+                this.form.patchValue(this.produkt());
             }
         });
-        this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
+
+        // this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
+    }
+    ngOnInit(): void {
+        this.activatedRoute.params
+            .pipe(
+                map((p: Params) => Number(p['id']) ?? null),
+                map((n) => (Number.isNaN(n) ? null : n)),
+                mergeMap((id) => {
+                    if (id) {
+                        return this.produkteApiService.read(id);
+                    } else {
+                        return of({ grundprodukt: null, eigenschaften: [] } as IProdukt);
+                    }
+                }),
+                tap((p) => {
+                    console.log('[FFGBSY]', 'Produkt =>', p);
+                }),
+            )
+            .subscribe((p) => this.produkt.set(p));
     }
 
-    private setEntity(produkt: Produkt) {
-        this.produkt.set(produkt);
-        this.showGrundproduktMultiplikator.set(produkt.grundprodukte_id != null);
-        this.form.patchValue(produkt);
-    }
-
-    public removeEigenschaft(eigenschaft: Eigenschaft) {
+    public removeEigenschaft(eigenschaft: IEigenschaft) {
         this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter((e) => e.id !== eigenschaft.id));
         this.produkt.set({
             ...this.produkt(),
@@ -121,7 +132,7 @@ export class ProdukteDetailPage {
         });
     }
 
-    public toggleEigenschaftEnthalten(eigenschaft: Eigenschaft) {
+    public toggleEigenschaftEnthalten(eigenschaft: IEigenschaft) {
         eigenschaft.in_produkt_enthalten = !eigenschaft.in_produkt_enthalten;
     }
 
@@ -133,7 +144,7 @@ export class ProdukteDetailPage {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: Eigenschaft = await (await modal.onWillDismiss()).data;
+        const eigenschaft: IEigenschaft = await (await modal.onWillDismiss()).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({
@@ -169,13 +180,12 @@ export class ProdukteDetailPage {
         if (product.id) {
             this.produkteApiService.update(product).subscribe((p) => {
                 this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                this.setEntity(p);
+                this.produkt.set(p);
             });
         } else {
             this.produkteApiService.create(product).subscribe((p) => {
                 this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                this.id.set(p.id);
-                this.setEntity(p);
+                this.produkt.set(p);
             });
         }
     }

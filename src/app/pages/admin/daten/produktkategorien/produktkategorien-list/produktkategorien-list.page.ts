@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
-import { Produktkategorie } from 'src/app/model/produktkategorie.class';
+import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
 import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -14,7 +14,7 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
 export class ProduktkategorienListPage implements ViewDidEnter {
     private produktkategorienApiService = inject(ProduktkategorienApiService);
 
-    public produktkategorien = signal<Produktkategorie[]>(null);
+    public produktkategorien = signal<IProduktkategorie[]>(null);
 
     ionViewDidEnter(): void {
         this.produktkategorien.set(null);

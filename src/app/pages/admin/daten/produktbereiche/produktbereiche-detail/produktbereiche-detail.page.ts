@@ -1,5 +1,5 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
-import { Produktbereich } from 'src/app/model/produktbereich.class';
+import { IProduktbereich } from 'src/app/model/i-produktbereich.interface';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -57,7 +57,7 @@ export class ProduktbereicheDetailPage {
     public id = input.required<number>();
 
     public drucker = toSignal(this.druckerApiService.readAll());
-    public produktbereich = signal<Produktbereich>(null);
+    public produktbereich = signal<IProduktbereich>(null);
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
         color: [''],
@@ -69,7 +69,7 @@ export class ProduktbereicheDetailPage {
     }
 
     private load(id: number) {
-        this.produktbereicheApiService.read(id).subscribe((produktbereich: Produktbereich) => {
+        this.produktbereicheApiService.read(id).subscribe((produktbereich: IProduktbereich) => {
             this.produktbereich.set(produktbereich);
             this.form.patchValue(produktbereich);
         });

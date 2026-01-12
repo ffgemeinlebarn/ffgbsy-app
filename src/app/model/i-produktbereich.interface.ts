@@ -1,6 +1,6 @@
 import { IDrucker } from './i-drucker.class';
 
-export class Produktbereich {
+export interface IProduktbereich {
     id: number;
     name: string;
     farbe: string;
