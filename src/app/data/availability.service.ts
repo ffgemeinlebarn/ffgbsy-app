@@ -1,10 +1,11 @@
 import { formatDate } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { map, retry, switchMap, tap } from 'rxjs';
 import { AvailabilityCheck } from 'src/app/model/availability-check.model';
 import { IDrucker } from 'src/app/model/i-drucker.class';
 import { DataService } from '../data/data.service';
+import { LOADING_ANIMATION } from '../misc/loading-http-context-token';
 import { DruckerService } from './drucker.service';
 import { SettingsService } from './settings.service';
 
@@ -81,7 +82,11 @@ export class AvailabilityService {
             .pipe(
                 map((d) => d.map((d) => new AvailabilityCheck<IDrucker>(d, 'busy'))),
                 tap((checks) => this.druckerAvailabilities.set(checks)),
-                switchMap(() => this.http.get<{ drucker: IDrucker; result: boolean }[]>(`${this.settings.apiBaseUrl()}/status/drucker`)),
+                switchMap(() =>
+                    this.http.get<{ drucker: IDrucker; result: boolean }[]>(`${this.settings.apiBaseUrl()}/status/drucker`, {
+                        context: new HttpContext().set(LOADING_ANIMATION, false),
+                    }),
+                ),
                 retry(1),
                 map((r) => r.map((r) => new AvailabilityCheck<IDrucker>(r.drucker, r.result ? 'success' : 'error'))),
             )

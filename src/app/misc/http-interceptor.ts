@@ -2,19 +2,23 @@ import { HttpErrorResponse, HttpEventType, type HttpEvent, type HttpHandlerFn, t
 import { inject } from '@angular/core';
 import { catchError, tap, type Observable } from 'rxjs';
 import { FrontendService } from '../data/frontend.service';
+import { LOADING_ANIMATION } from './loading-http-context-token';
 
-export function httpInterceptor(request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
+export const httpInterceptor = (request: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
     const frontend = inject(FrontendService);
 
     return next(request).pipe(
         tap((event) => {
-            if (event.type === HttpEventType.Sent) {
-                console.debug('[FFGBSY] HttpEventType = Sent', request.method, request.url);
-                frontend.showLoadingSpinner();
-            }
-            if (event.type === HttpEventType.Response) {
-                console.debug('[FFGBSY] HttpEventType = Response', request.method, request.url);
-                frontend.hideLoadingSpinner();
+            if (request.context.get(LOADING_ANIMATION)) {
+                if (event.type === HttpEventType.Sent) {
+                    console.debug('[FFGBSY] HttpEventType = Sent', request.method, request.url);
+                    frontend.showLoadingSpinner();
+                }
+
+                if (event.type === HttpEventType.Response) {
+                    console.debug('[FFGBSY] HttpEventType = Response', request.method, request.url);
+                    frontend.hideLoadingSpinner();
+                }
             }
         }),
         catchError((error: any) => {
@@ -34,4 +38,4 @@ export function httpInterceptor(request: HttpRequest<unknown>, next: HttpHandler
             throw error;
         }),
     );
-}
+};
