@@ -25,7 +25,7 @@ export class BestellungEditComponent {
     public aufnehmer = this.app.aufnehmer;
     public produktkategorien = this.data.produktkategorien;
 
-    public selectedProduktkategorie = signal<IProduktkategorie>(null);
+    public selectedProduktkategorie = signal<IProduktkategorie | null>(null);
     public filtredProdukteinteilungenToDisplay = signal<IProdukteinteilung[]>([]);
 
     constructor() {

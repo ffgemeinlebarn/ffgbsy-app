@@ -6,13 +6,13 @@ import { IBon } from './i-bon.model';
 import { ITisch } from './i-tisch.interface';
 
 export class Bestellung {
-    public id: number;
-    public tisch: ITisch;
-    public aufnehmer: IAufnehmer;
-    public device_name: string;
+    public id: number | null = null;
+    public tisch: ITisch | null = null;
+    public aufnehmer: IAufnehmer | null = null;
+    public device_name: string | null = null;
     public device_ip: string | null = null;
 
-    public status: Bestellstatus;
+    public status: Bestellstatus = null;
 
     public timestamp_begonnen: any = null;
     public timestamp_beendet: any = null;

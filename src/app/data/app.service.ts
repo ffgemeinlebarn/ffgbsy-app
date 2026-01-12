@@ -30,7 +30,7 @@ export class AppService {
     public readonly readyToGo = computed<boolean>(
         () => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility(),
     );
-    public readonly aufnehmer = signal<IAufnehmer>(null);
+    public readonly aufnehmer = signal<IAufnehmer | null>(null);
     public readonly deviceName = computed<string>(() => this.settings.local().deviceName);
     public readonly isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
     public readonly bonDebug = computed(() => this.settings.local().bonDebugMenu);

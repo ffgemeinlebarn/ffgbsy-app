@@ -56,7 +56,7 @@ export class TischeDetailPage {
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
-    public tisch = signal<ITisch>(null);
+    public tisch = signal<ITisch | null>(null);
     public tischkategorien = toSignal(this.tischkategorienApiService.readAll());
 
     public form: FormGroup = this.formBuilder.group({

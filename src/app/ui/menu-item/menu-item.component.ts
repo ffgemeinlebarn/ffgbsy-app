@@ -9,7 +9,7 @@ import { IonIcon, IonItem, IonLabel, IonMenuToggle } from '@ionic/angular/standa
     imports: [IonIcon, IonMenuToggle, IonItem, IonLabel, IonIcon, RouterLink],
 })
 export class MenuItemComponent {
-    public icon = input<string>(null);
+    public icon = input<string | null>(null);
     public link = input<string>('');
     public disabled = input<boolean>(false);
 }

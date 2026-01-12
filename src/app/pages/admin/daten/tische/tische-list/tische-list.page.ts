@@ -14,10 +14,10 @@ import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.compo
 export class TischeListPage implements ViewDidEnter {
     private tischkategorienApiService = inject(TischkategorienApiService);
 
-    public tischkategorienMitTischen = signal<ITischkategorie[]>(null);
+    public tischkategorienMitTischen = signal<ITischkategorie[]>([]);
 
     ionViewDidEnter(): void {
-        this.tischkategorienMitTischen.set(null);
+        this.tischkategorienMitTischen.set([]);
         this.tischkategorienApiService.readAllNested().subscribe((items) => this.tischkategorienMitTischen.set(items));
     }
 }

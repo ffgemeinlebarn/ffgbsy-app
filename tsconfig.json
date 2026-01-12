@@ -1,7 +1,7 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
-        "strict": false,
+        "strict": true,
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
         "baseUrl": "./",
@@ -15,7 +15,9 @@
         "experimentalDecorators": true,
         "importHelpers": true,
         "target": "ES2022",
-        "typeRoots": ["node_modules/@types"],
+        "typeRoots": [
+            "node_modules/@types"
+        ],
         "useDefineForClassFields": false
     }
 }

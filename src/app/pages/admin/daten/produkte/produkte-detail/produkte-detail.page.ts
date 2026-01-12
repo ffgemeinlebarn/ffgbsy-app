@@ -74,7 +74,7 @@ export class ProdukteDetailPage implements OnInit {
     private alertController = inject(AlertController);
     private readonly activatedRoute = inject(ActivatedRoute);
 
-    public readonly produkt = signal<IProdukt>(null);
+    public readonly produkt = signal<IProdukt | null>(null);
     public drucker = toSignal(this.druckerApiService.readAll());
     public produkteinteilungen = toSignal(this.produkteinteilungenApiService.readAll());
     public grundprodukte = toSignal(this.grundprodukteApiService.readAll());

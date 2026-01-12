@@ -17,7 +17,7 @@ export class TischAuswahlComponent {
 
     public tischkategorien = this.data.tischkategorien;
     public filtredTischkategorienToDisplay = computed(() => this.tischkategorien()?.filter((tischkategorie) => tischkategorie.aktiv) ?? []);
-    public selectedTischkategorie = signal<ITischkategorie>(null);
+    public selectedTischkategorie = signal<ITischkategorie | null>(null);
     public filtredTischeToDisplay = signal<ITisch[]>([]);
 
     constructor() {
