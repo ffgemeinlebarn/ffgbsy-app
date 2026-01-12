@@ -16,7 +16,7 @@
 
 @if (bestellungen) {
     <ion-content>
-        <ion-list>
+        <ion-list lines="full">
             @for (bestellung of bestellungen; track bestellung) {
                 <ion-item [routerLink]="['/bestellungen', bestellung.id]">
                     <ion-label>

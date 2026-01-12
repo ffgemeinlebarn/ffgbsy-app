@@ -1,10 +1,5 @@
 import { Component, inject } from '@angular/core';
-import {
-    IonButton,
-    IonIcon,
-    IonList,
-    IonMenuToggle,
-} from '@ionic/angular/standalone';
+import { IonButton, IonIcon, IonList, IonMenuToggle } from '@ionic/angular/standalone';
 import { AppService } from 'src/app/data/app.service';
 import { MenuItemComponent } from '../../ui/menu-item/menu-item.component';
 
@@ -12,20 +7,14 @@ import { MenuItemComponent } from '../../ui/menu-item/menu-item.component';
     selector: 'ffgbsy-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
-    imports: [
-        IonIcon,
-        IonList,
-        IonMenuToggle,
-        IonButton,
-        IonIcon,
-        MenuItemComponent,
-    ],
+    imports: [IonIcon, IonList, IonMenuToggle, IonButton, IonIcon, MenuItemComponent],
 })
 export class MenuComponent {
-    private appService = inject(AppService);
+    private readonly appService = inject(AppService);
 
     public aufnehmer = this.appService.aufnehmer;
     public isAdmin = this.appService.isAdmin;
+    public bonDebug = this.appService.bonDebug;
 
     public logout() {
         this.appService.clearAufnehmer();

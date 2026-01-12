@@ -33,6 +33,7 @@ export class AppService {
     public readonly aufnehmer = signal<IAufnehmer>(null);
     public readonly deviceName = computed<string>(() => this.settings.local().deviceName);
     public readonly isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
+    public readonly bonDebug = computed(() => this.settings.local().bonDebugMenu);
 
     // Current Bestellung
     public readonly bestellung = signal<Bestellung>(null);

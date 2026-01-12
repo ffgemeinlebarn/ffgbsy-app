@@ -1,19 +1,14 @@
 import { Component, effect, inject } from '@angular/core';
-import {
-    FormBuilder,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonButton,
     IonButtons,
+    IonChip,
     IonContent,
     IonHeader,
     IonIcon,
     IonInput,
     IonItem,
-    IonItemDivider,
     IonLabel,
     IonList,
     IonMenuButton,
@@ -30,6 +25,7 @@ import { environment } from 'src/environments/environment';
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
     imports: [
+        IonChip,
         IonList,
         IonHeader,
         IonToolbar,
@@ -40,7 +36,6 @@ import { environment } from 'src/environments/environment';
         IonContent,
         IonLabel,
         IonItem,
-        IonItemDivider,
         IonIcon,
         IonToggle,
         IonInput,
@@ -49,14 +44,17 @@ import { environment } from 'src/environments/environment';
     ],
 })
 export class SettingsPage {
-    private settings = inject(SettingsService);
-    private app = inject(AppService);
-    private formBuilder = inject(FormBuilder);
+    private readonly settings = inject(SettingsService);
+    private readonly app = inject(AppService);
+    private readonly formBuilder = inject(FormBuilder);
+
+    public adminFeatureIsActivated = this.app.isAdmin;
 
     public form = this.formBuilder.group({
         deviceName: ['', [Validators.required, Validators.minLength(1)]],
         deviceIsPrivate: [false, [Validators.required]],
         adminPin: [''],
+        bonDebugMenu: [false, [Validators.required]],
         apiBaseUrl: [environment.api, [Validators.required]],
     });
 
@@ -70,9 +68,7 @@ export class SettingsPage {
         this.settings.saveLocal({
             ...this.settings.local(),
             ...this.form.value,
-            deviceAufnehmerId: this.form.controls['deviceIsPrivate'].value
-                ? this.app.aufnehmer()?.id
-                : undefined,
+            deviceAufnehmerId: this.form.controls['deviceIsPrivate'].value ? this.app.aufnehmer()?.id : undefined,
         });
     }
 }

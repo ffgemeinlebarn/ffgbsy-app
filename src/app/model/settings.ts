@@ -1,4 +1,3 @@
-
 // App
 export interface AppSettings {
     version: string;
@@ -16,8 +15,8 @@ export interface APISettings {
 export interface StorageSettings {
     prefix: string;
     keys: {
-        daten: string
-    }
+        daten: string;
+    };
 }
 
 // Local
@@ -26,6 +25,7 @@ export interface LocalSettings {
     deviceName: string;
     deviceIsPrivate: boolean;
     deviceAufnehmerId?: number;
+    bonDebugMenu: boolean;
     adminPin: string;
     apiBaseUrl: string;
 }
