@@ -1,41 +1,22 @@
 import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import {
-    IonContent,
-    IonHeader,
-    IonList,
-    IonMenuButton,
-    IonTitle,
-    IonToolbar,
-    ViewDidEnter,
-} from '@ionic/angular/standalone';
-import { Tischkategorie } from 'src/app/classes/tischkategorie.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { TischkategorienService } from 'src/app/services/tischkategorien/tischkategorien.service';
+import { IonContent, IonHeader, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
+import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-tischkategorien-list',
     templateUrl: './tischkategorien-list.page.html',
     styleUrls: ['./tischkategorien-list.page.scss'],
-    imports: [
-        IonContent,
-        IonToolbar,
-        IonTitle,
-        IonList,
-        IonHeader,
-        RouterLink,
-        IonMenuButton,
-        PageSpinnerComponent,
-    ],
+    imports: [IonContent, IonToolbar, IonTitle, IonList, IonHeader, RouterLink, IonMenuButton, PageSpinnerComponent],
 })
 export class TischkategorienListPage implements ViewDidEnter {
-    private tischkategorienService = inject(TischkategorienService);
+    private tischkategorienApiService = inject(TischkategorienApiService);
 
-    public tischkategorien = signal<Tischkategorie[]>(null);
+    public tischkategorien = signal<ITischkategorie[]>(null);
 
     ionViewDidEnter(): void {
-        this.tischkategorienService
-            .readAllNested()
-            .subscribe((items) => this.tischkategorien.set(items));
+        this.tischkategorienApiService.readAllNested().subscribe((items) => this.tischkategorien.set(items));
     }
 }

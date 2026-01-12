@@ -1,109 +1,104 @@
 @defer (when produktkategorie()) {
-<ion-header>
-    <ion-toolbar>
-        <ion-back-button slot="start" defaultHref="/admin/daten/produktkategorien"></ion-back-button>
-        <ion-title>{{ produktkategorie()?.name }}</ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="save()">
-                <ion-icon name="save" slot="icon-only"></ion-icon>
-            </ion-button>
-        </ion-buttons>
-    </ion-toolbar>
-</ion-header>
+    <ion-header>
+        <ion-toolbar>
+            <ion-back-button slot="start" defaultHref="/admin/daten/produktkategorien"></ion-back-button>
+            <ion-title>{{ produktkategorie()?.name }}</ion-title>
+            <ion-buttons slot="end">
+                <ion-button (click)="save()">
+                    <ion-icon name="save" slot="icon-only"></ion-icon>
+                </ion-button>
+            </ion-buttons>
+        </ion-toolbar>
+    </ion-header>
 
-<ion-content>
-    <form [formGroup]="form" (ngSubmit)="save()">
-        <ion-list lines="full">
-            <ion-item>
-                <ion-label position="stacked">Name</ion-label>
-                <ion-input formControlName="name"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Farbe</ion-label>
-                <ion-input formControlName="color"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Sortierindex</ion-label>
-                <ion-input formControlName="sortierindex"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Produktbereich</ion-label>
-                <ion-select formControlName="produktbereiche_id">
-                    @for (produktbereich of produktbereiche(); track produktbereich.id) {
-                    <ion-select-option [value]="produktbereich.id">{{ produktbereich.name }}</ion-select-option>
-                    }
-                </ion-select>
-            </ion-item>
-        </ion-list>
-        <h2 class="ion-padding">
-            Drucker
-        </h2>
-        <ion-list lines="full">
-            <ion-item>
-                <ion-label position="stacked">Ebene Produktkategorie</ion-label>
-                <ion-select formControlName="drucker_id_level_1">
-                    <ion-select-option [value]="null">Kein Drucker definiert</ion-select-option>
-                    @for (drucker of drucker(); track drucker.id) {
-                    <ion-select-option [value]="drucker.id">{{ drucker.name }}</ion-select-option>
-                    }
-                </ion-select>
-            </ion-item>
-            <ion-item-divider>Vererbung</ion-item-divider>
-            <ion-item>
-                <ion-label>
-                    @if(produktkategorie()?.produktbereich.drucker_id_level_0)
-                    {
-                    <h3>{{ produktkategorie()?.produktbereich.drucker?.name }}</h3>
-                    }
-                    @else {
-                    <h3>Kein Drucker auf dieser Ebene definiert</h3>
-                    }
-                    <p>Produktbereich</p>
-                </ion-label>
-            </ion-item>
-        </ion-list>
-
-        <h2 class="ion-padding">
-            <span>Eigenschaften</span>
-            <ion-button fill="outline" color="primary" (click)="showEigenschaftSelectionModal()">
-                <ion-icon slot="start" name="add-outline"></ion-icon>
-                Hinzufügen
-            </ion-button>
-        </h2>
-        <ion-list lines="full">
-            @for (eigenschaft of produktkategorie()?.eigenschaften; track eigenschaft.id) {
-            <ion-item-sliding>
+    <ion-content>
+        <form [formGroup]="form" (ngSubmit)="save()">
+            <ion-list lines="full">
+                <ion-item>
+                    <ion-label position="stacked">Name</ion-label>
+                    <ion-input formControlName="name"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Farbe</ion-label>
+                    <ion-input formControlName="color"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Sortierindex</ion-label>
+                    <ion-input formControlName="sortierindex"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Produktbereich</ion-label>
+                    <ion-select formControlName="produktbereiche_id">
+                        @for (produktbereich of produktbereiche(); track produktbereich.id) {
+                            <ion-select-option [value]="produktbereich.id">{{ produktbereich.name }}</ion-select-option>
+                        }
+                    </ion-select>
+                </ion-item>
+            </ion-list>
+            <h2 class="ion-padding">Drucker</h2>
+            <ion-list lines="full">
+                <ion-item>
+                    <ion-label position="stacked">Ebene Produktkategorie</ion-label>
+                    <ion-select formControlName="drucker_id_level_1">
+                        <ion-select-option [value]="null">Kein Drucker definiert</ion-select-option>
+                        @for (drucker of drucker(); track drucker.id) {
+                            <ion-select-option [value]="drucker.id">{{ drucker.name }}</ion-select-option>
+                        }
+                    </ion-select>
+                </ion-item>
+                <ion-item-divider>Vererbung</ion-item-divider>
                 <ion-item>
                     <ion-label>
-                        <h3>{{ eigenschaft.name }}</h3>
-                        <p>{{ eigenschaft.preis | euroPreis }}</p>
+                        @if (produktkategorie()?.produktbereich.drucker_id_level_0) {
+                            <h3>{{ produktkategorie()?.produktbereich.drucker?.name }}</h3>
+                        } @else {
+                            <h3>Kein Drucker auf dieser Ebene definiert</h3>
+                        }
+                        <p>Produktbereich</p>
                     </ion-label>
-                    @if (eigenschaft.in_produkt_enthalten) {
-                    <ion-chip color="primary" (click)="toggleEigenschaftEnthalten(eigenschaft)">
-                        <ion-icon name="checkmark-circle"></ion-icon>
-                        <ion-label>enthalten</ion-label>
-                    </ion-chip>
-                    }
-                    @if (!eigenschaft.in_produkt_enthalten) {
-                    <ion-chip color="warning" (click)="toggleEigenschaftEnthalten(eigenschaft)">
-                        <ion-icon name="close-circle"></ion-icon>
-                        <ion-label>nicht enthalten</ion-label>
-                    </ion-chip>
-                    }
                 </ion-item>
+            </ion-list>
 
-                <ion-item-options>
-                    <ion-item-option color="danger" (click)="removeEigenschaft(eigenschaft)">
-                        <ion-icon slot="icon-only" name="trash"></ion-icon>
-                    </ion-item-option>
-                </ion-item-options>
-            </ion-item-sliding>
-            }
-        </ion-list>
-    </form>
-</ion-content>
-}
+            <h2 class="ion-padding">
+                <span>Eigenschaften</span>
+                <ion-button fill="outline" color="primary" (click)="showEigenschaftSelectionModal()">
+                    <ion-icon slot="start" name="add-outline"></ion-icon>
+                    Hinzufügen
+                </ion-button>
+            </h2>
+            <ion-list lines="full">
+                @for (eigenschaft of produktkategorie()?.eigenschaften; track eigenschaft.id) {
+                    <ion-item-sliding>
+                        <ion-item>
+                            <ion-label>
+                                <h3>{{ eigenschaft.name }}</h3>
+                                <p>{{ eigenschaft.preis | euroPreis }}</p>
+                            </ion-label>
+                            @if (eigenschaft.in_produkt_enthalten) {
+                                <ion-chip color="primary" (click)="toggleEigenschaftEnthalten(eigenschaft)">
+                                    <ion-icon name="checkmark-circle"></ion-icon>
+                                    <ion-label>enthalten</ion-label>
+                                </ion-chip>
+                            }
+                            @if (!eigenschaft.in_produkt_enthalten) {
+                                <ion-chip color="warning" (click)="toggleEigenschaftEnthalten(eigenschaft)">
+                                    <ion-icon name="close-circle"></ion-icon>
+                                    <ion-label>nicht enthalten</ion-label>
+                                </ion-chip>
+                            }
+                        </ion-item>
 
-@placeholder{
-<ffgbsy-page-spinner></ffgbsy-page-spinner>
+                        <ion-item-options>
+                            <ion-item-option color="danger" (click)="removeEigenschaft(eigenschaft)">
+                                <ion-icon slot="icon-only" name="trash"></ion-icon>
+                            </ion-item-option>
+                        </ion-item-options>
+                    </ion-item-sliding>
+                }
+            </ion-list>
+        </form>
+    </ion-content>
+
+} @placeholder {
+    <ffgbsy-page-spinner></ffgbsy-page-spinner>
 }

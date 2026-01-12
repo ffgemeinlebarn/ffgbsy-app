@@ -6,7 +6,6 @@
 </ion-header>
 
 <ion-content>
-
     <h2 class="ion-padding">
         <span>Lookup Daten</span>
         <ion-chip (click)="syncData()" color="primary">
@@ -72,12 +71,11 @@
         </ion-chip>
     </h2>
     <ion-list lines="full">
-        @for(item of druckerAvailabilities(); track item)
-        {
-        <ffgbsy-status-list-item [status]="item.status">
-            <h3>{{ item.entity.name }}</h3>
-            <p>{{ item.entity.ip }}</p>
-        </ffgbsy-status-list-item>
+        @for (item of druckerAvailabilities(); track item) {
+            <ffgbsy-status-list-item [status]="item.status">
+                <h3>{{ item.entity.name }}</h3>
+                <p>{{ item.entity.ip }}</p>
+            </ffgbsy-status-list-item>
         }
     </ion-list>
 </ion-content>

@@ -1,18 +1,39 @@
-import { Component, effect, inject, model, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AlertController, IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar, ModalController } from '@ionic/angular/standalone';
-import { Eigenschaft } from 'src/app/classes/eigenschaft.interface';
-import { Produkt } from 'src/app/classes/produkt.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { SelectEigenschaftModalComponent } from 'src/app/modals/select-eigenschaft-modal/select-eigenschaft-modal.component';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
-import { DruckerService } from 'src/app/services/drucker/drucker.service';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
-import { ProdukteService } from 'src/app/services/produkte/produkte.service';
-import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen/produkteinteilungen.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import {
+    AlertController,
+    IonBackButton,
+    IonButton,
+    IonButtons,
+    IonChip,
+    IonContent,
+    IonHeader,
+    IonIcon,
+    IonInput,
+    IonItem,
+    IonItemDivider,
+    IonLabel,
+    IonList,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToggle,
+    IonToolbar,
+    ModalController,
+} from '@ionic/angular/standalone';
+import { map, mergeMap, of, tap } from 'rxjs';
+import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
+import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
+import { ProdukteApiService } from 'src/app/data/api/produkte-api.service';
+import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
+import { IEigenschaft } from 'src/app/model/i-eigenschaft.interface';
+import { IProdukt } from 'src/app/model/i-produkt.interface';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkte-detail',
@@ -39,30 +60,29 @@ import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen
         FormsModule,
         EuroPreisPipe,
         ReactiveFormsModule,
-        PageSpinnerComponent
-    ]
+        PageSpinnerComponent,
+    ],
 })
-export class ProdukteDetailPage {
+export class ProdukteDetailPage implements OnInit {
     private frontendService = inject(FrontendService);
-    private produkteService = inject(ProdukteService);
-    private produkteinteilungenService = inject(ProdukteinteilungenService);
-    private grundprodukteService = inject(GrundprodukteService);
-    private druckerService = inject(DruckerService);
+    private produkteApiService = inject(ProdukteApiService);
+    private produkteinteilungenApiService = inject(ProdukteinteilungenApiService);
+    private grundprodukteApiService = inject(GrundprodukteApiService);
+    private druckerApiService = inject(DruckerApiService);
     private formBuilder = inject(FormBuilder);
     private modalController = inject(ModalController);
     private alertController = inject(AlertController);
-    private router = inject(Router);
+    private readonly activatedRoute = inject(ActivatedRoute);
 
-    public id = model.required<number | null>();
-    public produkt = signal<Produkt>(null);
-    public drucker = toSignal(this.druckerService.readAll());
-    public produkteinteilungen = toSignal(this.produkteinteilungenService.readAll());
-    public grundprodukte = toSignal(this.grundprodukteService.readAll());
-    public showGrundproduktMultiplikator = signal(true);
+    public readonly produkt = signal<IProdukt | null>(null);
+    public drucker = toSignal(this.druckerApiService.readAll());
+    public produkteinteilungen = toSignal(this.produkteinteilungenApiService.readAll());
+    public grundprodukte = toSignal(this.grundprodukteApiService.readAll());
+    public showGrundproduktMultiplikator = computed(() => this.produkt()?.grundprodukte_id != null);
 
     public form: FormGroup = this.formBuilder.group({
-        name: ["", [Validators.required, Validators.minLength(1)]],
-        formal_name: ["", [Validators.required, Validators.minLength(1)]],
+        name: ['', [Validators.required, Validators.minLength(1)]],
+        formal_name: ['', [Validators.required, Validators.minLength(1)]],
         preis: [0, [Validators.required, Validators.min(0)]],
         sortierindex: [100, [Validators.min(0)]],
         aktiv: [false, [Validators.required]],
@@ -78,27 +98,41 @@ export class ProdukteDetailPage {
 
     constructor() {
         effect(() => {
-            if (isNaN(this.id())) {
-                this.setEntity(new Produkt());
-            } else {
-                this.produkteService.read(this.id()).subscribe((produkt) => this.setEntity(produkt));
+            if (this.produkt()) {
+                this.form.patchValue(this.produkt());
             }
-        }, { allowSignalWrites: true });
-        this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
+        });
+
+        // this.form.controls['grundprodukte_id'].valueChanges.subscribe((id) => this.showGrundproduktMultiplikator.set(id != null));
+    }
+    ngOnInit(): void {
+        this.activatedRoute.params
+            .pipe(
+                map((p: Params) => Number(p['id']) ?? null),
+                map((n) => (Number.isNaN(n) ? null : n)),
+                mergeMap((id) => {
+                    if (id) {
+                        return this.produkteApiService.read(id);
+                    } else {
+                        return of({ grundprodukt: null, eigenschaften: [] } as IProdukt);
+                    }
+                }),
+                tap((p) => {
+                    console.log('[FFGBSY]', 'Produkt =>', p);
+                }),
+            )
+            .subscribe((p) => this.produkt.set(p));
     }
 
-    private setEntity(produkt: Produkt) {
-        this.produkt.set(produkt);
-        this.showGrundproduktMultiplikator.set(produkt.grundprodukte_id != null);
-        this.form.patchValue(produkt);
+    public removeEigenschaft(eigenschaft: IEigenschaft) {
+        this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter((e) => e.id !== eigenschaft.id));
+        this.produkt.set({
+            ...this.produkt(),
+            eigenschaften: this.form.controls.eigenschaften.value,
+        });
     }
 
-    public removeEigenschaft(eigenschaft: Eigenschaft) {
-        this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter(e => e.id !== eigenschaft.id));
-        this.produkt.set({ ...this.produkt(), eigenschaften: this.form.controls.eigenschaften.value });
-    }
-
-    public toggleEigenschaftEnthalten(eigenschaft: Eigenschaft) {
+    public toggleEigenschaftEnthalten(eigenschaft: IEigenschaft) {
         eigenschaft.in_produkt_enthalten = !eigenschaft.in_produkt_enthalten;
     }
 
@@ -110,27 +144,28 @@ export class ProdukteDetailPage {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: Eigenschaft = await (await modal.onWillDismiss()).data;
+        const eigenschaft: IEigenschaft = await (await modal.onWillDismiss()).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({
                 backdropDismiss: false,
                 header: eigenschaft.name,
-                message: "Ist die Eigenschaft im Produkt enthalten?",
+                message: 'Ist die Eigenschaft im Produkt enthalten?',
                 buttons: [
                     {
                         text: 'Nein',
-                        handler: () => alert.dismiss(false)
-                    }, {
+                        handler: () => alert.dismiss(false),
+                    },
+                    {
                         text: 'Ja',
-                        handler: () => alert.dismiss(true)
-                    }
-                ]
+                        handler: () => alert.dismiss(true),
+                    },
+                ],
             });
             await alert.present();
             eigenschaft.in_produkt_enthalten = await (await alert.onWillDismiss()).data;
 
-            if (!this.produkt().eigenschaften.find(e => e.id === eigenschaft.id)) {
+            if (!this.produkt().eigenschaften.find((e) => e.id === eigenschaft.id)) {
                 this.produkt.update((produkt) => {
                     produkt.eigenschaften.push(eigenschaft);
                     return produkt;
@@ -140,24 +175,18 @@ export class ProdukteDetailPage {
     }
 
     public save() {
-
         const product = { ...this.produkt(), ...this.form.value };
 
         if (product.id) {
-            this.produkteService
-                .update(product)
-                .subscribe(p => {
-                    this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                    this.setEntity(p);
-                });
+            this.produkteApiService.update(product).subscribe((p) => {
+                this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
+                this.produkt.set(p);
+            });
         } else {
-            this.produkteService
-                .create(product)
-                .subscribe(p => {
-                    this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
-                    this.id.set(p.id);
-                    this.setEntity(p);
-                });
+            this.produkteApiService.create(product).subscribe((p) => {
+                this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
+                this.produkt.set(p);
+            });
         }
     }
 }

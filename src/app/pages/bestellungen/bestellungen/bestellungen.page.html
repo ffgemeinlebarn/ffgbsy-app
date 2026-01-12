@@ -15,20 +15,24 @@
 </ion-content>
 
 @if (bestellungen) {
-<ion-content>
-    <ion-list>
-        @for (bestellung of bestellungen; track bestellung) {
-        <ion-item [routerLink]="['/bestellungen', bestellung.id]">
-            <ion-label>
-                <h2>{{ bestellung?.tisch?.reihe }} {{ bestellung?.tisch?.nummer }}</h2>
-                <p>Datum: <strong>{{ bestellung?.timestamp_beendet | date: 'dd.MM.yyyy' }} um {{ bestellung?.timestamp_beendet | date: 'HH:mm:ss' }} Uhr</strong></p>
-                <p>Summe: <strong>{{ bestellung?.summe | euroPreis }}</strong></p>
-            </ion-label>
-            <ion-note slot="end">{{ bestellung?.aufnehmer?.vorname }} {{ bestellung?.aufnehmer?.nachname }}</ion-note>
-        </ion-item>
-        }
-    </ion-list>
-</ion-content>
+    <ion-content>
+        <ion-list lines="full">
+            @for (bestellung of bestellungen; track bestellung) {
+                <ion-item [routerLink]="['/bestellungen', bestellung.id]">
+                    <ion-label>
+                        <h2>{{ bestellung?.tisch?.reihe }} {{ bestellung?.tisch?.nummer }}</h2>
+                        <p>
+                            Datum: <strong>{{ bestellung?.timestamp_beendet | date: "dd.MM.yyyy" }} um {{ bestellung?.timestamp_beendet | date: "HH:mm:ss" }} Uhr</strong>
+                        </p>
+                        <p>
+                            Summe: <strong>{{ bestellung?.summe | euroPreis }}</strong>
+                        </p>
+                    </ion-label>
+                    <ion-note slot="end">{{ bestellung?.aufnehmer?.vorname }} {{ bestellung?.aufnehmer?.nachname }}</ion-note>
+                </ion-item>
+            }
+        </ion-list>
+    </ion-content>
 }
 
 <ion-footer>
@@ -41,7 +45,7 @@
                     <ion-select interface="action-sheet" formControlName="aufnehmerId">
                         <ion-select-option [value]="null">Alle</ion-select-option>
                         @for (aufnehmer of availableFilter.aufnehmer(); track aufnehmer.id) {
-                        <ion-select-option [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
+                            <ion-select-option [value]="aufnehmer.id">{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-select-option>
                         }
                     </ion-select>
                 </ion-item>
@@ -51,16 +55,17 @@
                     <ion-select interface="action-sheet" formControlName="tischId">
                         <ion-select-option [value]="null">Alle</ion-select-option>
                         @for (tisch of availableFilter.tische(); track tisch.id) {
-                        <ion-select-option [value]="tisch.id">{{ tisch.reihe }} {{ tisch.nummer }}</ion-select-option>
+                            <ion-select-option [value]="tisch.id">{{ tisch.reihe }} {{ tisch.nummer }}</ion-select-option>
                         }
                     </ion-select>
                 </ion-item>
                 <ion-item color="light">
                     <ion-icon slot="start" name="timer-outline"></ion-icon>
                     <ion-label>Limit</ion-label>
-                    <ion-select interface="action-sheet" formControlName="limit">>
+                    <ion-select interface="action-sheet" formControlName="limit"
+                        >>
                         @for (limit of availableFilter.limits; track limit) {
-                        <ion-select-option [value]="limit">{{ limit }}</ion-select-option>
+                            <ion-select-option [value]="limit">{{ limit }}</ion-select-option>
                         }
                     </ion-select>
                 </ion-item>

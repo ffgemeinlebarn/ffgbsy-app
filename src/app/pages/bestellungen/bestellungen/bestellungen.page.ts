@@ -3,14 +3,29 @@ import { Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { Bestellung } from 'src/app/classes/bestellung.model';
-import { IBestellungenFilter } from 'src/app/interfaces/bestellungen-filter.interface';
-import { AppService } from 'src/app/services/app/app.service';
-import { AufnehmerService } from 'src/app/services/aufnehmer/aufnehmer.service';
-import { BestellungenService } from 'src/app/services/bestellungen/bestellungen.service';
-import { TischeService } from 'src/app/services/tische/tische.service';
-import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
+import {
+    IonContent,
+    IonFooter,
+    IonHeader,
+    IonIcon,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonMenuButton,
+    IonRippleEffect,
+    IonSelect,
+    IonSelectOption,
+    IonTitle,
+    IonToolbar,
+    ViewDidEnter,
+} from '@ionic/angular/standalone';
+import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
+import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
+import { TischeApiService } from 'src/app/data/api/tische-api.service';
+import { AppService } from 'src/app/data/app.service';
+import { Bestellung } from 'src/app/model/bestellung.model';
+import { IBestellungenFilter } from 'src/app/model/i-bestellungen-filter.interface';
+import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
@@ -34,13 +49,13 @@ import { EuroPreisPipe } from '../../../pipes/euro-preis/euro-preis.pipe';
         IonTitle,
         IonToolbar,
         ReactiveFormsModule,
-        RouterLink
-    ]
+        RouterLink,
+    ],
 })
 export class BestellungenPage implements ViewDidEnter {
-    private bestellungenService = inject(BestellungenService);
-    private aufnehmerService = inject(AufnehmerService);
-    private tischeService = inject(TischeService);
+    private readonly bestellungenApiService = inject(BestellungenApiService);
+    private readonly aufnehmerApiService = inject(AufnehmerApiService);
+    private tischeApiService = inject(TischeApiService);
     private appService = inject(AppService);
     private formBuilder = inject(FormBuilder);
 
@@ -50,13 +65,13 @@ export class BestellungenPage implements ViewDidEnter {
     public filter = this.formBuilder.group({
         aufnehmerId: new FormControl<null | number>(null),
         tischId: new FormControl<null | number>(null),
-        limit: [10]
+        limit: [10],
     });
 
     public availableFilter = {
-        aufnehmer: toSignal(this.aufnehmerService.readAll()),
-        tische: toSignal(this.tischeService.readAll()),
-        limits: [5, 10, 25, 50, 100, 200, 500, 1000]
+        aufnehmer: toSignal(this.aufnehmerApiService.readAll()),
+        tische: toSignal(this.tischeApiService.readAll()),
+        limits: [5, 10, 25, 50, 100, 200, 500, 1000],
     };
 
     constructor() {
@@ -66,9 +81,7 @@ export class BestellungenPage implements ViewDidEnter {
     }
 
     public searchBestellungen() {
-        return this.bestellungenService
-            .search(this.filter.value as IBestellungenFilter)
-            .subscribe(bestellungen => this.bestellungen = bestellungen);
+        return this.bestellungenApiService.search(this.filter.value as IBestellungenFilter).subscribe((bestellungen) => (this.bestellungen = bestellungen));
     }
     ionViewDidEnter(): void {
         this.searchBestellungen();

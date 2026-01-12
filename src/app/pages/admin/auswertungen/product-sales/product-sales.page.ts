@@ -2,22 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
-import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
+import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-product-sales',
     templateUrl: './product-sales.page.html',
     styleUrls: ['./product-sales.page.scss'],
-    imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, EuroPreisPipe, CommonModule, FormsModule]
+    imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, EuroPreisPipe, CommonModule, FormsModule],
 })
 export class ProductSalesPage implements ViewDidEnter {
-
-    private statistikenService = inject(StatistikenService);
+    private statistikenApiService = inject(StatistikenApiService);
 
     public tableProdukte = signal<any>(null);
 
     ionViewDidEnter(): void {
-        this.statistikenService.readProdukte().subscribe((p) => this.tableProdukte.set(p));
+        this.statistikenApiService.readProdukte().subscribe((p) => this.tableProdukte.set(p));
     }
 }

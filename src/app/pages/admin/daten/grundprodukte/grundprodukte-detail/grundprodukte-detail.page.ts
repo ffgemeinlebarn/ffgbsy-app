@@ -1,13 +1,7 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
-import { Grundprodukt } from 'src/app/classes/grundprodukt.class';
+import { IGrundprodukt } from 'src/app/model/i-grundprodukt.class';
 
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
     IonButton,
@@ -23,9 +17,9 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { GrundprodukteService } from 'src/app/services/grundprodukte/grundprodukte.service';
+import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-grundprodukte-detail',
@@ -51,14 +45,14 @@ import { GrundprodukteService } from 'src/app/services/grundprodukte/grundproduk
     ],
 })
 export class GrundprodukteDetailPage {
-    private grundprodukteService = inject(GrundprodukteService);
+    private grundprodukteApiService = inject(GrundprodukteApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
     public showBestand = signal(true);
 
-    public grundprodukt = signal<Grundprodukt>(null);
+    public grundprodukt = signal<IGrundprodukt>(null);
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
         unlimitiert: [true, [Validators.required]],
@@ -68,42 +62,32 @@ export class GrundprodukteDetailPage {
 
     constructor() {
         effect(() => this.load(this.id()));
-        this.form.controls['unlimitiert'].valueChanges.subscribe(
-            (isUnlimitiert) => this.showBestand.set(!isUnlimitiert)
-        );
+        this.form.controls['unlimitiert'].valueChanges.subscribe((isUnlimitiert) => this.showBestand.set(!isUnlimitiert));
     }
 
     private load(id: number) {
-        this.grundprodukteService
-            .read(id)
-            .subscribe((grundprodukt: Grundprodukt) => {
-                this.grundprodukt.set(grundprodukt);
-                this.showBestand.set(grundprodukt.bestand != null);
-                this.form.patchValue({
-                    ...grundprodukt,
-                    unlimitiert: grundprodukt.bestand == null,
-                });
+        this.grundprodukteApiService.read(id).subscribe((grundprodukt: IGrundprodukt) => {
+            this.grundprodukt.set(grundprodukt);
+            this.showBestand.set(grundprodukt.bestand != null);
+            this.form.patchValue({
+                ...grundprodukt,
+                unlimitiert: grundprodukt.bestand == null,
             });
+        });
     }
 
     public save() {
         const updated = { ...this.grundprodukt(), ...this.form.value };
         updated.bestand = updated.unlimitiert ? null : updated.bestand;
-        console.debug(
-            'GrundprodukteDetailPage',
-            'save(), Updated Product:',
-            updated
-        );
-        this.grundprodukteService.update(updated).subscribe((p) => {
-            this.frontendService.showToast(
-                `${p.name} wurde erfolgreich gespeichert!`
-            );
+        console.debug('[FFGBSY]', 'GrundprodukteDetailPage', 'save(), Updated Product:', updated);
+        this.grundprodukteApiService.update(updated).subscribe((p) => {
+            this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
             this.reload();
         });
     }
 
     private reload() {
-        this.grundprodukteService.readAll();
+        this.grundprodukteApiService.readAll();
     }
 }

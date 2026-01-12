@@ -1,14 +1,9 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
-import { Produktbereich } from 'src/app/classes/produktbereich.class';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { IProduktbereich } from 'src/app/model/i-produktbereich.interface';
 
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
 import {
     IonBackButton,
     IonButton,
@@ -25,10 +20,11 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { DruckerService } from 'src/app/services/drucker/drucker.service';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { ProduktbereicheService } from 'src/app/services/produktbereiche/produktbereiche.service';
+import { map, mergeMap, tap } from 'rxjs';
+import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
+import { ProduktbereicheApiService } from 'src/app/data/api/produktbereiche-api.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produktbereiche-detail',
@@ -54,16 +50,17 @@ import { ProduktbereicheService } from 'src/app/services/produktbereiche/produkt
         PageSpinnerComponent,
     ],
 })
-export class ProduktbereicheDetailPage {
-    private produktbereicheService = inject(ProduktbereicheService);
-    private druckerService = inject(DruckerService);
-    private frontendService = inject(FrontendService);
-    private formBuilder = inject(FormBuilder);
+export class ProduktbereicheDetailPage implements OnInit {
+    private readonly produktbereicheApiService = inject(ProduktbereicheApiService);
+    private readonly druckerApiService = inject(DruckerApiService);
+    private readonly frontendService = inject(FrontendService);
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly activatedRoute = inject(ActivatedRoute);
 
-    public id = input.required<number>();
+    public readonly drucker = toSignal(this.druckerApiService.readAll());
 
-    public drucker = toSignal(this.druckerService.readAll());
-    public produktbereich = signal<Produktbereich>(null);
+    public readonly produktbereich = signal<IProduktbereich | null>(null);
+
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
         color: [''],
@@ -71,36 +68,34 @@ export class ProduktbereicheDetailPage {
     });
 
     constructor() {
-        effect(() => this.load(this.id()));
+        effect(() => {
+            if (this.produktbereich()) {
+                this.form.patchValue(this.produktbereich());
+            }
+        });
     }
 
-    private load(id: number) {
-        this.produktbereicheService
-            .read(id)
-            .subscribe((produktbereich: Produktbereich) => {
-                this.produktbereich.set(produktbereich);
-                this.form.patchValue(produktbereich);
-            });
+    ngOnInit(): void {
+        this.activatedRoute.params
+            .pipe(
+                map((p: Params) => Number(p['id']) ?? null),
+                map((n) => (Number.isNaN(n) ? null : n)),
+                mergeMap((id) => this.produktbereicheApiService.read(id)),
+                tap((p) => {
+                    console.debug('[FFGBSY]', 'Selected Produktbereich =>', p);
+                }),
+            )
+            .subscribe((p) => this.produktbereich.set(p));
     }
 
     public save() {
         const updated = { ...this.produktbereich(), ...this.form.value };
         updated.bestand = updated.unlimitiert ? null : updated.bestand;
-        console.debug(
-            'ProduktbereicheDetailPage',
-            'save(), Updated Product:',
-            updated
-        );
-        this.produktbereicheService.update(updated).subscribe((p) => {
-            this.frontendService.showToast(
-                `${p.name} wurde erfolgreich gespeichert!`
-            );
-            this.load(this.id());
-            this.reload();
-        });
-    }
+        console.debug('[FFGBSY]', 'ProduktbereicheDetailPage', 'save(), Updated Product:', updated);
 
-    private reload() {
-        this.produktbereicheService.readAll();
+        this.produktbereicheApiService.update(updated).subscribe((p) => {
+            this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
+            this.produktbereich.set(p);
+        });
     }
 }

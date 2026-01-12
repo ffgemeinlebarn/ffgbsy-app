@@ -1,0 +1,33 @@
+<h3>{{ label() }}</h3>
+<div class="cards">
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{ keys()?.bestellungen_anzahl }}</ion-card-title>
+            <ion-card-subtitle>Bestellungen</ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{ keys()?.produkte_anzahl }}</ion-card-title>
+            <ion-card-subtitle>Verkaufte Produkte</ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{ keys()?.hauptspeisen_anzahl }}</ion-card-title>
+            <ion-card-subtitle>Hauptspeisen</ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{ keys()?.bons_anzahl }}</ion-card-title>
+            <ion-card-subtitle>Gedruckte Bons</ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>{{ keys()?.umsatz | euroPreis }}</ion-card-title>
+            <ion-card-subtitle>Umsatz</ion-card-subtitle>
+        </ion-card-header>
+    </ion-card>
+</div>

@@ -1,32 +1,33 @@
 import { NgClass } from '@angular/common';
 import { Component, effect, inject, signal } from '@angular/core';
-import { IonButton, IonContent, IonFooter, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, ModalController } from "@ionic/angular/standalone";
-import { Bestellposition } from 'src/app/classes/bestellposition.model';
-import { Produkt } from 'src/app/classes/produkt.class';
-import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
-import { Produktkategorie } from 'src/app/classes/produktkategorie.class';
-import { BestellungKontrolleModalComponent } from 'src/app/modals/bestellung-kontrolle/bestellung-kontrolle-modal.component';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
-import { AppService } from 'src/app/services/app/app.service';
-import { DataService } from 'src/app/services/data/data.service';
+import { IonButton, IonContent, IonFooter, IonIcon, IonItem, IonItemDivider, IonLabel, IonList } from '@ionic/angular/standalone';
+import { AppService } from 'src/app/data/app.service';
+import { DataService } from 'src/app/data/data.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { BestellungKontrolleModalComponent } from 'src/app/feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
+import { Bestellposition } from 'src/app/model/bestellposition.model';
+import { IProdukt } from 'src/app/model/i-produkt.interface';
+import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
+import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
 
 @Component({
-    selector: 'app-bestellung-edit',
+    selector: 'ffgbsy-bestellung-edit',
     templateUrl: './bestellung-edit.component.html',
     styleUrls: ['./bestellung-edit.component.scss'],
-    imports: [IonItemDivider, IonItem, IonIcon, IonContent, IonFooter, IonButton, IonList, IonItem, IonLabel, IonItemDivider, NgClass, EuroPreisPipe]
+    imports: [IonItemDivider, IonItem, IonIcon, IonContent, IonFooter, IonButton, IonList, IonItem, IonLabel, IonItemDivider, NgClass, EuroPreisPipe],
 })
 export class BestellungEditComponent {
-    private app = inject(AppService);
-    private data = inject(DataService);
-    private modalController = inject(ModalController);
+    private readonly app = inject(AppService);
+    private readonly data = inject(DataService);
+    private readonly frontendService = inject(FrontendService);
 
-    public bestellung = this.app.bestellung;
-    public aufnehmer = this.app.aufnehmer;
-    public produktkategorien = this.data.produktkategorien;
+    public readonly bestellung = this.app.bestellung;
+    public readonly aufnehmer = this.app.aufnehmer;
+    public readonly produktkategorien = this.data.produktkategorien;
 
-    public selectedProduktkategorie = signal<Produktkategorie>(null);
-    public filtredProdukteinteilungenToDisplay = signal<Produkteinteilung[]>([]);
+    public readonly selectedProduktkategorie = signal<IProduktkategorie | null>(null);
+    public readonly filtredProdukteinteilungenToDisplay = signal<IProdukteinteilung[]>([]);
 
     constructor() {
         effect(() => {
@@ -34,10 +35,11 @@ export class BestellungEditComponent {
                 this.selectProduktkategorie(this.produktkategorien()[0]);
             }
 
-            this.filtredProdukteinteilungenToDisplay.set(this.data.produktkategorien().find(produktkategorie => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? []);
-        }, { allowSignalWrites: true });
+            this.filtredProdukteinteilungenToDisplay.set(
+                this.data.produktkategorien().find((produktkategorie) => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? [],
+            );
+        });
     }
-
 
     public changeTisch() {
         this.bestellung.update((bestellung) => {
@@ -47,15 +49,14 @@ export class BestellungEditComponent {
     }
 
     /*******************************************************************************
-    *** Aufnahme der Bestellpositionen
-    *******************************************************************************/
+     *** Aufnahme der Bestellpositionen
+     *******************************************************************************/
 
-    selectProduktkategorie(produktkategorie: Produktkategorie) {
+    selectProduktkategorie(produktkategorie: IProduktkategorie) {
         this.selectedProduktkategorie.set(produktkategorie);
     }
 
-    addBestellposition(produkt: Produkt, form: string, event: any) {
-
+    addBestellposition(produkt: IProdukt, form: string, event: any) {
         // Verhindert dass ein Extra-Einfügen eine doppeltes Clicken des wrapper-Elements darunter verursacht
         event.stopPropagation();
 
@@ -63,11 +64,10 @@ export class BestellungEditComponent {
         let added: boolean = false;
 
         if (form == 'standard') {
-
             for (let bp of this.bestellung().bestellpositionen) {
                 if (
                     bp.produkt.id == produkt.id &&
-                    bp.display.eigenschaften.mit.length == 0 &&  // <= nur unmodifiziertes Produkt automatisch hochzählen
+                    bp.display.eigenschaften.mit.length == 0 && // <= nur unmodifiziertes Produkt automatisch hochzählen
                     bp.display.eigenschaften.ohne.length == 0
                 ) {
                     bp.anzahl++;
@@ -89,25 +89,11 @@ export class BestellungEditComponent {
         this.app.editBestellposition(bestellposition);
     }
 
-    async kontrolliereBestellung() {
-
-        const modal = await this.modalController.create({
-            component: BestellungKontrolleModalComponent,
-            cssClass: 'classic-modal',
-            showBackdrop: true,
-            backdropDismiss: false,
-            animated: true
+    public kontrolliereBestellung() {
+        this.frontendService.showModal(BestellungKontrolleModalComponent).subscribe((data) => {
+            if (data.data) {
+                this.app.createBestellung();
+            }
         });
-
-        modal.onDidDismiss()
-            .then((data) => {
-                if (data.data) {
-                    this.app.createBestellung();
-                }
-
-            });
-
-        return modal.present();
     }
-
 }

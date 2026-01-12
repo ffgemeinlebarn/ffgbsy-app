@@ -1,12 +1,7 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormControl,
-    FormsModule,
-    ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
     CheckboxCustomEvent,
     IonAccordion,
@@ -33,12 +28,12 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { Bon } from 'src/app/classes/bon.model';
-import { IBonsFilter } from 'src/app/interfaces/bons-filter.interface';
-import { BonsService } from 'src/app/services/bons/bons.service';
-import { DruckerService } from 'src/app/services/drucker/drucker.service';
-import { TischeService } from 'src/app/services/tische/tische.service';
-import { FrontendService } from '../../../../services/frontend/frontend.service';
+import { BonsApiService } from 'src/app/data/api/bons-api.service';
+import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
+import { TischeApiService } from 'src/app/data/api/tische-api.service';
+import { IBonsFilter } from 'src/app/model/bons-filter.interface';
+import { IBon } from 'src/app/model/i-bon.model';
+import { FrontendService } from '../../../../data/frontend.service';
 
 @Component({
     selector: 'ffgbsy-failed-bons',
@@ -74,23 +69,17 @@ import { FrontendService } from '../../../../services/frontend/frontend.service'
     ],
 })
 export class FailedBonsPage implements ViewDidEnter {
-    private bonsService = inject(BonsService);
-    private druckerService = inject(DruckerService);
-    private tischeService = inject(TischeService);
+    private bonsApiService = inject(BonsApiService);
+    private druckerApiService = inject(DruckerApiService);
+    private tischeApiService = inject(TischeApiService);
     private formBuilder = inject(FormBuilder);
     private frontendService = inject(FrontendService);
 
-    public bons = signal<Bon[]>([]);
+    public bons = signal<IBon[]>([]);
 
-    public numberOfBonsSelected = computed(
-        () => this.bons().filter((b) => b.selected).length
-    );
+    public numberOfBonsSelected = computed(() => this.bons().filter((b) => b.selected).length);
     public anyBonsSelected = computed(() => this.numberOfBonsSelected() > 0);
-    public allBonsSelectedAreMissingSuccess = computed(
-        () =>
-            this.bons().filter((b) => b.selected && b.successes == 0).length ==
-            this.numberOfBonsSelected()
-    );
+    public allBonsSelectedAreMissingSuccess = computed(() => this.bons().filter((b) => b.selected && b.successes == 0).length == this.numberOfBonsSelected());
 
     public filter = this.formBuilder.group({
         druckerId: new FormControl<null | number>(null),
@@ -102,15 +91,14 @@ export class FailedBonsPage implements ViewDidEnter {
     });
 
     public availableFilter = {
-        drucker: toSignal(this.druckerService.readAll()),
-        tische: toSignal(this.tischeService.readAll()),
+        drucker: toSignal(this.druckerApiService.readAll()),
+        tische: toSignal(this.tischeApiService.readAll()),
         types: ['bestellung', 'storno'],
         limits: [5, 10, 25, 50, 100, 200, 500, 1000],
     };
 
     public toggleAllOnOff() {
-        const allSelected =
-            this.bons().filter((b) => b.selected).length == this.bons().length;
+        const allSelected = this.bons().filter((b) => b.selected).length == this.bons().length;
         this.bons.update((bons) => {
             bons.forEach((bon) => (bon.selected = !allSelected));
             return [...bons];
@@ -121,7 +109,7 @@ export class FailedBonsPage implements ViewDidEnter {
         event.stopPropagation();
     }
 
-    public onChange(changeEvent: CheckboxCustomEvent, bon: Bon) {
+    public onChange(changeEvent: CheckboxCustomEvent, bon: IBon) {
         this.bons.update((bons) => {
             bons.find((b) => b == bon).selected = changeEvent.detail.checked;
             return [...bons];
@@ -129,29 +117,21 @@ export class FailedBonsPage implements ViewDidEnter {
     }
 
     public searchBons() {
-        return this.bonsService
-            .search(this.filter.value as IBonsFilter)
-            .subscribe((bons) => this.bons.set(bons));
+        return this.bonsApiService.search(this.filter.value as IBonsFilter).subscribe((bons) => this.bons.set(bons));
     }
 
     public printSelectedBons() {
-        this.frontendService.showLoadingSpinner();
+        // this.frontendService.showLoadingSpinner();
         const selectedBons = this.bons()
             .filter((b) => b.selected)
             .map((bon) => bon.id);
-        this.bonsService.druckBonsByIds(selectedBons).subscribe((bonDrucke) => {
+        this.bonsApiService.druckBonsByIds(selectedBons).subscribe((bonDrucke) => {
             this.searchBons();
-            const successfulBons = bonDrucke.filter(
-                (bon) => bon.success
-            ).length;
+            const successfulBons = bonDrucke.filter((bon) => bon.success).length;
             if (successfulBons === bonDrucke.length) {
-                this.frontendService.showToast(
-                    'Alle Bons erfolgreich gedruckt!'
-                );
+                this.frontendService.showToast('Alle Bons erfolgreich gedruckt!');
             } else {
-                this.frontendService.showToast(
-                    `Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`
-                );
+                this.frontendService.showToast(`Nur ${successfulBons}/${bonDrucke.length} Bons gedruckt!`);
             }
             this.frontendService.hideLoadingSpinner();
         });

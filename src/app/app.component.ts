@@ -1,43 +1,30 @@
 import { NgClass } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
-import {
-    IonApp,
-    IonContent,
-    IonMenu,
-    IonRouterOutlet,
-    IonSplitPane,
-} from '@ionic/angular/standalone';
-import { FrontendLoadingComponent } from './components/frontend-loading/frontend-loading.component';
-import { MenuComponent } from './components/menu/menu/menu.component';
-import { AppService } from './services/app/app.service';
-import { IonIconsService } from './services/ion-icons/ion-icons.service';
+import { IonApp, IonContent, IonMenu, IonProgressBar, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import * as allIonicIcons from 'ionicons/icons';
+import { AppService } from './data/app.service';
+import { FrontendService } from './data/frontend.service';
+import { MenuComponent } from './feature/menu/menu.component';
 
 @Component({
     selector: 'ffgbsy-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
-    imports: [
-        FrontendLoadingComponent,
-        NgClass,
-        IonApp,
-        IonSplitPane,
-        IonMenu,
-        IonContent,
-        IonRouterOutlet,
-        MenuComponent,
-    ],
+    imports: [IonProgressBar, NgClass, IonApp, IonSplitPane, IonMenu, IonContent, IonRouterOutlet, MenuComponent],
 })
 export class AppComponent {
-    private ionicIcons = inject(IonIconsService);
-    private appService = inject(AppService);
+    private readonly appService = inject(AppService);
+    private readonly frontendService = inject(FrontendService);
 
     public aufnehmer = this.appService.aufnehmer;
     public isAdmin = this.appService.isAdmin;
-    public zoomLevel = computed(
-        () => `zoom-level--${this.aufnehmer()?.zoom_level ?? 1}`
-    );
+    public zoomLevel = computed(() => `zoom-level--${this.aufnehmer()?.zoom_level ?? 1}`);
+
+    public loadingShow = this.frontendService.loadingSpinnerShow;
+    public loadingMessage = this.frontendService.loadingSpinnerMessage;
 
     constructor() {
-        this.ionicIcons.useDefinedIcons();
+        addIcons(allIonicIcons);
     }
 }

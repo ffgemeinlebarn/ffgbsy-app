@@ -1,7 +1,8 @@
 <ion-app [ngClass]="zoomLevel()">
-
+    @if (loadingShow()) {
+        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    }
     <ion-split-pane contentId="main-content" when="lg">
-
         <ion-menu side="start" menuId="sidemenu" contentId="main-content">
             <ion-content>
                 <ffgbsy-menu></ffgbsy-menu>
@@ -11,9 +12,5 @@
         <div id="main-content">
             <ion-router-outlet> </ion-router-outlet>
         </div>
-
     </ion-split-pane>
-
-    <ffgbsy-frontend-loading></ffgbsy-frontend-loading>
-
 </ion-app>

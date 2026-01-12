@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <div class="center-wrapper">
+        <div class="centered">
+            <img class="logo" src="assets/icon.svg" alt="Logo" />
+
+            <h4 class="tagline">FF Gemeinlebarn Bestellsystem</h4>
+            <h4 class="version">Version {{ version.number }}</h4>
+
+            @if (readyToGo()) {
+                <ion-button class="start" size="large" shape="round" [routerLink]="['/neue-bestellung']">
+                    <ion-icon slot="start" name="arrow-forward"></ion-icon>
+                    <span>Starten</span>
+                </ion-button>
+            } @else if (!isAufnehmerSelected()) {
+                <ion-button class="start" size="large" shape="round" (click)="selectAufnehmer()">
+                    <ion-icon slot="start" name="person-outline"></ion-icon>
+                    <span>Aufnehmer:in auswählen</span>
+                </ion-button>
+            } @else {
+                <p>Daten und Systeme müssen verfügbar sein!</p>
+            }
+
+            <div class="tiles">
+                <ffgbsy-init-tile
+                    title="Aufnehmer"
+                    [success]="isAufnehmerSelected()"
+                    (click)="selectAufnehmer()"
+                    [subtitle]="aufnehmerNameForSubtitle()"
+                    iconName="people-outline"
+                ></ffgbsy-init-tile>
+                <ffgbsy-init-tile
+                    title="Gerät"
+                    [success]="isDeviceNameSet()"
+                    unsuccesfulFlag="danger"
+                    routerLink="/settings"
+                    [subtitle]="deviceNameForSubtitle()"
+                    iconName="phone-portrait-outline"
+                ></ffgbsy-init-tile>
+                <ffgbsy-init-tile
+                    title="Lookup Daten"
+                    [success]="isLookupDataAvailable()"
+                    unsuccesfulFlag="danger"
+                    routerLink="/systemstatus"
+                    [subtitle]="dataLastSyncedForSubtitle()"
+                    iconName="cube-outline"
+                ></ffgbsy-init-tile>
+                <ffgbsy-init-tile
+                    title="API"
+                    [success]="isApiAvailable()"
+                    unsuccesfulFlag="danger"
+                    routerLink="/systemstatus"
+                    [subtitle]="apiAvailabilityStatusForSubtitle()"
+                    iconName="cloud-outline"
+                ></ffgbsy-init-tile>
+                <ffgbsy-init-tile
+                    title="Drucker"
+                    [success]="areDruckerAvailable()"
+                    unsuccesfulFlag="warn"
+                    routerLink="/systemstatus"
+                    [subtitle]="druckerAvailabilityStatusForSubtitle()"
+                    iconName="print-outline"
+                ></ffgbsy-init-tile>
+            </div>
+        </div>
+    </div>
+</ion-content>

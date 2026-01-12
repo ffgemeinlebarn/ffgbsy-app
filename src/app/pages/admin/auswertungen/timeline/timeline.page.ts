@@ -1,38 +1,18 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonMenuButton,
-    IonTitle,
-    IonToolbar,
-    ViewDidEnter,
-} from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { ColorGeneratorService } from 'src/app/services/color-generator/color-generator.service';
-import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
+import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
+import { ColorGeneratorService } from 'src/app/data/color-generator.service';
 
 @Component({
     selector: 'ffgbsy-timeline',
     templateUrl: './timeline.page.html',
     styleUrls: ['./timeline.page.scss'],
-    imports: [
-        IonContent,
-        IonButton,
-        IonIcon,
-        IonButtons,
-        IonTitle,
-        IonToolbar,
-        IonHeader,
-        IonMenuButton,
-        BaseChartDirective,
-    ],
+    imports: [IonContent, IonButton, IonIcon, IonButtons, IonTitle, IonToolbar, IonHeader, IonMenuButton, BaseChartDirective],
 })
 export class TimelinePage implements ViewDidEnter {
-    private statistikenService = inject(StatistikenService);
+    private statistikenApiService = inject(StatistikenApiService);
     private colorGenerator = inject(ColorGeneratorService);
 
     public chartTimelineBestellungen: ChartConfiguration<'line'>['data'] = {
@@ -52,7 +32,7 @@ export class TimelinePage implements ViewDidEnter {
     public readyToShow = signal(false);
 
     public loadData() {
-        this.statistikenService.readTimeline().subscribe((timeline) =>
+        this.statistikenApiService.readTimeline().subscribe((timeline) =>
             timeline.forEach((day, i) => {
                 const filtred = day.quaters.filter((x) => x.hour > 8);
                 const labels = filtred.map((x) => x.label);
@@ -90,16 +70,12 @@ export class TimelinePage implements ViewDidEnter {
                 });
 
                 this.readyToShow.set(true);
-            })
+            }),
         );
     }
 
     private formatDate(date) {
-        return [
-            date.getDate().toString().padStart(2, '0'),
-            (date.getMonth() + 1).toString().padStart(2, '0'),
-            date.getFullYear(),
-        ].join('.');
+        return [date.getDate().toString().padStart(2, '0'), (date.getMonth() + 1).toString().padStart(2, '0'), date.getFullYear()].join('.');
     }
 
     ionViewDidEnter(): void {

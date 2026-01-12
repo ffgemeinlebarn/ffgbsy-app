@@ -1,20 +1,20 @@
 import { Component, inject, signal } from '@angular/core';
 import { IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { KeysItemComponent } from 'src/app/components/keys-item/keys-item.component';
-import { StatistikenService } from 'src/app/services/statistiken/statistiken.service';
+import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
+import { KeysItemComponent } from 'src/app/ui/keys-item/keys-item.component';
 
 @Component({
     selector: 'ffgbsy-keys',
     templateUrl: './keys.page.html',
     styleUrls: ['./keys.page.scss'],
-    imports: [IonContent, IonTitle, IonToolbar, IonHeader, IonMenuButton, KeysItemComponent]
+    imports: [IonContent, IonTitle, IonToolbar, IonHeader, IonMenuButton, KeysItemComponent],
 })
 export class KeysPage implements ViewDidEnter {
-    private statistikenService = inject(StatistikenService);
+    private statistikenApiService = inject(StatistikenApiService);
 
     public kennzahlen = signal<any>(null);
 
     ionViewDidEnter(): void {
-        this.statistikenService.readKennzahlen().subscribe((keys) => this.kennzahlen.set(keys));
+        this.statistikenApiService.readKennzahlen().subscribe((keys) => this.kennzahlen.set(keys));
     }
 }

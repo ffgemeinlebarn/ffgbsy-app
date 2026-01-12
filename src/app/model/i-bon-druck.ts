@@ -1,0 +1,12 @@
+import { IDrucker } from './i-drucker.class';
+
+export interface IBonDruck {
+    id: number;
+    bons_id: number;
+    datum: Date | string;
+    laufnummer: boolean;
+    timestamp: Date | string | null;
+    success: boolean;
+    message: string | null;
+    drucker: IDrucker;
+}

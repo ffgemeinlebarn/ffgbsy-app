@@ -2,48 +2,47 @@
     <ion-toolbar>
         <ion-back-button slot="start" defaultHref="/admin/daten/tische"></ion-back-button>
         @defer (when tisch()) {
-        <ion-title>{{ tisch()?.reihe }}{{ tisch()?.nummer }}</ion-title>
-        <ion-buttons slot="end">
-            <ion-button (click)="save()">
-                <ion-icon name="save" slot="icon-only"></ion-icon>
-            </ion-button>
-        </ion-buttons>
+            <ion-title>{{ tisch()?.reihe }}{{ tisch()?.nummer }}</ion-title>
+            <ion-buttons slot="end">
+                <ion-button (click)="save()">
+                    <ion-icon name="save" slot="icon-only"></ion-icon>
+                </ion-button>
+            </ion-buttons>
         }
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     @defer (when tisch()) {
-    <form [formGroup]="form" (ngSubmit)="save()">
-        <ion-list lines="full">
-            <ion-item>
-                <ion-label position="stacked">Reihe</ion-label>
-                <ion-input formControlName="reihe"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Nummer</ion-label>
-                <ion-input inputmode="decimal" type="number" step="1" formControlName="nummer"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Sortierung</ion-label>
-                <ion-input inputmode="decimal" type="number" step="1" formControlName="sortierindex"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Tischkategorie</ion-label>
-                <ion-select formControlName="tischkategorien_id">
-                    <ion-select-option [value]="null">Keine Tischkategorie gewählt</ion-select-option>
-                    @for (tischkategorie of tischkategorien(); track tischkategorie.id) {
-                    <ion-select-option [value]="tischkategorie.id">{{ tischkategorie.name }}</ion-select-option>
-                    }
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-toggle formControlName="aktiv">Aktiv</ion-toggle>
-            </ion-item>
-        </ion-list>
-    </form>
-    }
-    @placeholder(minimum 300ms){
-    <ffgbsy-page-spinner></ffgbsy-page-spinner>
+        <form [formGroup]="form" (ngSubmit)="save()">
+            <ion-list lines="full">
+                <ion-item>
+                    <ion-label position="stacked">Reihe</ion-label>
+                    <ion-input formControlName="reihe"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Nummer</ion-label>
+                    <ion-input inputmode="decimal" type="number" step="1" formControlName="nummer"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Sortierung</ion-label>
+                    <ion-input inputmode="decimal" type="number" step="1" formControlName="sortierindex"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Tischkategorie</ion-label>
+                    <ion-select formControlName="tischkategorien_id">
+                        <ion-select-option [value]="null">Keine Tischkategorie gewählt</ion-select-option>
+                        @for (tischkategorie of tischkategorien(); track tischkategorie.id) {
+                            <ion-select-option [value]="tischkategorie.id">{{ tischkategorie.name }}</ion-select-option>
+                        }
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-toggle formControlName="aktiv">Aktiv</ion-toggle>
+                </ion-item>
+            </ion-list>
+        </form>
+    } @placeholder (minimum 300ms) {
+        <ffgbsy-page-spinner></ffgbsy-page-spinner>
     }
 </ion-content>

@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Aufnehmer auswählen</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list lines="full">
+        @for (aufnehmer of aufnehmer(); track aufnehmer.id) {
+            <ion-item (click)="select(aufnehmer)">
+                <ion-label>{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-label>
+            </ion-item>
+        }
+    </ion-list>
+</ion-content>
+<ion-footer class="aufnehmer-auswahl-footer">
+    <ion-button (click)="close()" shape="round">
+        <ion-icon slot="start" name="close-outline"></ion-icon>
+        Auswahl abbrechen
+    </ion-button>
+</ion-footer>

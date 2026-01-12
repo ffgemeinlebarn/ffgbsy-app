@@ -3,12 +3,10 @@
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Neue Bestellung</ion-title>
         <ion-buttons slot="end">
-
-            @if(bestellung())
-            {
-            <ion-button (click)="askForCancelBestellung()" (keypress)="askForCancelBestellung()">
-                <ion-icon name="close-circle" slot="icon-only"></ion-icon>
-            </ion-button>
+            @if (bestellung()) {
+                <ion-button (click)="askForCancelBestellung()" (keypress)="askForCancelBestellung()">
+                    <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+                </ion-button>
             }
         </ion-buttons>
     </ion-toolbar>
@@ -16,15 +14,10 @@
 
 <!-- Keine aktuelle Bestellung im BestellungenService -->
 
-@if(!aufnehmer() || !bestellung())
-{
-<app-aufnehmer-auswahl [aufnehmer]="aufnehmer()"></app-aufnehmer-auswahl>
-}
-@else if(bestellung().status == 'tischauswahl')
-{
-<app-tisch-auswahl (onTischSelected)="selectTisch($event)"></app-tisch-auswahl>
-}
-@else if(bestellung().status == 'bestellpositionen')
-{
-<app-bestellung-edit></app-bestellung-edit>
+@if (!aufnehmer() || !bestellung()) {
+    <ffgbsy-aufnehmer-auswahl [aufnehmer]="aufnehmer()"></ffgbsy-aufnehmer-auswahl>
+} @else if (bestellung().status == "tischauswahl") {
+    <app-tisch-auswahl (onTischSelected)="selectTisch($event)"></app-tisch-auswahl>
+} @else if (bestellung().status == "bestellpositionen") {
+    <ffgbsy-bestellung-edit></ffgbsy-bestellung-edit>
 }

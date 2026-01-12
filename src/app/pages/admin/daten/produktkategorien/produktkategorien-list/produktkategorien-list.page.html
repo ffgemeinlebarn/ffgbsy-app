@@ -5,20 +5,19 @@
     </ion-toolbar>
 </ion-header>
 
-@if ( produktkategorien()) {
-<ion-content>
-    <ion-list lines="full">
-        @for (produktkategorie of produktkategorien(); track produktkategorie.id) {
-        <ion-item [routerLink]="[produktkategorie.id]" [button]="true">
-            <ion-label>
-                <h3>{{ produktkategorie.name }}</h3>
-                <p>{{ produktkategorie.produktbereich?.name }}</p>
-            </ion-label>
-        </ion-item>
-        }
-    </ion-list>
-</ion-content>
-}
-@else{
-<ffgbsy-page-spinner></ffgbsy-page-spinner>
+@if (produktkategorien()) {
+    <ion-content>
+        <ion-list lines="full">
+            @for (produktkategorie of produktkategorien(); track produktkategorie.id) {
+                <ion-item [routerLink]="[produktkategorie.id]" [button]="true">
+                    <ion-label>
+                        <h3>{{ produktkategorie.name }}</h3>
+                        <p>{{ produktkategorie.produktbereich?.name }}</p>
+                    </ion-label>
+                </ion-item>
+            }
+        </ion-list>
+    </ion-content>
+} @else {
+    <ffgbsy-page-spinner></ffgbsy-page-spinner>
 }

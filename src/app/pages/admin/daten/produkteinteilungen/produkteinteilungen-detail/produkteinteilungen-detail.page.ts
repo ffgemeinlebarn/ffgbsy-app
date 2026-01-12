@@ -1,12 +1,6 @@
 import { Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
     IonButton,
@@ -23,11 +17,11 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { Produkteinteilung } from 'src/app/classes/produkteinteilung.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { ProdukteinteilungenService } from 'src/app/services/produkteinteilungen/produkteinteilungen.service';
-import { ProduktkategorienService } from 'src/app/services/produktkategorien/produktkategorien.service';
+import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
+import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkteinteilungen-detail',
@@ -54,17 +48,15 @@ import { ProduktkategorienService } from 'src/app/services/produktkategorien/pro
     ],
 })
 export class ProdukteinteilungenDetailPage {
-    private produkteinteilungenService = inject(ProdukteinteilungenService);
-    private produktkategorienService = inject(ProduktkategorienService);
+    private produkteinteilungenApiService = inject(ProdukteinteilungenApiService);
+    private produktkategorienApiService = inject(ProduktkategorienApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
 
-    public produktkategorien = toSignal(
-        this.produktkategorienService.readAll()
-    );
-    public produkteinteilung = signal<Produkteinteilung>(null);
+    public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
+    public produkteinteilung = signal<IProdukteinteilung>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -77,31 +69,23 @@ export class ProdukteinteilungenDetailPage {
     }
 
     private load(id: number) {
-        this.produkteinteilungenService
-            .read(id)
-            .subscribe((produkteinteilung: Produkteinteilung) => {
-                this.produkteinteilung.set(produkteinteilung);
-                this.form.patchValue(produkteinteilung);
-            });
+        this.produkteinteilungenApiService.read(id).subscribe((produkteinteilung: IProdukteinteilung) => {
+            this.produkteinteilung.set(produkteinteilung);
+            this.form.patchValue(produkteinteilung);
+        });
     }
 
     public save() {
         const updated = { ...this.produkteinteilung(), ...this.form.value };
-        console.debug(
-            'ProdukteinteilungenDetailPage',
-            'save(), Updated Product:',
-            updated
-        );
-        this.produkteinteilungenService.update(updated).subscribe((p) => {
-            this.frontendService.showToast(
-                `${p.name} wurde erfolgreich gespeichert!`
-            );
+        console.debug('[FFGBSY]', 'ProdukteinteilungenDetailPage', 'save(), Updated Product:', updated);
+        this.produkteinteilungenApiService.update(updated).subscribe((p) => {
+            this.frontendService.showToast(`${p.name} wurde erfolgreich gespeichert!`);
             this.load(this.id());
             this.reload();
         });
     }
 
     private reload() {
-        this.produkteinteilungenService.readAll();
+        this.produkteinteilungenApiService.readAll();
     }
 }

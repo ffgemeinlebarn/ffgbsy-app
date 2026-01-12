@@ -1,11 +1,11 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar, ViewDidEnter } from "@ionic/angular/standalone";
-import { Produkt } from 'src/app/classes/produkt.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { EuroPreisPipe } from 'src/app/pipes/euro-preis/euro-preis.pipe';
-import { ProdukteService } from 'src/app/services/produkte/produkte.service';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonList, IonMenuButton, IonSearchbar, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { ProdukteApiService } from 'src/app/data/api/produkte-api.service';
+import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
+import { IProdukt } from 'src/app/model/i-produkt.interface';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkte-list',
@@ -26,18 +26,18 @@ import { ProdukteService } from 'src/app/services/produkte/produkte.service';
         RouterLink,
         EuroPreisPipe,
         FormsModule,
-        ReactiveFormsModule
-    ]
+        ReactiveFormsModule,
+    ],
 })
 export class ProdukteListPage implements ViewDidEnter {
-    private produkteService = inject(ProdukteService);
+    private produkteApiService = inject(ProdukteApiService);
 
-    public search = new FormControl("");
-    public produkte = signal<Produkt[]>(null);
-    public produkteFiltred = signal<Produkt[]>(null);
+    public search = new FormControl('');
+    public produkte = signal<IProdukt[]>(null);
+    public produkteFiltred = signal<IProdukt[]>(null);
 
     constructor() {
-        effect(() => this.produkteFiltred.set(this.produkte()), { allowSignalWrites: true });
+        effect(() => this.produkteFiltred.set(this.produkte()));
     }
 
     public handleSearchInput(event: any) {
@@ -45,12 +45,12 @@ export class ProdukteListPage implements ViewDidEnter {
     }
 
     private filter(query: string) {
-        this.produkteFiltred.set(this.produkte().filter(produkt => produkt.name.toLowerCase().includes(query)));
+        this.produkteFiltred.set(this.produkte().filter((produkt) => produkt.name.toLowerCase().includes(query)));
     }
 
     ionViewDidEnter(): void {
         this.produkte.set(null);
-        this.produkteService.readAll().subscribe((produkte) => {
+        this.produkteApiService.readAll().subscribe((produkte) => {
             this.produkte.set(produkte);
             this.search.setValue('');
             this.filter('');

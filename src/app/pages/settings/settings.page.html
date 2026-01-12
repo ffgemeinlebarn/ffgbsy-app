@@ -11,10 +11,8 @@
 </ion-header>
 <ion-content>
     <form [formGroup]="form" (ngSubmit)="save()">
+        <h2 class="ion-padding">Gerät</h2>
         <ion-list lines="full">
-            <ion-item-divider>
-                <ion-label>Gerät</ion-label>
-            </ion-item-divider>
             <ion-item>
                 <ion-label position="stacked">Gerätename</ion-label>
                 <ion-input formControlName="deviceName"></ion-input>
@@ -27,16 +25,26 @@
                     </ion-label>
                 </ion-toggle>
             </ion-item>
-            <ion-item-divider>
-                <ion-label>Administration</ion-label>
-            </ion-item-divider>
+        </ion-list>
+
+        <h2 class="ion-padding">Administration</h2>
+        <ion-list lines="full">
             <ion-item>
-                <ion-label position="stacked">Freitschaltungs PIN</ion-label>
-                <ion-input inputmode="numeric" type="password" formControlName="adminPin"></ion-input>
+                <ion-label position="stacked">PIN für Auswertungen und Datenverwaltung </ion-label>
+                <ion-input inputmode="numeric" placeholder="PIN-Code" type="password" formControlName="adminPin"></ion-input>
+                <ion-chip class="non-clickable" slot="end" [color]="adminFeatureIsActivatedColor()">{{ adminFeatureIsActivatedText() }}</ion-chip>
+            </ion-item>
+            <ion-item>
+                <ion-toggle formControlName="bonDebugMenu">
+                    <ion-label>
+                        <h3>Bon Druck Menü</h3>
+                        <p>Menü, um Bons im Fehlerfall suchen und nochmal Drucken zu können</p>
+                    </ion-label>
+                </ion-toggle>
             </ion-item>
             <ion-item>
                 <ion-label position="stacked">API</ion-label>
-                <ion-input type="text" formControlName="apiBaseUrl"></ion-input>
+                <ion-input type="text" placeholder="Basis URL der API" formControlName="apiBaseUrl"></ion-input>
             </ion-item>
         </ion-list>
     </form>

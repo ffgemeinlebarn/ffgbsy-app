@@ -1,12 +1,7 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import {
-    FormBuilder,
-    FormGroup,
-    FormsModule,
-    ReactiveFormsModule,
-    Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Params } from '@angular/router';
 import {
     IonBackButton,
     IonButton,
@@ -24,11 +19,12 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { Tisch } from 'src/app/classes/tisch.class';
-import { PageSpinnerComponent } from 'src/app/components/page-spinner/page-spinner.component';
-import { FrontendService } from 'src/app/services/frontend/frontend.service';
-import { TischeService } from 'src/app/services/tische/tische.service';
-import { TischkategorienService } from 'src/app/services/tischkategorien/tischkategorien.service';
+import { map, mergeMap, tap } from 'rxjs';
+import { TischeApiService } from 'src/app/data/api/tische-api.service';
+import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
+import { FrontendService } from 'src/app/data/frontend.service';
+import { ITisch } from 'src/app/model/i-tisch.interface';
+import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-tische-detail',
@@ -55,55 +51,54 @@ import { TischkategorienService } from 'src/app/services/tischkategorien/tischka
         IonToggle,
     ],
 })
-export class TischeDetailPage {
-    private frontendService = inject(FrontendService);
-    private tischeService = inject(TischeService);
-    private tischkategorienService = inject(TischkategorienService);
-    private formBuilder = inject(FormBuilder);
+export class TischeDetailPage implements OnInit {
+    private readonly frontendService = inject(FrontendService);
+    private readonly tischeApiService = inject(TischeApiService);
+    private readonly tischkategorienApiService = inject(TischkategorienApiService);
+    private readonly formBuilder = inject(FormBuilder);
+    private readonly activatedRoute = inject(ActivatedRoute);
 
-    public id = input.required<number>();
-    public tisch = signal<Tisch>(null);
-    public tischkategorien = toSignal(this.tischkategorienService.readAll());
+    public readonly tisch = signal<ITisch | null>(null);
+    public readonly tischkategorien = toSignal(this.tischkategorienApiService.readAll());
 
     public form: FormGroup = this.formBuilder.group({
         reihe: ['', [Validators.required, Validators.minLength(1)]],
         nummer: [0, [Validators.required, Validators.min(1)]],
         aktiv: [true],
         sortierindex: [100, [Validators.min(0)]],
-        tischkategorien_id: [
-            null,
-            [Validators.required, Validators.nullValidator],
-        ],
+        tischkategorien_id: [null, [Validators.required, Validators.nullValidator]],
     });
 
     constructor() {
-        effect(() =>
-            this.tischeService
-                .read(this.id())
-                .subscribe((tisch) => this.setEntity(tisch))
-        );
+        effect(() => {
+            if (this.tisch()) {
+                this.form.patchValue(this.tisch());
+            }
+        });
     }
 
-    private setEntity(tisch: Tisch) {
-        this.tisch.set(tisch);
-        this.form.patchValue(tisch);
+    ngOnInit(): void {
+        this.activatedRoute.params
+            .pipe(
+                map((p: Params) => Number(p['id']) ?? null),
+                map((n) => (Number.isNaN(n) ? null : n)),
+                mergeMap((id) => this.tischeApiService.read(id)),
+                tap((t) => {
+                    console.debug('[FFGBSY]', 'Selected Tisch =>', t);
+                }),
+            )
+            .subscribe((t) => this.tisch.set(t));
     }
 
     public save() {
         if (this.form.invalid) {
-            this.frontendService.showToast(
-                `Es ist ein Fehler aufgetreten! Der Tisch wurde nicht gespeichert!`
-            );
+            this.frontendService.showToast(`Es ist ein Fehler aufgetreten! Der Tisch wurde nicht gespeichert!`);
             return;
         }
 
-        this.tischeService
-            .update({ ...this.tisch(), ...this.form.value })
-            .subscribe((tisch) => {
-                this.frontendService.showToast(
-                    `${tisch.reihe}${tisch.nummer} wurde erfolgreich gespeichert!`
-                );
-                this.setEntity(tisch);
-            });
+        this.tischeApiService.update({ ...this.tisch(), ...this.form.value }).subscribe((tisch) => {
+            this.frontendService.showToast(`${tisch.reihe}${tisch.nummer} wurde erfolgreich gespeichert!`);
+            this.tisch.set(tisch);
+        });
     }
 }
