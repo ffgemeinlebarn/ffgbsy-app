@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
@@ -24,20 +24,21 @@ import {
     IonToolbar,
     ModalController,
 } from '@ionic/angular/standalone';
-import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
-import { ProduktbereicheApiService } from 'src/app/data/api/produktbereiche-api.service';
-import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-import { IEigenschaft } from 'src/app/model/i-eigenschaft.interface';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
+import { ProduktbereicheApiService } from '../../../../../data/api/produktbereiche-api.service';
+import { ProduktkategorienApiService } from '../../../../../data/api/produktkategorien-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { SelectEigenschaftModalComponent } from '../../../../../feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
+import { EuroPreisPipe } from '../../../../../misc/euro-preis.pipe';
+import { IEigenschaft } from '../../../../../model/i-eigenschaft.interface';
+import { IProduktkategorie } from '../../../../../model/i-produktkategorie.interface';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produktkategorien-detail',
     templateUrl: './produktkategorien-detail.page.html',
     styleUrls: ['./produktkategorien-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonChip,
         IonItemDivider,

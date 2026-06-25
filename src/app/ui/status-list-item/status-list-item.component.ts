@@ -1,11 +1,12 @@
-import { Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
-import { CheckStatus } from 'src/app/model/check-status.type';
+import { CheckStatus } from '../../model/check-status.type';
 
 @Component({
     selector: 'ffgbsy-status-list-item',
     templateUrl: './status-list-item.component.html',
     styleUrls: ['./status-list-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonItem, IonLabel, IonIcon],
 })
 export class StatusListItemComponent {

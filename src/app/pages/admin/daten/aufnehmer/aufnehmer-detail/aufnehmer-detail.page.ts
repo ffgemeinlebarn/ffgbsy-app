@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
@@ -17,14 +17,15 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
+import { AufnehmerApiService } from '../../../../../data/api/aufnehmer-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { IAufnehmer } from '../../../../../model/i-aufnehmer.model';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-detail',
     templateUrl: './aufnehmer-detail.page.html',
     styleUrls: ['./aufnehmer-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonBackButton,
         IonIcon,

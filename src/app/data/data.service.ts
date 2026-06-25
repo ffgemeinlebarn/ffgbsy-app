@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
-import { DataLoadedReportModalComponent } from 'src/app/feature/data-loaded-report-modal/data-loaded-report-modal.component';
-import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
-import { IDaten } from 'src/app/model/i-daten.interface';
-import { IProdukt } from 'src/app/model/i-produkt.interface';
-import { IProduktbereich } from 'src/app/model/i-produktbereich.interface';
-import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
-import { ITisch } from 'src/app/model/i-tisch.interface';
-import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
+import { DataLoadedReportModalComponent } from '../feature/data-loaded-report-modal/data-loaded-report-modal.component';
+import { IAufnehmer } from '../model/i-aufnehmer.model';
+import { IDaten } from '../model/i-daten.interface';
+import { IProdukt } from '../model/i-produkt.interface';
+import { IProduktbereich } from '../model/i-produktbereich.interface';
+import { IProdukteinteilung } from '../model/i-produkteinteilung.interface';
+import { IProduktkategorie } from '../model/i-produktkategorie.interface';
+import { ITisch } from '../model/i-tisch.interface';
+import { ITischkategorie } from '../model/i-tischkategorie.interface';
 import { SettingsService } from './settings.service';
 
 @Injectable({

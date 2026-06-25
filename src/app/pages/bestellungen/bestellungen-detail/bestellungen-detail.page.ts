@@ -1,33 +1,68 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
     AlertController,
     IonBackButton,
+    IonButton,
     IonButtons,
     IonChip,
+    IonCol,
     IonContent,
+    IonGrid,
     IonHeader,
+    IonIcon,
     IonItem,
     IonItemDivider,
+    IonItemOption,
+    IonItemOptions,
+    IonItemSliding,
     IonLabel,
     IonList,
+    IonNote,
+    IonRow,
+    IonText,
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
-import { BonsApiService } from 'src/app/data/api/bons-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { Bestellung } from 'src/app/model/bestellung.model';
-import { IBon } from 'src/app/model/i-bon.model';
+import { BestellungenApiService } from '../../../data/api/bestellungen-api.service';
+import { BonsApiService } from '../../../data/api/bons-api.service';
+import { FrontendService } from '../../../data/frontend.service';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
+import { Bestellposition } from '../../../model/bestellposition.model';
+import { Bestellung } from '../../../model/bestellung.model';
+import { IBon } from '../../../model/i-bon.model';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
     templateUrl: './bestellungen-detail.page.html',
     styleUrls: ['./bestellungen-detail.page.scss'],
-    imports: [IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonItemDivider, IonChip, DatePipe, EuroPreisPipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [
+        IonText,
+        IonButton,
+        IonIcon,
+        IonItemOptions,
+        IonItemOption,
+        IonNote,
+        IonGrid,
+        IonItemSliding,
+        IonRow,
+        IonCol,
+        IonHeader,
+        IonToolbar,
+        IonButtons,
+        IonBackButton,
+        IonTitle,
+        IonContent,
+        IonList,
+        IonItem,
+        IonLabel,
+        IonItemDivider,
+        IonChip,
+        DatePipe,
+        EuroPreisPipe,
+    ],
 })
 export class BestellungenDetailPage implements OnInit {
     public activatedRoute = inject(ActivatedRoute);

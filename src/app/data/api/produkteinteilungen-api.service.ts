@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
+import { IProdukteinteilung } from '../../model/i-produkteinteilung.interface';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -14,6 +14,9 @@ import {
     IonInput,
     IonItem,
     IonItemDivider,
+    IonItemOption,
+    IonItemOptions,
+    IonItemSliding,
     IonLabel,
     IonList,
     IonSelect,
@@ -24,22 +27,26 @@ import {
     ModalController,
 } from '@ionic/angular/standalone';
 import { map, mergeMap, of, tap } from 'rxjs';
-import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
-import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
-import { ProdukteApiService } from 'src/app/data/api/produkte-api.service';
-import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-import { IEigenschaft } from 'src/app/model/i-eigenschaft.interface';
-import { IProdukt } from 'src/app/model/i-produkt.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
+import { GrundprodukteApiService } from '../../../../../data/api/grundprodukte-api.service';
+import { ProdukteApiService } from '../../../../../data/api/produkte-api.service';
+import { ProdukteinteilungenApiService } from '../../../../../data/api/produkteinteilungen-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { SelectEigenschaftModalComponent } from '../../../../../feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
+import { EuroPreisPipe } from '../../../../../misc/euro-preis.pipe';
+import { IEigenschaft } from '../../../../../model/i-eigenschaft.interface';
+import { IProdukt } from '../../../../../model/i-produkt.interface';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkte-detail',
     templateUrl: './produkte-detail.page.html',
     styleUrls: ['./produkte-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
+        IonItemSliding,
+        IonItemOptions,
+        IonItemOption,
         IonItemDivider,
         IonChip,
         IonItem,

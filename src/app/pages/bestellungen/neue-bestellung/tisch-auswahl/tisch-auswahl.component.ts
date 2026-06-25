@@ -1,14 +1,15 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, effect, inject, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, output, signal } from '@angular/core';
 import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
-import { DataService } from 'src/app/data/data.service';
-import { ITisch } from 'src/app/model/i-tisch.interface';
-import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
+import { DataService } from '../../../../data/data.service';
+import { ITisch } from '../../../../model/i-tisch.interface';
+import { ITischkategorie } from '../../../../model/i-tischkategorie.interface';
 
 @Component({
     selector: 'app-tisch-auswahl',
     templateUrl: './tisch-auswahl.component.html',
     styleUrls: ['./tisch-auswahl.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonContent, IonFooter, IonButton, NgClass],
 })
 export class TischAuswahlComponent {

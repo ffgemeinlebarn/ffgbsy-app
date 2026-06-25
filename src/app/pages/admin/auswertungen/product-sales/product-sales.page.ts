@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-
+import { StatistikenApiService } from '../../../../data/api/statistiken-api.service';
+import { EuroPreisPipe } from '../../../../misc/euro-preis.pipe';
 @Component({
     selector: 'ffgbsy-product-sales',
     templateUrl: './product-sales.page.html',
     styleUrls: ['./product-sales.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, EuroPreisPipe, CommonModule, FormsModule],
 })
 export class ProductSalesPage implements ViewDidEnter {

@@ -1,12 +1,13 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonButton, IonIcon, IonList, IonMenuToggle } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/data/app.service';
+import { AppService } from '../../data/app.service';
 import { MenuItemComponent } from '../../ui/menu-item/menu-item.component';
 
 @Component({
     selector: 'ffgbsy-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonIcon, IonList, IonMenuToggle, IonButton, IonIcon, MenuItemComponent],
 })
 export class MenuComponent {

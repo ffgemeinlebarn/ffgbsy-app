@@ -1,16 +1,17 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar, ViewWillEnter } from '@ionic/angular/standalone';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
+import { StatistikenApiService } from '../../../../data/api/statistiken-api.service';
+import { EuroPreisPipe } from '../../../../misc/euro-preis.pipe';
 
 @Component({
     selector: 'ffgbsy-sales-volumne',
     templateUrl: './sales-volumne.page.html',
     styleUrls: ['./sales-volumne.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonIcon, IonButton, IonButtons, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, CommonModule, FormsModule, EuroPreisPipe, BaseChartDirective],
 })
 export class SalesVolumnePage implements ViewWillEnter {

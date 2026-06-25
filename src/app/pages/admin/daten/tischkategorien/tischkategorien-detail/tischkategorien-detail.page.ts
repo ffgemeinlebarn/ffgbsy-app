@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -16,16 +16,17 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
-import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { ProduktkategorienApiService } from '../../../../../data/api/produktkategorien-api.service';
+import { TischkategorienApiService } from '../../../../../data/api/tischkategorien-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { ITischkategorie } from '../../../../../model/i-tischkategorie.interface';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-tischkategorien-detail',
     templateUrl: './tischkategorien-detail.page.html',
     styleUrls: ['./tischkategorien-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonLabel,
         IonList,

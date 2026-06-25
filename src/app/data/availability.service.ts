@@ -2,10 +2,10 @@ import { formatDate } from '@angular/common';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { map, switchMap, tap } from 'rxjs';
-import { AvailabilityCheck } from 'src/app/model/availability-check.model';
-import { IDrucker } from 'src/app/model/i-drucker.class';
 import { DataService } from '../data/data.service';
 import { LOADING_ANIMATION } from '../misc/http-context-tokens';
+import { AvailabilityCheck } from '../model/availability-check.model';
+import { IDrucker } from '../model/i-drucker.class';
 import { DruckerApiService } from './api/drucker-api.service';
 import { SettingsService } from './settings.service';
 

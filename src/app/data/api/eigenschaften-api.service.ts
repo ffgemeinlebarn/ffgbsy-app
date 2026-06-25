@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IEigenschaft } from 'src/app/model/i-eigenschaft.interface';
+import { IEigenschaft } from '../../model/i-eigenschaft.interface';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

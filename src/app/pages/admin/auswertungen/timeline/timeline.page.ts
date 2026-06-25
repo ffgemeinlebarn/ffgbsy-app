@@ -1,14 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
-import { StatistikenApiService } from 'src/app/data/api/statistiken-api.service';
-import { ColorGeneratorService } from 'src/app/data/color-generator.service';
+import { StatistikenApiService } from '../../../../data/api/statistiken-api.service';
+import { ColorGeneratorService } from '../../../../data/color-generator.service';
 
 @Component({
     selector: 'ffgbsy-timeline',
     templateUrl: './timeline.page.html',
     styleUrls: ['./timeline.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonContent, IonButton, IonIcon, IonButtons, IonTitle, IonToolbar, IonHeader, IonMenuButton, BaseChartDirective],
 })
 export class TimelinePage implements ViewDidEnter {

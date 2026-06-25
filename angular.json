@@ -32,7 +32,10 @@
                             "src/.htaccess",
                             "src/manifest.webmanifest"
                         ],
-                        "styles": ["src/global.scss", "src/theme/variables.scss"],
+                        "styles": [
+                            "src/global.scss",
+                            "src/theme/variables.scss"
+                        ],
                         "scripts": [],
                         "serviceWorker": "ngsw-config.json"
                     },
@@ -92,14 +95,19 @@
                 "lint": {
                     "builder": "@angular-eslint/builder:lint",
                     "options": {
-                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+                        "lintFilePatterns": [
+                            "src/**/*.ts",
+                            "src/**/*.html"
+                        ]
                     }
                 }
             }
         }
     },
     "cli": {
-        "schematicCollections": ["@ionic/angular-toolkit"],
+        "schematicCollections": [
+            "@ionic/angular-toolkit"
+        ],
         "analytics": false
     },
     "schematics": {

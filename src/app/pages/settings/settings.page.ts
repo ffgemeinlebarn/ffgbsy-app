@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonButton,
@@ -16,14 +16,15 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/data/app.service';
-import { SettingsService } from 'src/app/data/settings.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
+import { AppService } from '../../data/app.service';
+import { SettingsService } from '../../data/settings.service';
 
 @Component({
     selector: 'ffgbsy-settings',
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonChip,
         IonList,

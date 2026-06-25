@@ -15,7 +15,7 @@
 <!-- Keine aktuelle Bestellung im BestellungenService -->
 
 @if (!aufnehmer() || !bestellung()) {
-    <ffgbsy-aufnehmer-auswahl [aufnehmer]="aufnehmer()"></ffgbsy-aufnehmer-auswahl>
+    <ffgbsy-aufnehmer-auswahl></ffgbsy-aufnehmer-auswahl>
 } @else if (bestellung().status == "tischauswahl") {
     <app-tisch-auswahl (onTischSelected)="selectTisch($event)"></app-tisch-auswahl>
 } @else if (bestellung().status == "bestellpositionen") {

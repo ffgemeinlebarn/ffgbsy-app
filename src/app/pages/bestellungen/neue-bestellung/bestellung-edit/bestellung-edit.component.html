@@ -40,7 +40,7 @@
                         <ion-item button (click)="addBestellposition(produkt, 'standard', $event)" (keypress)="addBestellposition(produkt, 'standard', $event)">
                             <ion-label text-wrap>
                                 <h2>{{ produkt?.name }}</h2>
-                                <p>{{ produkt?.preis | euroPreis }}</p>
+                                <p>{{ $safeNavigationMigration(produkt?.preis) | euroPreis }}</p>
                             </ion-label>
                             <ion-button
                                 slot="end"

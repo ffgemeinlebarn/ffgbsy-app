@@ -1,4 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -20,16 +20,17 @@ import {
     IonToolbar,
 } from '@ionic/angular/standalone';
 import { map, mergeMap, tap } from 'rxjs';
-import { TischeApiService } from 'src/app/data/api/tische-api.service';
-import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { ITisch } from 'src/app/model/i-tisch.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { TischeApiService } from '../../../../../data/api/tische-api.service';
+import { TischkategorienApiService } from '../../../../../data/api/tischkategorien-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { ITisch } from '../../../../../model/i-tisch.interface';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-tische-detail',
     templateUrl: './tische-detail.page.html',
     styleUrls: ['./tische-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonLabel,
         IonItem,

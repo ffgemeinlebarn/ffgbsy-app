@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITisch } from 'src/app/model/i-tisch.interface';
+import { ITisch } from '../../model/i-tisch.interface';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

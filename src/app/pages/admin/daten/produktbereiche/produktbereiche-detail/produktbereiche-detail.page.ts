@@ -1,6 +1,4 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
-import { IProduktbereich } from 'src/app/model/i-produktbereich.interface';
-
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -21,15 +19,17 @@ import {
     IonToolbar,
 } from '@ionic/angular/standalone';
 import { map, mergeMap, tap } from 'rxjs';
-import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
-import { ProduktbereicheApiService } from 'src/app/data/api/produktbereiche-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
+import { ProduktbereicheApiService } from '../../../../../data/api/produktbereiche-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { IProduktbereich } from '../../../../../model/i-produktbereich.interface';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produktbereiche-detail',
     templateUrl: './produktbereiche-detail.page.html',
     styleUrls: ['./produktbereiche-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonLabel,
         IonList,

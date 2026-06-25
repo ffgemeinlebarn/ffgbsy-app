@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { Bestellung } from 'src/app/model/bestellung.model';
-import { IBestellungenFilter } from 'src/app/model/i-bestellungen-filter.interface';
+import { Bestellposition } from '../../model/bestellposition.model';
+import { Bestellung } from '../../model/bestellung.model';
+import { IBestellungenFilter } from '../../model/i-bestellungen-filter.interface';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

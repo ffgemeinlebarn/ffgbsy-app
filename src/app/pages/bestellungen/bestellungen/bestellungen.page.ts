@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -12,6 +12,7 @@ import {
     IonLabel,
     IonList,
     IonMenuButton,
+    IonNote,
     IonRippleEffect,
     IonSelect,
     IonSelectOption,
@@ -19,19 +20,21 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
-import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
-import { TischeApiService } from 'src/app/data/api/tische-api.service';
-import { AppService } from 'src/app/data/app.service';
-import { Bestellung } from 'src/app/model/bestellung.model';
-import { IBestellungenFilter } from 'src/app/model/i-bestellungen-filter.interface';
+import { AufnehmerApiService } from '../../../data/api/aufnehmer-api.service';
+import { BestellungenApiService } from '../../../data/api/bestellungen-api.service';
+import { TischeApiService } from '../../../data/api/tische-api.service';
+import { AppService } from '../../../data/app.service';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
+import { Bestellung } from '../../../model/bestellung.model';
+import { IBestellungenFilter } from '../../../model/i-bestellungen-filter.interface';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
     templateUrl: './bestellungen.page.html',
     styleUrls: ['./bestellungen.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
+        IonNote,
         DatePipe,
         EuroPreisPipe,
         FormsModule,

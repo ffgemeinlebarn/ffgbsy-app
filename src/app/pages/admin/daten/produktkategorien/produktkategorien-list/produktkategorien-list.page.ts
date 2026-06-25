@@ -1,15 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonContent, IonHeader, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { ProduktkategorienApiService } from '../../../../../data/api/produktkategorien-api.service';
+import { IProduktkategorie } from '../../../../../model/i-produktkategorie.interface';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produktkategorien-list',
     templateUrl: './produktkategorien-list.page.html',
     styleUrls: ['./produktkategorien-list.page.scss'],
-    imports: [IonContent, IonToolbar, IonTitle, IonList, IonHeader, RouterLink, IonMenuButton, PageSpinnerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonLabel, IonContent, IonToolbar, IonTitle, IonList, IonItem, IonHeader, RouterLink, IonMenuButton, PageSpinnerComponent],
 })
 export class ProduktkategorienListPage implements ViewDidEnter {
     private produktkategorienApiService = inject(ProduktkategorienApiService);

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IDrucker } from 'src/app/model/i-drucker.class';
+import { IDrucker } from '../../model/i-drucker.class';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

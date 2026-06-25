@@ -37,7 +37,7 @@
                 <ffgbsy-init-tile
                     title="Gerät"
                     [success]="isDeviceNameSet()"
-                    unsuccesfulFlag="danger"
+                    unsuccesfulFlag="error"
                     routerLink="/settings"
                     [subtitle]="deviceNameForSubtitle()"
                     iconName="phone-portrait-outline"
@@ -45,15 +45,15 @@
                 <ffgbsy-init-tile
                     title="Lookup Daten"
                     [success]="isLookupDataAvailable()"
-                    unsuccesfulFlag="danger"
+                    unsuccesfulFlag="error"
                     routerLink="/systemstatus"
                     [subtitle]="dataLastSyncedForSubtitle()"
                     iconName="cube-outline"
                 ></ffgbsy-init-tile>
                 <ffgbsy-init-tile
                     title="API"
-                    [success]="isApiAvailable()"
-                    unsuccesfulFlag="danger"
+                    [success]="isApiAvailable().isSuccessful()"
+                    unsuccesfulFlag="error"
                     routerLink="/systemstatus"
                     [subtitle]="apiAvailabilityStatusForSubtitle()"
                     iconName="cloud-outline"

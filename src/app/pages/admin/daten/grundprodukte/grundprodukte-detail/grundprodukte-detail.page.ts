@@ -1,5 +1,4 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
-import { IGrundprodukt } from 'src/app/model/i-grundprodukt.class';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -17,14 +16,16 @@ import {
     IonToggle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { GrundprodukteApiService } from '../../../../../data/api/grundprodukte-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { IGrundprodukt } from '../../../../../model/i-grundprodukt.class';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-grundprodukte-detail',
     templateUrl: './grundprodukte-detail.page.html',
     styleUrls: ['./grundprodukte-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonLabel,
         IonList,

@@ -1,15 +1,16 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonContent, IonHeader, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
-import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { IonChip, IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenuButton, IonNote, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { TischkategorienApiService } from '../../../../../data/api/tischkategorien-api.service';
+import { ITischkategorie } from '../../../../../model/i-tischkategorie.interface';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-tischkategorien-list',
     templateUrl: './tischkategorien-list.page.html',
     styleUrls: ['./tischkategorien-list.page.scss'],
-    imports: [IonContent, IonToolbar, IonTitle, IonList, IonHeader, RouterLink, IonMenuButton, PageSpinnerComponent],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonLabel, IonNote, IonChip, IonContent, IonToolbar, IonTitle, IonList, IonHeader, RouterLink, IonItem, IonMenuButton, PageSpinnerComponent],
 })
 export class TischkategorienListPage implements ViewDidEnter {
     private tischkategorienApiService = inject(TischkategorienApiService);

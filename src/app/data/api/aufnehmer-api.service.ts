@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
+import { IAufnehmer } from '../../model/i-aufnehmer.model';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

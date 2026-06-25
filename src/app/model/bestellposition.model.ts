@@ -16,6 +16,7 @@ export class Bestellposition {
     eigenschaften: IEigenschaft[];
     bestellungen_id: number;
     drucker_id: number;
+    summe_ohne_eigenschaften: number;
 
     constructor(produkt: IProdukt) {
         this.produkt = produkt;

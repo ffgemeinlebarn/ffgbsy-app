@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
     IonButton,
@@ -26,6 +26,7 @@ import { Bestellposition } from '../../model/bestellposition.model';
     selector: 'ffgbsy-bestellungsposition-edit-modal',
     templateUrl: './bestellungsposition-edit-modal.component.html',
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonTextarea,
         IonFooter,
@@ -48,7 +49,7 @@ import { Bestellposition } from '../../model/bestellposition.model';
     ],
 })
 export class BestellungspositionEditModalComponent {
-    private modalController = inject(ModalController);
+    private readonly modalController = inject(ModalController);
     @Input() public bestellposition: Bestellposition;
 
     public save() {

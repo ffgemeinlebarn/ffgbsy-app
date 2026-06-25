@@ -1,16 +1,16 @@
-import { Component, computed, ElementRef, inject, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, ElementRef, inject, viewChild } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { map } from 'rxjs';
-import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
-import { EigenschaftenApiService } from 'src/app/data/api/eigenschaften-api.service';
-import { ProdukteApiService } from 'src/app/data/api/produkte-api.service';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-
+import { DruckerApiService } from '../../../data/api/drucker-api.service';
+import { EigenschaftenApiService } from '../../../data/api/eigenschaften-api.service';
+import { ProdukteApiService } from '../../../data/api/produkte-api.service';
+import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
 @Component({
     selector: 'ffgbsy-angebot-uebersicht',
     templateUrl: './angebot-uebersicht.page.html',
     styleUrls: ['./angebot-uebersicht.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [EuroPreisPipe, IonButtons, IonIcon, IonButton, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton],
 })
 export class AngebotUebersichtPage {

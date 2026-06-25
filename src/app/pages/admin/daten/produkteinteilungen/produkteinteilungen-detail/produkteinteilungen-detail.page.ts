@@ -1,4 +1,4 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
@@ -17,16 +17,17 @@ import {
     IonTitle,
     IonToolbar,
 } from '@ionic/angular/standalone';
-import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
-import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { ProdukteinteilungenApiService } from '../../../../../data/api/produkteinteilungen-api.service';
+import { ProduktkategorienApiService } from '../../../../../data/api/produktkategorien-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { IProdukteinteilung } from '../../../../../model/i-produkteinteilung.interface';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkteinteilungen-detail',
     templateUrl: './produkteinteilungen-detail.page.html',
     styleUrls: ['./produkteinteilungen-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonLabel,
         IonList,

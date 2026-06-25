@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
+import { IProduktkategorie } from '../../model/i-produktkategorie.interface';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

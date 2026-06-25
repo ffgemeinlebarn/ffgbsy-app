@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { IBonsFilter } from 'src/app/model/bons-filter.interface';
-import { IBonDruck } from 'src/app/model/i-bon-druck';
-import { IBon } from 'src/app/model/i-bon.model';
+import { Bestellposition } from '../../model/bestellposition.model';
+import { IBonsFilter } from '../../model/bons-filter.interface';
+import { IBonDruck } from '../../model/i-bon-druck';
+import { IBon } from '../../model/i-bon.model';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

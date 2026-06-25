@@ -1,20 +1,21 @@
 import { NgClass } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { IonButton, IonContent, IonFooter, IonIcon, IonItem, IonItemDivider, IonLabel, IonList } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/data/app.service';
-import { DataService } from 'src/app/data/data.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { BestellungKontrolleModalComponent } from 'src/app/feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { IProdukt } from 'src/app/model/i-produkt.interface';
-import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
+import { AppService } from '../../../../data/app.service';
+import { DataService } from '../../../../data/data.service';
+import { FrontendService } from '../../../../data/frontend.service';
+import { BestellungKontrolleModalComponent } from '../../../../feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
+import { EuroPreisPipe } from '../../../../misc/euro-preis.pipe';
+import { Bestellposition } from '../../../../model/bestellposition.model';
+import { IProdukt } from '../../../../model/i-produkt.interface';
+import { IProdukteinteilung } from '../../../../model/i-produkteinteilung.interface';
+import { IProduktkategorie } from '../../../../model/i-produktkategorie.interface';
 
 @Component({
     selector: 'ffgbsy-bestellung-edit',
     templateUrl: './bestellung-edit.component.html',
     styleUrls: ['./bestellung-edit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonItemDivider, IonItem, IonIcon, IonContent, IonFooter, IonButton, IonList, IonItem, IonLabel, IonItemDivider, NgClass, EuroPreisPipe],
 })
 export class BestellungEditComponent {

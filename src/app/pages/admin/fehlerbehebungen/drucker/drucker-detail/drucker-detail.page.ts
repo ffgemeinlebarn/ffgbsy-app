@@ -1,4 +1,4 @@
-import { Component, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
     IonBackButton,
@@ -15,15 +15,16 @@ import {
     IonToolbar,
     ViewDidEnter,
 } from '@ionic/angular/standalone';
-import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { IDrucker } from 'src/app/model/i-drucker.class';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { IDrucker } from '../../../../../model/i-drucker.class';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-drucker-detail',
     templateUrl: './drucker-detail.page.html',
     styleUrls: ['./drucker-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [
         IonBackButton,
         IonButtons,

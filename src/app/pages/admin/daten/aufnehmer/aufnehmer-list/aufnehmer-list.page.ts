@@ -1,16 +1,17 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { IonContent, IonHeader, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
-import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { AufnehmerApiService } from '../../../../../data/api/aufnehmer-api.service';
+import { IAufnehmer } from '../../../../../model/i-aufnehmer.model';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-list',
     templateUrl: './aufnehmer-list.page.html',
     styleUrls: ['./aufnehmer-list.page.scss'],
-    imports: [IonList, IonContent, IonHeader, IonTitle, IonToolbar, IonMenuButton, PageSpinnerComponent, RouterLink, FormsModule],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonLabel, IonList, IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonMenuButton, PageSpinnerComponent, RouterLink, FormsModule],
 })
 export class AufnehmerListPage implements ViewDidEnter {
     private readonly aufnehmerApiService = inject(AufnehmerApiService);

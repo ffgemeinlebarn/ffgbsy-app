@@ -27,13 +27,19 @@
         </ion-item-divider>
         <ion-item>
             <ion-label>
-                <h3>{{ bestellung?.timestamp_begonnen | date: "dd.MM.yyyy" }} um {{ bestellung?.timestamp_begonnen | date: "HH:mm:ss" }} Uhr</h3>
+                <h3>
+                    {{ $safeNavigationMigration(bestellung?.timestamp_begonnen) | date: "dd.MM.yyyy" }} um
+                    {{ $safeNavigationMigration(bestellung?.timestamp_begonnen) | date: "HH:mm:ss" }} Uhr
+                </h3>
                 <p>Timestamp Bestellung begonnen</p>
             </ion-label>
         </ion-item>
         <ion-item>
             <ion-label>
-                <h3>{{ bestellung?.timestamp_beendet | date: "dd.MM.yyyy" }} um {{ bestellung?.timestamp_beendet | date: "HH:mm:ss" }} Uhr</h3>
+                <h3>
+                    {{ $safeNavigationMigration(bestellung?.timestamp_beendet) | date: "dd.MM.yyyy" }} um
+                    {{ $safeNavigationMigration(bestellung?.timestamp_beendet) | date: "HH:mm:ss" }} Uhr
+                </h3>
                 <p>Timestamp Bestellung gesendet</p>
             </ion-label>
         </ion-item>
@@ -70,8 +76,8 @@
                                 <ion-label>
                                     <h3>{{ bestellposition?.produkt?.name }}</h3>
                                     <p>
-                                        ({{ bestellposition?.anzahl }}x {{ bestellposition?.produkt?.preis | euroPreis }} =
-                                        {{ bestellposition?.summe_ohne_eigenschaften | euroPreis }})
+                                        ({{ bestellposition?.anzahl }}x {{ $safeNavigationMigration(bestellposition?.produkt?.preis) | euroPreis }} =
+                                        {{ $safeNavigationMigration(bestellposition?.summe_ohne_eigenschaften) | euroPreis }})
                                     </p>
                                     <p class="eigenschaften">
                                         @for (eigenschaft of bestellposition?.eigenschaften.mit; track eigenschaft) {
@@ -81,7 +87,7 @@
                                             <ion-chip color="secondary" outline>ohne {{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-chip>
                                         }
                                     </p>
-                                    @if (notiz) {
+                                    @if (bestellung?.notiz) {
                                         <p>
                                             Info: <span>{{ bestellung?.notiz }}</span>
                                         </p>
@@ -92,7 +98,7 @@
                     </ion-grid>
                     <ion-note slot="end">
                         <ion-chip color="primary">
-                            {{ bestellposition?.summe | euroPreis }}
+                            {{ $safeNavigationMigration(bestellposition?.summe) | euroPreis }}
                         </ion-chip>
                     </ion-note>
                 </ion-item>
@@ -119,7 +125,8 @@
                             <ion-label>
                                 <h3>{{ bestellposition?.produkt?.name }}</h3>
                                 <p>
-                                    ({{ bestellposition?.anzahl }}x {{ bestellposition?.produkt?.preis | euroPreis }} = {{ bestellposition?.summe_ohne_eigenschaften | euroPreis }})
+                                    ({{ bestellposition?.anzahl }}x {{ $safeNavigationMigration(bestellposition?.produkt?.preis) | euroPreis }} =
+                                    {{ $safeNavigationMigration(bestellposition?.summe_ohne_eigenschaften) | euroPreis }})
                                 </p>
                                 <p class="eigenschaften">
                                     @for (eigenschaft of bestellposition?.eigenschaften.mit; track eigenschaft) {
@@ -129,7 +136,7 @@
                                         <ion-chip color="secondary" outline>ohne {{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-chip>
                                     }
                                 </p>
-                                @if (notiz) {
+                                @if (bestellung?.notiz) {
                                     <p>
                                         Info: <span>{{ bestellung?.notiz }}</span>
                                     </p>
@@ -140,14 +147,14 @@
                 </ion-grid>
                 <ion-note slot="end">
                     <ion-chip color="primary">
-                        {{ bestellposition?.summe | euroPreis }}
+                        {{ $safeNavigationMigration(bestellposition?.summe) | euroPreis }}
                     </ion-chip>
                 </ion-note>
             </ion-item>
         }
         <ion-item color="primary">
             <ion-label>
-                <h3 class="bestellung-summe">{{ bestellung?.summe | euroPreis }}</h3>
+                <h3 class="bestellung-summe">{{ $safeNavigationMigration(bestellung?.summe) | euroPreis }}</h3>
                 <p>Summe</p>
             </ion-label>
         </ion-item>
