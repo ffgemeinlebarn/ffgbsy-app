@@ -19,7 +19,7 @@ export class GrundprodukteDetailPage {
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
-    public id = input.required<number>();
+    public id = input.required<GrundproduktId>();
     public showBestand = signal(true);
 
     public grundprodukt = signal<GrundproduktDto>(null);
@@ -35,7 +35,7 @@ export class GrundprodukteDetailPage {
         this.form.controls['unlimitiert'].valueChanges.subscribe((isUnlimitiert) => this.showBestand.set(!isUnlimitiert));
     }
 
-    private load(id: number) {
+    private load(id: GrundproduktId) {
         this.grundprodukteApiService.read(id).subscribe((grundprodukt: GrundproduktDto) => {
             this.grundprodukt.set(grundprodukt);
             this.showBestand.set(grundprodukt.bestand != null);

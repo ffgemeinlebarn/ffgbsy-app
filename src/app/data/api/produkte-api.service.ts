@@ -19,7 +19,7 @@ export class ProdukteApiService {
         return this.http.get<ProduktDto[]>(`${this.settings.apiBaseUrl()}/produkte`);
     }
 
-    public read(id: number) {
+    public read(id: ProduktId) {
         return this.http.get<ProduktDto>(`${this.settings.apiBaseUrl()}/produkte/${id}`);
     }
 
@@ -27,7 +27,7 @@ export class ProdukteApiService {
         return this.http.put<ProduktDto>(`${this.settings.apiBaseUrl()}/produkte/${produkte.id}`, produkte);
     }
 
-    public delete(id: number) {
+    public delete(id: ProduktId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/produkte/${id}`);
     }
 }

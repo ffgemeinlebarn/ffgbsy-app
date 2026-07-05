@@ -21,7 +21,7 @@ export class ProdukteinteilungenDetailPage {
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
-    public id = input.required<number>();
+    public id = input.required<ProdukteinteilungId>();
 
     public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
     public produkteinteilung = signal<ProdukteinteilungDto>(null);
@@ -36,7 +36,7 @@ export class ProdukteinteilungenDetailPage {
         effect(() => this.load(this.id()));
     }
 
-    private load(id: number) {
+    private load(id: ProdukteinteilungId) {
         this.produkteinteilungenApiService.read(id).subscribe((produkteinteilung: ProdukteinteilungDto) => {
             this.produkteinteilung.set(produkteinteilung);
             this.form.patchValue(produkteinteilung);

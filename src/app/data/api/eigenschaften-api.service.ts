@@ -19,7 +19,7 @@ export class EigenschaftenApiService {
         return this.http.get<EigenschaftDto[]>(`${this.settings.apiBaseUrl()}/eigenschaften`);
     }
 
-    public read(id: number) {
+    public read(id: EigenschaftId) {
         return this.http.get<EigenschaftDto>(`${this.settings.apiBaseUrl()}/eigenschaften/${id}`);
     }
 
@@ -27,7 +27,7 @@ export class EigenschaftenApiService {
         return this.http.put<EigenschaftDto>(`${this.settings.apiBaseUrl()}/eigenschaften/${eigenschaft.id}`, eigenschaft);
     }
 
-    public delete(id: number) {
+    public delete(id: EigenschaftId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/eigenschaften/${id}`);
     }
 }

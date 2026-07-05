@@ -47,7 +47,7 @@ export class TischeDetailPage implements OnInit {
         this.activatedRoute.params
             .pipe(
                 map((p: Params) => Number(p['id']) ?? null),
-                map((n) => (Number.isNaN(n) ? null : n)),
+                map((n) => (Number.isNaN(n) ? null : (n as TischId))),
                 mergeMap((id) => this.tischeApiService.read(id)),
                 tap((t) => {
                     console.debug('[FFGBSY]', 'Selected Tisch =>', t);

@@ -6,7 +6,7 @@ export interface BonDto {
     id: BonId;
     bestellungen_id: BestellungId;
     type: 'bestellung' | 'storno';
-    drucker_id: number;
+    drucker_id: DruckerId;
     drucker: DruckerDto | null;
     bestellung: BestellungDto | null;
     drucke: BonDruckDto[];

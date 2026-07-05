@@ -19,7 +19,7 @@ export class DruckerApiService {
         return this.http.get<DruckerDto[]>(`${this.settings.apiBaseUrl()}/drucker`);
     }
 
-    public read(id: number) {
+    public read(id: DruckerId) {
         return this.http.get<DruckerDto>(`${this.settings.apiBaseUrl()}/drucker/${id}`);
     }
 
@@ -27,7 +27,7 @@ export class DruckerApiService {
         return this.http.put<DruckerDto>(`${this.settings.apiBaseUrl()}/drucker/${drucker.id}`, drucker);
     }
 
-    public delete(id: number) {
+    public delete(id: DruckerId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/drucker/${id}`);
     }
 }

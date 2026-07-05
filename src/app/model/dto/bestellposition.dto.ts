@@ -6,7 +6,7 @@ export interface BestellpositionDto {
     anzahl: number;
     produkte_id: ProduktId;
     notiz: string;
-    drucker_id: number;
+    drucker_id: DruckerId;
     eigenschaften: {
         mit: EigenschaftDto[];
         ohne: EigenschaftDto[];

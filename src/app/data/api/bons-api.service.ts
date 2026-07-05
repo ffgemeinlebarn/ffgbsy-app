@@ -43,15 +43,15 @@ export class BonsApiService {
         return this.http.get<BonDto[]>(`${this.settings.apiBaseUrl()}/bons`, { params });
     }
 
-    public druckBonsOfBestellungById(id: number): Observable<BonDruckDto[]> {
+    public druckBonsOfBestellungById(id: BestellungId): Observable<BonDruckDto[]> {
         return this.http.post<BonDruckDto[]>(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null);
     }
 
-    public druckBonsByIds(ids: number[]): Observable<BonDruckDto[]> {
+    public druckBonsByIds(ids: BonId[]): Observable<BonDruckDto[]> {
         return this.http.post<BonDruckDto[]>(`${this.settings.apiBaseUrl()}/print/bons`, ids);
     }
 
-    public druckBonById(id: number): Observable<BonDruckDto> {
+    public druckBonById(id: BonId): Observable<BonDruckDto> {
         return this.http.post<BonDruckDto>(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null);
     }
 }

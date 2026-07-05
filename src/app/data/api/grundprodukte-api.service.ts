@@ -19,7 +19,7 @@ export class GrundprodukteApiService {
         return this.http.get<GrundproduktDto[]>(`${this.settings.apiBaseUrl()}/grundprodukte`);
     }
 
-    public read(id: number) {
+    public read(id: GrundproduktId) {
         return this.http.get<GrundproduktDto>(`${this.settings.apiBaseUrl()}/grundprodukte/${id}`);
     }
 
@@ -27,7 +27,7 @@ export class GrundprodukteApiService {
         return this.http.put<GrundproduktDto>(`${this.settings.apiBaseUrl()}/grundprodukte/${grundprodukt.id}`, grundprodukt);
     }
 
-    public delete(id: number) {
+    public delete(id: GrundproduktId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/grundprodukte/${id}`);
     }
 }

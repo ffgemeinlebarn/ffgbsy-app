@@ -18,7 +18,7 @@ export class DruckerDetailPage implements ViewDidEnter {
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
-    public id = input.required<number>();
+    public id = input.required<DruckerId>();
     public drucker = signal<DruckerDto>(null);
 
     public form: FormGroup = this.formBuilder.group({
@@ -27,7 +27,7 @@ export class DruckerDetailPage implements ViewDidEnter {
         port: [9100, [Validators.required]],
     });
 
-    private load(id: number) {
+    private load(id: DruckerId) {
         this.druckerApiService.read(id).subscribe((drucker: DruckerDto) => {
             this.drucker.set(drucker);
             this.form.patchValue(drucker);

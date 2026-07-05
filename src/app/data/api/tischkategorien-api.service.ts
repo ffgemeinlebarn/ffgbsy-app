@@ -23,7 +23,7 @@ export class TischkategorienApiService {
         return this.http.get<TischkategorieDto[]>(`${this.settings.apiBaseUrl()}/tischkategorien`, { params: { nested: true } });
     }
 
-    public read(id: number, nested = false) {
+    public read(id: TischkategorieId, nested = false) {
         return this.http.get<TischkategorieDto>(`${this.settings.apiBaseUrl()}/tischkategorien/${id}`, { params: nested ? { nested: true } : undefined });
     }
 
@@ -31,7 +31,7 @@ export class TischkategorienApiService {
         return this.http.put<TischkategorieDto>(`${this.settings.apiBaseUrl()}/tischkategorien/${tischkategorien.id}`, tischkategorien);
     }
 
-    public delete(id: number) {
+    public delete(id: TischkategorieId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/tischkategorien/${id}`);
     }
 }

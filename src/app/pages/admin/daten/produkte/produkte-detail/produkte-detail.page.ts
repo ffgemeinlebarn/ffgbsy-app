@@ -68,7 +68,7 @@ export class ProdukteDetailPage implements OnInit {
         this.activatedRoute.params
             .pipe(
                 map((p: Params) => Number(p['id']) ?? null),
-                map((n) => (Number.isNaN(n) ? null : n)),
+                map((n) => (Number.isNaN(n) ? null : (n as ProduktId))),
                 mergeMap((id) => {
                     if (id) {
                         return this.produkteApiService.read(id);

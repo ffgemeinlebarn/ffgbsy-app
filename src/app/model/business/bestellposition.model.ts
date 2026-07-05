@@ -14,7 +14,7 @@ export class Bestellposition {
         },
     };
     eigenschaften: EigenschaftDto[];
-    drucker_id: number;
+    drucker_id: DruckerId;
 
     bestellungen_id: BestellungId;
     drucker_id_level_0: DruckerId | null;

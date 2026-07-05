@@ -21,7 +21,7 @@ export class TischkategorienDetailPage {
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
-    public id = input.required<number>();
+    public id = input.required<TischkategorieId>();
 
     public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
     public tischkategorie = signal<TischkategorieDto>(null);

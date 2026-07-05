@@ -19,7 +19,7 @@ export class ProdukteinteilungenApiService {
         return this.http.get<ProdukteinteilungDto[]>(`${this.settings.apiBaseUrl()}/produkteinteilungen`);
     }
 
-    public read(id: number) {
+    public read(id: ProdukteinteilungId) {
         return this.http.get<ProdukteinteilungDto>(`${this.settings.apiBaseUrl()}/produkteinteilungen/${id}`);
     }
 
@@ -27,7 +27,7 @@ export class ProdukteinteilungenApiService {
         return this.http.put<ProdukteinteilungDto>(`${this.settings.apiBaseUrl()}/produkteinteilungen/${produkteinteilungen.id}`, produkteinteilungen);
     }
 
-    public delete(id: number) {
+    public delete(id: ProdukteinteilungId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/produkteinteilungen/${id}`);
     }
 }
