@@ -6,7 +6,6 @@ export interface BestellpositionDto {
     anzahl: number;
     produkte_id: ProduktId;
     notiz: string;
-    summe_ohne_eigenschaften: number;
     drucker_id: number;
     eigenschaften: {
         mit: EigenschaftDto[];
@@ -19,6 +18,7 @@ export interface BestellpositionDto {
     drucker_id_level_2: DruckerId | null;
 
     summe: number;
+    summe_ohne_eigenschaften: number;
     summe_eigenschaften: number;
     calc_correction: number;
 

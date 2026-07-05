@@ -104,7 +104,7 @@ export class AppService {
 
     public sendBestellung() {
         this.bestellungenApiService
-            .create(this.bestellung().toBestellungDto())
+            .create(this.bestellung().toDto())
             .pipe(catchError((e) => this.handleCreateBestellungError(e)))
             .subscribe((bestellung: BestellungDto) => {
                 if (bestellung) {

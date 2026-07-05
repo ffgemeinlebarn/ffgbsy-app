@@ -1,6 +1,5 @@
 import { parseZone } from 'moment';
 import { AufnehmerDto } from '../dto/aufnehmer.dto';
-import { BestellpositionDto } from '../dto/bestellposition.dto';
 import { BestellungDto } from '../dto/bestellung.dto';
 import { BonDto } from '../dto/bon.dto';
 import { TischDto } from '../dto/tisch.dto';
@@ -52,7 +51,7 @@ export class Bestellung {
         return summe;
     }
 
-    public toBestellungDto(): BestellungDto {
+    public toDto(): BestellungDto {
         return {
             id: this.id,
             tische_id: this.tisch.id,
@@ -62,22 +61,8 @@ export class Bestellung {
             device_name: this.device_name,
             device_ip: this.device_ip,
             summe: this.summe,
-            bestellpositionen: this.bestellpositionen.map(
-                (bp) =>
-                    ({
-                        id: bp.id,
-                        anzahl: bp.anzahl,
-                        produkte_id: bp.produkt.id,
-                        notiz: bp.notiz,
-                        summe_ohne_eigenschaften: bp.summe_ohne_eigenschaften,
-                        drucker_id: bp.drucker_id,
-                        eigenschaften: {
-                            mit: bp.eigenschaften,
-                            ohne: bp.eigenschaften,
-                        },
-                    }) as BestellpositionDto,
-            ),
-            stornopositionen: [],
+            bestellpositionen: this.bestellpositionen.map((bp) => bp.toDto()),
+            stornopositionen: this.stornopositionen.map((bp) => bp.toDto()),
             aufnehmer: this.aufnehmer,
             tisch: this.tisch,
             bestellbons: this.bestellbons,

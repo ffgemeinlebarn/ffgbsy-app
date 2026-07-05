@@ -52,7 +52,7 @@ export class BestellungKontrolleModalComponent implements ViewDidEnter {
     ionViewDidEnter(): void {
         this.availabilityCheckSuccess.set(null);
         this.availabilityCheckItems.set([]);
-        this.bestellungenApiService.checkAvailability(this.app.bestellung().toBestellungDto()).subscribe((result) => {
+        this.bestellungenApiService.checkAvailability(this.app.bestellung().toDto()).subscribe((result) => {
             this.availabilityCheckSuccess.set(result.success);
             this.availabilityCheckItems.set(result.checks.filter((check) => !check.success));
         });
