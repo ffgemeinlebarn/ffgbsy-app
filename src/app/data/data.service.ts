@@ -3,13 +3,13 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { DataLoadedReportModalComponent } from '../feature/data-loaded-report-modal/data-loaded-report-modal.component';
 import { AufnehmerDto } from '../model/dto/aufnehmer.dto';
+import { TischDto } from '../model/dto/tisch.dto';
+import { TischkategorieDto } from '../model/dto/tischkategorie.dto';
 import { IDaten } from '../model/i-daten.interface';
 import { IProdukt } from '../model/i-produkt.interface';
 import { IProduktbereich } from '../model/i-produktbereich.interface';
 import { IProdukteinteilung } from '../model/i-produkteinteilung.interface';
 import { IProduktkategorie } from '../model/i-produktkategorie.interface';
-import { ITisch } from '../model/i-tisch.interface';
-import { ITischkategorie } from '../model/i-tischkategorie.interface';
 import { SettingsService } from './settings.service';
 
 @Injectable({
@@ -25,8 +25,8 @@ export class DataService {
     public produktkategorien = signal<IProduktkategorie[]>([]);
     public produkteinteilungen = signal<IProdukteinteilung[]>([]);
     public produkte = signal<IProdukt[]>([]);
-    public tischkategorien = signal<ITischkategorie[]>([]);
-    public tische = signal<ITisch[]>([]);
+    public tischkategorien = signal<TischkategorieDto[]>([]);
+    public tische = signal<TischDto[]>([]);
 
     public lookupDataSetted = computed(() => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische());
 

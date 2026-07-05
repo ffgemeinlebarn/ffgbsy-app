@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { IonChip, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonNote, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { TischkategorienApiService } from '../../../../../data/api/tischkategorien-api.service';
-import { ITischkategorie } from '../../../../../model/i-tischkategorie.interface';
+import { TischkategorieDto } from '../../../../../model/dto/tischkategorie.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
 export class TischeListPage implements ViewDidEnter {
     private readonly tischkategorienApiService = inject(TischkategorienApiService);
 
-    public readonly tischkategorienMitTischen = signal<ITischkategorie[]>([]);
+    public readonly tischkategorienMitTischen = signal<TischkategorieDto[]>([]);
 
     ionViewDidEnter(): void {
         this.tischkategorienMitTischen.set([]);

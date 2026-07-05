@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonButton, IonButtons, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { AppService } from '../../../data/app.service';
 import { FrontendService } from '../../../data/frontend.service';
-import { ITisch } from '../../../model/i-tisch.interface';
+import { TischDto } from '../../../model/dto/tisch.dto';
 import { AufnehmerAuswahlComponent } from './aufnehmer-auswahl/aufnehmer-auswahl.component';
 import { BestellungEditComponent } from './bestellung-edit/bestellung-edit.component';
 import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
@@ -25,7 +25,7 @@ export class NeueBestellungPage {
      *** Tischauswahl
      *******************************************************************************/
 
-    selectTisch(tisch: ITisch) {
+    selectTisch(tisch: TischDto) {
         this.bestellung.update((bestellung) => {
             if (bestellung.tisch == null) {
                 bestellung.setTimestampBegonnen();
@@ -43,8 +43,6 @@ export class NeueBestellungPage {
      *******************************************************************************/
 
     async askForCancelBestellung() {
-        await this.frontend
-            .showJaNeinAlert('Abbruch der Bestellung', 'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.')
-            .then((_) => this.app.cancelBestellung());
+        await this.frontend.showJaNeinAlert('Abbruch der Bestellung', 'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.').then((_) => this.app.cancelBestellung());
     }
 }

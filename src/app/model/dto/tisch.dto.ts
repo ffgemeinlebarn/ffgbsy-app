@@ -1,4 +1,4 @@
-export interface ITisch {
+export interface TischDto {
     id: number;
     reihe: any;
     nummer: number;

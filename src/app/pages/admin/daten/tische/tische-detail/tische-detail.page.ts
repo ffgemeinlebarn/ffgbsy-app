@@ -2,28 +2,12 @@ import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } fr
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { map, mergeMap, tap } from 'rxjs';
 import { TischeApiService } from '../../../../../data/api/tische-api.service';
 import { TischkategorienApiService } from '../../../../../data/api/tischkategorien-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
-import { ITisch } from '../../../../../model/i-tisch.interface';
+import { TischDto } from '../../../../../model/dto/tisch.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -31,26 +15,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
     templateUrl: './tische-detail.page.html',
     styleUrls: ['./tische-detail.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        IonLabel,
-        IonItem,
-        IonList,
-        IonIcon,
-        IonButtons,
-        IonTitle,
-        IonBackButton,
-        IonToolbar,
-        IonHeader,
-        IonContent,
-        IonButton,
-        IonInput,
-        IonSelect,
-        IonSelectOption,
-        FormsModule,
-        PageSpinnerComponent,
-        ReactiveFormsModule,
-        IonToggle,
-    ],
+    imports: [IonLabel, IonItem, IonList, IonIcon, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonContent, IonButton, IonInput, IonSelect, IonSelectOption, FormsModule, PageSpinnerComponent, ReactiveFormsModule, IonToggle],
 })
 export class TischeDetailPage implements OnInit {
     private readonly frontendService = inject(FrontendService);
@@ -59,7 +24,7 @@ export class TischeDetailPage implements OnInit {
     private readonly formBuilder = inject(FormBuilder);
     private readonly activatedRoute = inject(ActivatedRoute);
 
-    public readonly tisch = signal<ITisch | null>(null);
+    public readonly tisch = signal<TischDto | null>(null);
     public readonly tischkategorien = toSignal(this.tischkategorienApiService.readAll());
 
     public form: FormGroup = this.formBuilder.group({

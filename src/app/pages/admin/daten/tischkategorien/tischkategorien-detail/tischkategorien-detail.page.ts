@@ -1,25 +1,11 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { ProduktkategorienApiService } from '../../../../../data/api/produktkategorien-api.service';
 import { TischkategorienApiService } from '../../../../../data/api/tischkategorien-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
-import { ITischkategorie } from '../../../../../model/i-tischkategorie.interface';
+import { TischkategorieDto } from '../../../../../model/dto/tischkategorie.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -27,24 +13,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
     templateUrl: './tischkategorien-detail.page.html',
     styleUrls: ['./tischkategorien-detail.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        IonLabel,
-        IonList,
-        IonItem,
-        IonContent,
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonTitle,
-        IonBackButton,
-        IonToolbar,
-        IonHeader,
-        IonToggle,
-        IonInput,
-        FormsModule,
-        ReactiveFormsModule,
-        PageSpinnerComponent,
-    ],
+    imports: [IonLabel, IonList, IonItem, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonToggle, IonInput, FormsModule, ReactiveFormsModule, PageSpinnerComponent],
 })
 export class TischkategorienDetailPage {
     private tischkategorienApiService = inject(TischkategorienApiService);
@@ -55,7 +24,7 @@ export class TischkategorienDetailPage {
     public id = input.required<number>();
 
     public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
-    public tischkategorie = signal<ITischkategorie>(null);
+    public tischkategorie = signal<TischkategorieDto>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -64,10 +33,10 @@ export class TischkategorienDetailPage {
     });
 
     constructor() {
-        effect(() => this.tischkategorienApiService.read(this.id()).subscribe((tischkategorie: ITischkategorie) => this.setEntity(tischkategorie)));
+        effect(() => this.tischkategorienApiService.read(this.id()).subscribe((tischkategorie: TischkategorieDto) => this.setEntity(tischkategorie)));
     }
 
-    private setEntity(tischkategorie: ITischkategorie) {
+    private setEntity(tischkategorie: TischkategorieDto) {
         this.tischkategorie.set(tischkategorie);
         this.form.patchValue(tischkategorie);
     }

@@ -2,8 +2,8 @@ import { NgClass } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, effect, inject, output, signal } from '@angular/core';
 import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
 import { DataService } from '../../../../data/data.service';
-import { ITisch } from '../../../../model/i-tisch.interface';
-import { ITischkategorie } from '../../../../model/i-tischkategorie.interface';
+import { TischDto } from '../../../../model/dto/tisch.dto';
+import { TischkategorieDto } from '../../../../model/dto/tischkategorie.dto';
 
 @Component({
     selector: 'app-tisch-auswahl',
@@ -14,12 +14,12 @@ import { ITischkategorie } from '../../../../model/i-tischkategorie.interface';
 })
 export class TischAuswahlComponent {
     private data = inject(DataService);
-    public onTischSelected = output<ITisch>();
+    public onTischSelected = output<TischDto>();
 
     public tischkategorien = this.data.tischkategorien;
     public filtredTischkategorienToDisplay = computed(() => this.tischkategorien()?.filter((tischkategorie) => tischkategorie.aktiv) ?? []);
-    public selectedTischkategorie = signal<ITischkategorie | null>(null);
-    public filtredTischeToDisplay = signal<ITisch[]>([]);
+    public selectedTischkategorie = signal<TischkategorieDto | null>(null);
+    public filtredTischeToDisplay = signal<TischDto[]>([]);
 
     constructor() {
         effect(() => {
@@ -31,11 +31,11 @@ export class TischAuswahlComponent {
         });
     }
 
-    public selectTischkategorie(tischkategorie: ITischkategorie) {
+    public selectTischkategorie(tischkategorie: TischkategorieDto) {
         this.selectedTischkategorie.set(tischkategorie);
     }
 
-    public selectTisch(tisch: ITisch) {
+    public selectTisch(tisch: TischDto) {
         this.onTischSelected.emit(tisch);
     }
 }
