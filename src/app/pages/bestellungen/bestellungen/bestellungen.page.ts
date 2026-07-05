@@ -3,57 +3,21 @@ import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/cor
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import {
-    IonContent,
-    IonFooter,
-    IonHeader,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonMenuButton,
-    IonNote,
-    IonRippleEffect,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToolbar,
-    ViewDidEnter,
-} from '@ionic/angular/standalone';
+import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonNote, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { AufnehmerApiService } from '../../../data/api/aufnehmer-api.service';
 import { BestellungenApiService } from '../../../data/api/bestellungen-api.service';
 import { TischeApiService } from '../../../data/api/tische-api.service';
 import { AppService } from '../../../data/app.service';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
-import { Bestellung } from '../../../model/bestellung.model';
-import { IBestellungenFilter } from '../../../model/i-bestellungen-filter.interface';
+import { Bestellung } from '../../../model/business/bestellung.model';
+import { IBestellungenFilter } from '../../../model/interfaces/i-bestellungen-filter.interface';
 
 @Component({
     selector: 'ffgbsy-bestellungen',
     templateUrl: './bestellungen.page.html',
     styleUrls: ['./bestellungen.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        IonNote,
-        DatePipe,
-        EuroPreisPipe,
-        FormsModule,
-        IonContent,
-        IonFooter,
-        IonHeader,
-        IonIcon,
-        IonItem,
-        IonLabel,
-        IonList,
-        IonMenuButton,
-        IonRippleEffect,
-        IonSelect,
-        IonSelectOption,
-        IonTitle,
-        IonToolbar,
-        ReactiveFormsModule,
-        RouterLink,
-    ],
+    imports: [IonNote, DatePipe, EuroPreisPipe, FormsModule, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar, ReactiveFormsModule, RouterLink],
 })
 export class BestellungenPage implements ViewDidEnter {
     private readonly bestellungenApiService = inject(BestellungenApiService);

@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Bestellposition } from '../../model/bestellposition.model';
-import { Bestellung } from '../../model/bestellung.model';
-import { IBestellungenFilter } from '../../model/i-bestellungen-filter.interface';
+import { BestellpositionDto } from '../../model/dto/bestellposition.dto';
+import { BestellungDto } from '../../model/dto/bestellung.dto';
+import { IBestellungenFilter } from '../../model/interfaces/i-bestellungen-filter.interface';
 import { SettingsService } from '../settings.service';
 
 @Injectable({
@@ -12,24 +12,24 @@ export class BestellungenApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
 
-    public checkAvailability(bestellung: Bestellung) {
+    public checkAvailability(bestellung: BestellungDto) {
         return this.http.post<any>(`${this.settings.apiBaseUrl()}/bestellungen/availability`, bestellung);
     }
 
-    public create(bestellung: Bestellung) {
-        return this.http.post<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellung);
+    public create(bestellung: BestellungDto) {
+        return this.http.post<BestellungDto>(`${this.settings.apiBaseUrl()}/bestellungen`, bestellung);
     }
 
-    public createStornoBestellposition(bestellposition: Bestellposition, anzahl: number) {
-        return this.http.post<Bestellposition>(`${this.settings.apiBaseUrl()}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl });
+    public createStornoBestellposition(bestellposition: BestellpositionDto, anzahl: number) {
+        return this.http.post<BestellpositionDto>(`${this.settings.apiBaseUrl()}/bestellungen/${bestellposition.bestellungen_id}/bestellpositionen/${bestellposition.id}`, { anzahl });
     }
 
     public readAll() {
-        return this.http.get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`);
+        return this.http.get<BestellungDto[]>(`${this.settings.apiBaseUrl()}/bestellungen`);
     }
 
-    public read(id: number) {
-        return this.http.get<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`);
+    public read(id: BestellungId) {
+        return this.http.get<BestellungDto>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`);
     }
 
     public search(filter: IBestellungenFilter) {
@@ -44,16 +44,16 @@ export class BestellungenApiService {
 
         params = params.append('limit', filter.limit);
 
-        return this.http.get<Bestellung[]>(`${this.settings.apiBaseUrl()}/bestellungen`, {
+        return this.http.get<BestellungDto[]>(`${this.settings.apiBaseUrl()}/bestellungen`, {
             params,
         });
     }
 
-    public update(bestellungen: Bestellung) {
-        return this.http.put<Bestellung>(`${this.settings.apiBaseUrl()}/bestellungen/${bestellungen.id}`, bestellungen);
+    public update(bestellungen: BestellungDto) {
+        return this.http.put<BestellungDto>(`${this.settings.apiBaseUrl()}/bestellungen/${bestellungen.id}`, bestellungen);
     }
 
-    public delete(id: number) {
+    public delete(id: BestellungId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/bestellungen/${id}`);
     }
 }

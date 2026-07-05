@@ -11,7 +11,7 @@
             <div class="bestellpositionen">
                 <ion-list>
                     @for (bp of bestellung().bestellpositionen.slice().reverse(); track $index) {
-                        <ion-item button (click)="editBestellungsposition(bp, $index)" (keypress)="editBestellungsposition(bp, $index)">
+                        <ion-item button (click)="editBestellungsposition(bp)" (keypress)="editBestellungsposition(bp)">
                             <ion-label text-wrap>
                                 <h3>
                                     <strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}
@@ -42,12 +42,7 @@
                                 <h2>{{ produkt?.name }}</h2>
                                 <p>{{ $safeNavigationMigration(produkt?.preis) | euroPreis }}</p>
                             </ion-label>
-                            <ion-button
-                                slot="end"
-                                shape="round"
-                                (click)="addBestellposition(produkt, 'new_line', $event)"
-                                (keypress)="addBestellposition(produkt, 'new_line', $event)"
-                            >
+                            <ion-button slot="end" shape="round" (click)="addBestellposition(produkt, 'new_line', $event)" (keypress)="addBestellposition(produkt, 'new_line', $event)">
                                 <ion-icon name="git-pull-request" slot="icon-only"></ion-icon>
                             </ion-button>
                         </ion-item>
@@ -66,14 +61,7 @@
                 <span class="summe__betrag">{{ bestellung().calcSumme() | euroPreis: { symbol: false, zerotext: false } }}</span>
             </div>
             <div class="submit">
-                <ion-button
-                    size="large"
-                    expand="block"
-                    color="success"
-                    (click)="kontrolliereBestellung()"
-                    (keypress)="kontrolliereBestellung()"
-                    [disabled]="bestellung().bestellpositionen.length == 0"
-                >
+                <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" (keypress)="kontrolliereBestellung()" [disabled]="bestellung().bestellpositionen.length == 0">
                     <ion-label>Abschluss </ion-label>
                     <ion-icon slot="start" name="checkmark-circle"></ion-icon>
                 </ion-button>
@@ -84,13 +72,7 @@
                 @for (produktkategorie of produktkategorien(); track produktkategorie.id) {
                     <div class="kachel produktkategorie-kachel">
                         <div class="kachel__inner" [ngClass]="produktkategorie.color">
-                            <ion-button
-                                text-wrap
-                                text-normal
-                                expand="full"
-                                (click)="selectProduktkategorie(produktkategorie)"
-                                (keypress)="selectProduktkategorie(produktkategorie)"
-                            >
+                            <ion-button text-wrap text-normal expand="full" (click)="selectProduktkategorie(produktkategorie)" (keypress)="selectProduktkategorie(produktkategorie)">
                                 <span class="button-inner">{{ produktkategorie.name }}</span>
                             </ion-button>
                         </div>

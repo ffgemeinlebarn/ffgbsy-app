@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { IonIcon, IonItem, IonLabel } from '@ionic/angular/standalone';
-import { CheckStatus } from '../../model/check-status.type';
+import { CheckStatus } from '../../model/types/check-status.type';
 
 @Component({
     selector: 'ffgbsy-status-list-item',

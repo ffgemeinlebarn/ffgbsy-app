@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenuButton, IonNote, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
-import { IDrucker } from '../../../../../model/i-drucker.class';
+import { DruckerDto } from '../../../../../model/dto/drucker.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
 export class DruckerListPage implements ViewDidEnter {
     private druckerApiService = inject(DruckerApiService);
 
-    public drucker = signal<IDrucker[]>(null);
+    public drucker = signal<DruckerDto[]>(null);
 
     ionViewDidEnter(): void {
         this.druckerApiService.readAll().subscribe((items) => this.drucker.set(items));

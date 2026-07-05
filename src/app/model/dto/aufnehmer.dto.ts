@@ -1,5 +1,5 @@
 export interface AufnehmerDto {
-    id: number;
+    id: AufnehmerId;
     vorname: string;
     nachname: string;
     aktiv: boolean;

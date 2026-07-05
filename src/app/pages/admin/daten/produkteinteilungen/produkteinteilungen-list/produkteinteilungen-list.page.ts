@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { ProdukteinteilungenApiService } from '../../../../../data/api/produkteinteilungen-api.service';
-import { IProdukteinteilung } from '../../../../../model/i-produkteinteilung.interface';
+import { ProdukteinteilungDto } from '../../../../../model/dto/produkteinteilung.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
 export class ProdukteinteilungenListPage implements ViewDidEnter {
     private produkteinteilungenApiService = inject(ProdukteinteilungenApiService);
 
-    public produkteinteilungen = signal<IProdukteinteilung[]>(null);
+    public produkteinteilungen = signal<ProdukteinteilungDto[]>(null);
 
     ionViewDidEnter(): void {
         this.produkteinteilungen.set(null);

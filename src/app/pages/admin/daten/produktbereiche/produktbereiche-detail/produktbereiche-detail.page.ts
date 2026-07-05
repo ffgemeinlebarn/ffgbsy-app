@@ -2,27 +2,12 @@ import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } fr
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { map, mergeMap, tap } from 'rxjs';
 import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
 import { ProduktbereicheApiService } from '../../../../../data/api/produktbereiche-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
-import { IProduktbereich } from '../../../../../model/i-produktbereich.interface';
+import { ProduktDtobereich } from '../../../../../model/i-produktbereich.interface';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -30,25 +15,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
     templateUrl: './produktbereiche-detail.page.html',
     styleUrls: ['./produktbereiche-detail.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        IonLabel,
-        IonList,
-        IonItem,
-        IonContent,
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonTitle,
-        IonBackButton,
-        IonToolbar,
-        IonHeader,
-        IonInput,
-        IonSelect,
-        IonSelectOption,
-        FormsModule,
-        ReactiveFormsModule,
-        PageSpinnerComponent,
-    ],
+    imports: [IonLabel, IonList, IonItem, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonInput, IonSelect, IonSelectOption, FormsModule, ReactiveFormsModule, PageSpinnerComponent],
 })
 export class ProduktbereicheDetailPage implements OnInit {
     private readonly produktbereicheApiService = inject(ProduktbereicheApiService);
@@ -59,7 +26,7 @@ export class ProduktbereicheDetailPage implements OnInit {
 
     public readonly drucker = toSignal(this.druckerApiService.readAll());
 
-    public readonly produktbereich = signal<IProduktbereich | null>(null);
+    public readonly produktbereich = signal<ProduktDtobereich | null>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],

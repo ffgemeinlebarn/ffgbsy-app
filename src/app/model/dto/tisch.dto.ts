@@ -1,8 +1,8 @@
 export interface TischDto {
-    id: number;
+    id: TischId;
     reihe: string;
     nummer: number;
-    tischkategorien_id: number;
+    tischkategorien_id: TischkategorieId;
     aktiv: boolean;
     sortierIndex: number;
 }

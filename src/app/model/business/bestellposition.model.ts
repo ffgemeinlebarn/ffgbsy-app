@@ -1,10 +1,10 @@
-import { IEigenschaft } from './i-eigenschaft.interface';
-import { IProdukt } from './i-produkt.interface';
+import { EigenschaftDto } from '../dto/eigenschaft.dto';
+import { ProduktDto } from '../dto/produkt.dto';
 
 export class Bestellposition {
-    id: number = null;
+    id: BestellpositionId = null;
     anzahl: number = 0;
-    produkt: IProdukt;
+    produkt: ProduktDto;
     notiz: string = '';
     display: any = {
         eigenschaften: {
@@ -12,13 +12,12 @@ export class Bestellposition {
             ohne: [],
         },
     };
-    calc_correction: any = 0.0;
-    eigenschaften: IEigenschaft[];
-    bestellungen_id: number;
+    calc_correction: number = 0;
+    eigenschaften: EigenschaftDto[];
     drucker_id: number;
     summe_ohne_eigenschaften: number;
 
-    constructor(produkt: IProdukt) {
+    constructor(produkt: ProduktDto) {
         this.produkt = produkt;
         this.anzahl = 1;
         this.notiz = '';
@@ -29,6 +28,6 @@ export class Bestellposition {
             },
         };
 
-        this.eigenschaften = JSON.parse(JSON.stringify(this.produkt.eigenschaften));
+        this.eigenschaften = structuredClone(this.produkt.eigenschaften);
     }
 }

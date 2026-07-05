@@ -19,7 +19,7 @@ export class AufnehmerApiService {
         return this.http.get<AufnehmerDto[]>(`${this.settings.apiBaseUrl()}/aufnehmer`);
     }
 
-    public read(id: number) {
+    public read(id: AufnehmerId) {
         return this.http.get<AufnehmerDto>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`);
     }
 
@@ -27,7 +27,7 @@ export class AufnehmerApiService {
         return this.http.put<AufnehmerDto>(`${this.settings.apiBaseUrl()}/aufnehmer/${aufnehmer.id}`, aufnehmer);
     }
 
-    public delete(id: number) {
+    public delete(id: AufnehmerId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`);
     }
 }

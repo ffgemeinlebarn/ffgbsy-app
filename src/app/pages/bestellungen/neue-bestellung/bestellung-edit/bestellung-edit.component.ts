@@ -7,9 +7,8 @@ import { FrontendService } from '../../../../data/frontend.service';
 import { BestellungKontrolleModalComponent } from '../../../../feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { EuroPreisPipe } from '../../../../misc/euro-preis.pipe';
 import { Bestellposition } from '../../../../model/bestellposition.model';
-import { IProdukt } from '../../../../model/i-produkt.interface';
-import { IProdukteinteilung } from '../../../../model/i-produkteinteilung.interface';
-import { IProduktkategorie } from '../../../../model/i-produktkategorie.interface';
+import { ProduktDto } from '../../../../model/dto/produkt.dto';
+import { ProdukteinteilungDto } from '../../../../model/dto/produkteinteilung.dto';
 
 @Component({
     selector: 'ffgbsy-bestellung-edit',
@@ -27,8 +26,8 @@ export class BestellungEditComponent {
     public readonly aufnehmer = this.app.aufnehmer;
     public readonly produktkategorien = this.data.produktkategorien;
 
-    public readonly selectedProduktkategorie = signal<IProduktkategorie | null>(null);
-    public readonly filtredProdukteinteilungenToDisplay = signal<IProdukteinteilung[]>([]);
+    public readonly selectedProduktkategorie = signal<ProduktDto | null>(null);
+    public readonly filtredProdukteinteilungenToDisplay = signal<ProdukteinteilungDto[]>([]);
 
     constructor() {
         effect(() => {
@@ -36,9 +35,7 @@ export class BestellungEditComponent {
                 this.selectProduktkategorie(this.produktkategorien()[0]);
             }
 
-            this.filtredProdukteinteilungenToDisplay.set(
-                this.data.produktkategorien().find((produktkategorie) => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? [],
-            );
+            this.filtredProdukteinteilungenToDisplay.set(this.data.produktkategorien().find((produktkategorie) => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? []);
         });
     }
 
@@ -53,11 +50,11 @@ export class BestellungEditComponent {
      *** Aufnahme der Bestellpositionen
      *******************************************************************************/
 
-    selectProduktkategorie(produktkategorie: IProduktkategorie) {
+    selectProduktkategorie(produktkategorie: ProduktDto) {
         this.selectedProduktkategorie.set(produktkategorie);
     }
 
-    addBestellposition(produkt: IProdukt, form: string, event: any) {
+    addBestellposition(produkt: ProduktDto, form: string, event: any) {
         // Verhindert dass ein Extra-Einfügen eine doppeltes Clicken des wrapper-Elements darunter verursacht
         event.stopPropagation();
 

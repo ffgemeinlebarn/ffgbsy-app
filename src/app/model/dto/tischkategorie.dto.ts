@@ -1,7 +1,7 @@
 import { TischDto } from './tisch.dto';
 
 export interface TischkategorieDto {
-    id: number;
+    id: TischkategorieId;
     name: string;
     sortierIndex: number;
     aktiv: boolean;

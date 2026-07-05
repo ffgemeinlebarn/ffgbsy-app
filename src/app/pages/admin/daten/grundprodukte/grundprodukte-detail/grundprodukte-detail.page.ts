@@ -1,24 +1,10 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { GrundprodukteApiService } from '../../../../../data/api/grundprodukte-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
-import { IGrundprodukt } from '../../../../../model/i-grundprodukt.class';
+import { GrundproduktDto } from '../../../../../model/dto/grundprodukt.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -26,24 +12,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
     templateUrl: './grundprodukte-detail.page.html',
     styleUrls: ['./grundprodukte-detail.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        IonLabel,
-        IonList,
-        IonItem,
-        IonContent,
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonTitle,
-        IonBackButton,
-        IonToolbar,
-        IonHeader,
-        IonToggle,
-        IonInput,
-        FormsModule,
-        ReactiveFormsModule,
-        PageSpinnerComponent,
-    ],
+    imports: [IonLabel, IonList, IonItem, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonToggle, IonInput, FormsModule, ReactiveFormsModule, PageSpinnerComponent],
 })
 export class GrundprodukteDetailPage {
     private grundprodukteApiService = inject(GrundprodukteApiService);
@@ -53,7 +22,7 @@ export class GrundprodukteDetailPage {
     public id = input.required<number>();
     public showBestand = signal(true);
 
-    public grundprodukt = signal<IGrundprodukt>(null);
+    public grundprodukt = signal<GrundproduktDto>(null);
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
         unlimitiert: [true, [Validators.required]],
@@ -67,7 +36,7 @@ export class GrundprodukteDetailPage {
     }
 
     private load(id: number) {
-        this.grundprodukteApiService.read(id).subscribe((grundprodukt: IGrundprodukt) => {
+        this.grundprodukteApiService.read(id).subscribe((grundprodukt: GrundproduktDto) => {
             this.grundprodukt.set(grundprodukt);
             this.showBestand.set(grundprodukt.bestand != null);
             this.form.patchValue({

@@ -1,13 +1,14 @@
-import { Injectable, computed, effect, inject, signal } from '@angular/core';
+import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
-import { from, tap } from 'rxjs';
+import { catchError, from, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { DataService } from '../data/data.service';
 import { BestellungspositionEditModalComponent } from '../feature/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
 import { SelectAufnehmerModalComponent } from '../feature/select-aufnehmer-modal/select-aufnehmer-modal.component';
-import { Bestellposition } from '../model/bestellposition.model';
-import { Bestellung } from '../model/bestellung.model';
+import { Bestellposition } from '../model/business/bestellposition.model';
+import { Bestellung } from '../model/business/bestellung.model';
 import { AufnehmerDto } from '../model/dto/aufnehmer.dto';
+import { BestellungDto } from '../model/dto/bestellung.dto';
 import { BestellungenApiService } from './api/bestellungen-api.service';
 import { BonsApiService } from './api/bons-api.service';
 import { AvailabilityService } from './availability.service';
@@ -18,12 +19,12 @@ import { SettingsService } from './settings.service';
     providedIn: 'root',
 })
 export class AppService {
-    private settings = inject(SettingsService);
-    private frontend = inject(FrontendService);
-    private data = inject(DataService);
-    private bonsApiService = inject(BonsApiService);
-    private availability = inject(AvailabilityService);
-    private modalController = inject(ModalController);
+    private readonly settings = inject(SettingsService);
+    private readonly frontend = inject(FrontendService);
+    private readonly data = inject(DataService);
+    private readonly bonsApiService = inject(BonsApiService);
+    private readonly availability = inject(AvailabilityService);
+    private readonly modalController = inject(ModalController);
     private readonly bestellungenApiService = inject(BestellungenApiService);
 
     // State Management
@@ -33,8 +34,7 @@ export class AppService {
     public readonly isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
     public readonly bonDebug = computed(() => this.settings.local().bonDebugMenu);
 
-    // Current Bestellung
-    public readonly bestellung = signal<Bestellung>(null);
+    public readonly bestellung = signal<Bestellung>(null); // Current Bestellung
 
     constructor() {
         effect(() => {
@@ -103,34 +103,42 @@ export class AppService {
     }
 
     public sendBestellung() {
-        this.bestellungenApiService.create(this.bestellung()).subscribe({
-            next: (bestellung) => {
-                this.frontend.showToast('Bestellung erfolgreich angelegt!', 2000);
-                this.bestellung.set(null);
+        this.bestellungenApiService
+            .create(this.bestellung().toBestellungDto())
+            .pipe(catchError((e) => this.handleCreateBestellungError(e)))
+            .subscribe((bestellung: BestellungDto) => {
+                if (bestellung) {
+                    this.frontend.showToast('Bestellung erfolgreich angelegt!', 2000);
+                    this.bestellung.set(null);
 
-                this.bonsApiService.druckBonsOfBestellungById(bestellung.id).subscribe({
-                    next: (bons) => {
-                        if (bons.filter((b) => !b.success).length == 0) {
-                            this.frontend.showToast('Alle Bons wurden erfolgreich gedruckt!', 2000);
-                        } else {
-                            this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten nicht alle Bons gedruckt werden!\n\nWeitere Details unter dem Menüpunkt "Bestellungen".');
-                        }
-                    },
-                    error: (error) => {
-                        this.frontend.showOkAlert('Fehler beim Drucken der Bons', error.message);
-                    },
-                });
-            },
-            error: (errrorResponse) => {
-                if (errrorResponse.status == 400 && errrorResponse.error.error.description == 'AvailabilityCheck' && !errrorResponse.error.error.success) {
-                    const moreThanOne = errrorResponse.error.error.data.checks.length > 1;
-                    const messages = errrorResponse.error.error.data.checks.map((check, i) => (moreThanOne ? `${i + 1}) ${check.message}` : check.message)).join(' ');
-
-                    this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', messages);
-                } else {
-                    this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', errrorResponse.error.error.description);
+                    this.bonsApiService.druckBonsOfBestellungById(bestellung.id).subscribe({
+                        next: (bons) => {
+                            if (bons.filter((b) => !b.success).length == 0) {
+                                this.frontend.showToast('Alle Bons wurden erfolgreich gedruckt!', 2000);
+                            } else {
+                                this.frontend.showOkAlert('Fehler beim Drucken', 'Es konnten nicht alle Bons gedruckt werden!\n\nWeitere Details unter dem Menüpunkt "Bestellungen".');
+                            }
+                        },
+                        error: (error) => {
+                            this.frontend.showOkAlert('Fehler beim Drucken der Bons', error.message);
+                        },
+                    });
                 }
-            },
-        });
+            });
     }
+
+    private handleCreateBestellungError: (errorResponse: any) => Observable<any> = (errorResponse: any) => {
+        const err = errorResponse.error.error;
+
+        if (errorResponse.status == 400 && err.description == 'AvailabilityCheck' && !err.success) {
+            const moreThanOne = err.data.checks.length > 1;
+            const messages = err.data.checks.map((check, i) => (moreThanOne ? `${i + 1}) ${check.message}` : check.message)).join(' ');
+
+            this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', messages);
+        } else {
+            this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', err.description);
+        }
+
+        return of(false);
+    };
 }

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IProdukt } from '../../model/i-produkt.interface';
+import { ProduktDto } from '../../model/dto/produkt.dto';
 import { SettingsService } from '../settings.service';
 
 @Injectable({
@@ -11,20 +11,20 @@ export class ProdukteApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
 
-    public create(produkte: IProdukt) {
-        return this.http.post<IProdukt>(`${this.settings.apiBaseUrl()}/produkte`, produkte);
+    public create(produkte: ProduktDto) {
+        return this.http.post<ProduktDto>(`${this.settings.apiBaseUrl()}/produkte`, produkte);
     }
 
-    public readAll(): Observable<IProdukt[]> {
-        return this.http.get<IProdukt[]>(`${this.settings.apiBaseUrl()}/produkte`);
+    public readAll(): Observable<ProduktDto[]> {
+        return this.http.get<ProduktDto[]>(`${this.settings.apiBaseUrl()}/produkte`);
     }
 
     public read(id: number) {
-        return this.http.get<IProdukt>(`${this.settings.apiBaseUrl()}/produkte/${id}`);
+        return this.http.get<ProduktDto>(`${this.settings.apiBaseUrl()}/produkte/${id}`);
     }
 
-    public update(produkte: IProdukt) {
-        return this.http.put<IProdukt>(`${this.settings.apiBaseUrl()}/produkte/${produkte.id}`, produkte);
+    public update(produkte: ProduktDto) {
+        return this.http.put<ProduktDto>(`${this.settings.apiBaseUrl()}/produkte/${produkte.id}`, produkte);
     }
 
     public delete(id: number) {

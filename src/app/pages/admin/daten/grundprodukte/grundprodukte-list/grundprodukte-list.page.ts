@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { IonChip, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { GrundprodukteApiService } from '../../../../../data/api/grundprodukte-api.service';
-import { IGrundprodukt } from '../../../../../model/i-grundprodukt.class';
+import { GrundproduktDto } from '../../../../../model/dto/grundprodukt.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
 export class GrundprodukteListPage implements ViewDidEnter {
     private grundprodukteApiService = inject(GrundprodukteApiService);
 
-    public grundprodukte = signal<IGrundprodukt[]>(null);
+    public grundprodukte = signal<GrundproduktDto[]>(null);
 
     ionViewDidEnter(): void {
         this.grundprodukte.set(null);
