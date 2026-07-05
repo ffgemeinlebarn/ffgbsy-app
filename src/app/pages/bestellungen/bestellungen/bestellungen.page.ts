@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -9,7 +9,7 @@ import { BestellungenApiService } from '../../../data/api/bestellungen-api.servi
 import { TischeApiService } from '../../../data/api/tische-api.service';
 import { AppService } from '../../../data/app.service';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
-import { Bestellung } from '../../../model/business/bestellung.model';
+import { BestellungDto } from '../../../model/dto/bestellung.dto';
 import { IBestellungenFilter } from '../../../model/interfaces/i-bestellungen-filter.interface';
 
 @Component({
@@ -22,12 +22,12 @@ import { IBestellungenFilter } from '../../../model/interfaces/i-bestellungen-fi
 export class BestellungenPage implements ViewDidEnter {
     private readonly bestellungenApiService = inject(BestellungenApiService);
     private readonly aufnehmerApiService = inject(AufnehmerApiService);
-    private tischeApiService = inject(TischeApiService);
-    private appService = inject(AppService);
-    private formBuilder = inject(FormBuilder);
+    private readonly tischeApiService = inject(TischeApiService);
+    private readonly appService = inject(AppService);
+    private readonly formBuilder = inject(FormBuilder);
 
     public scannerEnabled: boolean = false;
-    public bestellungen: Array<Bestellung>;
+    public bestellungen = signal<BestellungDto[]>([]);
 
     public filter = this.formBuilder.group({
         aufnehmerId: new FormControl<null | number>(null),
@@ -48,8 +48,11 @@ export class BestellungenPage implements ViewDidEnter {
     }
 
     public searchBestellungen() {
-        return this.bestellungenApiService.search(this.filter.value as IBestellungenFilter).subscribe((bestellungen) => (this.bestellungen = bestellungen));
+        return this.bestellungenApiService.search(this.filter.value as IBestellungenFilter).subscribe((bestellungen) => {
+            this.bestellungen.set(bestellungen);
+        });
     }
+
     ionViewDidEnter(): void {
         this.searchBestellungen();
     }

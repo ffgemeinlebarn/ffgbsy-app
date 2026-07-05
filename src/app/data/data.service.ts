@@ -4,10 +4,11 @@ import { ModalController } from '@ionic/angular/standalone';
 import { DataLoadedReportModalComponent } from '../feature/data-loaded-report-modal/data-loaded-report-modal.component';
 import { AufnehmerDto } from '../model/dto/aufnehmer.dto';
 import { ProduktDto } from '../model/dto/produkt.dto';
+import { ProduktbereichDto } from '../model/dto/produktbereich.dto';
 import { ProdukteinteilungDto } from '../model/dto/produkteinteilung.dto';
+import { ProduktkategorieDto } from '../model/dto/produktkategorie.dto';
 import { TischDto } from '../model/dto/tisch.dto';
 import { TischkategorieDto } from '../model/dto/tischkategorie.dto';
-import { ProduktDtobereich } from '../model/i-produktbereich.interface';
 import { IDaten } from '../model/interfaces/i-daten.interface';
 import { SettingsService } from './settings.service';
 
@@ -20,8 +21,8 @@ export class DataService {
     private settings = inject(SettingsService);
 
     public aufnehmer = signal<AufnehmerDto[]>([]);
-    public produktbereiche = signal<ProduktDtobereich[]>([]);
-    public produktkategorien = signal<ProduktDto[]>([]);
+    public produktbereiche = signal<ProduktbereichDto[]>([]);
+    public produktkategorien = signal<ProduktkategorieDto[]>([]);
     public produkteinteilungen = signal<ProdukteinteilungDto[]>([]);
     public produkte = signal<ProduktDto[]>([]);
     public tischkategorien = signal<TischkategorieDto[]>([]);

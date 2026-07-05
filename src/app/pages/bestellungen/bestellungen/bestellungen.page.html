@@ -14,19 +14,16 @@
     </div>
 </ion-content>
 
-@if (bestellungen) {
+@if (bestellungen().length) {
     <ion-content>
         <ion-list lines="full">
-            @for (bestellung of bestellungen; track bestellung) {
+            @for (bestellung of bestellungen(); track bestellung) {
                 <ion-item [routerLink]="['/bestellungen', bestellung.id]">
                     <ion-label>
                         <h2>{{ bestellung?.tisch?.reihe }} {{ bestellung?.tisch?.nummer }}</h2>
                         <p>
                             Datum:
-                            <strong
-                                >{{ $safeNavigationMigration(bestellung?.timestamp_beendet) | date: "dd.MM.yyyy" }} um
-                                {{ $safeNavigationMigration(bestellung?.timestamp_beendet) | date: "HH:mm:ss" }} Uhr</strong
-                            >
+                            <strong>{{ $safeNavigationMigration(bestellung?.timestamp_beendet) | date: "dd.MM.yyyy" }} um {{ $safeNavigationMigration(bestellung?.timestamp_beendet) | date: "HH:mm:ss" }} Uhr</strong>
                         </p>
                         <p>
                             Summe: <strong>{{ $safeNavigationMigration(bestellung?.summe) | euroPreis }}</strong>

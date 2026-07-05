@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { ProduktkategorienApiService } from '../../../../../data/api/produktkategorien-api.service';
-import { ProduktDto } from '../../../../../model/dto/produktkategorie.dto';
+import { ProduktkategorieDto } from '../../../../../model/dto/produktkategorie.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -15,7 +15,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
 export class ProduktkategorienListPage implements ViewDidEnter {
     private produktkategorienApiService = inject(ProduktkategorienApiService);
 
-    public produktkategorien = signal<ProduktDto[]>(null);
+    public produktkategorien = signal<ProduktkategorieDto[]>(null);
 
     ionViewDidEnter(): void {
         this.produktkategorien.set(null);

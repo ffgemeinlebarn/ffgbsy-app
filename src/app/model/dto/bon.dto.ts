@@ -5,6 +5,7 @@ import { DruckerDto } from './drucker.dto';
 export interface BonDto {
     id: BonId;
     bestellungen_id: BestellungId;
+    type: 'bestellung' | 'storno';
     drucker_id: number;
     drucker: DruckerDto | null;
     bestellung: BestellungDto | null;

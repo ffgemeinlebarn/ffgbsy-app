@@ -10,7 +10,7 @@ import { FrontendService } from '../../../../../data/frontend.service';
 import { SelectEigenschaftModalComponent } from '../../../../../feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
 import { EuroPreisPipe } from '../../../../../misc/euro-preis.pipe';
 import { EigenschaftDto } from '../../../../../model/dto/eigenschaft.dto';
-import { ProduktDto } from '../../../../../model/dto/produktkategorie.dto';
+import { ProduktkategorieDto } from '../../../../../model/dto/produktkategorie.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -29,11 +29,11 @@ export class ProduktkategorienDetailPage {
     private modalController = inject(ModalController);
     private alertController = inject(AlertController);
 
-    public id = input.required<number>();
+    public id = input.required<ProduktkategorieId>();
 
     public drucker = toSignal(this.druckerApiService.readAll());
     public produktbereiche = toSignal(this.produktbereicheApiService.readAll());
-    public produktkategorie = signal<ProduktDto>(null);
+    public produktkategorie = signal<ProduktkategorieDto>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -45,10 +45,10 @@ export class ProduktkategorienDetailPage {
     });
 
     constructor() {
-        effect(() => this.produktkategorienApiService.read(this.id()).subscribe((produktkategorie: ProduktDto) => this.setEntity(produktkategorie)));
+        effect(() => this.produktkategorienApiService.read(this.id()).subscribe((produktkategorie: ProduktkategorieDto) => this.setEntity(produktkategorie)));
     }
 
-    private setEntity(produktkategorie: ProduktDto) {
+    private setEntity(produktkategorie: ProduktkategorieDto) {
         this.produktkategorie.set(produktkategorie);
         this.form.patchValue(produktkategorie);
     }

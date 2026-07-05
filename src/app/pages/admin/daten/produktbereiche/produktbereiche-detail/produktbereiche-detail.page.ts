@@ -7,7 +7,7 @@ import { map, mergeMap, tap } from 'rxjs';
 import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
 import { ProduktbereicheApiService } from '../../../../../data/api/produktbereiche-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
-import { ProduktDtobereich } from '../../../../../model/i-produktbereich.interface';
+import { ProduktbereichDto } from '../../../../../model/dto/produktbereich.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -26,7 +26,7 @@ export class ProduktbereicheDetailPage implements OnInit {
 
     public readonly drucker = toSignal(this.druckerApiService.readAll());
 
-    public readonly produktbereich = signal<ProduktDtobereich | null>(null);
+    public readonly produktbereich = signal<ProduktbereichDto | null>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -46,7 +46,7 @@ export class ProduktbereicheDetailPage implements OnInit {
         this.activatedRoute.params
             .pipe(
                 map((p: Params) => Number(p['id']) ?? null),
-                map((n) => (Number.isNaN(n) ? null : n)),
+                map((n) => (Number.isNaN(n) ? null : (n as ProduktbereichId))),
                 mergeMap((id) => this.produktbereicheApiService.read(id)),
                 tap((p) => {
                     console.debug('[FFGBSY]', 'Selected Produktbereich =>', p);

@@ -6,9 +6,10 @@ import { DataService } from '../../../../data/data.service';
 import { FrontendService } from '../../../../data/frontend.service';
 import { BestellungKontrolleModalComponent } from '../../../../feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
 import { EuroPreisPipe } from '../../../../misc/euro-preis.pipe';
-import { Bestellposition } from '../../../../model/bestellposition.model';
+import { Bestellposition } from '../../../../model/business/bestellposition.model';
 import { ProduktDto } from '../../../../model/dto/produkt.dto';
 import { ProdukteinteilungDto } from '../../../../model/dto/produkteinteilung.dto';
+import { ProduktkategorieDto } from '../../../../model/dto/produktkategorie.dto';
 
 @Component({
     selector: 'ffgbsy-bestellung-edit',
@@ -26,7 +27,7 @@ export class BestellungEditComponent {
     public readonly aufnehmer = this.app.aufnehmer;
     public readonly produktkategorien = this.data.produktkategorien;
 
-    public readonly selectedProduktkategorie = signal<ProduktDto | null>(null);
+    public readonly selectedProduktkategorie = signal<ProduktkategorieDto | null>(null);
     public readonly filtredProdukteinteilungenToDisplay = signal<ProdukteinteilungDto[]>([]);
 
     constructor() {
@@ -35,7 +36,7 @@ export class BestellungEditComponent {
                 this.selectProduktkategorie(this.produktkategorien()[0]);
             }
 
-            this.filtredProdukteinteilungenToDisplay.set(this.data.produktkategorien().find((produktkategorie) => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? []);
+            this.filtredProdukteinteilungenToDisplay.set(this.data.produktkategorien().find((p) => p.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? []);
         });
     }
 
@@ -50,7 +51,7 @@ export class BestellungEditComponent {
      *** Aufnahme der Bestellpositionen
      *******************************************************************************/
 
-    selectProduktkategorie(produktkategorie: ProduktDto) {
+    selectProduktkategorie(produktkategorie: ProduktkategorieDto) {
         this.selectedProduktkategorie.set(produktkategorie);
     }
 

@@ -1,6 +1,7 @@
 import { DruckerDto } from './drucker.dto';
 import { EigenschaftDto } from './eigenschaft.dto';
 import { GrundproduktDto } from './grundprodukt.dto';
+import { ProdukteinteilungDto } from './produkteinteilung.dto';
 
 export interface ProduktDto {
     id: ProduktId;
@@ -22,5 +23,5 @@ export interface ProduktDto {
     grundprodukt: GrundproduktDto | null;
     eigenschaften: EigenschaftDto[];
 
-    // produkteinteilung: ProdukteinteilungMitKategorie;
+    produkteinteilung: ProdukteinteilungDto; //ProdukteinteilungMitKategorie;
 }

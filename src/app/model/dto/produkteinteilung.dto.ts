@@ -1,11 +1,11 @@
-import { ProduktDto } from './i-produkt.interface';
+import { ProduktDto } from './produkt.dto';
 import { ProduktkategorieDto } from './produktkategorie.dto';
 
 export interface ProdukteinteilungDto {
-    id: number;
+    id: ProdukteinteilungId;
     name: string;
     produkte: ProduktDto[];
-    sortierindex: number;
-    produktkategorien_id: number;
+    sortierIndex: number;
+    produktkategorien_id: ProduktkategorieId;
     produktkategorie?: ProduktkategorieDto;
 }

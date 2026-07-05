@@ -14,10 +14,10 @@ import { AufnehmerDto } from '../../../../../model/dto/aufnehmer.dto';
 })
 export class AufnehmerDetailPage {
     private readonly aufnehmerApiService = inject(AufnehmerApiService);
-    private frontendService = inject(FrontendService);
-    private formBuilder = inject(FormBuilder);
+    private readonly frontendService = inject(FrontendService);
+    private readonly formBuilder = inject(FormBuilder);
 
-    public id = input.required<number>();
+    public id = input.required<AufnehmerId>();
     public aufnehmer = signal<AufnehmerDto>(null);
 
     public form = this.formBuilder.group({
@@ -31,7 +31,7 @@ export class AufnehmerDetailPage {
         effect(() => this.load(this.id()));
     }
 
-    public load(id: number) {
+    public load(id: AufnehmerId) {
         this.aufnehmerApiService.read(id).subscribe((aufnehmer) => {
             this.aufnehmer.set(aufnehmer);
             this.form.patchValue(aufnehmer);

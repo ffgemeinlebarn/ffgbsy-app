@@ -77,7 +77,7 @@ export class Bestellung {
                         },
                     }) as BestellpositionDto,
             ),
-            stornopositionen: this.stornopositionen,
+            stornopositionen: [],
             aufnehmer: this.aufnehmer,
             tisch: this.tisch,
             bestellbons: this.bestellbons,

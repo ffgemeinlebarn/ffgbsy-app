@@ -1,52 +1,15 @@
 import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-    IonButton,
-    IonCheckbox,
-    IonCol,
-    IonContent,
-    IonFooter,
-    IonGrid,
-    IonHeader,
-    IonIcon,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonListHeader,
-    IonRow,
-    IonTextarea,
-    IonTitle,
-    IonToolbar,
-    ModalController,
-} from '@ionic/angular/standalone';
+import { IonButton, IonCheckbox, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonRow, IonTextarea, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { EuroPreisPipe } from '../../misc/euro-preis.pipe';
-import { Bestellposition } from '../../model/bestellposition.model';
+import { Bestellposition } from '../../model/business/bestellposition.model';
 
 @Component({
     selector: 'ffgbsy-bestellungsposition-edit-modal',
     templateUrl: './bestellungsposition-edit-modal.component.html',
     styleUrls: ['./bestellungsposition-edit-modal.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        IonTextarea,
-        IonFooter,
-        IonItem,
-        IonLabel,
-        IonList,
-        IonListHeader,
-        IonIcon,
-        IonButton,
-        IonGrid,
-        IonRow,
-        IonContent,
-        IonTitle,
-        IonToolbar,
-        IonCol,
-        IonHeader,
-        FormsModule,
-        EuroPreisPipe,
-        IonCheckbox,
-    ],
+    imports: [IonTextarea, IonFooter, IonItem, IonLabel, IonList, IonListHeader, IonIcon, IonButton, IonGrid, IonRow, IonContent, IonTitle, IonToolbar, IonCol, IonHeader, FormsModule, EuroPreisPipe, IonCheckbox],
 })
 export class BestellungspositionEditModalComponent {
     private readonly modalController = inject(ModalController);
