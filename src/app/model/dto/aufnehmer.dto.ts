@@ -1,4 +1,4 @@
-export interface IAufnehmer {
+export interface AufnehmerDto {
     id: number;
     vorname: string;
     nachname: string;

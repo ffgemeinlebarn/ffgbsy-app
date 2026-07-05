@@ -7,7 +7,7 @@ import { BestellungspositionEditModalComponent } from '../feature/bestellungspos
 import { SelectAufnehmerModalComponent } from '../feature/select-aufnehmer-modal/select-aufnehmer-modal.component';
 import { Bestellposition } from '../model/bestellposition.model';
 import { Bestellung } from '../model/bestellung.model';
-import { IAufnehmer } from '../model/i-aufnehmer.model';
+import { AufnehmerDto } from '../model/dto/aufnehmer.dto';
 import { BestellungenApiService } from './api/bestellungen-api.service';
 import { BonsApiService } from './api/bons-api.service';
 import { AvailabilityService } from './availability.service';
@@ -27,10 +27,8 @@ export class AppService {
     private readonly bestellungenApiService = inject(BestellungenApiService);
 
     // State Management
-    public readonly readyToGo = computed<boolean>(
-        () => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility(),
-    );
-    public readonly aufnehmer = signal<IAufnehmer | null>(null);
+    public readonly readyToGo = computed<boolean>(() => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility());
+    public readonly aufnehmer = signal<AufnehmerDto | null>(null);
     public readonly deviceName = computed<string>(() => this.settings.local().deviceName);
     public readonly isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
     public readonly bonDebug = computed(() => this.settings.local().bonDebugMenu);
@@ -76,7 +74,7 @@ export class AppService {
         this.aufnehmer.set(null);
     }
 
-    public selectAufnehmer(aufnehmer: IAufnehmer) {
+    public selectAufnehmer(aufnehmer: AufnehmerDto) {
         this.aufnehmer.set(aufnehmer);
         this.settings.saveLocal(
             {

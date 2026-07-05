@@ -1,4 +1,4 @@
-import { IAufnehmer } from './i-aufnehmer.model';
+import { AufnehmerDto } from './dto/aufnehmer.dto';
 import { IProdukt } from './i-produkt.interface';
 import { IProduktbereich } from './i-produktbereich.interface';
 import { IProdukteinteilung } from './i-produkteinteilung.interface';
@@ -7,7 +7,7 @@ import { ITisch } from './i-tisch.interface';
 import { ITischkategorie } from './i-tischkategorie.interface';
 
 export interface IDaten {
-    aufnehmer: IAufnehmer[];
+    aufnehmer: AufnehmerDto[];
     produktbereiche: Array<IProduktbereich>;
     produktkategorien: Array<IProduktkategorie>;
     produkteinteilungen: Array<IProdukteinteilung>;

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { DataLoadedReportModalComponent } from '../feature/data-loaded-report-modal/data-loaded-report-modal.component';
-import { IAufnehmer } from '../model/i-aufnehmer.model';
+import { AufnehmerDto } from '../model/dto/aufnehmer.dto';
 import { IDaten } from '../model/i-daten.interface';
 import { IProdukt } from '../model/i-produkt.interface';
 import { IProduktbereich } from '../model/i-produktbereich.interface';
@@ -20,7 +20,7 @@ export class DataService {
     private http = inject(HttpClient);
     private settings = inject(SettingsService);
 
-    public aufnehmer = signal<IAufnehmer[]>([]);
+    public aufnehmer = signal<AufnehmerDto[]>([]);
     public produktbereiche = signal<IProduktbereich[]>([]);
     public produktkategorien = signal<IProduktkategorie[]>([]);
     public produkteinteilungen = signal<IProdukteinteilung[]>([]);
@@ -28,9 +28,7 @@ export class DataService {
     public tischkategorien = signal<ITischkategorie[]>([]);
     public tische = signal<ITisch[]>([]);
 
-    public lookupDataSetted = computed(
-        () => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische(),
-    );
+    public lookupDataSetted = computed(() => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische());
 
     constructor() {
         this.load();

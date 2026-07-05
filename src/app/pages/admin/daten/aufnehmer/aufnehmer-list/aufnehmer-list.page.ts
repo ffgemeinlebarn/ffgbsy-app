@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonHeader, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { AufnehmerApiService } from '../../../../../data/api/aufnehmer-api.service';
-import { IAufnehmer } from '../../../../../model/i-aufnehmer.model';
+import { AufnehmerDto } from '../../../../../model/dto/aufnehmer.dto';
 import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
@@ -16,7 +16,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
 export class AufnehmerListPage implements ViewDidEnter {
     private readonly aufnehmerApiService = inject(AufnehmerApiService);
 
-    public aufnehmerFullList = signal<IAufnehmer[]>(null);
+    public aufnehmerFullList = signal<AufnehmerDto[]>(null);
     public aufnehmerActive = computed(() => this.aufnehmerFullList()?.filter((a) => a.aktiv) ?? []);
     public aufnehmerInactive = computed(() => this.aufnehmerFullList()?.filter((a) => !a.aktiv) ?? []);
 

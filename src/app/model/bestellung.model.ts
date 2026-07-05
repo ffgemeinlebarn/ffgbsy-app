@@ -1,14 +1,14 @@
 import { parseZone } from 'moment';
 import { Bestellstatus } from '../model/bestellstatus.type';
 import { Bestellposition } from './bestellposition.model';
-import { IAufnehmer } from './i-aufnehmer.model';
+import { AufnehmerDto } from './dto/aufnehmer.dto';
 import { IBon } from './i-bon.model';
 import { ITisch } from './i-tisch.interface';
 
 export class Bestellung {
     public id: number | null = null;
     public tisch: ITisch | null = null;
-    public aufnehmer: IAufnehmer | null = null;
+    public aufnehmer: AufnehmerDto | null = null;
     public device_name: string | null = null;
     public device_ip: string | null = null;
 
@@ -24,7 +24,7 @@ export class Bestellung {
     public summe: number | null = null;
     public summe_ohne_eigenschaften: number | null = null;
 
-    constructor(tisch?: ITisch, aufnehmer?: IAufnehmer) {
+    constructor(tisch?: ITisch, aufnehmer?: AufnehmerDto) {
         this.id = null;
 
         this.setTimestampBegonnen();

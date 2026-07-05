@@ -1,50 +1,16 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { AufnehmerApiService } from '../../../../../data/api/aufnehmer-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
-import { IAufnehmer } from '../../../../../model/i-aufnehmer.model';
+import { AufnehmerDto } from '../../../../../model/dto/aufnehmer.dto';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-detail',
     templateUrl: './aufnehmer-detail.page.html',
     styleUrls: ['./aufnehmer-detail.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        IonBackButton,
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonItem,
-        IonLabel,
-        IonList,
-        IonContent,
-        IonHeader,
-        IonTitle,
-        IonToolbar,
-        IonSelect,
-        IonSelectOption,
-        IonToggle,
-        IonInput,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
+    imports: [IonBackButton, IonIcon, IonButton, IonButtons, IonItem, IonLabel, IonList, IonContent, IonHeader, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonToggle, IonInput, FormsModule, ReactiveFormsModule],
 })
 export class AufnehmerDetailPage {
     private readonly aufnehmerApiService = inject(AufnehmerApiService);
@@ -52,7 +18,7 @@ export class AufnehmerDetailPage {
     private formBuilder = inject(FormBuilder);
 
     public id = input.required<number>();
-    public aufnehmer = signal<IAufnehmer>(null);
+    public aufnehmer = signal<AufnehmerDto>(null);
 
     public form = this.formBuilder.group({
         vorname: ['', [Validators.required, Validators.minLength(1)]],
