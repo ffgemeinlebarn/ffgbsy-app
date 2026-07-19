@@ -1,21 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-    IonButton,
-    IonButtons,
-    IonChip,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonMenuButton,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../data/app.service';
 import { SettingsService } from '../../data/settings.service';
@@ -25,24 +10,7 @@ import { SettingsService } from '../../data/settings.service';
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [
-        IonChip,
-        IonList,
-        IonHeader,
-        IonToolbar,
-        IonTitle,
-        IonButtons,
-        IonButton,
-        IonMenuButton,
-        IonContent,
-        IonLabel,
-        IonItem,
-        IonIcon,
-        IonToggle,
-        IonInput,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
+    imports: [IonChip, IonList, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonMenuButton, IonContent, IonLabel, IonItem, IonIcon, IonToggle, IonInput, FormsModule, ReactiveFormsModule],
 })
 export class SettingsPage {
     private readonly settings = inject(SettingsService);

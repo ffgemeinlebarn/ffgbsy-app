@@ -19,19 +19,11 @@ export class InitPage {
 
     public readonly version = version;
 
-    public readonly aufnehmerNameForSubtitle = computed(() =>
-        this.appService.aufnehmer() ? `${this.appService.aufnehmer()?.vorname} ${this.appService.aufnehmer()?.nachname}` : 'nicht ausgewählt',
-    );
+    public readonly aufnehmerNameForSubtitle = computed(() => (this.appService.aufnehmer() ? `${this.appService.aufnehmer()?.vorname} ${this.appService.aufnehmer()?.nachname}` : 'nicht ausgewählt'));
     public readonly deviceNameForSubtitle = computed(() => (this.appService.deviceName() ? this.appService.deviceName() : 'Der Gerätename fehlt!'));
     public readonly dataLastSyncedForSubtitle = this.availabilityService.lookupDataGrossAvailibilityDatetime;
-    public readonly apiAvailabilityStatusForSubtitle = computed(() =>
-        this.availabilityService.apiAvailability() ? 'Schnittstelle erreichbar!' : 'Schnittstelle nicht erreichbar!',
-    );
-    public readonly druckerAvailabilityStatusForSubtitle = computed(() =>
-        this.availabilityService.druckerGrossAvailability()
-            ? 'Alle Drucker erreichbar!'
-            : `${this.availabilityService.druckerAvailabilities().filter((c) => c.isSuccessful()).length} von ${this.availabilityService.druckerAvailabilities().length} Drucker erreichbar!`,
-    );
+    public readonly apiAvailabilityStatusForSubtitle = computed(() => (this.availabilityService.apiAvailability() ? 'Schnittstelle erreichbar!' : 'Schnittstelle nicht erreichbar!'));
+    public readonly druckerAvailabilityStatusForSubtitle = computed(() => (this.availabilityService.druckerGrossAvailability() ? 'Alle Drucker erreichbar!' : `${this.availabilityService.druckerAvailabilities().filter((c) => c.isSuccessful()).length} von ${this.availabilityService.druckerAvailabilities().length} Drucker erreichbar!`));
 
     public readonly isAufnehmerSelected = computed(() => (this.appService.aufnehmer() ? true : false));
     public readonly isDeviceNameSet = computed(() => (this.appService.deviceName() ? true : false));
