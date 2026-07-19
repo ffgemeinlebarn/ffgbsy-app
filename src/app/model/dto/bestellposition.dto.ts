@@ -20,11 +20,10 @@ export interface BestellpositionDto {
     summe: number;
     summe_ohne_eigenschaften: number;
     summe_eigenschaften: number;
-    calc_correction: number;
+
+    // Todo: Was ist das?
+    // calc_correction: number;
 
     // Objects
     produkt: ProduktDto;
-
-    // TODO: not from api
-    // display: string;
 }

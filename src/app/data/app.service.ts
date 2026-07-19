@@ -34,7 +34,9 @@ export class AppService {
     public readonly isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
     public readonly bonDebug = computed(() => this.settings.local().bonDebugMenu);
 
+    // Editing
     public readonly bestellung = signal<Bestellung>(null); // Current Bestellung
+    public readonly bestellposition = signal<Bestellposition>(null); // Current Bestellposition, that is open in Modal for Editing
 
     constructor() {
         effect(() => {
@@ -43,6 +45,24 @@ export class AppService {
                 if (aufnehmer) {
                     this.selectAufnehmer(aufnehmer);
                 }
+            }
+        });
+
+        // Update Bestellung on Edit specific Bestellposition
+        effect(() => {
+            if (this.bestellposition()) {
+                console.debug('[FFGBSY]', 'AppService', '(Current) Bestellposition changed, Local Key =', this.bestellposition().localKey);
+
+                this.bestellung.update((bestellung) => {
+                    const index = bestellung.bestellpositionen().findIndex((b) => b.localKey == this.bestellposition().localKey);
+
+                    bestellung.bestellpositionen.update((bestellpositionen) => {
+                        bestellpositionen[index] = this.bestellposition();
+                        return bestellpositionen;
+                    });
+
+                    return bestellung;
+                });
             }
         });
     }
@@ -59,14 +79,8 @@ export class AppService {
     }
 
     public editBestellposition(bestellposition: Bestellposition) {
-        this.frontend.showModal(BestellungspositionEditModalComponent, { bestellposition }).subscribe((data: { data: null | Bestellposition }) => {
-            if (data.data == null) {
-                this.bestellung.update((bestellung) => {
-                    bestellung.bestellpositionen = bestellung.bestellpositionen.filter((b) => b != bestellposition);
-                    return bestellung;
-                });
-            }
-        });
+        this.bestellposition.set(bestellposition);
+        this.frontend.showModal(BestellungspositionEditModalComponent).subscribe(() => this.bestellposition.set(null));
     }
 
     public async clearAufnehmer() {
@@ -136,7 +150,7 @@ export class AppService {
 
             this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', messages);
         } else {
-            this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', err.description);
+            this.frontend.showOkAlert('Fehler beim Anlegen der Bestellung', err?.description);
         }
 
         return of(false);

@@ -9,22 +9,23 @@
                 </ion-button>
             </div>
             <div class="bestellpositionen">
+                <!-- {{ bestellung().bestellpositionen | json }} -->
                 <ion-list>
-                    @for (bp of bestellung().bestellpositionen.slice().reverse(); track $index) {
+                    @for (bp of bestellung().bestellpositionen(); track $index) {
                         <ion-item button (click)="editBestellungsposition(bp)" (keypress)="editBestellungsposition(bp)">
                             <ion-label text-wrap>
                                 <h3>
-                                    <strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}
+                                    <strong>{{ bp.anzahl() }}</strong> {{ bp.produkt.name }}
                                 </h3>
-                                <p>{{ bp.produkt.preis * bp.anzahl | euroPreis }}</p>
-                                @if (bp.display.eigenschaften.mit.length) {
-                                    <p><strong>Mit:</strong> {{ bp.display.eigenschaften.mit.join(", ") }}</p>
+                                <p>{{ bp.summe() | euroPreis }}</p>
+                                @if (bp.hasEigenschaftenAbweichendMit()) {
+                                    <p><strong>Mit:</strong> {{ bp.eigenschaftenAbweichendMitDisplay() }}</p>
                                 }
-                                @if (bp.display.eigenschaften.ohne.length) {
-                                    <p><strong>Ohne:</strong> {{ bp.display.eigenschaften.ohne.join(", ") }}</p>
+                                @if (bp.hasEigenschaftenAbweichendOhne()) {
+                                    <p><strong>Ohne:</strong> {{ bp.eigenschaftenAbweichendOhneDisplay() }}</p>
                                 }
-                                @if (bp.notiz) {
-                                    <p><strong>Notiz:</strong> {{ bp.notiz }}</p>
+                                @if (bp.notiz()) {
+                                    <p><strong>Notiz:</strong> {{ bp.notiz() }}</p>
                                 }
                             </ion-label>
                         </ion-item>
@@ -58,10 +59,10 @@
         <div class="footer-left">
             <div class="summe">
                 <span class="summe__euro">€</span>
-                <span class="summe__betrag">{{ bestellung().calcSumme() | euroPreis: { symbol: false, zerotext: false } }}</span>
+                <span class="summe__betrag">{{ bestellung().summe() | euroPreis: { symbol: "", zerotext: false } }}</span>
             </div>
             <div class="submit">
-                <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" (keypress)="kontrolliereBestellung()" [disabled]="bestellung().bestellpositionen.length == 0">
+                <ion-button size="large" expand="block" color="success" (click)="kontrolliereBestellung()" (keypress)="kontrolliereBestellung()" [disabled]="bestellung().bestellpositionen().length == 0">
                     <ion-label>Abschluss </ion-label>
                     <ion-icon slot="start" name="checkmark-circle"></ion-icon>
                 </ion-button>

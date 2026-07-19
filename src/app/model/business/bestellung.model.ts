@@ -1,3 +1,4 @@
+import { computed, signal } from '@angular/core';
 import { parseZone } from 'moment';
 import { AufnehmerDto } from '../dto/aufnehmer.dto';
 import { BestellungDto } from '../dto/bestellung.dto';
@@ -17,12 +18,17 @@ export class Bestellung {
 
     public timestamp_begonnen: any = null;
     public timestamp_beendet: any = null;
-    public bestellpositionen: Bestellposition[] = [];
-    public stornopositionen: Bestellposition[] = [];
+    public bestellpositionen = signal<Bestellposition[]>([]);
+    public stornopositionen = signal<Bestellposition[]>([]);
     public bestellbons: BonDto[] = [];
     public stornobons: BonDto[] = [];
 
-    public summe: number | null = null;
+    public summe = computed(() =>
+        this.bestellpositionen()
+            .map((b) => b.summe())
+            .reduce((a, c) => a + c, 0),
+    );
+    public summe_eigenschaften: number | null = null;
     public summe_ohne_eigenschaften: number | null = null;
 
     constructor(tisch?: TischDto, aufnehmer?: AufnehmerDto) {
@@ -33,22 +39,33 @@ export class Bestellung {
         if (aufnehmer) this.aufnehmer = aufnehmer;
     }
 
+    public fromExisting(bestellung: Bestellung): Bestellung {
+        this.id = bestellung.id;
+        this.tisch = bestellung.tisch;
+        this.aufnehmer = bestellung.aufnehmer;
+        this.device_name = bestellung.device_name;
+        this.device_ip = bestellung.device_ip;
+
+        this.status = bestellung.status;
+        this.timestamp_begonnen = bestellung.timestamp_begonnen;
+        this.timestamp_beendet = bestellung.timestamp_beendet;
+        this.bestellpositionen = bestellung.bestellpositionen;
+        this.stornopositionen = bestellung.stornopositionen;
+        this.bestellbons = bestellung.bestellbons;
+        this.stornobons = bestellung.stornobons;
+
+        this.summe = bestellung.summe;
+        this.summe_ohne_eigenschaften = bestellung.summe_ohne_eigenschaften;
+
+        return this;
+    }
+
     addBestellposition(bestellposition: Bestellposition) {
-        this.bestellpositionen.push(bestellposition);
+        this.bestellpositionen.update((b) => [...b, bestellposition]);
     }
 
     setTimestampBegonnen() {
         this.timestamp_begonnen = parseZone().toISOString(true);
-    }
-
-    calcSumme() {
-        let summe = 0.0;
-
-        for (let bp of this.bestellpositionen) {
-            summe += bp.anzahl * bp.produkt.preis + bp.calc_correction;
-        }
-
-        return summe;
     }
 
     public toDto(): BestellungDto {
@@ -60,9 +77,9 @@ export class Bestellung {
             aufnehmer_id: this.aufnehmer.id,
             device_name: this.device_name,
             device_ip: this.device_ip,
-            summe: this.summe,
-            bestellpositionen: this.bestellpositionen.map((bp) => bp.toDto()),
-            stornopositionen: this.stornopositionen.map((bp) => bp.toDto()),
+            summe: this.summe(),
+            bestellpositionen: this.bestellpositionen().map((bp) => bp.toDto()),
+            stornopositionen: this.stornopositionen().map((bp) => bp.toDto()),
             aufnehmer: this.aufnehmer,
             tisch: this.tisch,
             bestellbons: this.bestellbons,

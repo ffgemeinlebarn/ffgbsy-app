@@ -5,17 +5,27 @@
 </ion-header>
 
 <ion-content>
-    <h1 class="name">{{ bestellposition?.produkt.name }}</h1>
-    <p class="formal_name">{{ bestellposition?.produkt.formal_name }}</p>
+    <h1 class="name">{{ bestellposition().produkt.name }}</h1>
+    <p class="formal_name">{{ bestellposition().produkt.formal_name }}</p>
+    <div class="preise">
+        <div class="preise__item bestellposition">
+            <h3>{{ bestellposition().summe() | euroPreis }}</h3>
+            <p>Gesamte Bestellposition</p>
+        </div>
+        <div class="preise__item einzel">
+            <h3>{{ bestellposition().produkt.preis | euroPreis }}</h3>
+            <p>Einzelpreis</p>
+        </div>
+    </div>
     <ion-grid class="anzahl">
         <ion-row>
             <ion-col size="4">
-                <ion-button icon-button icon-only (click)="changeAnzahl(-1)" [disabled]="$safeNavigationMigration(bestellposition?.anzahl) <= 1">
+                <ion-button icon-button icon-only (click)="changeAnzahl(-1)" [disabled]="bestellposition().anzahl() <= 1">
                     <ion-icon name="arrow-back"></ion-icon>
                 </ion-button>
             </ion-col>
             <ion-col size="4">
-                <h2>{{ bestellposition?.anzahl }}</h2>
+                <h2>{{ bestellposition().anzahl() }}</h2>
             </ion-col>
             <ion-col size="4">
                 <ion-button icon-button icon-only (click)="changeAnzahl(+1)">
@@ -28,26 +38,27 @@
         <ion-list-header color="primary">
             <ion-label>Eigenschaften & Extras</ion-label>
         </ion-list-header>
-        @for (eigenschaft of bestellposition.eigenschaften; track eigenschaft) {
+
+        @for (eigenschaft of eigenschaftenForm; track $index) {
             <ion-item>
-                <ion-label>{{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-label>
-                <ion-checkbox [(ngModel)]="eigenschaft.aktiv"></ion-checkbox>
+                <ion-label>{{ eigenschaft.name().value() }} ({{ eigenschaft.preis().value() | euroPreis }})</ion-label>
+                <ion-checkbox [formField]="eigenschaft.aktiv"></ion-checkbox>
             </ion-item>
         }
         <ion-list-header color="primary">
             <ion-label>Notizen</ion-label>
         </ion-list-header>
         <ion-item>
-            <ion-textarea placeholder="Zusätzliche Informationen" [(ngModel)]="bestellposition.notiz"></ion-textarea>
+            <ion-textarea placeholder="Zusätzliche Informationen" [formField]="notizForm"></ion-textarea>
         </ion-item>
     </ion-list>
 </ion-content>
 
 <ion-footer>
-    <ion-button class="button-bestellposition-entfernen" color="danger" expand="block" (click)="delete()">
+    <ion-button class="button-bestellposition-entfernen" color="danger" expand="block" (click)="remove()">
         <ion-icon name="trash" slot="icon-only"></ion-icon>
     </ion-button>
-    <ion-button class="button-bestellposition-speichern" color="success" expand="block" (click)="save()">
+    <ion-button class="button-bestellposition-speichern" color="success" expand="block" (click)="confirm()">
         <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon>
         <ion-label>Speichern und zurück</ion-label>
     </ion-button>

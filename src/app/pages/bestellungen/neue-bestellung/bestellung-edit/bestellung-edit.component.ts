@@ -63,13 +63,10 @@ export class BestellungEditComponent {
         let added: boolean = false;
 
         if (form == 'standard') {
-            for (let bp of this.bestellung().bestellpositionen) {
-                if (
-                    bp.produkt.id == produkt.id &&
-                    bp.display.eigenschaften.mit.length == 0 && // <= nur unmodifiziertes Produkt automatisch hochzählen
-                    bp.display.eigenschaften.ohne.length == 0
-                ) {
-                    bp.anzahl++;
+            for (let bp of this.bestellung().bestellpositionen()) {
+                // nur unmodifiziertes Produkt automatisch hochzählen
+                if (bp.produkt.id == produkt.id && bp.isUnmodified()) {
+                    bp.anzahl.update((a) => a + 1);
                     added = true;
                     break;
                 }
@@ -78,7 +75,7 @@ export class BestellungEditComponent {
 
         if (!added) {
             this.bestellung.update((bestellung) => {
-                bestellung.addBestellposition(new Bestellposition(produkt));
+                bestellung.addBestellposition(Bestellposition.fromProduct(produkt));
                 return bestellung;
             });
         }

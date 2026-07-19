@@ -14,17 +14,7 @@
     <h3>Umsatz pro Tag</h3>
     <div class="chart-container chart-container--pie">
         @defer (when pieChartReadyToShow()) {
-            <canvas
-                baseChart
-                width="300"
-                height="300"
-                type="pie"
-                [datasets]="chartUmsatzProTag.datasets"
-                [labels]="chartUmsatzProTag.labels"
-                [options]="chartOptions"
-                [legend]="true"
-            >
-            </canvas>
+            <canvas baseChart width="300" height="300" type="pie" [datasets]="chartUmsatzProTag.datasets" [labels]="chartUmsatzProTag.labels" [options]="chartOptions" [legend]="true"> </canvas>
         }
     </div>
     <h3>Umsatz per Produktbereich</h3>
@@ -43,7 +33,7 @@
                     <tr>
                         <th scope="row">{{ tableProduktbereiche.header[i].name }}</th>
                         @for (item of tableProduktbereiche?.data; track item; let j = $index) {
-                            <td>{{ tableProduktbereiche?.data[j].data[i].summe | euroPreis: { symbol: true, zerotext: false } }}</td>
+                            <td>{{ tableProduktbereiche?.data[j].data[i].summe | euroPreis }}</td>
                         }
                     </tr>
                 }
@@ -52,7 +42,7 @@
                 <tr>
                     <th scope="row">Summe</th>
                     @for (item of tableProduktbereiche?.data; track item) {
-                        <td>{{ item.summe | euroPreis: { symbol: true, zerotext: false } }}</td>
+                        <td>{{ item.summe | euroPreis }}</td>
                     }
                 </tr>
             </tfoot>
@@ -74,7 +64,7 @@
                     <tr>
                         <th scope="row">{{ tableProduktkategorien.header[i].name }}</th>
                         @for (item of tableProduktkategorien?.data; track item; let j = $index) {
-                            <td>{{ tableProduktkategorien?.data[j].data[i].summe | euroPreis: { symbol: true, zerotext: false } }}</td>
+                            <td>{{ tableProduktkategorien?.data[j].data[i].summe | euroPreis }}</td>
                         }
                     </tr>
                 }
@@ -83,7 +73,7 @@
                 <tr>
                     <th scope="row">Summe</th>
                     @for (item of tableProduktkategorien?.data; track item) {
-                        <td>{{ item.summe | euroPreis: { symbol: true, zerotext: false } }}</td>
+                        <td>{{ item.summe | euroPreis }}</td>
                     }
                 </tr>
             </tfoot>
