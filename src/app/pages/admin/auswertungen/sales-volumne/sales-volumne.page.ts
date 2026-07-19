@@ -6,6 +6,7 @@ import { ChartConfiguration, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { StatistikenApiService } from '../../../../data/api/statistiken-api.service';
 import { EuroPreisPipe } from '../../../../misc/euro-preis.pipe';
+import { StatistikProduktkategorienUndBereicheDto } from '../../../../model/dto/statistiken.dto';
 
 @Component({
     selector: 'ffgbsy-sales-volumne',
@@ -24,8 +25,8 @@ export class SalesVolumnePage implements ViewWillEnter {
         datasets: [],
     };
     public chartOptions: ChartOptions = { responsive: true };
-    public tableProduktbereiche = null;
-    public tableProduktkategorien = null;
+    public tableProduktbereiche = signal<StatistikProduktkategorienUndBereicheDto>(null);
+    public tableProduktkategorien = signal<StatistikProduktkategorienUndBereicheDto>(null);
 
     public loadData() {
         this.statistikenApiService.readKennzahlen().subscribe((kennzahlen) => {
@@ -39,13 +40,8 @@ export class SalesVolumnePage implements ViewWillEnter {
             this.pieChartReadyToShow.set(true);
         });
 
-        this.statistikenApiService.readProduktbereiche().subscribe((stats) => {
-            this.tableProduktbereiche = stats;
-        });
-
-        this.statistikenApiService.readProduktkategorien().subscribe((stats) => {
-            this.tableProduktkategorien = stats;
-        });
+        this.statistikenApiService.readProduktbereiche().subscribe((stats) => this.tableProduktbereiche.set(stats));
+        this.statistikenApiService.readProduktkategorien().subscribe((stats) => this.tableProduktkategorien.set(stats));
     }
     ionViewWillEnter(): void {
         this.loadData();
