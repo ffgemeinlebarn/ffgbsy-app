@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonButton, IonButtons, IonHeader, IonIcon, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/data/app.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { ITisch } from 'src/app/model/i-tisch.interface';
+import { AppService } from '../../../data/app.service';
+import { FrontendService } from '../../../data/frontend.service';
+import { TischDto } from '../../../model/dto/tisch.dto';
 import { AufnehmerAuswahlComponent } from './aufnehmer-auswahl/aufnehmer-auswahl.component';
 import { BestellungEditComponent } from './bestellung-edit/bestellung-edit.component';
 import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
@@ -11,6 +11,7 @@ import { TischAuswahlComponent } from './tisch-auswahl/tisch-auswahl.component';
     selector: 'ffgbsy-neue-bestellung',
     templateUrl: './neue-bestellung.page.html',
     styleUrls: ['./neue-bestellung.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonIcon, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonMenuButton, AufnehmerAuswahlComponent, TischAuswahlComponent, BestellungEditComponent],
 })
 export class NeueBestellungPage {
@@ -24,7 +25,7 @@ export class NeueBestellungPage {
      *** Tischauswahl
      *******************************************************************************/
 
-    selectTisch(tisch: ITisch) {
+    selectTisch(tisch: TischDto) {
         this.bestellung.update((bestellung) => {
             if (bestellung.tisch == null) {
                 bestellung.setTimestampBegonnen();
@@ -42,8 +43,6 @@ export class NeueBestellungPage {
      *******************************************************************************/
 
     async askForCancelBestellung() {
-        await this.frontend
-            .showJaNeinAlert('Abbruch der Bestellung', 'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.')
-            .then((_) => this.app.cancelBestellung());
+        await this.frontend.showJaNeinAlert('Abbruch der Bestellung', 'Willst du die Bestellung wirklich abbrechen? Alle enthaltenen Positionen werden gelöscht.').then((_) => this.app.cancelBestellung());
     }
 }

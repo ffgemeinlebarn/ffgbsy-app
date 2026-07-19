@@ -1,68 +1,24 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonChip,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonItemDivider,
-    IonItemOption,
-    IonItemOptions,
-    IonItemSliding,
-    IonLabel,
-    IonList,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToolbar,
-    ModalController,
-} from '@ionic/angular/standalone';
-import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
-import { ProduktbereicheApiService } from 'src/app/data/api/produktbereiche-api.service';
-import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-import { IEigenschaft } from 'src/app/model/i-eigenschaft.interface';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
+import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
+import { ProduktbereicheApiService } from '../../../../../data/api/produktbereiche-api.service';
+import { ProduktkategorienApiService } from '../../../../../data/api/produktkategorien-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { SelectEigenschaftModalComponent } from '../../../../../feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
+import { EuroPreisPipe } from '../../../../../misc/euro-preis.pipe';
+import { EigenschaftDto } from '../../../../../model/dto/eigenschaft.dto';
+import { ProduktkategorieDto } from '../../../../../model/dto/produktkategorie.dto';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produktkategorien-detail',
     templateUrl: './produktkategorien-detail.page.html',
     styleUrls: ['./produktkategorien-detail.page.scss'],
-    imports: [
-        IonChip,
-        IonItemDivider,
-        IonItemOptions,
-        IonItemSliding,
-        IonItemOption,
-        IonLabel,
-        IonList,
-        IonItem,
-        IonContent,
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonTitle,
-        IonBackButton,
-        IonToolbar,
-        IonHeader,
-        IonInput,
-        IonSelect,
-        IonSelectOption,
-        FormsModule,
-        ReactiveFormsModule,
-        PageSpinnerComponent,
-        EuroPreisPipe,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonChip, IonItemDivider, IonItemOptions, IonItemSliding, IonItemOption, IonLabel, IonList, IonItem, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonInput, IonSelect, IonSelectOption, FormsModule, ReactiveFormsModule, PageSpinnerComponent, EuroPreisPipe],
 })
 export class ProduktkategorienDetailPage {
     private produktkategorienApiService = inject(ProduktkategorienApiService);
@@ -73,11 +29,11 @@ export class ProduktkategorienDetailPage {
     private modalController = inject(ModalController);
     private alertController = inject(AlertController);
 
-    public id = input.required<number>();
+    public id = input.required<ProduktkategorieId>();
 
     public drucker = toSignal(this.druckerApiService.readAll());
     public produktbereiche = toSignal(this.produktbereicheApiService.readAll());
-    public produktkategorie = signal<IProduktkategorie>(null);
+    public produktkategorie = signal<ProduktkategorieDto>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -89,15 +45,15 @@ export class ProduktkategorienDetailPage {
     });
 
     constructor() {
-        effect(() => this.produktkategorienApiService.read(this.id()).subscribe((produktkategorie: IProduktkategorie) => this.setEntity(produktkategorie)));
+        effect(() => this.produktkategorienApiService.read(this.id()).subscribe((produktkategorie: ProduktkategorieDto) => this.setEntity(produktkategorie)));
     }
 
-    private setEntity(produktkategorie: IProduktkategorie) {
+    private setEntity(produktkategorie: ProduktkategorieDto) {
         this.produktkategorie.set(produktkategorie);
         this.form.patchValue(produktkategorie);
     }
 
-    public removeEigenschaft(eigenschaft: IEigenschaft) {
+    public removeEigenschaft(eigenschaft: EigenschaftDto) {
         this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter((e) => e.id !== eigenschaft.id));
         this.produktkategorie.set({
             ...this.produktkategorie(),
@@ -105,7 +61,7 @@ export class ProduktkategorienDetailPage {
         });
     }
 
-    public toggleEigenschaftEnthalten(eigenschaft: IEigenschaft) {
+    public toggleEigenschaftEnthalten(eigenschaft: EigenschaftDto) {
         eigenschaft.in_produkt_enthalten = !eigenschaft.in_produkt_enthalten;
     }
 
@@ -117,7 +73,7 @@ export class ProduktkategorienDetailPage {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: IEigenschaft = await (await modal.onWillDismiss()).data;
+        const eigenschaft: EigenschaftDto = await (await modal.onWillDismiss()).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({

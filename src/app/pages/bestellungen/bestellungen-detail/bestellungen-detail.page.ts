@@ -1,52 +1,42 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-    AlertController,
-    IonBackButton,
-    IonButtons,
-    IonChip,
-    IonContent,
-    IonHeader,
-    IonItem,
-    IonItemDivider,
-    IonLabel,
-    IonList,
-    IonTitle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
-import { BestellungenApiService } from 'src/app/data/api/bestellungen-api.service';
-import { BonsApiService } from 'src/app/data/api/bons-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { Bestellung } from 'src/app/model/bestellung.model';
-import { IBon } from 'src/app/model/i-bon.model';
+import { AlertController, IonBackButton, IonButton, IonButtons, IonChip, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonNote, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { BestellungenApiService } from '../../../data/api/bestellungen-api.service';
+import { BonsApiService } from '../../../data/api/bons-api.service';
+import { FrontendService } from '../../../data/frontend.service';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
+import { BestellpositionDto } from '../../../model/dto/bestellposition.dto';
+import { BestellungDto } from '../../../model/dto/bestellung.dto';
+import { BonDto } from '../../../model/dto/bon.dto';
 
 @Component({
     selector: 'ffgbsy-bestellungen-detail',
     templateUrl: './bestellungen-detail.page.html',
     styleUrls: ['./bestellungen-detail.page.scss'],
-    imports: [IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonItemDivider, IonChip, DatePipe, EuroPreisPipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonText, IonButton, IonIcon, IonItemOptions, IonItemOption, IonNote, IonGrid, IonItemSliding, IonRow, IonCol, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonList, IonItem, IonLabel, IonItemDivider, IonChip, DatePipe, EuroPreisPipe],
 })
 export class BestellungenDetailPage implements OnInit {
-    public activatedRoute = inject(ActivatedRoute);
-    private bonsApiService = inject(BonsApiService);
+    private readonly activatedRoute = inject(ActivatedRoute);
+    private readonly bonsApiService = inject(BonsApiService);
     private readonly bestellungenApiService = inject(BestellungenApiService);
-    private frontend = inject(FrontendService);
-    private alertController = inject(AlertController);
+    private readonly frontend = inject(FrontendService);
+    private readonly alertController = inject(AlertController);
 
-    public bestellung: Bestellung;
+    public bestellung = signal<BestellungDto>(null);
 
     ngOnInit() {
-        this.loadBestellung(+this.activatedRoute.snapshot.paramMap.get('id'));
+        this.loadBestellung(+this.activatedRoute.snapshot.paramMap.get('id') as BestellungId);
     }
 
-    loadBestellung(id: number) {
-        this.bestellungenApiService.read(id).subscribe((bestellung) => (this.bestellung = bestellung));
+    loadBestellung(id: BestellungId) {
+        this.bestellungenApiService.read(id).subscribe((bestellung) => {
+            this.bestellung.set(bestellung);
+        });
     }
 
-    public printBon(bon: IBon) {
+    public printBon(bon: BonDto) {
         this.bonsApiService.druckBonById(bon.id).subscribe((bonDruck) => {
             this.loadBestellung(bon.bestellungen_id);
 
@@ -58,7 +48,7 @@ export class BestellungenDetailPage implements OnInit {
         });
     }
 
-    async askStornoAnzahl(bestellposition: Bestellposition) {
+    async askStornoAnzahl(bestellposition: BestellpositionDto) {
         const alert = await this.alertController.create({
             header: 'Bestellposition stornieren',
             inputs: [

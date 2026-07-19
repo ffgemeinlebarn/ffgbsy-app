@@ -1,5 +1,5 @@
-export interface IDrucker {
-    id: number;
+export interface DruckerDto {
+    id: DruckerId;
     name: string;
     ip: string;
     port: number;

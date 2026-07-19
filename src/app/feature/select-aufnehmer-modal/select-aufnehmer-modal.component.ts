@@ -1,13 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/data/app.service';
-import { DataService } from 'src/app/data/data.service';
-import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
+import { AppService } from '../../data/app.service';
+import { DataService } from '../../data/data.service';
+import { AufnehmerDto } from '../../model/dto/aufnehmer.dto';
 
 @Component({
     selector: 'app-select-aufnehmer-modal',
     templateUrl: './select-aufnehmer-modal.component.html',
     styleUrls: ['./select-aufnehmer-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonHeader, IonTitle, IonToolbar, IonButton, IonContent, IonList, IonItem, IonLabel, IonIcon, IonFooter],
 })
 export class SelectAufnehmerModalComponent {
@@ -21,7 +22,7 @@ export class SelectAufnehmerModalComponent {
         return this.modalController.dismiss(null, 'cancel');
     }
 
-    public select(aufnehmer: IAufnehmer) {
+    public select(aufnehmer: AufnehmerDto) {
         this.app.selectAufnehmer(aufnehmer);
         this.close();
     }

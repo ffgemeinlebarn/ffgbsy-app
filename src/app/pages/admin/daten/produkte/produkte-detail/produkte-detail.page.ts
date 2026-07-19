@@ -1,67 +1,26 @@
-import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import {
-    AlertController,
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonChip,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonItemDivider,
-    IonLabel,
-    IonList,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-    ModalController,
-} from '@ionic/angular/standalone';
+import { AlertController, IonBackButton, IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { map, mergeMap, of, tap } from 'rxjs';
-import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
-import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
-import { ProdukteApiService } from 'src/app/data/api/produkte-api.service';
-import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { SelectEigenschaftModalComponent } from 'src/app/feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-import { IEigenschaft } from 'src/app/model/i-eigenschaft.interface';
-import { IProdukt } from 'src/app/model/i-produkt.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { DruckerApiService } from '../../../../../data/api/drucker-api.service';
+import { GrundprodukteApiService } from '../../../../../data/api/grundprodukte-api.service';
+import { ProdukteApiService } from '../../../../../data/api/produkte-api.service';
+import { ProdukteinteilungenApiService } from '../../../../../data/api/produkteinteilungen-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { SelectEigenschaftModalComponent } from '../../../../../feature/select-eigenschaft-modal/select-eigenschaft-modal.component';
+import { EuroPreisPipe } from '../../../../../misc/euro-preis.pipe';
+import { EigenschaftDto } from '../../../../../model/dto/eigenschaft.dto';
+import { ProduktDto } from '../../../../../model/dto/produkt.dto';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkte-detail',
     templateUrl: './produkte-detail.page.html',
     styleUrls: ['./produkte-detail.page.scss'],
-    imports: [
-        IonItemDivider,
-        IonChip,
-        IonItem,
-        IonLabel,
-        IonList,
-        IonContent,
-        IonIcon,
-        IonButtons,
-        IonButton,
-        IonTitle,
-        IonBackButton,
-        IonHeader,
-        IonToolbar,
-        IonSelect,
-        IonSelectOption,
-        IonToggle,
-        IonInput,
-        FormsModule,
-        EuroPreisPipe,
-        ReactiveFormsModule,
-        PageSpinnerComponent,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonItemSliding, IonItemOptions, IonItemOption, IonItemDivider, IonChip, IonItem, IonLabel, IonList, IonContent, IonIcon, IonButtons, IonButton, IonTitle, IonBackButton, IonHeader, IonToolbar, IonSelect, IonSelectOption, IonToggle, IonInput, FormsModule, EuroPreisPipe, ReactiveFormsModule, PageSpinnerComponent],
 })
 export class ProdukteDetailPage implements OnInit {
     private frontendService = inject(FrontendService);
@@ -74,7 +33,7 @@ export class ProdukteDetailPage implements OnInit {
     private alertController = inject(AlertController);
     private readonly activatedRoute = inject(ActivatedRoute);
 
-    public readonly produkt = signal<IProdukt | null>(null);
+    public readonly produkt = signal<ProduktDto | null>(null);
     public drucker = toSignal(this.druckerApiService.readAll());
     public produkteinteilungen = toSignal(this.produkteinteilungenApiService.readAll());
     public grundprodukte = toSignal(this.grundprodukteApiService.readAll());
@@ -109,12 +68,12 @@ export class ProdukteDetailPage implements OnInit {
         this.activatedRoute.params
             .pipe(
                 map((p: Params) => Number(p['id']) ?? null),
-                map((n) => (Number.isNaN(n) ? null : n)),
+                map((n) => (Number.isNaN(n) ? null : (n as ProduktId))),
                 mergeMap((id) => {
                     if (id) {
                         return this.produkteApiService.read(id);
                     } else {
-                        return of({ grundprodukt: null, eigenschaften: [] } as IProdukt);
+                        return of({ grundprodukt: null, eigenschaften: [] } as ProduktDto);
                     }
                 }),
                 tap((p) => {
@@ -124,7 +83,7 @@ export class ProdukteDetailPage implements OnInit {
             .subscribe((p) => this.produkt.set(p));
     }
 
-    public removeEigenschaft(eigenschaft: IEigenschaft) {
+    public removeEigenschaft(eigenschaft: EigenschaftDto) {
         this.form.controls.eigenschaften.setValue(this.form.controls.eigenschaften.value.filter((e) => e.id !== eigenschaft.id));
         this.produkt.set({
             ...this.produkt(),
@@ -132,7 +91,7 @@ export class ProdukteDetailPage implements OnInit {
         });
     }
 
-    public toggleEigenschaftEnthalten(eigenschaft: IEigenschaft) {
+    public toggleEigenschaftEnthalten(eigenschaft: EigenschaftDto) {
         eigenschaft.in_produkt_enthalten = !eigenschaft.in_produkt_enthalten;
     }
 
@@ -144,7 +103,7 @@ export class ProdukteDetailPage implements OnInit {
             initialBreakpoint: 1,
         });
         await modal.present();
-        const eigenschaft: IEigenschaft = await (await modal.onWillDismiss()).data;
+        const eigenschaft: EigenschaftDto = await (await modal.onWillDismiss()).data;
 
         if (eigenschaft) {
             const alert = await this.alertController.create({

@@ -1,51 +1,19 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
-import { ProdukteinteilungenApiService } from 'src/app/data/api/produkteinteilungen-api.service';
-import { ProduktkategorienApiService } from 'src/app/data/api/produktkategorien-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { ProdukteinteilungenApiService } from '../../../../../data/api/produkteinteilungen-api.service';
+import { ProduktkategorienApiService } from '../../../../../data/api/produktkategorien-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { ProdukteinteilungDto } from '../../../../../model/dto/produkteinteilung.dto';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-produkteinteilungen-detail',
     templateUrl: './produkteinteilungen-detail.page.html',
     styleUrls: ['./produkteinteilungen-detail.page.scss'],
-    imports: [
-        IonLabel,
-        IonList,
-        IonItem,
-        IonContent,
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonTitle,
-        IonBackButton,
-        IonToolbar,
-        IonHeader,
-        IonInput,
-        IonSelect,
-        IonSelectOption,
-        FormsModule,
-        ReactiveFormsModule,
-        PageSpinnerComponent,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonLabel, IonList, IonItem, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonInput, IonSelect, IonSelectOption, FormsModule, ReactiveFormsModule, PageSpinnerComponent],
 })
 export class ProdukteinteilungenDetailPage {
     private produkteinteilungenApiService = inject(ProdukteinteilungenApiService);
@@ -53,10 +21,10 @@ export class ProdukteinteilungenDetailPage {
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
-    public id = input.required<number>();
+    public id = input.required<ProdukteinteilungId>();
 
     public produktkategorien = toSignal(this.produktkategorienApiService.readAll());
-    public produkteinteilung = signal<IProdukteinteilung>(null);
+    public produkteinteilung = signal<ProdukteinteilungDto>(null);
 
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
@@ -68,8 +36,8 @@ export class ProdukteinteilungenDetailPage {
         effect(() => this.load(this.id()));
     }
 
-    private load(id: number) {
-        this.produkteinteilungenApiService.read(id).subscribe((produkteinteilung: IProdukteinteilung) => {
+    private load(id: ProdukteinteilungId) {
+        this.produkteinteilungenApiService.read(id).subscribe((produkteinteilung: ProdukteinteilungDto) => {
             this.produkteinteilung.set(produkteinteilung);
             this.form.patchValue(produkteinteilung);
         });

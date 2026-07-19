@@ -1,55 +1,21 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { map, mergeMap, tap } from 'rxjs';
-import { TischeApiService } from 'src/app/data/api/tische-api.service';
-import { TischkategorienApiService } from 'src/app/data/api/tischkategorien-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { ITisch } from 'src/app/model/i-tisch.interface';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { TischeApiService } from '../../../../../data/api/tische-api.service';
+import { TischkategorienApiService } from '../../../../../data/api/tischkategorien-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { TischDto } from '../../../../../model/dto/tisch.dto';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-tische-detail',
     templateUrl: './tische-detail.page.html',
     styleUrls: ['./tische-detail.page.scss'],
-    imports: [
-        IonLabel,
-        IonItem,
-        IonList,
-        IonIcon,
-        IonButtons,
-        IonTitle,
-        IonBackButton,
-        IonToolbar,
-        IonHeader,
-        IonContent,
-        IonButton,
-        IonInput,
-        IonSelect,
-        IonSelectOption,
-        FormsModule,
-        PageSpinnerComponent,
-        ReactiveFormsModule,
-        IonToggle,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonLabel, IonItem, IonList, IonIcon, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonContent, IonButton, IonInput, IonSelect, IonSelectOption, FormsModule, PageSpinnerComponent, ReactiveFormsModule, IonToggle],
 })
 export class TischeDetailPage implements OnInit {
     private readonly frontendService = inject(FrontendService);
@@ -58,7 +24,7 @@ export class TischeDetailPage implements OnInit {
     private readonly formBuilder = inject(FormBuilder);
     private readonly activatedRoute = inject(ActivatedRoute);
 
-    public readonly tisch = signal<ITisch | null>(null);
+    public readonly tisch = signal<TischDto | null>(null);
     public readonly tischkategorien = toSignal(this.tischkategorienApiService.readAll());
 
     public form: FormGroup = this.formBuilder.group({
@@ -81,7 +47,7 @@ export class TischeDetailPage implements OnInit {
         this.activatedRoute.params
             .pipe(
                 map((p: Params) => Number(p['id']) ?? null),
-                map((n) => (Number.isNaN(n) ? null : n)),
+                map((n) => (Number.isNaN(n) ? null : (n as TischId))),
                 mergeMap((id) => this.tischeApiService.read(id)),
                 tap((t) => {
                     console.debug('[FFGBSY]', 'Selected Tisch =>', t);

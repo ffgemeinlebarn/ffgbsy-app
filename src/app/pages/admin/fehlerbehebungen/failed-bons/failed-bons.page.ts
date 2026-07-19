@@ -1,72 +1,21 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-    CheckboxCustomEvent,
-    IonAccordion,
-    IonAccordionGroup,
-    IonBadge,
-    IonButton,
-    IonButtons,
-    IonCheckbox,
-    IonChip,
-    IonContent,
-    IonFooter,
-    IonHeader,
-    IonIcon,
-    IonItem,
-    IonItemDivider,
-    IonLabel,
-    IonList,
-    IonMenuButton,
-    IonRippleEffect,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-    ViewDidEnter,
-} from '@ionic/angular/standalone';
-import { BonsApiService } from 'src/app/data/api/bons-api.service';
-import { DruckerApiService } from 'src/app/data/api/drucker-api.service';
-import { TischeApiService } from 'src/app/data/api/tische-api.service';
-import { IBonsFilter } from 'src/app/model/bons-filter.interface';
-import { IBon } from 'src/app/model/i-bon.model';
+import { CheckboxCustomEvent, IonAccordion, IonAccordionGroup, IonBadge, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCheckbox, IonChip, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
+import { BonsApiService } from '../../../../data/api/bons-api.service';
+import { DruckerApiService } from '../../../../data/api/drucker-api.service';
+import { TischeApiService } from '../../../../data/api/tische-api.service';
 import { FrontendService } from '../../../../data/frontend.service';
+import { BonDto } from '../../../../model/dto/bon.dto';
+import { IBonsFilter } from '../../../../model/interfaces/i-bons-filter.interface';
 
 @Component({
     selector: 'ffgbsy-failed-bons',
     templateUrl: './failed-bons.page.html',
     styleUrls: ['./failed-bons.page.scss'],
-    imports: [
-        TitleCasePipe,
-        IonBadge,
-        IonItemDivider,
-        IonAccordionGroup,
-        IonAccordion,
-        IonButtons,
-        IonMenuButton,
-        IonToggle,
-        IonButton,
-        IonSelect,
-        IonSelectOption,
-        IonRippleEffect,
-        IonFooter,
-        IonCheckbox,
-        IonIcon,
-        IonChip,
-        IonLabel,
-        IonItem,
-        IonList,
-        IonContent,
-        IonHeader,
-        IonTitle,
-        IonToolbar,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonCardContent, IonCardTitle, IonCardHeader, IonCard, IonCardSubtitle, TitleCasePipe, IonBadge, IonItemDivider, IonAccordionGroup, IonAccordion, IonButtons, IonMenuButton, IonToggle, IonButton, IonSelect, IonSelectOption, IonRippleEffect, IonFooter, IonCheckbox, IonIcon, IonChip, IonLabel, IonItem, IonList, IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, ReactiveFormsModule],
 })
 export class FailedBonsPage implements ViewDidEnter {
     private bonsApiService = inject(BonsApiService);
@@ -75,7 +24,7 @@ export class FailedBonsPage implements ViewDidEnter {
     private formBuilder = inject(FormBuilder);
     private frontendService = inject(FrontendService);
 
-    public bons = signal<IBon[]>([]);
+    public bons = signal<BonDto[]>([]);
 
     public numberOfBonsSelected = computed(() => this.bons().filter((b) => b.selected).length);
     public anyBonsSelected = computed(() => this.numberOfBonsSelected() > 0);
@@ -109,7 +58,7 @@ export class FailedBonsPage implements ViewDidEnter {
         event.stopPropagation();
     }
 
-    public onChange(changeEvent: CheckboxCustomEvent, bon: IBon) {
+    public onChange(changeEvent: CheckboxCustomEvent, bon: BonDto) {
         this.bons.update((bons) => {
             bons.find((b) => b == bon).selected = changeEvent.detail.checked;
             return [...bons];

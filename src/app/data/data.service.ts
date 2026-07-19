@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
-import { DataLoadedReportModalComponent } from 'src/app/feature/data-loaded-report-modal/data-loaded-report-modal.component';
-import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
-import { IDaten } from 'src/app/model/i-daten.interface';
-import { IProdukt } from 'src/app/model/i-produkt.interface';
-import { IProduktbereich } from 'src/app/model/i-produktbereich.interface';
-import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
-import { ITisch } from 'src/app/model/i-tisch.interface';
-import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
+import { DataLoadedReportModalComponent } from '../feature/data-loaded-report-modal/data-loaded-report-modal.component';
+import { AufnehmerDto } from '../model/dto/aufnehmer.dto';
+import { ProduktDto } from '../model/dto/produkt.dto';
+import { ProduktbereichDto } from '../model/dto/produktbereich.dto';
+import { ProdukteinteilungDto } from '../model/dto/produkteinteilung.dto';
+import { ProduktkategorieDto } from '../model/dto/produktkategorie.dto';
+import { TischDto } from '../model/dto/tisch.dto';
+import { TischkategorieDto } from '../model/dto/tischkategorie.dto';
+import { IDaten } from '../model/interfaces/i-daten.interface';
 import { SettingsService } from './settings.service';
 
 @Injectable({
@@ -20,17 +20,15 @@ export class DataService {
     private http = inject(HttpClient);
     private settings = inject(SettingsService);
 
-    public aufnehmer = signal<IAufnehmer[]>([]);
-    public produktbereiche = signal<IProduktbereich[]>([]);
-    public produktkategorien = signal<IProduktkategorie[]>([]);
-    public produkteinteilungen = signal<IProdukteinteilung[]>([]);
-    public produkte = signal<IProdukt[]>([]);
-    public tischkategorien = signal<ITischkategorie[]>([]);
-    public tische = signal<ITisch[]>([]);
+    public aufnehmer = signal<AufnehmerDto[]>([]);
+    public produktbereiche = signal<ProduktbereichDto[]>([]);
+    public produktkategorien = signal<ProduktkategorieDto[]>([]);
+    public produkteinteilungen = signal<ProdukteinteilungDto[]>([]);
+    public produkte = signal<ProduktDto[]>([]);
+    public tischkategorien = signal<TischkategorieDto[]>([]);
+    public tische = signal<TischDto[]>([]);
 
-    public lookupDataSetted = computed(
-        () => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische(),
-    );
+    public lookupDataSetted = computed(() => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische());
 
     constructor() {
         this.load();

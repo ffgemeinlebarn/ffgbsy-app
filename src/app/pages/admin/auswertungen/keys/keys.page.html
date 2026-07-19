@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-    <ffgbsy-keys-item label="Gesamt" [keys]="kennzahlen()?.gesamt"></ffgbsy-keys-item>
+    <ffgbsy-keys-item label="Gesamt" [keys]="$safeNavigationMigration(kennzahlen()?.gesamt)"></ffgbsy-keys-item>
 
     @for (tag of kennzahlen()?.taeglich; track tag.datum) {
         <ffgbsy-keys-item [label]="tag.label" [keys]="tag"></ffgbsy-keys-item>

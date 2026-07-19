@@ -1,20 +1,21 @@
 import { NgClass } from '@angular/common';
-import { Component, effect, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, signal } from '@angular/core';
 import { IonButton, IonContent, IonFooter, IonIcon, IonItem, IonItemDivider, IonLabel, IonList } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/data/app.service';
-import { DataService } from 'src/app/data/data.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { BestellungKontrolleModalComponent } from 'src/app/feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
-import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { IProdukt } from 'src/app/model/i-produkt.interface';
-import { IProdukteinteilung } from 'src/app/model/i-produkteinteilung.interface';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
+import { AppService } from '../../../../data/app.service';
+import { DataService } from '../../../../data/data.service';
+import { FrontendService } from '../../../../data/frontend.service';
+import { BestellungKontrolleModalComponent } from '../../../../feature/bestellung-kontrolle/bestellung-kontrolle-modal.component';
+import { EuroPreisPipe } from '../../../../misc/euro-preis.pipe';
+import { Bestellposition } from '../../../../model/business/bestellposition.model';
+import { ProduktDto } from '../../../../model/dto/produkt.dto';
+import { ProdukteinteilungDto } from '../../../../model/dto/produkteinteilung.dto';
+import { ProduktkategorieDto } from '../../../../model/dto/produktkategorie.dto';
 
 @Component({
     selector: 'ffgbsy-bestellung-edit',
     templateUrl: './bestellung-edit.component.html',
     styleUrls: ['./bestellung-edit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonItemDivider, IonItem, IonIcon, IonContent, IonFooter, IonButton, IonList, IonItem, IonLabel, IonItemDivider, NgClass, EuroPreisPipe],
 })
 export class BestellungEditComponent {
@@ -26,8 +27,8 @@ export class BestellungEditComponent {
     public readonly aufnehmer = this.app.aufnehmer;
     public readonly produktkategorien = this.data.produktkategorien;
 
-    public readonly selectedProduktkategorie = signal<IProduktkategorie | null>(null);
-    public readonly filtredProdukteinteilungenToDisplay = signal<IProdukteinteilung[]>([]);
+    public readonly selectedProduktkategorie = signal<ProduktkategorieDto | null>(null);
+    public readonly filtredProdukteinteilungenToDisplay = signal<ProdukteinteilungDto[]>([]);
 
     constructor() {
         effect(() => {
@@ -35,9 +36,7 @@ export class BestellungEditComponent {
                 this.selectProduktkategorie(this.produktkategorien()[0]);
             }
 
-            this.filtredProdukteinteilungenToDisplay.set(
-                this.data.produktkategorien().find((produktkategorie) => produktkategorie.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? [],
-            );
+            this.filtredProdukteinteilungenToDisplay.set(this.data.produktkategorien().find((p) => p.id == this.selectedProduktkategorie()?.id)?.produkteinteilungen ?? []);
         });
     }
 
@@ -52,11 +51,11 @@ export class BestellungEditComponent {
      *** Aufnahme der Bestellpositionen
      *******************************************************************************/
 
-    selectProduktkategorie(produktkategorie: IProduktkategorie) {
+    selectProduktkategorie(produktkategorie: ProduktkategorieDto) {
         this.selectedProduktkategorie.set(produktkategorie);
     }
 
-    addBestellposition(produkt: IProdukt, form: string, event: any) {
+    addBestellposition(produkt: ProduktDto, form: string, event: any) {
         // Verhindert dass ein Extra-Einfügen eine doppeltes Clicken des wrapper-Elements darunter verursacht
         event.stopPropagation();
 
@@ -64,13 +63,10 @@ export class BestellungEditComponent {
         let added: boolean = false;
 
         if (form == 'standard') {
-            for (let bp of this.bestellung().bestellpositionen) {
-                if (
-                    bp.produkt.id == produkt.id &&
-                    bp.display.eigenschaften.mit.length == 0 && // <= nur unmodifiziertes Produkt automatisch hochzählen
-                    bp.display.eigenschaften.ohne.length == 0
-                ) {
-                    bp.anzahl++;
+            for (let bp of this.bestellung().bestellpositionen()) {
+                // nur unmodifiziertes Produkt automatisch hochzählen
+                if (bp.produkt.id == produkt.id && bp.isUnmodified()) {
+                    bp.anzahl.update((a) => a + 1);
                     added = true;
                     break;
                 }
@@ -79,7 +75,7 @@ export class BestellungEditComponent {
 
         if (!added) {
             this.bestellung.update((bestellung) => {
-                bestellung.addBestellposition(new Bestellposition(produkt));
+                bestellung.addBestellposition(Bestellposition.fromProduct(produkt));
                 return bestellung;
             });
         }

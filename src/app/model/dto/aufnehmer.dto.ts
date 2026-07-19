@@ -1,5 +1,5 @@
-export interface IAufnehmer {
-    id: number;
+export interface AufnehmerDto {
+    id: AufnehmerId;
     vorname: string;
     nachname: string;
     aktiv: boolean;

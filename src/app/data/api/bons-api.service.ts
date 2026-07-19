@@ -1,10 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Bestellposition } from 'src/app/model/bestellposition.model';
-import { IBonsFilter } from 'src/app/model/bons-filter.interface';
-import { IBonDruck } from 'src/app/model/i-bon-druck';
-import { IBon } from 'src/app/model/i-bon.model';
+import { BestellpositionDto } from '../../model/dto/bestellposition.dto';
+import { BonDruckDto } from '../../model/dto/bon-druck.dto';
+import { BonDto } from '../../model/dto/bon.dto';
+import { IBonsFilter } from '../../model/interfaces/i-bons-filter.interface';
 import { SettingsService } from '../settings.service';
 
 @Injectable({
@@ -14,8 +14,8 @@ export class BonsApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
 
-    public createStornoBon(bestellposition: Bestellposition) {
-        return this.http.post<IBon>(`${this.settings.apiBaseUrl()}/bons`, {
+    public createStornoBon(bestellposition: BestellpositionDto) {
+        return this.http.post<BonDto>(`${this.settings.apiBaseUrl()}/bons`, {
             type: 'storno',
             bestellungen_id: bestellposition.bestellungen_id,
             drucker_id: bestellposition.drucker_id,
@@ -40,18 +40,18 @@ export class BonsApiService {
         params = params.append('multipleDrucke', filter.multipleDrucke);
         params = params.append('limit', filter.limit);
 
-        return this.http.get<IBon[]>(`${this.settings.apiBaseUrl()}/bons`, { params });
+        return this.http.get<BonDto[]>(`${this.settings.apiBaseUrl()}/bons`, { params });
     }
 
-    public druckBonsOfBestellungById(id: number): Observable<IBonDruck[]> {
-        return this.http.post<IBonDruck[]>(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null);
+    public druckBonsOfBestellungById(id: BestellungId): Observable<BonDruckDto[]> {
+        return this.http.post<BonDruckDto[]>(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null);
     }
 
-    public druckBonsByIds(ids: number[]): Observable<IBonDruck[]> {
-        return this.http.post<IBonDruck[]>(`${this.settings.apiBaseUrl()}/print/bons`, ids);
+    public druckBonsByIds(ids: BonId[]): Observable<BonDruckDto[]> {
+        return this.http.post<BonDruckDto[]>(`${this.settings.apiBaseUrl()}/print/bons`, ids);
     }
 
-    public druckBonById(id: number): Observable<IBonDruck> {
-        return this.http.post<IBonDruck>(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null);
+    public druckBonById(id: BonId): Observable<BonDruckDto> {
+        return this.http.post<BonDruckDto>(`${this.settings.apiBaseUrl()}/print/bons/${id}`, null);
     }
 }

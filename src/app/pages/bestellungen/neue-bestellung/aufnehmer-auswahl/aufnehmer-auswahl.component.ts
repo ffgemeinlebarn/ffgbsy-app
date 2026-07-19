@@ -1,16 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
-import { AppService } from 'src/app/data/app.service';
+import { AppService } from '../../../../data/app.service';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-auswahl',
     templateUrl: './aufnehmer-auswahl.component.html',
     styleUrls: ['./aufnehmer-auswahl.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonFooter, IonButton, IonContent],
 })
 export class AufnehmerAuswahlComponent {
     private readonly appService = inject(AppService);
-
     public readonly aufnehmer = this.appService.aufnehmer;
 
     public selectAufnehmer() {

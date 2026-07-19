@@ -1,0 +1,14 @@
+type AufnehmerId = { __AufnehmerId: never } & number;
+type BestellungId = { __BestellungId: never } & number;
+type BestellpositionId = { __BestellpositionId: never } & number;
+type BonId = { __BonId: never } & number;
+type BonDruckId = { __BonDruckId: never } & number;
+type ProduktId = { __ProduktId: never } & number;
+type ProduktbereichId = { __ProduktbereichId: never } & number;
+type ProduktkategorieId = { __ProduktkategorieId: never } & number;
+type ProdukteinteilungId = { __ProdukteinteilungId: never } & number;
+type GrundproduktId = { __GrundproduktId: never } & number;
+type DruckerId = { __DruckerId: never } & number;
+type EigenschaftId = { __EigenschaftId: never } & number;
+type TischId = { __TischId: never } & number;
+type TischkategorieId = { __TischkategorieId: never } & number;

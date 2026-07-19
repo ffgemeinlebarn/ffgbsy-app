@@ -63,8 +63,7 @@ export const routes: Routes = [
                     },
                     {
                         path: 'produktbereiche/:id',
-                        loadComponent: () =>
-                            import('./pages/admin/daten/produktbereiche/produktbereiche-detail/produktbereiche-detail.page').then((m) => m.ProduktbereicheDetailPage),
+                        loadComponent: () => import('./pages/admin/daten/produktbereiche/produktbereiche-detail/produktbereiche-detail.page').then((m) => m.ProduktbereicheDetailPage),
                     },
                     {
                         path: 'grundprodukte',
@@ -76,25 +75,19 @@ export const routes: Routes = [
                     },
                     {
                         path: 'produkteinteilungen',
-                        loadComponent: () =>
-                            import('./pages/admin/daten/produkteinteilungen/produkteinteilungen-list/produkteinteilungen-list.page').then((m) => m.ProdukteinteilungenListPage),
+                        loadComponent: () => import('./pages/admin/daten/produkteinteilungen/produkteinteilungen-list/produkteinteilungen-list.page').then((m) => m.ProdukteinteilungenListPage),
                     },
                     {
                         path: 'produkteinteilungen/:id',
-                        loadComponent: () =>
-                            import('./pages/admin/daten/produkteinteilungen/produkteinteilungen-detail/produkteinteilungen-detail.page').then(
-                                (m) => m.ProdukteinteilungenDetailPage,
-                            ),
+                        loadComponent: () => import('./pages/admin/daten/produkteinteilungen/produkteinteilungen-detail/produkteinteilungen-detail.page').then((m) => m.ProdukteinteilungenDetailPage),
                     },
                     {
                         path: 'produktkategorien',
-                        loadComponent: () =>
-                            import('./pages/admin/daten/produktkategorien/produktkategorien-list/produktkategorien-list.page').then((m) => m.ProduktkategorienListPage),
+                        loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien-list/produktkategorien-list.page').then((m) => m.ProduktkategorienListPage),
                     },
                     {
                         path: 'produktkategorien/:id',
-                        loadComponent: () =>
-                            import('./pages/admin/daten/produktkategorien/produktkategorien-detail/produktkategorien-detail.page').then((m) => m.ProduktkategorienDetailPage),
+                        loadComponent: () => import('./pages/admin/daten/produktkategorien/produktkategorien-detail/produktkategorien-detail.page').then((m) => m.ProduktkategorienDetailPage),
                     },
                     {
                         path: 'produkte',
@@ -118,8 +111,7 @@ export const routes: Routes = [
                     },
                     {
                         path: 'tischkategorien/:id',
-                        loadComponent: () =>
-                            import('./pages/admin/daten/tischkategorien/tischkategorien-detail/tischkategorien-detail.page').then((m) => m.TischkategorienDetailPage),
+                        loadComponent: () => import('./pages/admin/daten/tischkategorien/tischkategorien-detail/tischkategorien-detail.page').then((m) => m.TischkategorienDetailPage),
                     },
                     {
                         path: 'tische',

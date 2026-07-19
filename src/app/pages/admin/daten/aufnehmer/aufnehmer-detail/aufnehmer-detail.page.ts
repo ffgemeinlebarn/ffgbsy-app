@@ -1,57 +1,24 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonSelect,
-    IonSelectOption,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
-import { AufnehmerApiService } from 'src/app/data/api/aufnehmer-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { IAufnehmer } from 'src/app/model/i-aufnehmer.model';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
+import { AufnehmerApiService } from '../../../../../data/api/aufnehmer-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { AufnehmerDto } from '../../../../../model/dto/aufnehmer.dto';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-detail',
     templateUrl: './aufnehmer-detail.page.html',
     styleUrls: ['./aufnehmer-detail.page.scss'],
-    imports: [
-        IonBackButton,
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonItem,
-        IonLabel,
-        IonList,
-        IonContent,
-        IonHeader,
-        IonTitle,
-        IonToolbar,
-        IonSelect,
-        IonSelectOption,
-        IonToggle,
-        IonInput,
-        FormsModule,
-        ReactiveFormsModule,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonBackButton, IonIcon, IonButton, IonButtons, IonItem, IonLabel, IonList, IonContent, IonHeader, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonToggle, IonInput, FormsModule, ReactiveFormsModule],
 })
 export class AufnehmerDetailPage {
     private readonly aufnehmerApiService = inject(AufnehmerApiService);
-    private frontendService = inject(FrontendService);
-    private formBuilder = inject(FormBuilder);
+    private readonly frontendService = inject(FrontendService);
+    private readonly formBuilder = inject(FormBuilder);
 
-    public id = input.required<number>();
-    public aufnehmer = signal<IAufnehmer>(null);
+    public id = input.required<AufnehmerId>();
+    public aufnehmer = signal<AufnehmerDto>(null);
 
     public form = this.formBuilder.group({
         vorname: ['', [Validators.required, Validators.minLength(1)]],
@@ -64,7 +31,7 @@ export class AufnehmerDetailPage {
         effect(() => this.load(this.id()));
     }
 
-    public load(id: number) {
+    public load(id: AufnehmerId) {
         this.aufnehmerApiService.read(id).subscribe((aufnehmer) => {
             this.aufnehmer.set(aufnehmer);
             this.form.patchValue(aufnehmer);

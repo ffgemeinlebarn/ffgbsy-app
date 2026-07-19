@@ -1,24 +1,16 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { displayEuroNumber } from './euro-preis.helper';
 
 @Pipe({
     name: 'euroPreis',
     standalone: true,
 })
 export class EuroPreisPipe implements PipeTransform {
-    transform(value: any, args?: any): any {
-        if (!args) args = { symbol: true, zerotext: true };
+    transform(value: any, args?: any): string {
+        if (args === undefined) args = {};
+        if (args?.symbol === undefined) args.symbol = '€';
+        if (args?.zerotext === undefined) args.zerotext = true;
 
-        let p = parseFloat(value);
-        let symbol = '';
-        if (args.symbol === true) symbol = '€ ';
-
-        if (p != 0 || args.zerotext == false) {
-            let str: string = String(p.toFixed(2));
-            str = str.replace('.', ',');
-
-            return symbol + str;
-        } else {
-            return 'kostenlos';
-        }
+        return displayEuroNumber(value, args.symbol, args.zerotext);
     }
 }

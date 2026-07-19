@@ -1,12 +1,13 @@
-import { Component, input } from '@angular/core';
-import { IonCard, IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/angular/standalone';
-import { EuroPreisPipe } from 'src/app/misc/euro-preis.pipe';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { EuroPreisPipe } from '../../misc/euro-preis.pipe';
+import { TileComponent } from '../tile/tile.component';
 
 @Component({
     selector: 'ffgbsy-keys-item',
     templateUrl: './keys-item.component.html',
     styleUrls: ['./keys-item.component.scss'],
-    imports: [IonCardSubtitle, IonCardTitle, IonCard, IonCardHeader, EuroPreisPipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [EuroPreisPipe, TileComponent],
 })
 export class KeysItemComponent {
     public label = input('');

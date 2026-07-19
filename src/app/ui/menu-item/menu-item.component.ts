@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonIcon, IonItem, IonLabel, IonMenuToggle } from '@ionic/angular/standalone';
 
@@ -6,6 +6,7 @@ import { IonIcon, IonItem, IonLabel, IonMenuToggle } from '@ionic/angular/standa
     selector: 'ffgbsy-menu-item',
     templateUrl: './menu-item.component.html',
     styleUrls: ['./menu-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonIcon, IonMenuToggle, IonItem, IonLabel, IonIcon, RouterLink],
 })
 export class MenuItemComponent {

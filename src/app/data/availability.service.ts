@@ -2,10 +2,10 @@ import { formatDate } from '@angular/common';
 import { HttpClient, HttpContext } from '@angular/common/http';
 import { Injectable, WritableSignal, computed, effect, inject, signal } from '@angular/core';
 import { map, switchMap, tap } from 'rxjs';
-import { AvailabilityCheck } from 'src/app/model/availability-check.model';
-import { IDrucker } from 'src/app/model/i-drucker.class';
 import { DataService } from '../data/data.service';
 import { LOADING_ANIMATION } from '../misc/http-context-tokens';
+import { AvailabilityCheck } from '../model/business/availability-check.model';
+import { DruckerDto } from '../model/dto/drucker.dto';
 import { DruckerApiService } from './api/drucker-api.service';
 import { SettingsService } from './settings.service';
 
@@ -29,19 +29,11 @@ export class AvailabilityService {
     public tischeDataAvailability = signal(new AvailabilityCheck<number>(0));
     public lookupDataGrossAvailibility = computed(() => {
         this.data.lookupDataSetted();
-        return (
-            this.aufnehmerDataAvailability().isSuccessful() &&
-            this.produktbereicheDataAvailability().isSuccessful() &&
-            this.produktkategorienDataAvailability().isSuccessful() &&
-            this.produkteinteilungenDataAvailability().isSuccessful() &&
-            this.produkteDataAvailability().isSuccessful() &&
-            this.tischkategorienDataAvailability().isSuccessful() &&
-            this.tischeDataAvailability().isSuccessful()
-        );
+        return this.aufnehmerDataAvailability().isSuccessful() && this.produktbereicheDataAvailability().isSuccessful() && this.produktkategorienDataAvailability().isSuccessful() && this.produkteinteilungenDataAvailability().isSuccessful() && this.produkteDataAvailability().isSuccessful() && this.tischkategorienDataAvailability().isSuccessful() && this.tischeDataAvailability().isSuccessful();
     });
     public lookupDataGrossAvailibilityDatetime = computed<string>(() => (this.lookupDataGrossAvailibility() ? formatDate(new Date(), 'dd.MM.yyyy HH:mm:ss', 'en-US') : null));
 
-    public druckerAvailabilities = signal<AvailabilityCheck<IDrucker>[]>([]);
+    public druckerAvailabilities = signal<AvailabilityCheck<DruckerDto>[]>([]);
     public druckerGrossAvailability = computed(() => this.druckerAvailabilities().filter((d) => !d.isSuccessful()).length == 0 && this.druckerAvailabilities().length > 0);
     public apiAvailability = signal(new AvailabilityCheck<string>('API'));
 
@@ -80,14 +72,14 @@ export class AvailabilityService {
         this.drucker
             .readAll()
             .pipe(
-                map((d) => d.map((d) => new AvailabilityCheck<IDrucker>(d, 'busy'))),
+                map((d) => d.map((d) => new AvailabilityCheck<DruckerDto>(d, 'busy'))),
                 tap((checks) => this.druckerAvailabilities.set(checks)),
                 switchMap(() =>
-                    this.http.get<{ drucker: IDrucker; result: boolean }[]>(`${this.settings.apiBaseUrl()}/status/drucker`, {
+                    this.http.get<{ drucker: DruckerDto; result: boolean }[]>(`${this.settings.apiBaseUrl()}/status/drucker`, {
                         context: new HttpContext().set(LOADING_ANIMATION, false),
                     }),
                 ),
-                map((r) => r.map((r) => new AvailabilityCheck<IDrucker>(r.drucker, r.result ? 'success' : 'error'))),
+                map((r) => r.map((r) => new AvailabilityCheck<DruckerDto>(r.drucker, r.result ? 'success' : 'error'))),
             )
             .subscribe((checks) => this.druckerAvailabilities.set(checks));
     }

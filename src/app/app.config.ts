@@ -20,7 +20,9 @@ export const appConfig: ApplicationConfig = {
         importProvidersFrom(FormsModule),
         importProvidersFrom(CommonModule),
         provideCharts(withDefaultRegisterables()),
-        provideIonicAngular(),
+        provideIonicAngular({
+            useSetInputAPI: true,
+        }),
         provideHttpClient(withFetch(), withInterceptors([httpInterceptor])),
         provideRouter(routes, withComponentInputBinding()),
     ],

@@ -27,45 +27,11 @@
             }
 
             <div class="tiles">
-                <ffgbsy-init-tile
-                    title="Aufnehmer"
-                    [success]="isAufnehmerSelected()"
-                    (click)="selectAufnehmer()"
-                    [subtitle]="aufnehmerNameForSubtitle()"
-                    iconName="people-outline"
-                ></ffgbsy-init-tile>
-                <ffgbsy-init-tile
-                    title="Gerät"
-                    [success]="isDeviceNameSet()"
-                    unsuccesfulFlag="danger"
-                    routerLink="/settings"
-                    [subtitle]="deviceNameForSubtitle()"
-                    iconName="phone-portrait-outline"
-                ></ffgbsy-init-tile>
-                <ffgbsy-init-tile
-                    title="Lookup Daten"
-                    [success]="isLookupDataAvailable()"
-                    unsuccesfulFlag="danger"
-                    routerLink="/systemstatus"
-                    [subtitle]="dataLastSyncedForSubtitle()"
-                    iconName="cube-outline"
-                ></ffgbsy-init-tile>
-                <ffgbsy-init-tile
-                    title="API"
-                    [success]="isApiAvailable()"
-                    unsuccesfulFlag="danger"
-                    routerLink="/systemstatus"
-                    [subtitle]="apiAvailabilityStatusForSubtitle()"
-                    iconName="cloud-outline"
-                ></ffgbsy-init-tile>
-                <ffgbsy-init-tile
-                    title="Drucker"
-                    [success]="areDruckerAvailable()"
-                    unsuccesfulFlag="warn"
-                    routerLink="/systemstatus"
-                    [subtitle]="druckerAvailabilityStatusForSubtitle()"
-                    iconName="print-outline"
-                ></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="Aufnehmer" [success]="isAufnehmerSelected()" (click)="selectAufnehmer()" [subtitle]="aufnehmerNameForSubtitle()" iconName="people-outline"></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="Gerät" [success]="isDeviceNameSet()" unsuccesfulFlag="error" routerLink="/settings" [subtitle]="deviceNameForSubtitle()" iconName="phone-portrait-outline"></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="Lookup Daten" [success]="isLookupDataAvailable()" unsuccesfulFlag="error" routerLink="/systemstatus" [subtitle]="dataLastSyncedForSubtitle()" iconName="cube-outline"></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="API" [success]="isApiAvailable().isSuccessful()" unsuccesfulFlag="error" routerLink="/systemstatus" [subtitle]="apiAvailabilityStatusForSubtitle()" iconName="cloud-outline"></ffgbsy-init-tile>
+                <ffgbsy-init-tile title="Drucker" [success]="areDruckerAvailable()" unsuccesfulFlag="warn" routerLink="/systemstatus" [subtitle]="druckerAvailabilityStatusForSubtitle()" iconName="print-outline"></ffgbsy-init-tile>
             </div>
         </div>
     </div>

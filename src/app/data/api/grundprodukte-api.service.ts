@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IGrundprodukt } from 'src/app/model/i-grundprodukt.class';
+import { GrundproduktDto } from '../../model/dto/grundprodukt.dto';
 import { SettingsService } from '../settings.service';
 
 @Injectable({
@@ -11,23 +11,23 @@ export class GrundprodukteApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
 
-    public create(grundprodukt: IGrundprodukt) {
-        return this.http.post<IGrundprodukt>(`${this.settings.apiBaseUrl()}/grundprodukte`, grundprodukt);
+    public create(grundprodukt: GrundproduktDto) {
+        return this.http.post<GrundproduktDto>(`${this.settings.apiBaseUrl()}/grundprodukte`, grundprodukt);
     }
 
-    public readAll(): Observable<IGrundprodukt[]> {
-        return this.http.get<IGrundprodukt[]>(`${this.settings.apiBaseUrl()}/grundprodukte`);
+    public readAll(): Observable<GrundproduktDto[]> {
+        return this.http.get<GrundproduktDto[]>(`${this.settings.apiBaseUrl()}/grundprodukte`);
     }
 
-    public read(id: number) {
-        return this.http.get<IGrundprodukt>(`${this.settings.apiBaseUrl()}/grundprodukte/${id}`);
+    public read(id: GrundproduktId) {
+        return this.http.get<GrundproduktDto>(`${this.settings.apiBaseUrl()}/grundprodukte/${id}`);
     }
 
-    public update(grundprodukt: IGrundprodukt) {
-        return this.http.put<IGrundprodukt>(`${this.settings.apiBaseUrl()}/grundprodukte/${grundprodukt.id}`, grundprodukt);
+    public update(grundprodukt: GrundproduktDto) {
+        return this.http.put<GrundproduktDto>(`${this.settings.apiBaseUrl()}/grundprodukte/${grundprodukt.id}`, grundprodukt);
     }
 
-    public delete(id: number) {
+    public delete(id: GrundproduktId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/grundprodukte/${id}`);
     }
 }

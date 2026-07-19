@@ -4,7 +4,6 @@
         "strict": false,
         "forceConsistentCasingInFileNames": true,
         "skipLibCheck": true,
-        "baseUrl": "./",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
         "esModuleInterop": true,
@@ -15,9 +14,8 @@
         "experimentalDecorators": true,
         "importHelpers": true,
         "target": "ES2022",
-        "typeRoots": [
-            "node_modules/@types"
-        ],
-        "useDefineForClassFields": false
+        "typeRoots": ["node_modules/@types"],
+        "useDefineForClassFields": false,
+        "rootDir": "./src"
     }
 }

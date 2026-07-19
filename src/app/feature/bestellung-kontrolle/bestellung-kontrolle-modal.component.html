@@ -19,21 +19,21 @@
 
     <h2>Bestellpositionen</h2>
     <ion-list lines="full">
-        @for (bp of bestellung()?.bestellpositionen.slice().reverse(); track bp) {
+        @for (bp of bestellung()?.bestellpositionen().slice().reverse(); track bp) {
             <ion-item>
                 <ion-label text-wrap>
                     <h3>
-                        <strong>{{ bp.anzahl }}</strong> {{ bp.produkt.name }}
+                        <strong>{{ bp.anzahl() }}</strong> {{ bp.produkt.name }}
                     </h3>
-                    <p>{{ bp.produkt.preis * bp.anzahl | euroPreis }}</p>
-                    @if (bp.display.eigenschaften.mit.length) {
-                        <p><strong>Mit:</strong> {{ bp.display.eigenschaften.mit.join(", ") }}</p>
+                    <p>{{ bp.summe() | euroPreis }}</p>
+                    @if (bp.hasEigenschaftenAbweichendMit()) {
+                        <p><strong>Mit:</strong> {{ bp.eigenschaftenAbweichendMitDisplay() }}</p>
                     }
-                    @if (bp.display.eigenschaften.ohne.length) {
-                        <p><strong>Ohne:</strong> {{ bp.display.eigenschaften.ohne.join(", ") }}</p>
+                    @if (bp.hasEigenschaftenAbweichendOhne()) {
+                        <p><strong>Ohne:</strong> {{ bp.eigenschaftenAbweichendOhneDisplay() }}</p>
                     }
-                    @if (bp.notiz) {
-                        <p><strong>Notiz:</strong> {{ bp.notiz }}</p>
+                    @if (bp.notiz()) {
+                        <p><strong>Notiz:</strong> {{ bp.notiz() }}</p>
                     }
                 </ion-label>
             </ion-item>

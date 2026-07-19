@@ -1,12 +1,12 @@
-import { IDrucker } from './i-drucker.class';
+import { DruckerDto } from './drucker.dto';
 
-export interface IBonDruck {
-    id: number;
-    bons_id: number;
+export interface BonDruckDto {
+    id: BonDruckId;
+    bons_id: BonId;
     datum: Date | string;
     laufnummer: boolean;
     timestamp: Date | string | null;
     success: boolean;
     message: string | null;
-    drucker: IDrucker;
+    drucker: DruckerDto;
 }

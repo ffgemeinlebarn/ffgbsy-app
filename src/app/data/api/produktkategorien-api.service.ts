@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IProduktkategorie } from 'src/app/model/i-produktkategorie.interface';
+import { ProduktkategorieDto } from '../../model/dto/produktkategorie.dto';
 import { SettingsService } from '../settings.service';
 
 @Injectable({
@@ -11,23 +11,23 @@ export class ProduktkategorienApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
 
-    public create(produktkategorien: IProduktkategorie) {
-        return this.http.post<IProduktkategorie>(`${this.settings.apiBaseUrl()}/produktkategorien`, produktkategorien);
+    public create(produktkategorien: ProduktkategorieDto) {
+        return this.http.post<ProduktkategorieDto>(`${this.settings.apiBaseUrl()}/produktkategorien`, produktkategorien);
     }
 
-    public readAll(): Observable<IProduktkategorie[]> {
-        return this.http.get<IProduktkategorie[]>(`${this.settings.apiBaseUrl()}/produktkategorien`);
+    public readAll(): Observable<ProduktkategorieDto[]> {
+        return this.http.get<ProduktkategorieDto[]>(`${this.settings.apiBaseUrl()}/produktkategorien`);
     }
 
-    public read(id: number) {
-        return this.http.get<IProduktkategorie>(`${this.settings.apiBaseUrl()}/produktkategorien/${id}`);
+    public read(id: ProduktkategorieId) {
+        return this.http.get<ProduktkategorieDto>(`${this.settings.apiBaseUrl()}/produktkategorien/${id}`);
     }
 
-    public update(produktkategorien: IProduktkategorie) {
-        return this.http.put<IProduktkategorie>(`${this.settings.apiBaseUrl()}/produktkategorien/${produktkategorien.id}`, produktkategorien);
+    public update(produktkategorien: ProduktkategorieDto) {
+        return this.http.put<ProduktkategorieDto>(`${this.settings.apiBaseUrl()}/produktkategorien/${produktkategorien.id}`, produktkategorien);
     }
 
-    public delete(id: number) {
+    public delete(id: ProduktkategorieId) {
         return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/produktkategorien/${id}`);
     }
 }

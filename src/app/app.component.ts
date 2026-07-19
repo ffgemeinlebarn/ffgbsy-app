@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { IonApp, IonContent, IonMenu, IonProgressBar, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as allIonicIcons from 'ionicons/icons';
@@ -11,6 +11,7 @@ import { MenuComponent } from './feature/menu/menu.component';
     selector: 'ffgbsy-root',
     templateUrl: 'app.component.html',
     styleUrls: ['app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonProgressBar, NgClass, IonApp, IonSplitPane, IonMenu, IonContent, IonRouterOutlet, MenuComponent],
 })
 export class AppComponent {

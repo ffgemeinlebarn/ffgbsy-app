@@ -1,24 +1,25 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, effect, inject, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, output, signal } from '@angular/core';
 import { IonButton, IonContent, IonFooter } from '@ionic/angular/standalone';
-import { DataService } from 'src/app/data/data.service';
-import { ITisch } from 'src/app/model/i-tisch.interface';
-import { ITischkategorie } from 'src/app/model/i-tischkategorie.interface';
+import { DataService } from '../../../../data/data.service';
+import { TischDto } from '../../../../model/dto/tisch.dto';
+import { TischkategorieDto } from '../../../../model/dto/tischkategorie.dto';
 
 @Component({
     selector: 'app-tisch-auswahl',
     templateUrl: './tisch-auswahl.component.html',
     styleUrls: ['./tisch-auswahl.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonContent, IonFooter, IonButton, NgClass],
 })
 export class TischAuswahlComponent {
     private data = inject(DataService);
-    public onTischSelected = output<ITisch>();
+    public onTischSelected = output<TischDto>();
 
     public tischkategorien = this.data.tischkategorien;
     public filtredTischkategorienToDisplay = computed(() => this.tischkategorien()?.filter((tischkategorie) => tischkategorie.aktiv) ?? []);
-    public selectedTischkategorie = signal<ITischkategorie | null>(null);
-    public filtredTischeToDisplay = signal<ITisch[]>([]);
+    public selectedTischkategorie = signal<TischkategorieDto | null>(null);
+    public filtredTischeToDisplay = signal<TischDto[]>([]);
 
     constructor() {
         effect(() => {
@@ -30,11 +31,11 @@ export class TischAuswahlComponent {
         });
     }
 
-    public selectTischkategorie(tischkategorie: ITischkategorie) {
+    public selectTischkategorie(tischkategorie: TischkategorieDto) {
         this.selectedTischkategorie.set(tischkategorie);
     }
 
-    public selectTisch(tisch: ITisch) {
+    public selectTisch(tisch: TischDto) {
         this.onTischSelected.emit(tisch);
     }
 }

@@ -1,8 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { ILocalSettings } from 'src/app/model/i-local-settings.interface';
-
 import { Storage } from '@ionic/storage';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
+import { ILocalSettings } from '../model/interfaces/i-local-settings.interface';
 import { FrontendService } from './frontend.service';
 
 @Injectable({

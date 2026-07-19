@@ -1,13 +1,14 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonChip, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { AvailabilityService } from 'src/app/data/availability.service';
-import { DataService } from 'src/app/data/data.service';
-import { StatusListItemComponent } from 'src/app/ui/status-list-item/status-list-item.component';
+import { AvailabilityService } from '../../data/availability.service';
+import { DataService } from '../../data/data.service';
+import { StatusListItemComponent } from '../../ui/status-list-item/status-list-item.component';
 
 @Component({
     selector: 'ffgbsy-systemstatus',
     templateUrl: './systemstatus.page.html',
     styleUrls: ['./systemstatus.page.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonLabel, IonItem, IonHeader, IonToolbar, IonMenuButton, IonTitle, IonContent, IonList, StatusListItemComponent, IonChip, IonIcon],
 })
 export class SystemstatusPage {

@@ -19,7 +19,7 @@
                 @for (tisch of tischkategorie.tische; track tisch.id) {
                     <ion-item [routerLink]="[tisch.id]" [button]="true">
                         <ion-label>{{ tisch.reihe }}{{ tisch.nummer }}</ion-label>
-                        <ion-note slot="end">{{ tisch.sortierindex }}</ion-note>
+                        <ion-note slot="end">{{ tisch.sortierIndex }}</ion-note>
                         <ion-chip slot="end" [color]="tisch.aktiv ? 'success' : 'warning'">{{ tisch.aktiv ? "aktiv" : "inaktiv" }}</ion-chip>
                     </ion-item>
                 }

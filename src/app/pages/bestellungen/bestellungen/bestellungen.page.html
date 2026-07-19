@@ -5,7 +5,7 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content [hidden]="bestellungen?.length > 0">
+<ion-content [hidden]="$safeNavigationMigration(bestellungen?.length) > 0">
     <div class="center-wrapper">
         <div class="centered ion-text-center">
             <ion-icon name="search-outline"></ion-icon>
@@ -14,18 +14,19 @@
     </div>
 </ion-content>
 
-@if (bestellungen) {
+@if (bestellungen().length) {
     <ion-content>
         <ion-list lines="full">
-            @for (bestellung of bestellungen; track bestellung) {
+            @for (bestellung of bestellungen(); track bestellung) {
                 <ion-item [routerLink]="['/bestellungen', bestellung.id]">
                     <ion-label>
                         <h2>{{ bestellung?.tisch?.reihe }} {{ bestellung?.tisch?.nummer }}</h2>
                         <p>
-                            Datum: <strong>{{ bestellung?.timestamp_beendet | date: "dd.MM.yyyy" }} um {{ bestellung?.timestamp_beendet | date: "HH:mm:ss" }} Uhr</strong>
+                            Datum:
+                            <strong>{{ $safeNavigationMigration(bestellung?.timestamp_beendet) | date: "dd.MM.yyyy" }} um {{ $safeNavigationMigration(bestellung?.timestamp_beendet) | date: "HH:mm:ss" }} Uhr</strong>
                         </p>
                         <p>
-                            Summe: <strong>{{ bestellung?.summe | euroPreis }}</strong>
+                            Summe: <strong>{{ $safeNavigationMigration(bestellung?.summe) | euroPreis }}</strong>
                         </p>
                     </ion-label>
                     <ion-note slot="end">{{ bestellung?.aufnehmer?.vorname }} {{ bestellung?.aufnehmer?.nachname }}</ion-note>

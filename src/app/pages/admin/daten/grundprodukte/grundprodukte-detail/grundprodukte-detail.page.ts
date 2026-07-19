@@ -1,58 +1,28 @@
-import { Component, effect, inject, input, signal } from '@angular/core';
-import { IGrundprodukt } from 'src/app/model/i-grundprodukt.class';
+import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import {
-    IonBackButton,
-    IonButton,
-    IonButtons,
-    IonContent,
-    IonHeader,
-    IonIcon,
-    IonInput,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonTitle,
-    IonToggle,
-    IonToolbar,
-} from '@ionic/angular/standalone';
-import { GrundprodukteApiService } from 'src/app/data/api/grundprodukte-api.service';
-import { FrontendService } from 'src/app/data/frontend.service';
-import { PageSpinnerComponent } from 'src/app/ui/page-spinner/page-spinner.component';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
+import { GrundprodukteApiService } from '../../../../../data/api/grundprodukte-api.service';
+import { FrontendService } from '../../../../../data/frontend.service';
+import { GrundproduktDto } from '../../../../../model/dto/grundprodukt.dto';
+import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinner.component';
 
 @Component({
     selector: 'ffgbsy-grundprodukte-detail',
     templateUrl: './grundprodukte-detail.page.html',
     styleUrls: ['./grundprodukte-detail.page.scss'],
-    imports: [
-        IonLabel,
-        IonList,
-        IonItem,
-        IonContent,
-        IonIcon,
-        IonButton,
-        IonButtons,
-        IonTitle,
-        IonBackButton,
-        IonToolbar,
-        IonHeader,
-        IonToggle,
-        IonInput,
-        FormsModule,
-        ReactiveFormsModule,
-        PageSpinnerComponent,
-    ],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [IonLabel, IonList, IonItem, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonToggle, IonInput, FormsModule, ReactiveFormsModule, PageSpinnerComponent],
 })
 export class GrundprodukteDetailPage {
     private grundprodukteApiService = inject(GrundprodukteApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 
-    public id = input.required<number>();
+    public id = input.required<GrundproduktId>();
     public showBestand = signal(true);
 
-    public grundprodukt = signal<IGrundprodukt>(null);
+    public grundprodukt = signal<GrundproduktDto>(null);
     public form: FormGroup = this.formBuilder.group({
         name: ['', [Validators.required, Validators.minLength(1)]],
         unlimitiert: [true, [Validators.required]],
@@ -65,8 +35,8 @@ export class GrundprodukteDetailPage {
         this.form.controls['unlimitiert'].valueChanges.subscribe((isUnlimitiert) => this.showBestand.set(!isUnlimitiert));
     }
 
-    private load(id: number) {
-        this.grundprodukteApiService.read(id).subscribe((grundprodukt: IGrundprodukt) => {
+    private load(id: GrundproduktId) {
+        this.grundprodukteApiService.read(id).subscribe((grundprodukt: GrundproduktDto) => {
             this.grundprodukt.set(grundprodukt);
             this.showBestand.set(grundprodukt.bestand != null);
             this.form.patchValue({
