@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { DataLoadedReportModalComponent } from '../feature/data-loaded-report-modal/data-loaded-report-modal.component';
-import { PersonDto } from '../model/dto/aufnehmer.dto';
+import { PersonDto } from '../model/dto/person.dto';
 import { ProduktDto } from '../model/dto/produkt.dto';
 import { ProduktbereichDto } from '../model/dto/produktbereich.dto';
 import { ProdukteinteilungDto } from '../model/dto/produkteinteilung.dto';

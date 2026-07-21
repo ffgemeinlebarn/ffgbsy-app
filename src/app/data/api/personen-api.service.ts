@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PersonDto } from '../../model/dto/aufnehmer.dto';
+import { PersonDto } from '../../model/dto/person.dto';
 import { SettingsService } from '../settings.service';
 
 @Injectable({

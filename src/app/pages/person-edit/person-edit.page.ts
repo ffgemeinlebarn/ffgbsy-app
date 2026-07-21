@@ -6,17 +6,17 @@ import { AppService } from '../../data/app.service';
 import { FrontendService } from '../../data/frontend.service';
 
 @Component({
-    selector: 'ffgbsy-aufnehmer-edit',
-    templateUrl: './aufnehmer-edit.page.html',
-    styleUrls: ['./aufnehmer-edit.page.scss'],
+    selector: 'ffgbsy-person-edit',
+    templateUrl: './person-edit.page.html',
+    styleUrls: ['./person-edit.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonInput, FormsModule, IonHeader, IonToolbar, IonMenuButton, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItemDivider, IonLabel, IonItem, IonSelect, IonSelectOption, ReactiveFormsModule],
 })
-export class AufnehmerEditPage {
-    private appService = inject(AppService);
+export class PersonEditPage {
+    private readonly appService = inject(AppService);
     private readonly aufnehmerApiService = inject(PersonenApiService);
-    private frontendService = inject(FrontendService);
-    private formBuilder = inject(FormBuilder);
+    private readonly frontendService = inject(FrontendService);
+    private readonly formBuilder = inject(FormBuilder);
 
     public aufnehmer = this.appService.aufnehmer;
 

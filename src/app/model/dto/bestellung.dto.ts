@@ -1,6 +1,6 @@
-import { PersonDto } from './aufnehmer.dto';
 import { BestellpositionDto } from './bestellposition.dto';
 import { BonDto } from './bon.dto';
+import { PersonDto } from './person.dto';
 import { TischDto } from './tisch.dto';
 
 export interface BestellungDto {

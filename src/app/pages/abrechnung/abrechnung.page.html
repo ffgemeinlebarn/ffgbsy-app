@@ -1,0 +1,42 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Abrechnug</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+@if (abrechnung()) {
+    <ion-content>
+        <ion-list lines="full">
+            <ion-item>
+                <ion-badge slot="end" color="primary">12 Bons</ion-badge>
+                <ion-badge slot="end" color="danger">€ 376,20</ion-badge>
+                <ion-label> Jakob Vesely</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+    <ion-footer class="processing">
+        <div class="numbers">
+            <div class="summe">
+                <h2>{{ abrechnung().summe() | euroPreis: { zerotext: false } }}</h2>
+                <p>Summe</p>
+            </div>
+            <div class="bons">
+                <h2>{{ abrechnung().bonsAnzahl() }}</h2>
+                <p>Bons</p>
+            </div>
+        </div>
+        <div class="person">
+            {{ abrechnung().person }}
+        </div>
+        <ion-button color="warning"> Buchen </ion-button>
+    </ion-footer>
+} @else {
+    <ion-content>
+        <div class="waiting">
+            <ion-spinner name="dots"></ion-spinner>
+            <span>Warte auf Kellner:innen Scan</span>
+        </div>
+    </ion-content>
+}

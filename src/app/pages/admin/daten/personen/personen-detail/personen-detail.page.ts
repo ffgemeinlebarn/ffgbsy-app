@@ -3,16 +3,16 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
 import { PersonenApiService } from '../../../../../data/api/personen-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
-import { PersonDto } from '../../../../../model/dto/aufnehmer.dto';
+import { PersonDto } from '../../../../../model/dto/person.dto';
 
 @Component({
-    selector: 'ffgbsy-aufnehmer-detail',
-    templateUrl: './aufnehmer-detail.page.html',
-    styleUrls: ['./aufnehmer-detail.page.scss'],
+    selector: 'ffgbsy-personen-detail',
+    templateUrl: './personen-detail.page.html',
+    styleUrls: ['./personen-detail.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonBackButton, IonIcon, IonButton, IonButtons, IonItem, IonLabel, IonList, IonContent, IonHeader, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonToggle, IonInput, FormsModule, ReactiveFormsModule],
 })
-export class AufnehmerDetailPage {
+export class PersonenDetailPage {
     private readonly aufnehmerApiService = inject(PersonenApiService);
     private readonly frontendService = inject(FrontendService);
     private readonly formBuilder = inject(FormBuilder);

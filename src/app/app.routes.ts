@@ -19,12 +19,16 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/bestellungen/bestellungen-detail/bestellungen-detail.page').then((m) => m.BestellungenDetailPage),
     },
     {
+        path: 'abrechnung',
+        loadComponent: () => import('./pages/abrechnung/abrechnung.page').then((m) => m.AbrechnungPage),
+    },
+    {
         path: 'systemstatus',
         loadComponent: () => import('./pages/systemstatus/systemstatus.page').then((m) => m.SystemstatusPage),
     },
     {
         path: 'aufnehmer-edit',
-        loadComponent: () => import('./pages/aufnehmer-edit/aufnehmer-edit.page').then((m) => m.AufnehmerEditPage),
+        loadComponent: () => import('./pages/person-edit/person-edit.page').then((m) => m.PersonEditPage),
     },
     {
         path: 'admin',
@@ -99,11 +103,11 @@ export const routes: Routes = [
                     },
                     {
                         path: 'aufnehmer',
-                        loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-list/aufnehmer-list.page').then((m) => m.AufnehmerListPage),
+                        loadComponent: () => import('./pages/admin/daten/personen/personen-list/personen-list.page').then((m) => m.PersonenListPage),
                     },
                     {
                         path: 'aufnehmer/:id',
-                        loadComponent: () => import('./pages/admin/daten/aufnehmer/aufnehmer-detail/aufnehmer-detail.page').then((m) => m.AufnehmerDetailPage),
+                        loadComponent: () => import('./pages/admin/daten/personen/personen-detail/personen-detail.page').then((m) => m.PersonenDetailPage),
                     },
                     {
                         path: 'tischkategorien',

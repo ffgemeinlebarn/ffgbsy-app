@@ -1,4 +1,4 @@
-import { PersonDto } from '../dto/aufnehmer.dto';
+import { PersonDto } from '../dto/person.dto';
 import { ProduktDto } from '../dto/produkt.dto';
 import { ProduktbereichDto } from '../dto/produktbereich.dto';
 import { ProdukteinteilungDto } from '../dto/produkteinteilung.dto';

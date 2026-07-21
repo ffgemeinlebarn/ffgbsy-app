@@ -1,8 +1,8 @@
 import { computed, signal } from '@angular/core';
 import { parseZone } from 'moment';
-import { PersonDto } from '../dto/aufnehmer.dto';
 import { BestellungDto } from '../dto/bestellung.dto';
 import { BonDto } from '../dto/bon.dto';
+import { PersonDto } from '../dto/person.dto';
 import { TischDto } from '../dto/tisch.dto';
 import { Bestellstatus } from '../types/bestellstatus.type';
 import { Bestellposition } from './bestellposition.model';

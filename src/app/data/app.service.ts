@@ -7,8 +7,8 @@ import { BestellungspositionEditModalComponent } from '../feature/bestellungspos
 import { SelectAufnehmerModalComponent } from '../feature/select-aufnehmer-modal/select-aufnehmer-modal.component';
 import { Bestellposition } from '../model/business/bestellposition.model';
 import { Bestellung } from '../model/business/bestellung.model';
-import { PersonDto } from '../model/dto/aufnehmer.dto';
 import { BestellungDto } from '../model/dto/bestellung.dto';
+import { PersonDto } from '../model/dto/person.dto';
 import { BestellungenApiService } from './api/bestellungen-api.service';
 import { BonsApiService } from './api/bons-api.service';
 import { AvailabilityService } from './availability.service';

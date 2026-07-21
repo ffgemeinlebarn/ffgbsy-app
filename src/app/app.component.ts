@@ -1,5 +1,5 @@
 import { NgClass } from '@angular/common';
-import { Component, computed, inject, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { IonApp, IonContent, IonMenu, IonProgressBar, IonRouterOutlet, IonSplitPane } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import * as allIonicIcons from 'ionicons/icons';
