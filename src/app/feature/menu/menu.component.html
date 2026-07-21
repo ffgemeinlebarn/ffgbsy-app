@@ -2,6 +2,7 @@
     <ffgbsy-menu-item icon="home-outline" link="/">Start</ffgbsy-menu-item>
     <ffgbsy-menu-item icon="create-outline" link="/neue-bestellung">Neue Bestellung</ffgbsy-menu-item>
     <ffgbsy-menu-item icon="file-tray-outline" link="/bestellungen">Bestellungen</ffgbsy-menu-item>
+    <ffgbsy-menu-item icon="cash-outline" link="/abrechnung">Abrechnung</ffgbsy-menu-item>
     <ffgbsy-menu-item icon="pulse-outline" link="/systemstatus">Systemstatus</ffgbsy-menu-item>
     <ffgbsy-menu-item icon="settings-outline" link="/settings">Systemeinstellungen</ffgbsy-menu-item>
     <ffgbsy-menu-item icon="person-outline" link="/aufnehmer-edit" [disabled]="!aufnehmer()">
@@ -24,7 +25,7 @@
 
     @if (bonDebug()) {
         <h2 class="ion-padding">Fehlerbehebung</h2>
-        <ffgbsy-menu-item icon="document-text-outline" link="/admin/fehlerbehebungen/failed-bons">Bon Drucke</ffgbsy-menu-item>
+        <ffgbsy-menu-item icon="receipt-outline" link="/admin/fehlerbehebungen/failed-bons">Bon Drucke</ffgbsy-menu-item>
         <ffgbsy-menu-item icon="print-outline" link="/admin/fehlerbehebungen/drucker">Drucker Einstellungen</ffgbsy-menu-item>
     }
 

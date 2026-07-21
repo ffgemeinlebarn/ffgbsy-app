@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { AppService } from '../../data/app.service';
 import { DataService } from '../../data/data.service';
-import { AufnehmerDto } from '../../model/dto/aufnehmer.dto';
+import { PersonDto } from '../../model/dto/aufnehmer.dto';
 
 @Component({
     selector: 'app-select-aufnehmer-modal',
@@ -22,7 +22,7 @@ export class SelectAufnehmerModalComponent {
         return this.modalController.dismiss(null, 'cancel');
     }
 
-    public select(aufnehmer: AufnehmerDto) {
+    public select(aufnehmer: PersonDto) {
         this.app.selectAufnehmer(aufnehmer);
         this.close();
     }

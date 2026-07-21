@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { DataLoadedReportModalComponent } from '../feature/data-loaded-report-modal/data-loaded-report-modal.component';
-import { AufnehmerDto } from '../model/dto/aufnehmer.dto';
+import { PersonDto } from '../model/dto/aufnehmer.dto';
 import { ProduktDto } from '../model/dto/produkt.dto';
 import { ProduktbereichDto } from '../model/dto/produktbereich.dto';
 import { ProdukteinteilungDto } from '../model/dto/produkteinteilung.dto';
@@ -20,7 +20,7 @@ export class DataService {
     private http = inject(HttpClient);
     private settings = inject(SettingsService);
 
-    public aufnehmer = signal<AufnehmerDto[]>([]);
+    public aufnehmer = signal<PersonDto[]>([]);
     public produktbereiche = signal<ProduktbereichDto[]>([]);
     public produktkategorien = signal<ProduktkategorieDto[]>([]);
     public produkteinteilungen = signal<ProdukteinteilungDto[]>([]);
