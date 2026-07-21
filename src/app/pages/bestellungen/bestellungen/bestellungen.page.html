@@ -4,17 +4,16 @@
         <ion-title>Bestellungen</ion-title>
     </ion-toolbar>
 </ion-header>
-
-<ion-content [hidden]="$safeNavigationMigration(bestellungen?.length) > 0">
-    <div class="center-wrapper">
-        <div class="centered ion-text-center">
-            <ion-icon name="search-outline"></ion-icon>
-            <p>Benutzen Sie die untenstehende Filter- und Suchfunktion, um Bestellungen zu finden!</p>
+@if (!bestellungen().length) {
+    <ion-content>
+        <div class="center-wrapper">
+            <div class="centered ion-text-center">
+                <ion-icon name="search-outline"></ion-icon>
+                <p>Benutzen Sie die untenstehende Filter- und Suchfunktion, um Bestellungen zu finden!</p>
+            </div>
         </div>
-    </div>
-</ion-content>
-
-@if (bestellungen().length) {
+    </ion-content>
+} @else {
     <ion-content>
         <ion-list lines="full">
             @for (bestellung of bestellungen(); track bestellung) {
