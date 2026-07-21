@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { DataService } from '../data/data.service';
 import { BestellungspositionEditModalComponent } from '../feature/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
 import { SelectAufnehmerModalComponent } from '../feature/select-aufnehmer-modal/select-aufnehmer-modal.component';
+import { Abrechnung } from '../model/business/abrechnung.model';
 import { Bestellposition } from '../model/business/bestellposition.model';
 import { Bestellung } from '../model/business/bestellung.model';
 import { BestellungDto } from '../model/dto/bestellung.dto';
@@ -32,11 +33,13 @@ export class AppService {
     public readonly aufnehmer = signal<PersonDto | null>(null);
     public readonly deviceName = computed<string>(() => this.settings.local().deviceName);
     public readonly isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
+    public readonly isAbrechner = computed(() => this.settings.local().abrechnerPin == environment.localAbrechnerPin);
     public readonly bonDebug = computed(() => this.settings.local().bonDebugMenu);
 
     // Editing
     public readonly bestellung = signal<Bestellung>(null); // Current Bestellung
     public readonly bestellposition = signal<Bestellposition>(null); // Current Bestellposition, that is open in Modal for Editing
+    public readonly abrechnung = signal<Abrechnung>(null); // Current Abrechnung
 
     constructor() {
         effect(() => {

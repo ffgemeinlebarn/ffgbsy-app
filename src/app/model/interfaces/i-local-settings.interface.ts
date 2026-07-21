@@ -5,5 +5,6 @@ export interface ILocalSettings {
     deviceAufnehmerId?: PersonId;
     bonDebugMenu: boolean;
     adminPin: string;
+    abrechnerPin: string;
     apiBaseUrl: string;
 }

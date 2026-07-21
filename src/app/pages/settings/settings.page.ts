@@ -21,10 +21,15 @@ export class SettingsPage {
     public adminFeatureIsActivatedColor = computed(() => (this.adminFeatureIsActivated() ? 'success' : 'primary'));
     public adminFeatureIsActivatedText = computed(() => (this.adminFeatureIsActivated() ? 'aktiv' : 'inaktiv'));
 
+    public abrechnerFeatureIsActivated = this.app.isAbrechner;
+    public abrechnerFeatureIsActivatedColor = computed(() => (this.abrechnerFeatureIsActivated() ? 'success' : 'primary'));
+    public abrechnerFeatureIsActivatedText = computed(() => (this.abrechnerFeatureIsActivated() ? 'aktiv' : 'inaktiv'));
+
     public form = this.formBuilder.group({
         deviceName: ['', [Validators.required, Validators.minLength(1)]],
         deviceIsPrivate: [false, [Validators.required]],
         adminPin: [''],
+        abrechnerPin: [''],
         bonDebugMenu: [false, [Validators.required]],
         apiBaseUrl: [environment.api, [Validators.required]],
     });

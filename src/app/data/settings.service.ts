@@ -20,6 +20,7 @@ export class SettingsService {
         deviceAufnehmerId: undefined,
         bonDebugMenu: false,
         adminPin: '',
+        abrechnerPin: '',
         apiBaseUrl: environment.api,
     };
 

@@ -31,8 +31,13 @@
         <ion-list lines="full">
             <ion-item>
                 <ion-label position="stacked">PIN für Auswertungen und Datenverwaltung </ion-label>
-                <ion-input inputmode="numeric" placeholder="PIN-Code" type="password" formControlName="adminPin"></ion-input>
+                <ion-input inputmode="numeric" placeholder="Admin PIN-Code" type="password" formControlName="adminPin"></ion-input>
                 <ion-chip class="non-clickable" slot="end" [color]="adminFeatureIsActivatedColor()">{{ adminFeatureIsActivatedText() }}</ion-chip>
+            </ion-item>
+            <ion-item>
+                <ion-label position="stacked">PIN für die Abrechnung von Kellner:innen</ion-label>
+                <ion-input inputmode="numeric" placeholder="Abrechner PIN-Code" type="password" formControlName="abrechnerPin"></ion-input>
+                <ion-chip class="non-clickable" slot="end" [color]="abrechnerFeatureIsActivatedColor()">{{ abrechnerFeatureIsActivatedText() }}</ion-chip>
             </ion-item>
             <ion-item>
                 <ion-toggle formControlName="bonDebugMenu">

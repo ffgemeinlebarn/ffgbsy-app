@@ -15,6 +15,7 @@ export class MenuComponent {
 
     public aufnehmer = this.appService.aufnehmer;
     public isAdmin = this.appService.isAdmin;
+    public isAbrechner = this.appService.isAbrechner;
     public bonDebug = this.appService.bonDebug;
 
     public logout() {
