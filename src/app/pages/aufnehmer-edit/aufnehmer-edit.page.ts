@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonMenuButton, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
-import { AufnehmerApiService } from '../../data/api/aufnehmer-api.service';
+import { PersonenApiService } from '../../data/api/personen-api.service';
 import { AppService } from '../../data/app.service';
 import { FrontendService } from '../../data/frontend.service';
 
@@ -14,7 +14,7 @@ import { FrontendService } from '../../data/frontend.service';
 })
 export class AufnehmerEditPage {
     private appService = inject(AppService);
-    private readonly aufnehmerApiService = inject(AufnehmerApiService);
+    private readonly aufnehmerApiService = inject(PersonenApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
 

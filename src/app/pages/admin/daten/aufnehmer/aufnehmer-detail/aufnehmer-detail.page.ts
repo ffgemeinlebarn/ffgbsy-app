@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
-import { AufnehmerApiService } from '../../../../../data/api/aufnehmer-api.service';
+import { PersonenApiService } from '../../../../../data/api/personen-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
-import { AufnehmerDto } from '../../../../../model/dto/aufnehmer.dto';
+import { PersonDto } from '../../../../../model/dto/aufnehmer.dto';
 
 @Component({
     selector: 'ffgbsy-aufnehmer-detail',
@@ -13,12 +13,12 @@ import { AufnehmerDto } from '../../../../../model/dto/aufnehmer.dto';
     imports: [IonBackButton, IonIcon, IonButton, IonButtons, IonItem, IonLabel, IonList, IonContent, IonHeader, IonTitle, IonToolbar, IonSelect, IonSelectOption, IonToggle, IonInput, FormsModule, ReactiveFormsModule],
 })
 export class AufnehmerDetailPage {
-    private readonly aufnehmerApiService = inject(AufnehmerApiService);
+    private readonly aufnehmerApiService = inject(PersonenApiService);
     private readonly frontendService = inject(FrontendService);
     private readonly formBuilder = inject(FormBuilder);
 
-    public id = input.required<AufnehmerId>();
-    public aufnehmer = signal<AufnehmerDto>(null);
+    public id = input.required<PersonId>();
+    public aufnehmer = signal<PersonDto>(null);
 
     public form = this.formBuilder.group({
         vorname: ['', [Validators.required, Validators.minLength(1)]],
@@ -31,7 +31,7 @@ export class AufnehmerDetailPage {
         effect(() => this.load(this.id()));
     }
 
-    public load(id: AufnehmerId) {
+    public load(id: PersonId) {
         this.aufnehmerApiService.read(id).subscribe((aufnehmer) => {
             this.aufnehmer.set(aufnehmer);
             this.form.patchValue(aufnehmer);
