@@ -1,4 +1,4 @@
-type AufnehmerId = { __AufnehmerId: never } & number;
+type PersonId = { __AufnehmerId: never } & number;
 type BestellungId = { __BestellungId: never } & number;
 type BestellpositionId = { __BestellpositionId: never } & number;
 type BonId = { __BonId: never } & number;

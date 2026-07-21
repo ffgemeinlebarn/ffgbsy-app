@@ -14,6 +14,9 @@ export interface BonDto {
     successes: number;
     fails: number;
 
+    //todo: need Summe!!
+    summe: number;
+
     // only clientside for selecting on printing
     selected?: boolean;
 }

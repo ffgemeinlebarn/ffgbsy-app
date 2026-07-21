@@ -1,4 +1,4 @@
-import { AufnehmerDto } from '../dto/aufnehmer.dto';
+import { PersonDto } from '../dto/aufnehmer.dto';
 import { ProduktDto } from '../dto/produkt.dto';
 import { ProduktbereichDto } from '../dto/produktbereich.dto';
 import { ProdukteinteilungDto } from '../dto/produkteinteilung.dto';
@@ -7,7 +7,7 @@ import { TischDto } from '../dto/tisch.dto';
 import { TischkategorieDto } from '../dto/tischkategorie.dto';
 
 export interface IDaten {
-    aufnehmer: AufnehmerDto[];
+    aufnehmer: PersonDto[];
     produktbereiche: Array<ProduktbereichDto>;
     produktkategorien: Array<ProduktkategorieDto>;
     produkteinteilungen: Array<ProdukteinteilungDto>;

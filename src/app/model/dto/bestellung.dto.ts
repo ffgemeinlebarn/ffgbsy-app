@@ -1,4 +1,4 @@
-import { AufnehmerDto } from './aufnehmer.dto';
+import { PersonDto } from './aufnehmer.dto';
 import { BestellpositionDto } from './bestellposition.dto';
 import { BonDto } from './bon.dto';
 import { TischDto } from './tisch.dto';
@@ -6,7 +6,7 @@ import { TischDto } from './tisch.dto';
 export interface BestellungDto {
     id: BestellungId;
     tische_id: TischId;
-    aufnehmer_id: AufnehmerId;
+    aufnehmer_id: PersonId;
     timestamp_begonnen: string;
     timestamp_beendet: string;
     device_name: string;
@@ -18,6 +18,6 @@ export interface BestellungDto {
     stornobons: BonDto[];
 
     // Objects
-    aufnehmer: AufnehmerDto;
+    aufnehmer: PersonDto;
     tisch: TischDto;
 }
