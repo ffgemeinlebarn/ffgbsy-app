@@ -20,7 +20,7 @@ export class DataService {
     private http = inject(HttpClient);
     private settings = inject(SettingsService);
 
-    public aufnehmer = signal<PersonDto[]>([]);
+    public personen = signal<PersonDto[]>([]);
     public produktbereiche = signal<ProduktbereichDto[]>([]);
     public produktkategorien = signal<ProduktkategorieDto[]>([]);
     public produkteinteilungen = signal<ProdukteinteilungDto[]>([]);
@@ -28,7 +28,7 @@ export class DataService {
     public tischkategorien = signal<TischkategorieDto[]>([]);
     public tische = signal<TischDto[]>([]);
 
-    public lookupDataSetted = computed(() => this.aufnehmer() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische());
+    public lookupDataSetted = computed(() => this.personen() && this.produktbereiche() && this.produktkategorien() && this.produkteinteilungen() && this.produkte() && this.tischkategorien() && this.tische());
 
     constructor() {
         this.load();
@@ -36,7 +36,7 @@ export class DataService {
 
     public load() {
         this.http.get<IDaten>(`${this.settings.apiBaseUrl()}/daten/latest`).subscribe((data) => {
-            this.aufnehmer.set(data.aufnehmer);
+            this.personen.set(data.aufnehmer.map((p) => ({ ...p, aufnehmer: true, kellner: true })));
             this.produktbereiche.set(data.produktbereiche);
             this.produktkategorien.set(data.produktkategorien);
             this.produkteinteilungen.set(data.produkteinteilungen);

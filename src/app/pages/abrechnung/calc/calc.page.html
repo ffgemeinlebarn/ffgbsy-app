@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Kellner:innen zurückrechnen</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list lines="full">
+        <!-- @for (bon of abrechnung().bons(); track bon) { -->
+        <ion-item>
+            <ion-label>Jakob Vesely</ion-label>
+            <ion-badge slot="end" color="danger">€ 376,20</ion-badge>
+        </ion-item>
+        <!-- } -->
+    </ion-list>
+</ion-content>

@@ -48,7 +48,7 @@ export class AvailabilityService {
     public checkData() {
         console.debug('[FFGBSY]', 'AvailabilityService', 'checkData()');
 
-        this.setDataEnity(this.aufnehmerDataAvailability, this.data.aufnehmer());
+        this.setDataEnity(this.aufnehmerDataAvailability, this.data.personen());
         this.setDataEnity(this.produktbereicheDataAvailability, this.data.produktbereiche());
         this.setDataEnity(this.produktkategorienDataAvailability, this.data.produktkategorien());
         this.setDataEnity(this.produkteinteilungenDataAvailability, this.data.produkteinteilungen());

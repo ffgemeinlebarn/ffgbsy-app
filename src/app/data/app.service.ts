@@ -1,6 +1,6 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
-import { catchError, from, Observable, of, tap } from 'rxjs';
+import { catchError, from, map, mergeMap, Observable, of, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { DataService } from '../data/data.service';
 import { BestellungspositionEditModalComponent } from '../feature/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
@@ -44,7 +44,7 @@ export class AppService {
     constructor() {
         effect(() => {
             if (this.settings.local().deviceAufnehmerId && !this.aufnehmer()) {
-                const aufnehmer = this.data.aufnehmer().find((a) => a.id == this.settings.local().deviceAufnehmerId);
+                const aufnehmer = this.data.personen().find((a) => a.id == this.settings.local().deviceAufnehmerId);
                 if (aufnehmer) {
                     this.selectAufnehmer(aufnehmer);
                 }
@@ -74,11 +74,24 @@ export class AppService {
         return from(
             this.modalController.create({
                 component: SelectAufnehmerModalComponent,
+                componentProps: {
+                    showAufnehmer: true,
+                    showKellner: false,
+                },
                 canDismiss: true,
                 breakpoints: [0.1, 0.5, 1],
                 initialBreakpoint: 1,
             }),
-        ).pipe(tap((m) => m.present()));
+        ).pipe(
+            mergeMap((modal) => from(modal.present()).pipe(map(() => modal))),
+            mergeMap((modal) => from(modal.onDidDismiss())),
+            tap((result: { data: PersonDto; role: 'select' | 'cancel' }) => {
+                if (result.role == 'select' && result.data) {
+                    this.aufnehmer.set(result.data);
+                }
+            }),
+            map((result) => result.data),
+        );
     }
 
     public editBestellposition(bestellposition: Bestellposition) {

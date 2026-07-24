@@ -19,16 +19,25 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/bestellungen/bestellungen-detail/bestellungen-detail.page').then((m) => m.BestellungenDetailPage),
     },
     {
-        path: 'abrechnung',
-        loadComponent: () => import('./pages/abrechnung/abrechnung.page').then((m) => m.AbrechnungPage),
-    },
-    {
         path: 'systemstatus',
         loadComponent: () => import('./pages/systemstatus/systemstatus.page').then((m) => m.SystemstatusPage),
     },
     {
         path: 'aufnehmer-edit',
         loadComponent: () => import('./pages/person-edit/person-edit.page').then((m) => m.PersonEditPage),
+    },
+    {
+        path: 'abrechnung',
+        children: [
+            {
+                path: 'erfassen',
+                loadComponent: () => import('./pages/abrechnung/erfassen/erfassen.page').then((m) => m.AbrechnungErfassenPage),
+            },
+            {
+                path: 'calc',
+                loadComponent: () => import('./pages/abrechnung/calc/calc.page').then((m) => m.AbrechnungCalcPage),
+            },
+        ],
     },
     {
         path: 'admin',
