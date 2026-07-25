@@ -6,6 +6,7 @@ import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonIte
 import { from, map, mergeMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../data/app.service';
+import { FrontendService } from '../../data/frontend.service';
 import { SettingsService } from '../../data/settings.service';
 
 @Component({
@@ -19,6 +20,7 @@ export class SettingsPage {
     private readonly settings = inject(SettingsService);
     private readonly app = inject(AppService);
     private readonly alertController = inject(AlertController);
+    private readonly frontendService = inject(FrontendService);
 
     public readonly isUnlocked = signal(false);
     public readonly isFeatureAbrechnungenUnlocked = computed(() => this.settings.local().features.abrechnungen);
@@ -35,6 +37,7 @@ export class SettingsPage {
                         type: 'password',
                         name: 'code',
                         placeholder: 'PIN Code',
+                        attributes: { inputmode: 'decimal', step: 1 },
                     },
                 ],
                 buttons: [
@@ -52,6 +55,8 @@ export class SettingsPage {
             .subscribe((code: string) => {
                 if (code == environment.localAdminPin) {
                     this.isUnlocked.set(true);
+                } else {
+                    this.frontendService.showToast('Ungültiger PIN!');
                 }
             });
     }
