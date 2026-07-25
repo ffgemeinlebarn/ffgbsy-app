@@ -34,8 +34,8 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/abrechnung/erfassen/erfassen.page').then((m) => m.AbrechnungErfassenPage),
             },
             {
-                path: 'calc',
-                loadComponent: () => import('./pages/abrechnung/calc/calc.page').then((m) => m.AbrechnungCalcPage),
+                path: 'rueckrechnen',
+                loadComponent: () => import('./pages/abrechnung/rueckrechnen/rueckrechnen.page').then((m) => m.AbrechnungRueckrechnenPage),
             },
         ],
     },

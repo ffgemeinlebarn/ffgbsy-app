@@ -13,13 +13,13 @@
         }
     </ffgbsy-menu-item>
 
-    @if (isAbrechner()) {
+    @if (showAbrechnung()) {
         <h2 class="ion-padding">Abrechnungen</h2>
         <ffgbsy-menu-item icon="cash-outline" link="/abrechnung/erfassen">Erfassen</ffgbsy-menu-item>
         <ffgbsy-menu-item icon="person-outline" link="/abrechnung/calc">Zurückrechnen</ffgbsy-menu-item>
     }
 
-    @if (isAdmin()) {
+    @if (showStatistik()) {
         <h2 class="ion-padding">Auswertungen</h2>
         <ffgbsy-menu-item icon="analytics-outline" link="/admin/auswertungen/timeline">Zeitleiste</ffgbsy-menu-item>
         <ffgbsy-menu-item icon="stats-chart-outline" link="/admin/auswertungen/keys">Kennzahlen</ffgbsy-menu-item>
@@ -28,24 +28,34 @@
         <ffgbsy-menu-item icon="eye-outline" link="/admin/auswertungen/uebersicht-angebot">Produkte & Eigenschaften</ffgbsy-menu-item>
     }
 
-    @if (bonDebug()) {
+    @if (showBonDebug() || showSystemeinstellungen()) {
         <h2 class="ion-padding">Fehlerbehebung</h2>
-        <ffgbsy-menu-item icon="receipt-outline" link="/admin/fehlerbehebungen/failed-bons">Bon Drucke</ffgbsy-menu-item>
-        <ffgbsy-menu-item icon="print-outline" link="/admin/fehlerbehebungen/drucker">Drucker Einstellungen</ffgbsy-menu-item>
+        @if (showBonDebug()) {
+            <ffgbsy-menu-item icon="receipt-outline" link="/admin/fehlerbehebungen/failed-bons">Bon Drucke</ffgbsy-menu-item>
+        }
+
+        @if (showSystemeinstellungen()) {
+            <ffgbsy-menu-item icon="print-outline" link="/admin/fehlerbehebungen/drucker">Drucker Einstellungen</ffgbsy-menu-item>
+        }
     }
 
-    @if (isAdmin()) {
+    @if (showProduktverwaltung()) {
         <h2 class="ion-padding">Produktverwaltung</h2>
         <ffgbsy-menu-item link="/admin/daten/grundprodukte">Grundprodukte</ffgbsy-menu-item>
         <ffgbsy-menu-item link="/admin/daten/produktbereiche">Produktbereiche</ffgbsy-menu-item>
         <ffgbsy-menu-item link="/admin/daten/produktkategorien">Produktkategorien</ffgbsy-menu-item>
         <ffgbsy-menu-item link="/admin/daten/produkteinteilungen">Produkteinteilungen</ffgbsy-menu-item>
         <ffgbsy-menu-item link="/admin/daten/produkte">Produkte</ffgbsy-menu-item>
-
+    }
+    @if (showPersonenverwaltung() || showTischverwaltung()) {
         <h2 class="ion-padding">Basisdaten</h2>
-        <ffgbsy-menu-item link="/admin/daten/aufnehmer">Aufnehmer:innen</ffgbsy-menu-item>
-        <ffgbsy-menu-item link="/admin/daten/tischkategorien">Tischkategorien</ffgbsy-menu-item>
-        <ffgbsy-menu-item link="/admin/daten/tische">Tische</ffgbsy-menu-item>
+        @if (showPersonenverwaltung()) {
+            <ffgbsy-menu-item link="/admin/daten/aufnehmer">Aufnehmer:innen</ffgbsy-menu-item>
+        }
+        @if (showTischverwaltung()) {
+            <ffgbsy-menu-item link="/admin/daten/tischkategorien">Tischkategorien</ffgbsy-menu-item>
+            <ffgbsy-menu-item link="/admin/daten/tische">Tische</ffgbsy-menu-item>
+        }
     }
 </ion-list>
 

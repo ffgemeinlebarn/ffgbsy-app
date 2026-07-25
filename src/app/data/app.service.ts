@@ -1,7 +1,6 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { ModalController } from '@ionic/angular/standalone';
 import { catchError, from, map, mergeMap, Observable, of, tap } from 'rxjs';
-import { environment } from '../../environments/environment';
 import { DataService } from '../data/data.service';
 import { BestellungspositionEditModalComponent } from '../feature/bestellungsposition-edit-modal/bestellungsposition-edit-modal.component';
 import { SelectAufnehmerModalComponent } from '../feature/select-aufnehmer-modal/select-aufnehmer-modal.component';
@@ -32,9 +31,8 @@ export class AppService {
     public readonly readyToGo = computed<boolean>(() => this.aufnehmer() && this.deviceName() && this.availability.apiAvailability() && this.availability.lookupDataGrossAvailibility());
     public readonly aufnehmer = signal<PersonDto | null>(null);
     public readonly deviceName = computed<string>(() => this.settings.local().deviceName);
-    public readonly isAdmin = computed(() => this.settings.local().adminPin == environment.localAdminPin);
-    public readonly isAbrechner = computed(() => this.settings.local().abrechnerPin == environment.localAbrechnerPin);
-    public readonly bonDebug = computed(() => this.settings.local().bonDebugMenu);
+    public readonly features = computed(() => this.settings.local().features);
+    public readonly abrechnungKostenstelle = computed(() => this.settings.local().abrechnungKostenstelle);
 
     // Editing
     public readonly bestellung = signal<Bestellung>(null); // Current Bestellung

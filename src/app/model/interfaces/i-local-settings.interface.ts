@@ -3,8 +3,16 @@ export interface ILocalSettings {
     deviceName: string;
     deviceIsPrivate: boolean;
     deviceAufnehmerId?: PersonId;
-    bonDebugMenu: boolean;
-    adminPin: string;
-    abrechnerPin: string;
+    features: {
+        aufnehmen: boolean;
+        abrechnungen: boolean;
+        bonDebug: boolean;
+        produktverwaltung: boolean;
+        personenverwaltung: boolean;
+        tischverwaltung: boolean;
+        statistiken: boolean;
+        system: boolean;
+    };
+    abrechnungKostenstelle: string;
     apiBaseUrl: string;
 }

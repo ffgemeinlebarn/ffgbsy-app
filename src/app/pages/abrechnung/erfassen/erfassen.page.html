@@ -2,14 +2,16 @@
     <ion-toolbar>
         <ion-menu-button slot="start"></ion-menu-button>
         <ion-title>Abrechnugen Erfassen</ion-title>
-        @if (abrechnung()) {
-            <ion-buttons slot="end">
+        <ion-buttons slot="end">
+            @if (abrechnung()) {
                 <ion-button (click)="cancel()">
                     <ion-icon name="close-circle" slot="start"></ion-icon>
                     <span>Abbrechen</span>
                 </ion-button>
-            </ion-buttons>
-        }
+            } @else {
+                <ion-badge class="kostenstelle" color="light">{{ abrechnungKostenstelle() }}</ion-badge>
+            }
+        </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
@@ -40,6 +42,16 @@
             <ion-button size="large" color="warning">Buchen</ion-button>
         </div>
     </ion-footer>
+} @else if (abrechnungKostenstelle() == "") {
+    <ion-content>
+        <div class="waiting">
+            <h3>Es ist keine Kostenstelle ausgewählt!</h3>
+            <ion-button routerLink="/settings">
+                <ion-icon name="settings-outline" slot="start"></ion-icon>
+                Einstellungen
+            </ion-button>
+        </div>
+    </ion-content>
 } @else {
     <ion-content>
         <div class="waiting">

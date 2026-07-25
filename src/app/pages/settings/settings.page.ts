@@ -1,6 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonButton, IonButtons, IonChip, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonMenuButton, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { form, FormField } from '@angular/forms/signals';
+import { AlertController } from '@ionic/angular';
+import { IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonMenuButton, IonSelect, IonSelectOption, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
+import { from, map, mergeMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AppService } from '../../data/app.service';
 import { SettingsService } from '../../data/settings.service';
@@ -10,41 +13,55 @@ import { SettingsService } from '../../data/settings.service';
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [IonChip, IonList, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonMenuButton, IonContent, IonLabel, IonItem, IonIcon, IonToggle, IonInput, FormsModule, ReactiveFormsModule],
+    imports: [FormsModule, IonList, IonHeader, IonSelect, IonSelectOption, IonToolbar, IonTitle, IonButtons, IonButton, IonMenuButton, IonContent, IonLabel, IonItem, IonIcon, IonToggle, IonInput, FormsModule, ReactiveFormsModule, FormField],
 })
 export class SettingsPage {
     private readonly settings = inject(SettingsService);
     private readonly app = inject(AppService);
-    private readonly formBuilder = inject(FormBuilder);
+    private readonly alertController = inject(AlertController);
 
-    public adminFeatureIsActivated = this.app.isAdmin;
-    public adminFeatureIsActivatedColor = computed(() => (this.adminFeatureIsActivated() ? 'success' : 'primary'));
-    public adminFeatureIsActivatedText = computed(() => (this.adminFeatureIsActivated() ? 'aktiv' : 'inaktiv'));
+    public readonly isUnlocked = signal(false);
+    public readonly isFeatureAbrechnungenUnlocked = computed(() => this.settings.local().features.abrechnungen);
+    public readonly isFeatureSystemUnlocked = computed(() => this.settings.local().features.system);
 
-    public abrechnerFeatureIsActivated = this.app.isAbrechner;
-    public abrechnerFeatureIsActivatedColor = computed(() => (this.abrechnerFeatureIsActivated() ? 'success' : 'primary'));
-    public abrechnerFeatureIsActivatedText = computed(() => (this.abrechnerFeatureIsActivated() ? 'aktiv' : 'inaktiv'));
+    public form = form(this.settings.local);
 
-    public form = this.formBuilder.group({
-        deviceName: ['', [Validators.required, Validators.minLength(1)]],
-        deviceIsPrivate: [false, [Validators.required]],
-        adminPin: [''],
-        abrechnerPin: [''],
-        bonDebugMenu: [false, [Validators.required]],
-        apiBaseUrl: [environment.api, [Validators.required]],
-    });
-
-    constructor() {
-        effect(() => {
-            this.form.patchValue(this.settings.local());
-        });
+    public unlock() {
+        from(
+            this.alertController.create({
+                header: 'PIN Code Eingabe',
+                inputs: [
+                    {
+                        type: 'password',
+                        name: 'code',
+                        placeholder: 'PIN Code',
+                    },
+                ],
+                buttons: [
+                    {
+                        text: 'Unlock',
+                    },
+                ],
+            }),
+        )
+            .pipe(
+                mergeMap((modal) => from(modal.present()).pipe(map(() => modal))),
+                mergeMap((modal) => from(modal.onDidDismiss())),
+                map((result) => result?.data?.values?.code ?? null),
+            )
+            .subscribe((code: string) => {
+                if (code == environment.localAdminPin) {
+                    this.isUnlocked.set(true);
+                }
+            });
     }
 
     public save() {
+        this.isUnlocked.set(false);
+
         this.settings.saveLocal({
             ...this.settings.local(),
-            ...this.form.value,
-            deviceAufnehmerId: this.form.controls['deviceIsPrivate'].value ? this.app.aufnehmer()?.id : undefined,
+            deviceAufnehmerId: this.form.deviceIsPrivate().value() ? this.app.aufnehmer()?.id : undefined,
         });
     }
 }

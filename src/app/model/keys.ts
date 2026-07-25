@@ -12,3 +12,4 @@ type DruckerId = { __DruckerId: never } & number;
 type EigenschaftId = { __EigenschaftId: never } & number;
 type TischId = { __TischId: never } & number;
 type TischkategorieId = { __TischkategorieId: never } & number;
+type AbrechnungId = { __AbrechnungId: never } & number;

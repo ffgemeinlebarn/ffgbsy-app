@@ -10,15 +10,15 @@
     </ion-toolbar>
 </ion-header>
 <ion-content>
-    <form [formGroup]="form" (ngSubmit)="save()">
+    <form (ngSubmit)="save()">
         <h2 class="ion-padding">Gerät</h2>
         <ion-list lines="full">
             <ion-item>
                 <ion-label position="stacked">Gerätename</ion-label>
-                <ion-input formControlName="deviceName"></ion-input>
+                <ion-input [formField]="form.deviceName"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-toggle formControlName="deviceIsPrivate">
+                <ion-toggle [formField]="form.deviceIsPrivate">
                     <ion-label>
                         <h3>Privates Gerät</h3>
                         <p>Aufnehmer:in bleibt gespeichert</p>
@@ -27,29 +27,95 @@
             </ion-item>
         </ion-list>
 
-        <h2 class="ion-padding">Administration</h2>
+        <h2 class="ion-padding">
+            <span>Features</span>
+            <ion-button color="light" size="small" shape="round" (click)="unlock()">
+                <ion-icon name="checkmark-circle" slot="start"></ion-icon>
+                Freischaltung
+            </ion-button>
+        </h2>
         <ion-list lines="full">
-            <ion-item>
-                <ion-label position="stacked">PIN für Auswertungen und Datenverwaltung </ion-label>
-                <ion-input inputmode="numeric" placeholder="Admin PIN-Code" type="password" formControlName="adminPin"></ion-input>
-                <ion-chip class="non-clickable" slot="end" [color]="adminFeatureIsActivatedColor()">{{ adminFeatureIsActivatedText() }}</ion-chip>
+            <ion-item [disabled]="!isUnlocked()">
+                <ion-toggle [formField]="form.features.aufnehmen">
+                    <ion-label>
+                        <h3>Aufnehmen</h3>
+                        <p>Bestellungen aufnehmen</p>
+                    </ion-label>
+                </ion-toggle>
             </ion-item>
-            <ion-item>
-                <ion-label position="stacked">PIN für die Abrechnung von Kellner:innen</ion-label>
-                <ion-input inputmode="numeric" placeholder="Abrechner PIN-Code" type="password" formControlName="abrechnerPin"></ion-input>
-                <ion-chip class="non-clickable" slot="end" [color]="abrechnerFeatureIsActivatedColor()">{{ abrechnerFeatureIsActivatedText() }}</ion-chip>
+            <ion-item [disabled]="!isUnlocked()">
+                <ion-toggle [formField]="form.features.abrechnungen">
+                    <ion-label>
+                        <h3>Abrechnungen</h3>
+                        <p>Abrechnen und Rückrechnen im Menü anzeigen</p>
+                    </ion-label>
+                </ion-toggle>
             </ion-item>
-            <ion-item>
-                <ion-toggle formControlName="bonDebugMenu">
+            @if (this.isFeatureAbrechnungenUnlocked()) {
+                <ion-item>
+                    <ion-label>Kostenstelle für die Abrechnung</ion-label>
+                    <ion-select slot="end" [formField]="form.abrechnungKostenstelle">
+                        <ion-select-option value="">Nicht ausgewählt</ion-select-option>
+                        <ion-select-option value="Schank">Kassa Schank</ion-select-option>
+                        <ion-select-option value="Grill">Kassa Grill</ion-select-option>
+                    </ion-select>
+                </ion-item>
+            }
+            <ion-item [disabled]="!isUnlocked()">
+                <ion-toggle [formField]="form.features.bonDebug">
                     <ion-label>
                         <h3>Bon Druck Menü</h3>
                         <p>Menü, um Bons im Fehlerfall suchen und nochmal Drucken zu können</p>
                     </ion-label>
                 </ion-toggle>
             </ion-item>
-            <ion-item>
+            <ion-item [disabled]="!isUnlocked()">
+                <ion-toggle [formField]="form.features.produktverwaltung">
+                    <ion-label>
+                        <h3>Produktverwaltung</h3>
+                        <p>Produkte inkl. Bereiche und Kategorien verwalten</p>
+                    </ion-label>
+                </ion-toggle>
+            </ion-item>
+            <ion-item [disabled]="!isUnlocked()">
+                <ion-toggle [formField]="form.features.personenverwaltung">
+                    <ion-label>
+                        <h3>Personen</h3>
+                        <p>Personen verwalten</p>
+                    </ion-label>
+                </ion-toggle>
+            </ion-item>
+            <ion-item [disabled]="!isUnlocked()">
+                <ion-toggle [formField]="form.features.tischverwaltung">
+                    <ion-label>
+                        <h3>Tische</h3>
+                        <p>Tische & Tischkategorien verwalten</p>
+                    </ion-label>
+                </ion-toggle>
+            </ion-item>
+            <ion-item [disabled]="!isUnlocked()">
+                <ion-toggle [formField]="form.features.statistiken">
+                    <ion-label>
+                        <h3>Statistiken</h3>
+                        <p>Einsicht in Statistiken</p>
+                    </ion-label>
+                </ion-toggle>
+            </ion-item>
+            <ion-item [disabled]="!isUnlocked()">
+                <ion-toggle [formField]="form.features.system">
+                    <ion-label>
+                        <h3>System</h3>
+                        <p>Einstellungen zu Drucker & API</p>
+                    </ion-label>
+                </ion-toggle>
+            </ion-item>
+        </ion-list>
+
+        <h2 class="ion-padding">Systemanbindung</h2>
+        <ion-list lines="full">
+            <ion-item [disabled]="!isFeatureSystemUnlocked()">
                 <ion-label position="stacked">API</ion-label>
-                <ion-input type="text" placeholder="Basis URL der API" formControlName="apiBaseUrl"></ion-input>
+                <ion-input type="text" placeholder="Basis URL der API" [formField]="form.apiBaseUrl"></ion-input>
             </ion-item>
         </ion-list>
     </form>

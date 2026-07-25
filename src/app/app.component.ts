@@ -19,7 +19,6 @@ export class AppComponent {
     private readonly frontendService = inject(FrontendService);
 
     public aufnehmer = this.appService.aufnehmer;
-    public isAdmin = this.appService.isAdmin;
     public zoomLevel = computed(() => `zoom-level--${this.aufnehmer()?.zoom_level ?? 1}`);
 
     public loadingShow = this.frontendService.loadingSpinnerShow;

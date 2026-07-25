@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { IonBadge, IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonSpinner, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
 import { from, map, mergeMap } from 'rxjs';
 import { AppService } from '../../../data/app.service';
@@ -13,7 +14,7 @@ import { PersonDto } from '../../../model/dto/person.dto';
     templateUrl: './erfassen.page.html',
     styleUrls: ['./erfassen.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [IonIcon, IonButtons, IonButton, IonSpinner, IonFooter, IonBadge, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonMenuButton, EuroPreisPipe],
+    imports: [IonIcon, RouterModule, IonButton, IonButtons, IonButton, IonSpinner, IonFooter, IonBadge, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonMenuButton, EuroPreisPipe],
 })
 export class AbrechnungErfassenPage {
     private readonly appService = inject(AppService);
@@ -22,6 +23,7 @@ export class AbrechnungErfassenPage {
 
     public readonly personen = this.data.personen;
     public readonly abrechnung = this.appService.abrechnung;
+    public readonly abrechnungKostenstelle = this.appService.abrechnungKostenstelle;
 
     public cancel() {
         this.abrechnung.set(null);
