@@ -1,9 +1,11 @@
 import { computed, signal } from '@angular/core';
+import { AbrechnungDto } from '../dto/abrechnung.dto';
 import { BonDto } from '../dto/bon.dto';
 import { PersonDto } from '../dto/person.dto';
 
 export class Abrechnung {
-    public person: PersonDto;
+    public stelle: string;
+    public kellner: PersonDto;
     public bons = signal<BonDto[]>([]);
 
     public bonsAnzahl = computed(() => this.bons().length);
@@ -14,7 +16,19 @@ export class Abrechnung {
             .reduce((a, c) => a + c, 0),
     );
 
-    constructor(person: PersonDto) {
-        this.person = person;
+    constructor(stelle: string, kellner: PersonDto) {
+        this.stelle = stelle;
+        this.kellner = kellner;
+    }
+
+    asDto(): AbrechnungDto {
+        return {
+            id: undefined,
+            stelle: this.stelle,
+            bons: this.bons(),
+            kellner: this.kellner,
+            summe: this.summe(),
+            timestamp: new Date(),
+        };
     }
 }

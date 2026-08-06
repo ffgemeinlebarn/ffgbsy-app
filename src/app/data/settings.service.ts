@@ -18,6 +18,7 @@ export class SettingsService {
         deviceName: '',
         deviceIsPrivate: false,
         deviceAufnehmerId: undefined,
+        deviceSplitPaneBreakpoint: 'lg',
         features: {
             aufnehmen: true,
             abrechnungen: false,
@@ -32,8 +33,9 @@ export class SettingsService {
         apiBaseUrl: environment.api,
     };
 
-    public apiBaseUrl = computed(() => this.local().apiBaseUrl ?? environment.api);
-    public local = signal<ILocalSettings>(this.initialLocalSettings);
+    public readonly apiBaseUrl = computed(() => this.local().apiBaseUrl ?? environment.api);
+    public readonly deviceSplitPaneBreakpoint = computed(() => this.local().deviceSplitPaneBreakpoint ?? 'lg');
+    public readonly local = signal<ILocalSettings>(this.initialLocalSettings);
 
     constructor() {
         this.storage.create();
@@ -42,6 +44,10 @@ export class SettingsService {
 
     public async loadLocal() {
         const localSettings = (await this.storage.get(this.localSettingsKey)) as ILocalSettings;
+
+        if (!localSettings?.deviceSplitPaneBreakpoint) {
+            localSettings.deviceSplitPaneBreakpoint = 'lg';
+        }
 
         if (localSettings?.features) {
             this.local.set(localSettings);

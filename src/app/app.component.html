@@ -2,7 +2,7 @@
     @if (loadingShow()) {
         <ion-progress-bar type="indeterminate"></ion-progress-bar>
     }
-    <ion-split-pane contentId="main-content" when="lg">
+    <ion-split-pane contentId="main-content" [when]="deviceSplitPaneBreakpoint()">
         <ion-menu side="start" menuId="sidemenu" contentId="main-content">
             <ion-content>
                 <ffgbsy-menu></ffgbsy-menu>

@@ -36,7 +36,7 @@ export class DataService {
 
     public load() {
         this.http.get<IDaten>(`${this.settings.apiBaseUrl()}/daten/latest`).subscribe((data) => {
-            this.personen.set(data.aufnehmer.map((p) => ({ ...p, aufnehmer: true, kellner: true })));
+            this.personen.set(data.personen);
             this.produktbereiche.set(data.produktbereiche);
             this.produktkategorien.set(data.produktkategorien);
             this.produkteinteilungen.set(data.produkteinteilungen);

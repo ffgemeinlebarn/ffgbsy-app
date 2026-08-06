@@ -72,11 +72,8 @@
                                         <h3>{{ bestellposition?.produkt?.name }}</h3>
                                         <p>({{ bestellposition?.anzahl }}x {{ $safeNavigationMigration(bestellposition?.produkt?.preis) | euroPreis }} = {{ $safeNavigationMigration(bestellposition?.summe_ohne_eigenschaften) | euroPreis }})</p>
                                         <p class="eigenschaften">
-                                            @for (eigenschaft of bestellposition?.eigenschaften.mit; track eigenschaft) {
-                                                <ion-chip color="secondary" outline>mit {{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-chip>
-                                            }
-                                            @for (eigenschaft of bestellposition?.eigenschaften.ohne; track eigenschaft) {
-                                                <ion-chip color="secondary" outline>ohne {{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-chip>
+                                            @for (eigenschaft of bestellposition?.eigenschaften; track eigenschaft) {
+                                                <ion-chip color="secondary" outline>{{ eigenschaft.in_produkt_enthalten && !eigenschaft.aktiv ? "ohne" : "mit" }} {{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-chip>
                                             }
                                         </p>
                                         @if (bestellposition.notiz) {
@@ -118,11 +115,8 @@
                                     <h3>{{ bestellposition?.produkt?.name }}</h3>
                                     <p>({{ bestellposition?.anzahl }}x {{ $safeNavigationMigration(bestellposition?.produkt?.preis) | euroPreis }} = {{ $safeNavigationMigration(bestellposition?.summe_ohne_eigenschaften) | euroPreis }})</p>
                                     <p class="eigenschaften">
-                                        @for (eigenschaft of bestellposition?.eigenschaften.mit; track eigenschaft) {
-                                            <ion-chip color="secondary" outline>mit {{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-chip>
-                                        }
-                                        @for (eigenschaft of bestellposition?.eigenschaften.ohne; track eigenschaft) {
-                                            <ion-chip color="secondary" outline>ohne {{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-chip>
+                                        @for (eigenschaft of bestellposition?.eigenschaften; track eigenschaft) {
+                                            <ion-chip color="secondary" outline>{{ eigenschaft.in_produkt_enthalten && !eigenschaft.aktiv ? "ohne" : "mit" }} {{ eigenschaft.name }} ({{ eigenschaft.preis | euroPreis }})</ion-chip>
                                         }
                                     </p>
                                     @if (bestellposition.notiz) {

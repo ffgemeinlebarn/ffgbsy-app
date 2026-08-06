@@ -25,6 +25,17 @@
                     </ion-label>
                 </ion-toggle>
             </ion-item>
+            <ion-item>
+                <ion-label>Split Pane Breakpoint für größere Displays</ion-label>
+                <ion-select slot="end" [formField]="form.deviceSplitPaneBreakpoint">
+                    <ion-select-option value="never">Nie</ion-select-option>
+                    <ion-select-option value="xl">ab sehr groß (XL)</ion-select-option>
+                    <ion-select-option value="lg">ab groß (LG)</ion-select-option>
+                    <ion-select-option value="md">Ab mittel (MD)</ion-select-option>
+                    <ion-select-option value="sm">Ab klein (SM)</ion-select-option>
+                    <ion-select-option value="xs">Immer</ion-select-option>
+                </ion-select>
+            </ion-item>
         </ion-list>
 
         <h2 class="ion-padding">

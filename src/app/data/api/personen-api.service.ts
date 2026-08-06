@@ -11,23 +11,23 @@ export class PersonenApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
 
-    public create(aufnehmer: PersonDto) {
-        return this.http.post<PersonDto>(`${this.settings.apiBaseUrl()}/aufnehmer`, aufnehmer);
+    public create(person: PersonDto) {
+        return this.http.post<PersonDto>(`${this.settings.apiBaseUrl()}/personen`, person);
     }
 
     public readAll(): Observable<PersonDto[]> {
-        return this.http.get<PersonDto[]>(`${this.settings.apiBaseUrl()}/aufnehmer`);
+        return this.http.get<PersonDto[]>(`${this.settings.apiBaseUrl()}/personen`);
     }
 
     public read(id: PersonId) {
-        return this.http.get<PersonDto>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`);
+        return this.http.get<PersonDto>(`${this.settings.apiBaseUrl()}/personen/${id}`);
     }
 
-    public update(aufnehmer: PersonDto) {
-        return this.http.put<PersonDto>(`${this.settings.apiBaseUrl()}/aufnehmer/${aufnehmer.id}`, aufnehmer);
+    public update(person: PersonDto) {
+        return this.http.put<PersonDto>(`${this.settings.apiBaseUrl()}/personen/${person.id}`, person);
     }
 
     public delete(id: PersonId) {
-        return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`);
+        return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/personen/${id}`);
     }
 }

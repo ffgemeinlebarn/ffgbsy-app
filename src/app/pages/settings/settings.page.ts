@@ -14,7 +14,7 @@ import { SettingsService } from '../../data/settings.service';
     templateUrl: './settings.page.html',
     styleUrls: ['./settings.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [FormsModule, IonList, IonHeader, IonSelect, IonSelectOption, IonToolbar, IonTitle, IonButtons, IonButton, IonMenuButton, IonContent, IonLabel, IonItem, IonIcon, IonToggle, IonInput, FormsModule, ReactiveFormsModule, FormField],
+    imports: [IonList, IonHeader, IonSelect, IonSelectOption, IonToolbar, IonTitle, IonButtons, IonButton, IonMenuButton, IonContent, IonLabel, IonItem, IonIcon, IonToggle, IonInput, FormsModule, ReactiveFormsModule, FormField],
 })
 export class SettingsPage {
     private readonly settings = inject(SettingsService);

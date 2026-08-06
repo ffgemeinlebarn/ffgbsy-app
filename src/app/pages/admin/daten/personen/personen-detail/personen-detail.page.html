@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
-        <ion-back-button slot="start" defaultHref="/daten/aufnehmer"></ion-back-button>
+        <ion-back-button slot="start" defaultHref="/daten/personen"></ion-back-button>
         <ion-title>{{ aufnehmer()?.vorname }} {{ aufnehmer()?.nachname }}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="save()">
@@ -11,27 +11,38 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <form [formGroup]="form" (ngSubmit)="save()">
-        <ion-list lines="full">
-            <ion-item>
-                <ion-label position="stacked">Vorname</ion-label>
-                <ion-input formControlName="vorname"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Nachname</ion-label>
-                <ion-input formControlName="nachname"></ion-input>
-            </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Schriftgröße</ion-label>
-                <ion-select formControlName="zoom_level">
-                    <ion-select-option [value]="1">Level 1</ion-select-option>
-                    <ion-select-option [value]="2">Level 2</ion-select-option>
-                    <ion-select-option [value]="3">Level 3</ion-select-option>
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-toggle formControlName="aktiv">Aktiv</ion-toggle>
-            </ion-item>
-        </ion-list>
-    </form>
+    @if (aufnehmer()) {
+        <form (ngSubmit)="save()">
+            <ion-list lines="full">
+                <ion-item>
+                    <ion-label position="stacked">Vorname</ion-label>
+                    <ion-input [formField]="form.vorname"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Nachname</ion-label>
+                    <ion-input [formField]="form.nachname"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="stacked">Schriftgröße</ion-label>
+                    <ion-select [formField]="form.zoom_level">
+                        <ion-select-option [value]="1">Level 1</ion-select-option>
+                        <ion-select-option [value]="2">Level 2</ion-select-option>
+                        <ion-select-option [value]="3">Level 3</ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-toggle [formField]="form.aktiv">Aktiv</ion-toggle>
+                </ion-item>
+                <ion-item>
+                    <ion-toggle [formField]="form.aufnehmer">Aufnehmer:in</ion-toggle>
+                </ion-item>
+                <ion-item>
+                    <ion-toggle [formField]="form.kellner">Kellner:in</ion-toggle>
+                </ion-item>
+                <ion-item>
+                    <ion-toggle [formField]="form.abrechner">Abrechner:in</ion-toggle>
+                </ion-item>
+            </ion-list>
+        </form>
+    }
 </ion-content>

@@ -1,8 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
+import { AbrechnungKellnerStatusDto } from '../../model/dto/abrechnung-kellner-status.dto';
+import { AbrechnungOverviewItemDto } from '../../model/dto/abrechnung-overview-item.dto';
 import { AbrechnungDto } from '../../model/dto/abrechnung.dto';
-import { PersonDto } from '../../model/dto/person.dto';
+import { RueckrechnungDto } from '../../model/dto/rueckrechnung.dto';
+import { AppService } from '../app.service';
 import { SettingsService } from '../settings.service';
 
 @Injectable({
@@ -11,24 +14,37 @@ import { SettingsService } from '../settings.service';
 export class AbrechnungenApiService {
     private readonly http = inject(HttpClient);
     private readonly settings = inject(SettingsService);
+    private readonly appService = inject(AppService);
 
-    public create(abrechnung: AbrechnungDto) {
-        return of(abrechnung);
+    private readonly abrechnungsstelle = this.appService.abrechnungKostenstelle;
+
+    public readOverviews(): Observable<AbrechnungOverviewItemDto[]> {
+        if (!this.abrechnungsstelle()) {
+            throw new Error('Es ist keine Abrechnungsstelle festgelegt!');
+        }
+        return this.http.get<AbrechnungOverviewItemDto[]>(`${this.settings.apiBaseUrl()}/abrechnungen-overview/${this.abrechnungsstelle()}`);
     }
 
-    public readAll(): Observable<PersonDto[]> {
-        return this.http.get<PersonDto[]>(`${this.settings.apiBaseUrl()}/aufnehmer`);
+    public readKellnerStatus(kellnerId: PersonId): Observable<AbrechnungKellnerStatusDto> {
+        if (!this.abrechnungsstelle()) {
+            throw new Error('Es ist keine Abrechnungsstelle festgelegt!');
+        }
+        return this.http.get<AbrechnungKellnerStatusDto>(`${this.settings.apiBaseUrl()}/abrechnungen-overview/${this.abrechnungsstelle()}/${kellnerId}`);
     }
 
-    public read(id: PersonId) {
-        return this.http.get<PersonDto>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`);
+    public createAbrechnung(abrechnung: AbrechnungDto) {
+        return this.http.post<AbrechnungKellnerStatusDto>(`${this.settings.apiBaseUrl()}/abrechnungen`, abrechnung);
     }
 
-    public update(aufnehmer: PersonDto) {
-        return this.http.put<PersonDto>(`${this.settings.apiBaseUrl()}/aufnehmer/${aufnehmer.id}`, aufnehmer);
+    public deleteAbrechnung(id: AbrechnungId) {
+        return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/abrechnungen/${id}`);
     }
 
-    public delete(id: PersonId) {
-        return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/aufnehmer/${id}`);
+    public createRueckrechnung(rueckrechnung: RueckrechnungDto) {
+        return this.http.post<AbrechnungKellnerStatusDto>(`${this.settings.apiBaseUrl()}/rueckrechnungen`, rueckrechnung);
+    }
+
+    public deleteRueckrechnung(id: RueckrechnungId) {
+        return this.http.delete<boolean>(`${this.settings.apiBaseUrl()}/abrechnungen/${id}`);
     }
 }

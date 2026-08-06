@@ -7,10 +7,7 @@ export interface BestellpositionDto {
     produkte_id: ProduktId;
     notiz: string;
     drucker_id: DruckerId;
-    eigenschaften: {
-        mit: EigenschaftDto[];
-        ohne: EigenschaftDto[];
-    };
+    eigenschaften: EigenschaftDto[];
 
     bestellungen_id: BestellungId;
     drucker_id_level_0: DruckerId | null;

@@ -28,16 +28,7 @@ export const routes: Routes = [
     },
     {
         path: 'abrechnung',
-        children: [
-            {
-                path: 'erfassen',
-                loadComponent: () => import('./pages/abrechnung/erfassen/erfassen.page').then((m) => m.AbrechnungErfassenPage),
-            },
-            {
-                path: 'rueckrechnen',
-                loadComponent: () => import('./pages/abrechnung/rueckrechnen/rueckrechnen.page').then((m) => m.AbrechnungRueckrechnenPage),
-            },
-        ],
+        loadComponent: () => import('./pages/abrechnung/abrechnung.page').then((m) => m.AbrechnungPage),
     },
     {
         path: 'auswertungen',
@@ -108,11 +99,11 @@ export const routes: Routes = [
                 loadComponent: () => import('./pages/admin/daten/produkte/produkte-detail/produkte-detail.page').then((m) => m.ProdukteDetailPage),
             },
             {
-                path: 'aufnehmer',
+                path: 'personen',
                 loadComponent: () => import('./pages/admin/daten/personen/personen-list/personen-list.page').then((m) => m.PersonenListPage),
             },
             {
-                path: 'aufnehmer/:id',
+                path: 'personen/:id',
                 loadComponent: () => import('./pages/admin/daten/personen/personen-detail/personen-detail.page').then((m) => m.PersonenDetailPage),
             },
             {

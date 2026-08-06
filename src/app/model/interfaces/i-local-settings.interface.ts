@@ -3,6 +3,7 @@ export interface ILocalSettings {
     deviceName: string;
     deviceIsPrivate: boolean;
     deviceAufnehmerId?: PersonId;
+    deviceSplitPaneBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     features: {
         aufnehmen: boolean;
         abrechnungen: boolean;

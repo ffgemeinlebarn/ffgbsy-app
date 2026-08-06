@@ -4,7 +4,7 @@ export interface PersonDto {
     nachname: string;
     aktiv: boolean;
     zoom_level: number;
-    saldo: number;
     aufnehmer: boolean;
     kellner: boolean;
+    abrechner: boolean;
 }

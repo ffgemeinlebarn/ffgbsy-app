@@ -1,0 +1,143 @@
+:host {
+    ion-toolbar {
+        .kostenstelle {
+            margin-right: 16px;
+        }
+    }
+
+    ion-toolbar.last-action {
+        padding-left: 16px;
+        padding-right: 16px;
+
+        .content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 8px;
+
+            span,
+            strong {
+                display: inline-flex;
+                flex-direction: row;
+                gap: 4px;
+                align-items: center;
+            }
+        }
+    }
+
+    ion-footer {
+        padding: 2em 1em;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .overview {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1em;
+        padding: 1em;
+
+        ffgbsy-tile {
+            --ffgbsy-tile-font-size: 1.25em;
+            --ffgbsy-tile-gap: 0em;
+            height: 140px;
+            justify-content: space-between;
+
+            &.last-booked {
+                --ffgbsy-tile-bg-color: var(--ion-color-primary--shade-4);
+            }
+        }
+    }
+
+    ion-footer.wait-for-kellner {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5em;
+        padding: 0;
+
+        .waiting {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 0.5em;
+            align-items: center;
+            font-size: 1.25em;
+
+            span {
+                padding: 1em;
+            }
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            padding: 1em;
+
+            .select-kellner-manual ion-button {
+                --padding-top: 1.5em;
+                --padding-bottom: 1.5em;
+                --padding-start: 2em;
+                --padding-end: 2em;
+            }
+
+            .scan {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1em;
+            }
+        }
+    }
+
+    ion-footer.summary {
+        background-color: var(--ion-color-primary);
+        color: var(--ion-color-primary-contrast);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        padding: 0;
+        font-size: 2rem;
+
+        .numbers {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            padding: 1em 1.5em;
+
+            .summe,
+            .bons {
+                width: 50%;
+                display: flex;
+                flex-direction: column;
+                gap: 0.2em;
+
+                h2 {
+                    font-size: 1em;
+                    font-weight: bold;
+                    margin: 0;
+                    padding: 0;
+                }
+
+                p {
+                    font-size: 0.8em;
+                    margin: 0;
+                }
+            }
+        }
+
+        .buchen {
+            padding: 1em 1.5em;
+            background-color: color-mix(in srgb, var(--ion-color-primary), #000 10%);
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}

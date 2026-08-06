@@ -13,3 +13,4 @@ type EigenschaftId = { __EigenschaftId: never } & number;
 type TischId = { __TischId: never } & number;
 type TischkategorieId = { __TischkategorieId: never } & number;
 type AbrechnungId = { __AbrechnungId: never } & number;
+type RueckrechnungId = { __RueckrechnungId: never } & number;

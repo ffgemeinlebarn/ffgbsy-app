@@ -2,7 +2,6 @@
     <ffgbsy-menu-item no-border icon="home-outline" link="/">Start</ffgbsy-menu-item>
 
     @if (showAufnehmen()) {
-        <h2 class="ion-padding">Aufnehmen</h2>
         <ffgbsy-menu-item icon="create-outline" link="/neue-bestellung">Neue Bestellung</ffgbsy-menu-item>
         <ffgbsy-menu-item icon="file-tray-outline" link="/bestellungen">Bestellungen</ffgbsy-menu-item>
         <ffgbsy-menu-item icon="person-outline" link="/aufnehmer-edit" [disabled]="!aufnehmer()">
@@ -13,20 +12,18 @@
                 Aufnehmer
             }
         </ffgbsy-menu-item>
-
-        @if (aufnehmer()) {
-            <div class="init-button ion-padding">
-                <ion-menu-toggle auto-hide="false">
-                    <ion-button color="primary" (click)="logout()"> <ion-icon slot="start" name="log-out-outline"></ion-icon> ausloggen </ion-button>
-                </ion-menu-toggle>
-            </div>
-        }
     }
 
     @if (showAbrechnung()) {
-        <h2 class="ion-padding">Abrechnungen</h2>
-        <ffgbsy-menu-item icon="cash-outline" link="/abrechnung/erfassen">Erfassen</ffgbsy-menu-item>
-        <ffgbsy-menu-item icon="person-outline" link="/abrechnung/rueckrechnen">Rückrechnen</ffgbsy-menu-item>
+        <ffgbsy-menu-item icon="cash-outline" link="/abrechnung">Abrechnung</ffgbsy-menu-item>
+    }
+
+    @if (showAufnehmen() && aufnehmer()) {
+        <div class="init-button ion-padding">
+            <ion-menu-toggle auto-hide="false">
+                <ion-button color="primary" (click)="logout()"> <ion-icon slot="start" name="log-out-outline"></ion-icon> ausloggen </ion-button>
+            </ion-menu-toggle>
+        </div>
     }
 
     @if (showStatistik()) {
@@ -65,7 +62,7 @@
     @if (showPersonenverwaltung() || showTischverwaltung()) {
         <h2 class="ion-padding">Basisdaten</h2>
         @if (showPersonenverwaltung()) {
-            <ffgbsy-menu-item link="/daten/aufnehmer">Aufnehmer:innen</ffgbsy-menu-item>
+            <ffgbsy-menu-item link="/daten/personen">Personen</ffgbsy-menu-item>
         }
         @if (showTischverwaltung()) {
             <ffgbsy-menu-item link="/daten/tischkategorien">Tischkategorien</ffgbsy-menu-item>

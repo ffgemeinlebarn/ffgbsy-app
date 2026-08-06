@@ -7,7 +7,7 @@ import { TischDto } from '../dto/tisch.dto';
 import { TischkategorieDto } from '../dto/tischkategorie.dto';
 
 export interface IDaten {
-    aufnehmer: PersonDto[];
+    personen: PersonDto[];
     produktbereiche: Array<ProduktbereichDto>;
     produktkategorien: Array<ProduktkategorieDto>;
     produkteinteilungen: Array<ProdukteinteilungDto>;
