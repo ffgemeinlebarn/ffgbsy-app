@@ -25,7 +25,7 @@ export const httpInterceptor = (request: HttpRequest<unknown>, next: HttpHandler
         catchError((error: any) => {
             frontend.hideLoadingSpinner();
             if (error instanceof HttpErrorResponse) {
-                console.error('[FFGBSY]', 'HTTP Error:', error.error.error);
+                console.error('[FFGBSY]', 'HTTP Error:', error);
 
                 if (error.error.statusCode == 0) {
                     frontend.showOkAlert('Es konnte keine Verbindung hergestellt werden!', error.error.message);

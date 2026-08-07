@@ -79,7 +79,7 @@ export class Bestellposition {
         bestellposition.anzahl.set(dto.anzahl);
         bestellposition.produkt = dto.produkt;
         bestellposition.notiz.set(dto.notiz);
-        bestellposition.eigenschaften.set([...dto.eigenschaften.mit, ...dto.eigenschaften.ohne]);
+        bestellposition.eigenschaften.set(dto.eigenschaften);
         bestellposition.drucker_id = dto.drucker_id;
         bestellposition.bestellungen_id = dto.bestellungen_id;
         bestellposition.drucker_id_level_0 = dto.drucker_id_level_0;
@@ -104,7 +104,7 @@ export class Bestellposition {
             summe_eigenschaften: this.summe_eigenschaften(),
             summe_ohne_eigenschaften: this.summe_ohne_eigenschaften(),
             drucker_id: this.drucker_id,
-            eigenschaften: this.eigenschaftenAbweichend(),
+            eigenschaften: this.eigenschaften(),
         };
     }
 }

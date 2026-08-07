@@ -1,8 +1,8 @@
 import { computed, signal } from '@angular/core';
 import { parseZone } from 'moment';
-import { AufnehmerDto } from '../dto/aufnehmer.dto';
 import { BestellungDto } from '../dto/bestellung.dto';
 import { BonDto } from '../dto/bon.dto';
+import { PersonDto } from '../dto/person.dto';
 import { TischDto } from '../dto/tisch.dto';
 import { Bestellstatus } from '../types/bestellstatus.type';
 import { Bestellposition } from './bestellposition.model';
@@ -10,7 +10,7 @@ import { Bestellposition } from './bestellposition.model';
 export class Bestellung {
     public id: BestellungId | null = null;
     public tisch: TischDto | null = null;
-    public aufnehmer: AufnehmerDto | null = null;
+    public aufnehmer: PersonDto | null = null;
     public device_name: string | null = null;
     public device_ip: string | null = null;
 
@@ -31,7 +31,7 @@ export class Bestellung {
     public summe_eigenschaften: number | null = null;
     public summe_ohne_eigenschaften: number | null = null;
 
-    constructor(tisch?: TischDto, aufnehmer?: AufnehmerDto) {
+    constructor(tisch?: TischDto, aufnehmer?: PersonDto) {
         this.id = null;
 
         this.setTimestampBegonnen();

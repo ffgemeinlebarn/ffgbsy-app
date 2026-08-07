@@ -1,0 +1,125 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-menu-button slot="start"></ion-menu-button>
+        <ion-title>Abrechnungen</ion-title>
+        <ion-buttons slot="end">
+            @if (abrechnung()) {
+                <ion-button (click)="cancel()">
+                    <ion-icon name="close-circle" slot="start"></ion-icon>
+                    <span>Abbrechen</span>
+                </ion-button>
+            } @else {
+                <ion-badge class="kostenstelle" color="light">{{ abrechnungKostenstelle() }}</ion-badge>
+            }
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+@if (abrechnung()) {
+    <ion-content>
+        <ion-list lines="full">
+            @for (bon of abrechnung().bons().reverse(); track bon) {
+                <ion-item>
+                    <ion-label slot="start">Bon {{ bon.id }} </ion-label>
+                    <ion-badge slot="end" color="light">{{ bon.drucker.name }}</ion-badge>
+                    <ion-badge slot="end" color="danger">{{ bon.summe | euroPreis }}</ion-badge>
+                </ion-item>
+            }
+        </ion-list>
+    </ion-content>
+    <ion-footer class="summary">
+        <div class="numbers">
+            <div class="summe">
+                <h2>{{ abrechnung().summe() | euroPreis: { zerotext: false } }}</h2>
+                <p>Summe</p>
+            </div>
+            <div class="bons">
+                <h2>{{ abrechnung().bonsAnzahl() }}</h2>
+                <p>Bons</p>
+            </div>
+        </div>
+        <div class="buchen">
+            <div class="person">{{ abrechnung().kellner.vorname }} {{ abrechnung().kellner.nachname }}</div>
+            <ion-button size="large" color="warning" (click)="createAbrechnung()">auf Kellner:in buchen</ion-button>
+        </div>
+    </ion-footer>
+} @else {
+    <ion-modal class="rueckrechung-summe-modal" #rueckrechungSummeModal [isOpen]="rueckrechungDisplayModal()" (ionModalDidPresent)="onRueckrechnungModalDidPresent()" (ionModalDidDismiss)="onRueckrechnungModalDidDismiss()">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Rückrechnung für {{ rueckrechungOverview()?.kellner.vorname }} {{ rueckrechungOverview()?.kellner.nachname }}</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+                <ion-list lines="none">
+                    <ion-item>
+                        <ion-label>Offen</ion-label>
+                        <ion-badge slot="end">{{ rueckrechungOverview()?.summe_offen | euroPreis: { zerotext: false } }}</ion-badge>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Rückrechnungsbetrag</ion-label>
+                        <ion-input slot="end" #rueckrechnungModalInput inputmode="decimal" type="number" step="0.1" [(ngModel)]="rueckrechungSumme"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Offen bleibt</ion-label>
+                        <ion-badge slot="end">{{ rueckrechungBleibendeSumme() | euroPreis: { zerotext: false } }}</ion-badge>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+            <ion-footer>
+                <ion-button color="success" expand="block" size="large" (click)="startRueckrechung()">Speichern</ion-button>
+                <ion-button color="primary" expand="block" (click)="rueckrechungSummeModal.dismiss()">Abbrechen</ion-button>
+            </ion-footer>
+        </ng-template>
+    </ion-modal>
+
+    @if (lastTransaction()) {
+        <ion-toolbar class="last-transaction" [color]="lastTransaction()?.type == 'abrechnung' ? 'primary' : 'success'">
+            <div class="content">
+                <span>Letzte {{ lastTransaction()?.type == "abrechnung" ? "Abrechnung" : "Rückrechnung" }}: </span>
+                <strong>
+                    @if (lastTransaction()?.type == "abrechnung") {
+                        <ion-icon color="warning" name="add-circle"></ion-icon><ion-badge color="warning">{{ lastTransaction().summe | euroPreis: { zerotext: false } }}</ion-badge>
+                    } @else {
+                        <ion-icon color="light" name="remove-circle"></ion-icon><ion-badge color="light">{{ lastTransaction().summe | euroPreis: { zerotext: false } }}</ion-badge>
+                    }
+                    <span> bei {{ lastTransaction()?.kellner.vorname }} {{ lastTransaction()?.kellner.nachname }}</span>
+                </strong>
+            </div>
+        </ion-toolbar>
+    }
+    <ion-content>
+        <div class="overview">
+            @for (overview of overviews(); track overview.kellner.id) {
+                <ffgbsy-tile (click)="openRueckrechnungModal(overview)" [title]="overview.summe_offen | euroPreis: { zerotext: false }" [subtitle]="`${overview.kellner.vorname} ${overview.kellner.nachname}`"></ffgbsy-tile>
+            }
+        </div>
+    </ion-content>
+    <ion-footer class="wait-for-kellner">
+        @if (abrechnungKostenstelle()) {
+            @if (barcodeInputActive()) {
+                <div class="waiting">
+                    <ion-progress-bar color="secondary" type="indeterminate"></ion-progress-bar>
+                    <span>Warte auf Scan von Kellner:innen</span>
+                </div>
+            }
+            <div class="actions">
+                <div class="select-kellner-manual">
+                    <ion-button (click)="selectKellner()">Kellner:in manuell auswählen</ion-button>
+                </div>
+                <div class="scan">
+                    <ion-toggle [formField]="barcodeInputActiveForm"></ion-toggle>
+                    <label>Eingabe per Scanner</label>
+                </div>
+            </div>
+        } @else {
+            <div class="waiting">
+                <h3>Es ist keine Kostenstelle ausgewählt!</h3>
+                <ion-button routerLink="/settings">
+                    <ion-icon name="settings-outline" slot="start"></ion-icon>
+                    Einstellungen
+                </ion-button>
+            </div>
+        }
+    </ion-footer>
+}

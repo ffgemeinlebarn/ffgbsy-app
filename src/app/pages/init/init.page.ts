@@ -25,6 +25,10 @@ export class InitPage {
     public readonly apiAvailabilityStatusForSubtitle = computed(() => (this.availabilityService.apiAvailability() ? 'Schnittstelle erreichbar!' : 'Schnittstelle nicht erreichbar!'));
     public readonly druckerAvailabilityStatusForSubtitle = computed(() => (this.availabilityService.druckerGrossAvailability() ? 'Alle Drucker erreichbar!' : `${this.availabilityService.druckerAvailabilities().filter((c) => c.isSuccessful()).length} von ${this.availabilityService.druckerAvailabilities().length} Drucker erreichbar!`));
 
+    public readonly featureAufnehmen = computed(() => this.appService.features().aufnehmen);
+    public readonly featureAbrechnen = computed(() => this.appService.features().abrechnungen);
+    public readonly featureStatistiken = computed(() => this.appService.features().statistiken);
+
     public readonly isAufnehmerSelected = computed(() => (this.appService.aufnehmer() ? true : false));
     public readonly isDeviceNameSet = computed(() => (this.appService.deviceName() ? true : false));
     public readonly isLookupDataAvailable = this.availabilityService.lookupDataGrossAvailibility;

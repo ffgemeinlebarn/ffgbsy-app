@@ -14,3 +14,7 @@
         }
     }
 }
+
+:host([no-border]) ion-item {
+    --border-width: 0;
+}

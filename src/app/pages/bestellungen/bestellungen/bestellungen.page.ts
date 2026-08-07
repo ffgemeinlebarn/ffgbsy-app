@@ -4,8 +4,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonNote, IonRippleEffect, IonSelect, IonSelectOption, IonTitle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
-import { AufnehmerApiService } from '../../../data/api/aufnehmer-api.service';
 import { BestellungenApiService } from '../../../data/api/bestellungen-api.service';
+import { PersonenApiService } from '../../../data/api/personen-api.service';
 import { TischeApiService } from '../../../data/api/tische-api.service';
 import { AppService } from '../../../data/app.service';
 import { EuroPreisPipe } from '../../../misc/euro-preis.pipe';
@@ -21,7 +21,7 @@ import { IBestellungenFilter } from '../../../model/interfaces/i-bestellungen-fi
 })
 export class BestellungenPage implements ViewDidEnter {
     private readonly bestellungenApiService = inject(BestellungenApiService);
-    private readonly aufnehmerApiService = inject(AufnehmerApiService);
+    private readonly aufnehmerApiService = inject(PersonenApiService);
     private readonly tischeApiService = inject(TischeApiService);
     private readonly appService = inject(AppService);
     private readonly formBuilder = inject(FormBuilder);

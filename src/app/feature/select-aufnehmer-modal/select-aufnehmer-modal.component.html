@@ -5,15 +5,15 @@
 </ion-header>
 <ion-content>
     <ion-list lines="full">
-        @for (aufnehmer of aufnehmer(); track aufnehmer.id) {
-            <ion-item (click)="select(aufnehmer)">
-                <ion-label>{{ aufnehmer.vorname }} {{ aufnehmer.nachname }}</ion-label>
+        @for (person of personenFiltred(); track person.id) {
+            <ion-item (click)="select(person)">
+                <ion-label>{{ person.vorname }} {{ person.nachname }}</ion-label>
             </ion-item>
         }
     </ion-list>
 </ion-content>
 <ion-footer class="aufnehmer-auswahl-footer">
-    <ion-button (click)="close()" shape="round">
+    <ion-button (click)="cancel()" shape="round">
         <ion-icon slot="start" name="close-outline"></ion-icon>
         Auswahl abbrechen
     </ion-button>

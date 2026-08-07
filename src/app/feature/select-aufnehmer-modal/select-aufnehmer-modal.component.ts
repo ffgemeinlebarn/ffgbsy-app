@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
 import { IonButton, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonTitle, IonToolbar, ModalController } from '@ionic/angular/standalone';
-import { AppService } from '../../data/app.service';
 import { DataService } from '../../data/data.service';
-import { AufnehmerDto } from '../../model/dto/aufnehmer.dto';
+import { PersonDto } from '../../model/dto/person.dto';
 
 @Component({
     selector: 'app-select-aufnehmer-modal',
@@ -12,18 +11,19 @@ import { AufnehmerDto } from '../../model/dto/aufnehmer.dto';
     imports: [IonHeader, IonTitle, IonToolbar, IonButton, IonContent, IonList, IonItem, IonLabel, IonIcon, IonFooter],
 })
 export class SelectAufnehmerModalComponent {
-    private app = inject(AppService);
     private data = inject(DataService);
     private modalController = inject(ModalController);
 
-    public aufnehmer = this.data.aufnehmer;
+    public showAufnehmer = input<boolean>(true);
+    public showKellner = input<boolean>(true);
 
-    public close() {
+    public personenFiltred = computed(() => this.data.personen().filter((p) => (p.aufnehmer && this.showAufnehmer()) || (p.kellner && this.showKellner())));
+
+    public cancel() {
         return this.modalController.dismiss(null, 'cancel');
     }
 
-    public select(aufnehmer: AufnehmerDto) {
-        this.app.selectAufnehmer(aufnehmer);
-        this.close();
+    public select(person: PersonDto) {
+        return this.modalController.dismiss(person, 'select');
     }
 }

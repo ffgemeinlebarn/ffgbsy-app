@@ -1,4 +1,4 @@
-type AufnehmerId = { __AufnehmerId: never } & number;
+type PersonId = { __AufnehmerId: never } & number;
 type BestellungId = { __BestellungId: never } & number;
 type BestellpositionId = { __BestellpositionId: never } & number;
 type BonId = { __BonId: never } & number;
@@ -12,3 +12,5 @@ type DruckerId = { __DruckerId: never } & number;
 type EigenschaftId = { __EigenschaftId: never } & number;
 type TischId = { __TischId: never } & number;
 type TischkategorieId = { __TischkategorieId: never } & number;
+type AbrechnungId = { __AbrechnungId: never } & number;
+type RueckrechnungId = { __RueckrechnungId: never } & number;

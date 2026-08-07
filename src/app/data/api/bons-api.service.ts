@@ -43,6 +43,10 @@ export class BonsApiService {
         return this.http.get<BonDto[]>(`${this.settings.apiBaseUrl()}/bons`, { params });
     }
 
+    public read(id: BonId) {
+        return this.http.get<BonDto>(`${this.settings.apiBaseUrl()}/bons/${id}`);
+    }
+
     public druckBonsOfBestellungById(id: BestellungId): Observable<BonDruckDto[]> {
         return this.http.post<BonDruckDto[]>(`${this.settings.apiBaseUrl()}/print/bestellungen/${id}`, null);
     }
