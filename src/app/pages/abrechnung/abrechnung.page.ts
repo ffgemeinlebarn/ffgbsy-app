@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, model, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { form, FormField } from '@angular/forms/signals';
 import { RouterModule } from '@angular/router';
-import { IonBadge, IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonMenuButton, IonProgressBar, IonTitle, IonToggle, IonToolbar, ModalController, ViewDidEnter } from '@ionic/angular/standalone';
+import { IonBadge, IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonMenuButton, IonModal, IonProgressBar, IonTitle, IonToggle, IonToolbar, ModalController, ViewDidEnter } from '@ionic/angular/standalone';
 import { from, map, mergeMap } from 'rxjs';
 import { AbrechnungenApiService } from '../../data/api/abrechnungen-api.service';
 import { BonsApiService } from '../../data/api/bons-api.service';
@@ -15,6 +15,7 @@ import { Abrechnung } from '../../model/business/abrechnung.model';
 import { AbrechnungOverviewItemDto } from '../../model/dto/abrechnung-overview-item.dto';
 import { BonDto } from '../../model/dto/bon.dto';
 import { PersonDto } from '../../model/dto/person.dto';
+import { IAbrechnungLastTransaction } from '../../model/interfaces/i-abrechnung-last-transation.interface';
 import { TileComponent } from '../../ui/tile/tile.component';
 
 @Component({
@@ -22,7 +23,7 @@ import { TileComponent } from '../../ui/tile/tile.component';
     templateUrl: './abrechnung.page.html',
     styleUrls: ['./abrechnung.page.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [IonProgressBar, IonToggle, IonIcon, TileComponent, RouterModule, IonButton, IonButtons, IonButton, IonFooter, IonBadge, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonMenuButton, EuroPreisPipe, FormsModule, FormField],
+    imports: [IonInput, IonModal, IonProgressBar, IonToggle, IonIcon, TileComponent, RouterModule, IonButton, IonButtons, IonButton, IonFooter, IonBadge, IonLabel, IonItem, IonList, IonHeader, IonToolbar, IonTitle, IonContent, IonMenuButton, EuroPreisPipe, FormsModule, FormField],
 })
 export class AbrechnungPage implements ViewDidEnter {
     private readonly appService = inject(AppService);
@@ -40,16 +41,20 @@ export class AbrechnungPage implements ViewDidEnter {
     private barcodeInputBuffer: string = '';
     public readonly barcodeInputActive = signal(true);
     public readonly barcodeInputActiveForm = form(this.barcodeInputActive);
-    public readonly lastBookedKellner = signal<PersonDto>(null);
-    public readonly lastBookedSumme = signal<number>(null);
+    public readonly lastTransaction = signal<IAbrechnungLastTransaction>(null);
 
+    public readonly rueckrechungOverview = signal<AbrechnungOverviewItemDto>(null);
+    public readonly rueckrechungSumme = model<number>(0);
+    public readonly rueckrechungBleibendeSumme = computed(() => this.rueckrechungOverview()?.summe_offen - this.rueckrechungSumme());
+    public readonly rueckrechungDisplayModal = signal(false);
+    private readonly rueckrechnungModalInput = viewChild<IonInput>('rueckrechnungModalInput');
     private readonly bonInputStartSequence = 'bon';
     private readonly kellnerInputStartSequence = 'kellner';
 
     constructor() {
         console.log('[FFGBSY]', 'Add Event Listener for Keydown');
         document.addEventListener('keydown', (event) => {
-            if (this.barcodeInputActive()) {
+            if (this.barcodeInputActive() && !this.rueckrechungDisplayModal()) {
                 const key = event.key.toLowerCase();
 
                 // Number or Start Sequence Input
@@ -142,14 +147,56 @@ export class AbrechnungPage implements ViewDidEnter {
             });
     }
 
+    public openRueckrechnungModal(overview: AbrechnungOverviewItemDto) {
+        this.rueckrechungOverview.set(overview);
+        this.rueckrechungSumme.set(0);
+        this.rueckrechungDisplayModal.set(true);
+    }
+
+    public startRueckrechung() {
+        this.abrechnungenApiService
+            .createRueckrechnung({
+                id: undefined,
+                kellner: this.rueckrechungOverview()?.kellner,
+                stelle: this.abrechnungKostenstelle(),
+                summe: this.rueckrechungSumme(),
+                timestamp: new Date(),
+            })
+            .subscribe(() => {
+                this.lastTransaction.set({
+                    kellner: this.rueckrechungOverview()?.kellner,
+                    summe: this.rueckrechungSumme(),
+                    type: 'rueckrechnung',
+                });
+                this.rueckrechungOverview.set(null);
+                this.rueckrechungSumme.set(0);
+                this.rueckrechungDisplayModal.set(false);
+                this.loadOverview();
+            });
+    }
+
+    public onRueckrechnungModalDidPresent() {
+        // Set
+        console.log(this.rueckrechnungModalInput());
+        this.rueckrechnungModalInput().setFocus();
+    }
+
+    // When Backdrop click bspw.
+    public onRueckrechnungModalDidDismiss() {
+        this.rueckrechungDisplayModal.set(false);
+    }
+
     private loadOverview() {
         this.abrechnungenApiService.readOverviews().subscribe((ovs) => this.overviews.set(ovs));
     }
 
     public createAbrechnung() {
         this.abrechnungenApiService.createAbrechnung(this.abrechnung().asDto()).subscribe(() => {
-            this.lastBookedKellner.set(this.abrechnung().kellner);
-            this.lastBookedSumme.set(this.abrechnung().summe());
+            this.lastTransaction.set({
+                kellner: this.abrechnung().kellner,
+                summe: this.abrechnung().summe(),
+                type: 'abrechnung',
+            });
             this.abrechnung.set(null);
             this.loadOverview();
         });

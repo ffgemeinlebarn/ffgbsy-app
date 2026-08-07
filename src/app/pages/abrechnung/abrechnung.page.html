@@ -43,12 +43,47 @@
         </div>
     </ion-footer>
 } @else {
-    @if (lastBookedSumme()) {
-        <ion-toolbar class="last-action" color="primary">
+    <ion-modal class="rueckrechung-summe-modal" #rueckrechungSummeModal [isOpen]="rueckrechungDisplayModal()" (ionModalDidPresent)="onRueckrechnungModalDidPresent()" (ionModalDidDismiss)="onRueckrechnungModalDidDismiss()">
+        <ng-template>
+            <ion-header>
+                <ion-toolbar>
+                    <ion-title>Rückrechnung für {{ rueckrechungOverview()?.kellner.vorname }} {{ rueckrechungOverview()?.kellner.nachname }}</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+                <ion-list lines="none">
+                    <ion-item>
+                        <ion-label>Offen</ion-label>
+                        <ion-badge slot="end">{{ rueckrechungOverview()?.summe_offen | euroPreis: { zerotext: false } }}</ion-badge>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Rückrechnungsbetrag</ion-label>
+                        <ion-input slot="end" #rueckrechnungModalInput inputmode="decimal" type="number" step="0.1" [(ngModel)]="rueckrechungSumme"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Offen bleibt</ion-label>
+                        <ion-badge slot="end">{{ rueckrechungBleibendeSumme() | euroPreis: { zerotext: false } }}</ion-badge>
+                    </ion-item>
+                </ion-list>
+            </ion-content>
+            <ion-footer>
+                <ion-button color="success" expand="block" size="large" (click)="startRueckrechung()">Speichern</ion-button>
+                <ion-button color="primary" expand="block" (click)="rueckrechungSummeModal.dismiss()">Abbrechen</ion-button>
+            </ion-footer>
+        </ng-template>
+    </ion-modal>
+
+    @if (lastTransaction()) {
+        <ion-toolbar class="last-transaction" [color]="lastTransaction()?.type == 'abrechnung' ? 'primary' : 'success'">
             <div class="content">
-                <span>Letzte Abrechnung: </span>
+                <span>Letzte {{ lastTransaction()?.type == "abrechnung" ? "Abrechnung" : "Rückrechnung" }}: </span>
                 <strong>
-                    <ion-icon color="warning" name="add-circle"></ion-icon><ion-badge color="warning">{{ lastBookedSumme() | euroPreis: { zerotext: false } }}</ion-badge> bei {{ lastBookedKellner()?.vorname }} {{ lastBookedKellner()?.nachname }}
+                    @if (lastTransaction()?.type == "abrechnung") {
+                        <ion-icon color="warning" name="add-circle"></ion-icon><ion-badge color="warning">{{ lastTransaction().summe | euroPreis: { zerotext: false } }}</ion-badge>
+                    } @else {
+                        <ion-icon color="light" name="remove-circle"></ion-icon><ion-badge color="light">{{ lastTransaction().summe | euroPreis: { zerotext: false } }}</ion-badge>
+                    }
+                    <span> bei {{ lastTransaction()?.kellner.vorname }} {{ lastTransaction()?.kellner.nachname }}</span>
                 </strong>
             </div>
         </ion-toolbar>
@@ -56,7 +91,7 @@
     <ion-content>
         <div class="overview">
             @for (overview of overviews(); track overview.kellner.id) {
-                <ffgbsy-tile [title]="overview.summe_offen | euroPreis: { zerotext: false }" [subtitle]="`${overview.kellner.vorname} ${overview.kellner.nachname}`"></ffgbsy-tile>
+                <ffgbsy-tile (click)="openRueckrechnungModal(overview)" [title]="overview.summe_offen | euroPreis: { zerotext: false }" [subtitle]="`${overview.kellner.vorname} ${overview.kellner.nachname}`"></ffgbsy-tile>
             }
         </div>
     </ion-content>

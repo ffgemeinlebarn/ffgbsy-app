@@ -5,7 +5,7 @@
         }
     }
 
-    ion-toolbar.last-action {
+    ion-toolbar.last-transaction {
         padding-left: 16px;
         padding-right: 16px;
 
@@ -139,5 +139,38 @@
             justify-content: space-between;
             align-items: center;
         }
+    }
+}
+
+.rueckrechung-summe-modal {
+    ion-label,
+    ion-badge,
+    ion-input {
+        font-size: 1.15rem;
+    }
+
+    ion-input {
+        background-color: #ddd;
+        border-radius: 4px;
+        text-align: right;
+        font-weight: bold;
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        padding-left: 20px !important;
+        overflow: hidden;
+
+        &:before {
+            content: "€";
+            position: relative;
+            left: -10px;
+        }
+    }
+
+    ion-footer {
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
     }
 }
