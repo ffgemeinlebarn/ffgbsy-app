@@ -27,11 +27,12 @@ jobs:
       - name: Run Build
         run: npm run ci:build:production
 
-      - name: Upload Debug Artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:
           name: PWA
           path: ./www/browser
+          include-hidden-files: true
 
   deploy:
     name: Deploy
@@ -52,6 +53,28 @@ jobs:
           server: ${{ secrets.FTP_DEPLOY_HOST }}
           username: ${{ secrets.FTP_DEPLOY_USERNAME }}
           password: ${{ secrets.FTP_DEPLOY_PASSWORD }}
+          local-dir: ./dist/
+          dangerous-clean-slate: true
+          log-level: verbose
+  deploy_local:
+    name: Deploy for Localhost Version
+    needs: build
+    runs-on: ubuntu-latest
+    environment: Production
+
+    steps:
+      - name: Download PWA Artifact
+        uses: actions/download-artifact@v7
+        with:
+          name: PWA
+          path: ./dist/
+
+      - name: 📂 Upload PWA
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.LOCAL_VERSION_FTP_DEPLOY_HOST }}
+          username: ${{ secrets.LOCAL_VERSION_FTP_DEPLOY_USERNAME }}
+          password: ${{ secrets.LOCAL_VERSION_FTP_DEPLOY_PASSWORD }}
           local-dir: ./dist/
           dangerous-clean-slate: true
           log-level: verbose
