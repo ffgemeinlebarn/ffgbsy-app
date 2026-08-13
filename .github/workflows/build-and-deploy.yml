@@ -27,11 +27,21 @@ jobs:
       - name: Run Build
         run: npm run ci:build:production
 
+      - name: Run Build
+        run: npm run ci:build:backup
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v7
         with:
           name: PWA
           path: ./www/browser
+          include-hidden-files: true
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: PWA-Backup
+          path: ./www-backup/browser
           include-hidden-files: true
 
   deploy:
@@ -56,8 +66,9 @@ jobs:
           local-dir: ./dist/
           dangerous-clean-slate: true
           log-level: verbose
-  deploy_local:
-    name: Deploy for Localhost Version
+
+  deploy_backup:
+    name: Deploy Backup Version
     needs: build
     runs-on: ubuntu-latest
     environment: Production
@@ -66,7 +77,7 @@ jobs:
       - name: Download PWA Artifact
         uses: actions/download-artifact@v7
         with:
-          name: PWA
+          name: PWA-Backup
           path: ./dist/
 
       - name: 📂 Upload PWA
