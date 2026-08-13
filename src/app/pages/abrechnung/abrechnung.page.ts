@@ -187,7 +187,10 @@ export class AbrechnungPage implements ViewDidEnter {
     }
 
     private loadOverview() {
-        this.abrechnungenApiService.readOverviews().subscribe((ovs) => this.overviews.set(ovs));
+        if (!this.appService.abrechnungKostenstelle()) {
+            throw new Error('Es ist keine Abrechnungsstelle festgelegt!');
+        }
+        this.abrechnungenApiService.readOverviews(this.appService.abrechnungKostenstelle()).subscribe((ovs) => this.overviews.set(ovs));
     }
 
     public createAbrechnung() {

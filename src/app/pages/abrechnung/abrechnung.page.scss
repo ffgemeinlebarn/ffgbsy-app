@@ -64,6 +64,10 @@
             align-items: center;
             font-size: 1.25em;
 
+            ion-progress-bar {
+                opacity: 0.5;
+            }
+
             span {
                 padding: 1em;
             }

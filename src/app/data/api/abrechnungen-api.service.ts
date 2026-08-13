@@ -18,11 +18,8 @@ export class AbrechnungenApiService {
 
     private readonly abrechnungsstelle = this.appService.abrechnungKostenstelle;
 
-    public readOverviews(): Observable<AbrechnungOverviewItemDto[]> {
-        if (!this.abrechnungsstelle()) {
-            throw new Error('Es ist keine Abrechnungsstelle festgelegt!');
-        }
-        return this.http.get<AbrechnungOverviewItemDto[]>(`${this.settings.apiBaseUrl()}/abrechnungen-overview/${this.abrechnungsstelle()}`);
+    public readOverviews(abrechnungsstelle: string): Observable<AbrechnungOverviewItemDto[]> {
+        return this.http.get<AbrechnungOverviewItemDto[]>(`${this.settings.apiBaseUrl()}/abrechnungen-overview/${abrechnungsstelle}`);
     }
 
     public readKellnerStatus(kellnerId: PersonId): Observable<AbrechnungKellnerStatusDto> {

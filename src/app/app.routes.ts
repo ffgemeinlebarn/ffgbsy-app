@@ -53,6 +53,10 @@ export const routes: Routes = [
                 path: 'uebersicht-angebot',
                 loadComponent: () => import('./pages/admin/angebot-uebersicht/angebot-uebersicht.page').then((m) => m.AngebotUebersichtPage),
             },
+            {
+                path: 'abrechnungen',
+                loadComponent: () => import('./pages/admin/auswertungen/abrechnungen/abrechnungen.page').then((m) => m.AuswertungenAbrechnungen),
+            },
         ],
     },
     {
