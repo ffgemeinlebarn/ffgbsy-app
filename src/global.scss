@@ -59,6 +59,11 @@ ion-chip.non-clickable {
 }
 
 :root {
+    ion-modal {
+        padding: 1rem;
+        --border-radius: 0.7em;
+    }
+
     @media screen and (max-width: 300px) {
         --base-width-item-tile: 50%;
         --base-width-category-tile: 50%;
