@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonTitle, IonToggle, IonToolbar } from '@ionic/angular/standalone';
+import { IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonList, IonTitle, IonToggle, IonToolbar, ViewDidEnter } from '@ionic/angular/standalone';
 import { GrundprodukteApiService } from '../../../../../data/api/grundprodukte-api.service';
 import { FrontendService } from '../../../../../data/frontend.service';
 import { GrundproduktDto } from '../../../../../model/dto/grundprodukt.dto';
@@ -14,7 +14,7 @@ import { PageSpinnerComponent } from '../../../../../ui/page-spinner/page-spinne
     changeDetection: ChangeDetectionStrategy.Eager,
     imports: [IonLabel, IonList, IonItem, IonContent, IonIcon, IonButton, IonButtons, IonTitle, IonBackButton, IonToolbar, IonHeader, IonToggle, IonInput, FormsModule, ReactiveFormsModule, PageSpinnerComponent],
 })
-export class GrundprodukteDetailPage {
+export class GrundprodukteDetailPage implements ViewDidEnter {
     private grundprodukteApiService = inject(GrundprodukteApiService);
     private frontendService = inject(FrontendService);
     private formBuilder = inject(FormBuilder);
@@ -31,7 +31,6 @@ export class GrundprodukteDetailPage {
     });
 
     constructor() {
-        effect(() => this.load(this.id()));
         this.form.controls['unlimitiert'].valueChanges.subscribe((isUnlimitiert) => this.showBestand.set(!isUnlimitiert));
     }
 
@@ -59,5 +58,9 @@ export class GrundprodukteDetailPage {
 
     private reload() {
         this.grundprodukteApiService.readAll();
+    }
+
+    ionViewDidEnter(): void {
+        this.load(this.id());
     }
 }
