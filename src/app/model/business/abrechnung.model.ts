@@ -7,6 +7,7 @@ export class Abrechnung {
     public stelle: string;
     public kellner: PersonDto;
     public bons = signal<BonDto[]>([]);
+    public lockedBonIds: number[] = [];
 
     public bonsAnzahl = computed(() => this.bons().length);
 

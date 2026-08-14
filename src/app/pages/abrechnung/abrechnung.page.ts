@@ -13,7 +13,6 @@ import { SelectAufnehmerModalComponent } from '../../feature/select-aufnehmer-mo
 import { EuroPreisPipe } from '../../misc/euro-preis.pipe';
 import { Abrechnung } from '../../model/business/abrechnung.model';
 import { AbrechnungOverviewItemDto } from '../../model/dto/abrechnung-overview-item.dto';
-import { BonDto } from '../../model/dto/bon.dto';
 import { PersonDto } from '../../model/dto/person.dto';
 import { IAbrechnungLastTransaction } from '../../model/interfaces/i-abrechnung-last-transation.interface';
 import { TileComponent } from '../../ui/tile/tile.component';
@@ -100,19 +99,35 @@ export class AbrechnungPage implements ViewDidEnter {
 
     public addBonById(id: BonId) {
         if (
-            !this.abrechnung()
+            this.abrechnung()
                 .bons()
                 .find((b) => b.id == id)
         ) {
-            this.bonsApiService.read(id).subscribe((bon) => this.addBon(bon));
+            console.log('[FFGBSY] Add Bon by Id: Bon schon in Abrechnung!');
+            return;
         }
-    }
 
-    public addBon(bon: BonDto) {
+        if (this.abrechnung().lockedBonIds.find((bid) => bid == id)) {
+            console.log('[FFGBSY] Add Bon by Id: Bon Id is locked!');
+            return;
+        }
+
         this.abrechnung.update((a) => {
-            a.bons.update((b) => [...b, bon]);
-
+            a.lockedBonIds.push(id);
             return a;
+        });
+
+        this.bonsApiService.read(id).subscribe((bon) => {
+            console.log('[FFGBSY] Got Bon, clear id lock and update bons in Abrechnung');
+
+            this.abrechnung.update((a) => {
+                a.lockedBonIds = a.lockedBonIds.filter((lid) => lid != id);
+
+                a.bons.update((b) => [...b, bon]);
+
+                return a;
+            });
+            console.log('[FFGBSY] Abrechnung = ', this.abrechnung());
         });
     }
 
